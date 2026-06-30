@@ -53,9 +53,9 @@ export default function Nav() {
               key={link.href}
               href={link.href}
               className="font-body text-xs tracking-[0.15em] uppercase transition-colors duration-200"
-              style={{ color: 'rgba(244,241,236,0.45)' }}
+              style={{ color: 'rgba(244,241,236,0.65)' }}
               onMouseEnter={e => (e.currentTarget.style.color = '#F4F1EC')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(244,241,236,0.45)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(244,241,236,0.65)')}
             >
               {link.label}
             </a>

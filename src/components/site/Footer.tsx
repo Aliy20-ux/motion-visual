@@ -80,7 +80,7 @@ export default function Footer() {
               cursor: 'default',
               background: distorted
                 ? 'linear-gradient(135deg,#7C3AED,#06B6D4)'
-                : 'linear-gradient(180deg, rgba(244,241,236,0.55) 0%, rgba(244,241,236,0.08) 100%)',
+                : 'linear-gradient(180deg, rgba(244,241,236,0.6) 0%, rgba(244,241,236,0.22) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',

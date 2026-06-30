@@ -48,15 +48,17 @@ const fragmentShader = `
 function FluidPlane() {
   const meshRef = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
-  const mouse = useRef({ x: 0, y: 0 });
+  const targetMouse = useRef(new THREE.Vector2(0, 0));
   const distortionRef = useRef(1.0);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      targetMouse.current.set(
+        (e.clientX / window.innerWidth) * 2 - 1,
+        -(e.clientY / window.innerHeight) * 2 + 1
+      );
     };
-    window.addEventListener('mousemove', move);
+    window.addEventListener('mousemove', move, { passive: true });
     return () => window.removeEventListener('mousemove', move);
   }, []);
 
@@ -68,14 +70,14 @@ function FluidPlane() {
 
   useFrame(({ clock }) => {
     uniforms.current.uTime.value = clock.elapsedTime;
-    uniforms.current.uMouse.value.lerp(new THREE.Vector2(mouse.current.x, mouse.current.y), 0.06);
+    uniforms.current.uMouse.value.lerp(targetMouse.current, 0.06);
     distortionRef.current = THREE.MathUtils.lerp(distortionRef.current, 0.6, 0.008);
     uniforms.current.uDistortion.value = distortionRef.current;
   });
 
   return (
     <mesh ref={meshRef} rotation={[0, 0, 0]}>
-      <planeGeometry args={[viewport.width * 1.2, viewport.height * 1.2, 80, 80]} />
+      <planeGeometry args={[viewport.width * 1.2, viewport.height * 1.2, 48, 48]} />
       <shaderMaterial
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
@@ -164,7 +166,8 @@ export default function Hero() {
         <Suspense fallback={null}>
           <Canvas
             camera={{ fov: 50, position: [0, 0, 3] }}
-            gl={{ antialias: true, alpha: true }}
+            gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
+            dpr={[1, 1.5]}
             style={{ width: '100%', height: '100%' }}
           >
             <FluidPlane />
@@ -233,8 +236,8 @@ export default function Hero() {
         {/* Sub row */}
         <motion.div
           className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-10 lg:mt-14"
-          initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease, delay: 1.9 }}
         >
           <p className="font-body font-light text-sm leading-relaxed max-w-[280px]" style={{ color: 'rgba(244,241,236,0.45)' }}>

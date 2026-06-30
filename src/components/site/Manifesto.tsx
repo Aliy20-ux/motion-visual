@@ -15,34 +15,27 @@ export default function Manifesto() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!sectionRef.current || !wordsRef.current || prefersReduced) return;
 
-    const words = wordsRef.current.querySelectorAll('.word');
+    const ctx = gsap.context(() => {
+      const words = wordsRef.current!.querySelectorAll('.word');
 
-    gsap.set(words, { opacity: 0.12, color: 'rgba(244,241,236,0.12)' });
+      gsap.set(words, { opacity: 0.15, color: 'rgba(244,241,236,0.15)' });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        pin: true,
-        start: 'top top',
-        end: '+=280%',
-        scrub: 1.2,
-      },
-    });
-
-    words.forEach((word, i) => {
-      tl.to(word, {
-        opacity: 1,
-        color: '#F4F1EC',
-        duration: 0.6,
-        ease: 'none',
-      }, i * 0.12);
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.vars.trigger === sectionRef.current) t.kill();
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true,
+          start: 'top top',
+          end: '+=280%',
+          scrub: 0.9,
+        },
       });
-    };
+
+      words.forEach((word, i) => {
+        tl.to(word, { opacity: 1, color: '#F4F1EC', duration: 0.6, ease: 'none' }, i * 0.12);
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   const words = copy.split(' ');

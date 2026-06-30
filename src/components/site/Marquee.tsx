@@ -20,7 +20,7 @@ export default function Marquee() {
           <span
             key={i}
             className={`font-body text-xs tracking-[0.22em] uppercase shrink-0 ${item === '·' ? '' : ''}`}
-            style={{ color: item === '·' ? 'rgba(6,182,212,0.6)' : 'rgba(244,241,236,0.22)' }}
+            style={{ color: item === '·' ? 'rgba(6,182,212,0.6)' : 'rgba(244,241,236,0.32)' }}
           >
             {item}
           </span>
