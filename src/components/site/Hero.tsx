@@ -203,44 +203,54 @@ export default function Hero() {
       >
         {/* Location + ticker row */}
         <motion.div
-          className="flex items-center justify-between mb-8 flex-wrap gap-3"
+          className="flex items-center justify-between mb-6 flex-wrap gap-3"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1, ease }}
+          transition={{ duration: 0.7, delay: 1.0, ease }}
         >
-          <span className="font-body text-xs tracking-[0.25em] uppercase" style={{ color: 'rgba(244,241,236,0.3)' }}>
+          <span className="font-body text-xs tracking-[0.25em] uppercase" style={{ color: 'rgba(244,241,236,0.35)' }}>
             Edinburgh, Scotland
           </span>
           <ClientTicker />
         </motion.div>
 
+        {/* Thin rule */}
+        <motion.div
+          className="mb-8"
+          style={{ height: 1, background: 'rgba(244,241,236,0.08)' }}
+          initial={{ scaleX: 0, originX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.0, ease, delay: 1.15 }}
+        />
+
         {/* Headline */}
         <h1 aria-label="We build the internet's most wanted." className="relative">
           {headline.map((line, i) => (
-            <motion.span
-              key={i}
-              className="block font-display italic overflow-hidden"
-              style={{ fontSize: 'clamp(4rem,12vw,14rem)', lineHeight: 0.92, letterSpacing: '-0.02em' }}
-              initial={{ opacity: 0, y: '110%' }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, ease, delay: 1.3 + i * 0.14 }}
-            >
-              <span style={i === 2 ? {} : { color: '#F4F1EC' }}
-                className={i === 2 ? 'gradient-text' : ''}>
-                {line}
-              </span>
-            </motion.span>
+            <div key={i} className="overflow-hidden">
+              <motion.span
+                className="block font-display italic"
+                style={{ fontSize: 'clamp(4rem,12vw,14rem)', lineHeight: 0.92, letterSpacing: '-0.025em' }}
+                initial={{ y: '110%' }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.1, ease, delay: 1.25 + i * 0.13 }}
+              >
+                <span style={i === 2 ? {} : { color: '#F4F1EC' }}
+                  className={i === 2 ? 'gradient-text' : ''}>
+                  {line}
+                </span>
+              </motion.span>
+            </div>
           ))}
         </h1>
 
         {/* Sub row */}
         <motion.div
-          className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-10 lg:mt-14"
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-10 lg:mt-16"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease, delay: 1.9 }}
+          transition={{ duration: 0.85, ease, delay: 1.85 }}
         >
-          <p className="font-body font-light text-sm leading-relaxed max-w-[280px]" style={{ color: 'rgba(244,241,236,0.45)' }}>
+          <p className="font-body font-light text-sm leading-relaxed max-w-[280px]" style={{ color: 'rgba(244,241,236,0.58)' }}>
             Award-quality websites for brands<br />that refuse to be forgettable.
           </p>
           <div className="w-px h-8 bg-white/10 hidden sm:block" />
@@ -251,7 +261,7 @@ export default function Hero() {
             <a
               href="#quote"
               className="font-body font-light text-sm transition-all duration-200 hover:opacity-100"
-              style={{ color: 'rgba(244,241,236,0.5)', textDecoration: 'underline', textUnderlineOffset: 4 }}
+              style={{ color: 'rgba(244,241,236,0.55)', textDecoration: 'underline', textUnderlineOffset: 4 }}
             >
               Get a quote →
             </a>
