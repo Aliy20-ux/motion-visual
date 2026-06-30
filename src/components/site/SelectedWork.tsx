@@ -313,7 +313,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex-shrink-0 overflow-hidden rounded-2xl"
+      className="group relative flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer"
       style={{
         width: 'clamp(300px,38vw,480px)',
         height: 'clamp(360px,55vh,600px)',

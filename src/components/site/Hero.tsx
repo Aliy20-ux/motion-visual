@@ -5,6 +5,14 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ArrowUpRight } from 'lucide-react';
 
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    setMobile(window.innerWidth < 768 || /iPhone|Android|iPad/i.test(navigator.userAgent));
+  }, []);
+  return mobile;
+}
+
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const clients = ['Thomas J Walls', 'Texture Lounge', 'CHE Edinburgh', 'S2 Studio', 'Lucky Chen', 'The Mid Yoken'];
@@ -148,6 +156,7 @@ function MagneticCTA({ children, href }: { children: React.ReactNode; href: stri
 /* ── Hero ── */
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
   const textY = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
@@ -161,18 +170,29 @@ export default function Hero() {
       className="relative overflow-hidden"
       style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}
     >
-      {/* 3D Canvas */}
+      {/* 3D Canvas — skipped on mobile for battery / perf */}
       <div className="absolute inset-0 z-0" data-cursor="invert">
-        <Suspense fallback={null}>
-          <Canvas
-            camera={{ fov: 50, position: [0, 0, 3] }}
-            gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-            dpr={[1, 1.5]}
-            style={{ width: '100%', height: '100%' }}
-          >
-            <FluidPlane />
-          </Canvas>
-        </Suspense>
+        {isMobile ? (
+          /* Static gradient fallback for mobile */
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(ellipse 80% 80% at 30% 40%, rgba(124,58,237,0.25) 0%, rgba(6,182,212,0.1) 50%, transparent 80%)',
+            }}
+          />
+        ) : (
+          <Suspense fallback={null}>
+            <Canvas
+              camera={{ fov: 50, position: [0, 0, 3] }}
+              gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
+              dpr={[1, 1.5]}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <FluidPlane />
+            </Canvas>
+          </Suspense>
+        )}
         {/* Vignette */}
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 30%, rgba(10,10,11,0.65) 100%)' }} />
         <div className="absolute top-0 left-0 right-0 h-40" style={{ background: 'linear-gradient(to bottom, #0A0A0B 0%, transparent 100%)' }} />

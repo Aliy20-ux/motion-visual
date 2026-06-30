@@ -87,7 +87,9 @@ function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
 
 export default function Results() {
   return (
-    <section id="results" className="relative" style={{ padding: 'clamp(80px,10vw,140px) clamp(20px,5vw,80px)' }}>
+    <section id="results" className="relative overflow-hidden" style={{ padding: 'clamp(80px,10vw,140px) clamp(20px,5vw,80px)' }}>
+      {/* Atmospheric depth */}
+      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] -translate-y-1/2 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 70%)' }} />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div
