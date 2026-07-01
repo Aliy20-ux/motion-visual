@@ -47,22 +47,22 @@ export default function Footer() {
             </motion.p>
 
             {/* Huge display line */}
-            <div className="overflow-hidden mb-4">
+            <motion.div className="overflow-hidden mb-4"
+              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
               <motion.h2 className="font-display italic"
                 style={{ fontSize: 'clamp(3.5rem,9vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                initial={{ y: '110%' }} whileInView={{ y: 0 }} viewport={{ once: true }}
-                transition={{ duration: 0.95, ease }}>
+                variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.95, ease } } }}>
                 Let's build
               </motion.h2>
-            </div>
-            <div className="overflow-hidden mb-14">
+            </motion.div>
+            <motion.div className="overflow-hidden mb-14"
+              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
               <motion.h2 className="font-display italic gradient-text"
                 style={{ fontSize: 'clamp(3.5rem,9vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em' }}
-                initial={{ y: '110%' }} whileInView={{ y: 0 }} viewport={{ once: true }}
-                transition={{ duration: 0.95, ease, delay: 0.1 }}>
+                variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.95, ease, delay: 0.1 } } }}>
                 something great.
               </motion.h2>
-            </div>
+            </motion.div>
 
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}

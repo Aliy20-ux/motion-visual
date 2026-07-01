@@ -52,15 +52,15 @@ export default function WhyUs() {
               <div className="w-8 h-px gradient-bg" />
               <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(237,232,220,0.35)' }}>Why Us</span>
             </motion.div>
-            <div className="overflow-hidden">
+            <motion.div className="overflow-hidden"
+              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
               <motion.h2 className="font-display italic"
                 style={{ fontSize: 'clamp(2.8rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                initial={{ y: '110%' }} whileInView={{ y: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.95, ease }}>
+                variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.95, ease } } }}>
                 The standard<br />
                 <span className="gradient-text">we hold ourselves to.</span>
               </motion.h2>
-            </div>
+            </motion.div>
           </div>
 
           <motion.div className="lg:max-w-xs"

@@ -77,7 +77,7 @@ export default function Manifesto() {
       {/* Editorial lines */}
       <div className="relative z-10 space-y-1 md:space-y-0">
         {lines.map((line, i) => (
-          <div
+          <motion.div
             key={i}
             className={`overflow-hidden ${
               line.align === 'right'
@@ -86,6 +86,9 @@ export default function Manifesto() {
                 ? 'text-center'
                 : 'text-left'
             }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
           >
             <motion.p
               className={
@@ -105,14 +108,14 @@ export default function Manifesto() {
                     ? 'rgba(244,241,236,0.45)'
                     : undefined,
               }}
-              initial={{ y: '115%' }}
-              whileInView={{ y: 0 }}
-              viewport={{ once: true, margin: '-5%' }}
-              transition={{ duration: 1.05, ease, delay: i * 0.1 }}
+              variants={{
+                hidden: { y: '115%' },
+                visible: { y: 0, transition: { duration: 1.05, ease, delay: i * 0.1 } },
+              }}
             >
               {line.text}
             </motion.p>
-          </div>
+          </motion.div>
         ))}
       </div>
 

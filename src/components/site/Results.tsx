@@ -109,19 +109,17 @@ export default function Results() {
                 The Numbers
               </span>
             </motion.div>
-            <div className="overflow-hidden">
+            <motion.div className="overflow-hidden"
+              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
               <motion.h2
                 className="font-display italic"
                 style={{ fontSize: 'clamp(2.5rem,6vw,7rem)', lineHeight: 0.92, letterSpacing: '-0.02em', color: '#F4F1EC' }}
-                initial={{ y: '110%' }}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, ease }}
+                variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.9, ease } } }}
               >
                 Results that<br />
                 <span className="gradient-text">speak for themselves.</span>
               </motion.h2>
-            </div>
+            </motion.div>
           </div>
           <motion.p
             className="font-body font-light text-sm leading-relaxed max-w-xs hidden md:block"
