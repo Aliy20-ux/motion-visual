@@ -64,25 +64,28 @@ export default function Hero() {
         <video
           autoPlay muted loop playsInline preload="auto"
           className="absolute inset-0 w-full h-full"
-          style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
+          style={{ objectFit: 'cover', objectPosition: 'center center' }}
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
       </motion.div>
 
       {/* ── Cinematic overlay stack ── */}
-      {/* Bottom-heavy gradient so text sits on dark */}
+      {/* Bottom-heavy gradient — dark crimson base so text sits on black */}
       <div className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: 'linear-gradient(180deg, rgba(8,8,9,0.28) 0%, rgba(8,8,9,0.04) 30%, rgba(8,8,9,0.55) 72%, #080809 100%)' }} />
-      {/* Edge vignette */}
+        style={{ background: 'linear-gradient(180deg, rgba(6,4,4,0.32) 0%, rgba(8,4,4,0.04) 30%, rgba(14,6,6,0.62) 72%, #0A0505 100%)' }} />
+      {/* Edge vignette with crimson tint */}
       <div className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 32%, rgba(8,8,9,0.6) 100%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(10,4,4,0.68) 100%)' }} />
+      {/* Subtle crimson atmospheric glow — echoes the video's light source */}
+      <div className="absolute inset-0 z-[1] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 62% 38%, rgba(196,30,30,0.09) 0%, transparent 58%)' }} />
       {/* Scroll-driven progressive darkening */}
       <motion.div className="absolute inset-0 z-[2] pointer-events-none"
-        style={{ background: '#080809', opacity: scrollOverlay }} />
+        style={{ background: '#080404', opacity: scrollOverlay }} />
 
       {/* ── Entrance veil ── */}
-      <motion.div className="absolute inset-0 z-[30] pointer-events-none" style={{ background: '#0A0A0B' }}
+      <motion.div className="absolute inset-0 z-[30] pointer-events-none" style={{ background: '#0A0505' }}
         initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 1.5, delay: 0.15, ease: 'easeOut' }} />
 
       {/* ── Main content ── */}
@@ -148,7 +151,7 @@ export default function Hero() {
         style={{ opacity: contentOpacity }}>
         <motion.div
           animate={{ y: [0, 14, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-px h-14" style={{ background: 'linear-gradient(to bottom, rgba(196,144,32,0.7), transparent)' }} />
+          className="w-px h-14" style={{ background: 'linear-gradient(to bottom, rgba(196,30,30,0.7), transparent)' }} />
         <span className="font-body text-[9px] tracking-[0.3em] uppercase"
           style={{ color: 'rgba(237,232,220,0.22)', writingMode: 'vertical-lr' }}>scroll</span>
       </motion.div>

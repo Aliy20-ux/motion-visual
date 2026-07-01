@@ -175,7 +175,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
       {/* Hover accent glow */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 40% 60%, rgba(196,144,32,0.12) 0%, transparent 65%)' }}
+        style={{ background: 'radial-gradient(ellipse at 40% 60%, rgba(196,30,30,0.12) 0%, transparent 65%)' }}
       />
 
       {/* Index — top left */}
@@ -214,8 +214,8 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
           </div>
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
-            style={{ border: '1px solid rgba(196,144,32,0.4)', background: 'rgba(196,144,32,0.08)' }}>
-            <ArrowUpRight size={14} style={{ color: '#C49020' }} />
+            style={{ border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
+            <ArrowUpRight size={14} style={{ color: '#C41E1E' }} />
           </div>
         </div>
       </div>

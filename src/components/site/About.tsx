@@ -48,7 +48,7 @@ export default function About() {
 
       {/* Atmospheric glow */}
       <div className="absolute bottom-0 left-0 w-[700px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(196,144,32,0.07) 0%, transparent 60%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(196,30,30,0.07) 0%, transparent 60%)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto">
 
@@ -103,7 +103,7 @@ export default function About() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(196,144,32,0.1)', border: '1px solid rgba(196,144,32,0.25)' }}>
+                  style={{ background: 'rgba(196,30,30,0.1)', border: '1px solid rgba(196,30,30,0.25)' }}>
                   <span className="font-display italic gradient-text"
                     style={{ fontSize: '0.8rem', letterSpacing: '-0.01em' }}>
                     {member.initials}
@@ -123,7 +123,7 @@ export default function About() {
                   {member.name}
                 </p>
                 <p className="font-body text-[10px] tracking-[0.22em] uppercase mt-1.5"
-                  style={{ color: 'rgba(196,144,32,0.75)' }}>
+                  style={{ color: 'rgba(196,30,30,0.75)' }}>
                   {member.role}
                 </p>
               </div>

@@ -13,7 +13,7 @@ export default function Marquee() {
               letterSpacing: item === '×' ? '0' : '0.22em',
               textTransform: 'uppercase',
               fontWeight: item === '×' ? 300 : 500,
-              color: item === '×' ? 'rgba(196,144,32,0.5)' : 'rgba(237,232,220,0.32)',
+              color: item === '×' ? 'rgba(196,30,30,0.5)' : 'rgba(237,232,220,0.32)',
             }}>
             {item}
           </span>

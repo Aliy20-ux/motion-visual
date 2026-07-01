@@ -20,7 +20,7 @@ export default function Manifesto() {
     >
       {/* Atmospheric glow */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle at 80% 10%, rgba(196,144,32,0.055) 0%, transparent 60%)' }} />
+        style={{ background: 'radial-gradient(circle at 80% 10%, rgba(196,30,30,0.055) 0%, transparent 60%)' }} />
 
       {/* ── Section label row ── */}
       <div className="relative z-10 flex items-start justify-between mb-24">

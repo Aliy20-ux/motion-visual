@@ -5,8 +5,9 @@
   --color-canvas-2: #0E0E10;
   --color-canvas-3: #161618;
   --color-off-white: #EDE8DC;
-  --color-gold: #C49020;
-  --color-gold-light: #E8C050;
+  --color-crimson: #C41E1E;
+  --color-crimson-light: #E83838;
+  --color-chrome: #C8C8C8;
   --color-border: rgba(237, 232, 220, 0.07);
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -41,16 +42,16 @@ body::after {
   mix-blend-mode: overlay;
 }
 
-/* ── Gold gradient system ── */
+/* ── Crimson/chrome gradient system ── */
 .gradient-text {
-  background: linear-gradient(135deg, #C49020 0%, #F0C830 100%);
+  background: linear-gradient(135deg, #C41E1E 0%, #E83838 52%, #D0D0D0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #B07810 0%, #D49820 100%);
+  background: linear-gradient(135deg, #8B1010 0%, #C41E1E 100%);
 }
 
 .glass {
@@ -67,12 +68,12 @@ body::after {
   border: 1px solid rgba(237,232,220,0.12);
 }
 
-/* Scroll progress bar — gold */
+/* Scroll progress bar — crimson */
 body::before {
   content: '';
   position: fixed;
   top: 0; left: 0; width: 100%; height: 2px;
-  background: linear-gradient(to right, #B07810, #E8C050);
+  background: linear-gradient(to right, #8B1010, #C41E1E, #D0D0D0);
   transform-origin: left;
   transform: scaleX(var(--scroll-progress, 0));
   z-index: 99999;
@@ -81,13 +82,13 @@ body::before {
 
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: #09090A; }
-::-webkit-scrollbar-thumb { background: rgba(196,144,32,0.35); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: rgba(196,30,30,0.35); border-radius: 2px; }
 
 /* Hide scrollbar on horizontal scroll tracks (SelectedWork) */
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
-:focus-visible { outline: 2px solid #C49020; outline-offset: 3px; }
+:focus-visible { outline: 2px solid #C41E1E; outline-offset: 3px; }
 
 /* Form input placeholders */
 #quote input::placeholder,

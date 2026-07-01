@@ -25,7 +25,7 @@ export default function Footer() {
 
         {/* Subtle glow — top left only */}
         <div className="absolute top-0 left-0 w-[600px] h-[500px] pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(196,144,32,0.08) 0%, transparent 65%)' }} />
+          style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(196,30,30,0.08) 0%, transparent 65%)' }} />
 
         <div className="relative" style={{ padding: 'clamp(80px,11vw,160px) clamp(24px,5vw,88px)' }}>
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 lg:gap-24 items-end">
@@ -92,7 +92,7 @@ export default function Footer() {
               <div className="flex flex-col gap-4">
                 <a href="#quote"
                   className="gradient-bg inline-flex items-center justify-center gap-2 rounded-full font-body font-semibold text-sm cursor-pointer transition-all hover:opacity-90 hover:scale-[1.03] duration-200"
-                  style={{ padding: '16px 36px', color: '#09090A' }}>
+                  style={{ padding: '16px 36px', color: '#F0EDED' }}>
                   Start Your Project <ArrowUpRight size={14} />
                 </a>
                 <a href="mailto:hello@motionvisual.co.uk"
@@ -120,7 +120,7 @@ export default function Footer() {
             <div className="flex flex-col gap-6 max-w-xs">
               <div className="flex items-center gap-3">
                 <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center shrink-0">
-                  <span className="font-body text-[10px] font-bold" style={{ color: '#09090A' }}>MV</span>
+                  <span className="font-body text-[10px] font-bold" style={{ color: '#F0EDED' }}>MV</span>
                 </div>
                 <span className="font-body text-sm font-medium tracking-[0.08em] uppercase"
                   style={{ color: 'rgba(237,232,220,0.65)' }}>
@@ -172,7 +172,7 @@ export default function Footer() {
                 </span>
                 <a href="#quote"
                   className="inline-flex items-center gap-1.5 font-body text-xs mt-2 transition-opacity hover:opacity-80 cursor-pointer w-fit"
-                  style={{ color: 'rgba(196,144,32,0.7)' }}>
+                  style={{ color: 'rgba(196,30,30,0.7)' }}>
                   Get a quote <ArrowUpRight size={11} />
                 </a>
               </div>
@@ -197,7 +197,7 @@ export default function Footer() {
               ))}
               <a href="/admin"
                 className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
-                style={{ color: 'rgba(196,144,32,0.28)' }}>
+                style={{ color: 'rgba(196,30,30,0.28)' }}>
                 Admin
               </a>
             </div>

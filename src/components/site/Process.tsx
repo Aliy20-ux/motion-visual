@@ -10,28 +10,28 @@ const steps = [
     title: 'Brief & Strategy',
     duration: 'Day 1–2',
     body: 'We start with a focused discovery call — goals, audience, competitors, and brand. No endless questionnaires. We ask the right questions and we listen. By the end of day two, we have a strategy document you can hold us to.',
-    accent: '#C49020',
+    accent: '#C41E1E',
   },
   {
     num: '02',
     title: 'Design & Direction',
     duration: 'Day 3–5',
     body: "You receive a full design direction — typography, colour palette, layout language, and key page concepts. Not wireframes. Real, polished design work. We refine until it's right, then we lock it.",
-    accent: '#B07810',
+    accent: '#8B1010',
   },
   {
     num: '03',
     title: 'Build & Animate',
     duration: 'Day 6–12',
     body: 'Our developers build from the approved designs — every animation, interaction, and transition handcrafted in code. No templates, no page builders. The site we build performs as well as it looks.',
-    accent: '#C49020',
+    accent: '#C41E1E',
   },
   {
     num: '04',
     title: 'Launch & Handover',
     duration: 'Day 13–14',
     body: 'Final QA, speed audit, SEO setup, and deployment to your domain. You get full access, a walkthrough, and 30 days of post-launch support. Most clients go live in under two weeks from first call.',
-    accent: '#B07810',
+    accent: '#8B1010',
   },
 ];
 
@@ -44,7 +44,7 @@ export default function Process() {
     >
       {/* Atmospheric glow */}
       <div className="absolute top-0 right-0 w-[700px] h-[600px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 100% 0%, rgba(196,144,32,0.06) 0%, transparent 60%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 100% 0%, rgba(196,30,30,0.06) 0%, transparent 60%)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto">
 
@@ -150,11 +150,11 @@ export default function Process() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease, delay: 0.2 }}>
           <p className="font-body font-light text-xs" style={{ color: 'rgba(237,232,220,0.25)' }}>
-            Average project delivered in <span style={{ color: 'rgba(196,144,32,0.7)' }}>11.4 days</span> across all 2025 projects.
+            Average project delivered in <span style={{ color: 'rgba(196,30,30,0.7)' }}>11.4 days</span> across all 2025 projects.
           </p>
           <a href="#quote"
             className="gradient-bg inline-flex items-center gap-2 rounded-full font-body text-xs font-semibold cursor-pointer transition-all hover:opacity-90 hover:scale-[1.03] duration-200"
-            style={{ padding: '12px 28px', color: '#09090A' }}>
+            style={{ padding: '12px 28px', color: '#F0EDED' }}>
             Book Your Free Consultation <ArrowUpRight size={12} />
           </a>
         </motion.div>

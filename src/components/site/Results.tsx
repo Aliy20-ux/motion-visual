@@ -64,7 +64,7 @@ function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
       {/* Accent glow on hover */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(196,144,32,0.06), transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(196,30,30,0.06), transparent 70%)' }}
       />
 
       <span
@@ -89,7 +89,7 @@ export default function Results() {
   return (
     <section id="results" className="relative overflow-hidden" style={{ padding: 'clamp(80px,10vw,140px) clamp(20px,5vw,80px)' }}>
       {/* Atmospheric depth */}
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] -translate-y-1/2 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(196,144,32,0.05) 0%, transparent 70%)' }} />
+      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] -translate-y-1/2 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(196,30,30,0.05) 0%, transparent 70%)' }} />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div

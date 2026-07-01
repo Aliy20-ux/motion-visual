@@ -52,7 +52,7 @@ export default function Testimonials() {
 
       {/* Atmospheric glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 60%, rgba(196,144,32,0.06) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 60%, rgba(196,30,30,0.06) 0%, transparent 70%)' }} />
 
       <div style={{ padding: 'clamp(80px,11vw,150px) clamp(24px,5vw,88px)' }}>
         <div className="max-w-7xl mx-auto">
@@ -129,7 +129,7 @@ export default function Testimonials() {
                   {testimonials.map((_, i) => (
                     <button key={i} onClick={() => setCurrent(i)} aria-label={`Testimonial ${i + 1}`}
                       className="transition-all duration-400 cursor-pointer"
-                      style={{ height: 3, borderRadius: 2, background: i === current ? 'linear-gradient(135deg,#B07810,#E8C050)' : 'rgba(237,232,220,0.15)', width: i === current ? 28 : 8 }} />
+                      style={{ height: 3, borderRadius: 2, background: i === current ? 'linear-gradient(135deg,#8B1010,#E83838)' : 'rgba(237,232,220,0.15)', width: i === current ? 28 : 8 }} />
                   ))}
                 </div>
 

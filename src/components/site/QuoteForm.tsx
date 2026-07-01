@@ -115,13 +115,13 @@ function GoldInput({
           letterSpacing: '-0.02em',
           color: '#EDE8DC',
           borderBottom: '1px solid rgba(237,232,220,0.14)',
-          caretColor: '#C49020',
+          caretColor: '#C41E1E',
         }}
       />
       {/* Animated gold underline */}
       <motion.div
         className="absolute bottom-0 left-0 h-px"
-        style={{ background: 'linear-gradient(to right, #B07810, #E8C050)' }}
+        style={{ background: 'linear-gradient(to right, #8B1010, #E83838)' }}
         animate={{ width: focused ? '100%' : '0%' }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       />
@@ -153,12 +153,12 @@ function GoldTextarea({
           lineHeight: 1.75,
           color: '#EDE8DC',
           borderBottom: '1px solid rgba(237,232,220,0.14)',
-          caretColor: '#C49020',
+          caretColor: '#C41E1E',
         }}
       />
       <motion.div
         className="absolute bottom-0 left-0 h-px"
-        style={{ background: 'linear-gradient(to right, #B07810, #E8C050)' }}
+        style={{ background: 'linear-gradient(to right, #8B1010, #E83838)' }}
         animate={{ width: focused ? '100%' : '0%' }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       />
@@ -176,9 +176,9 @@ function ChoiceCard({
       className="relative text-left rounded-2xl cursor-pointer"
       style={{
         padding: 'clamp(20px,2.5vw,32px) clamp(20px,2.5vw,32px)',
-        background: selected ? 'rgba(196,144,32,0.1)' : 'rgba(237,232,220,0.03)',
+        background: selected ? 'rgba(196,30,30,0.1)' : 'rgba(237,232,220,0.03)',
         border: selected
-          ? '1px solid rgba(196,144,32,0.5)'
+          ? '1px solid rgba(196,30,30,0.5)'
           : '1px solid rgba(237,232,220,0.09)',
       }}
       whileHover={{ scale: 1.02, background: 'rgba(237,232,220,0.055)' }}
@@ -187,7 +187,7 @@ function ChoiceCard({
     >
       {/* Key hint */}
       <span className="absolute top-4 right-5 font-body text-[10px] tracking-widest"
-        style={{ color: selected ? 'rgba(196,144,32,0.8)' : 'rgba(237,232,220,0.2)' }}>
+        style={{ color: selected ? 'rgba(196,30,30,0.8)' : 'rgba(237,232,220,0.2)' }}>
         {keyHint}
       </span>
 
@@ -208,7 +208,7 @@ function ChoiceCard({
           className="absolute top-4 left-5"
           initial={{ scale: 0 }} animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-          <Check size={13} style={{ color: '#C49020' }} />
+          <Check size={13} style={{ color: '#C41E1E' }} />
         </motion.div>
       )}
     </motion.button>
@@ -225,8 +225,8 @@ function GoldButton({ children, onClick, disabled }: {
       disabled={disabled}
       className="inline-flex items-center gap-3 rounded-full font-body font-semibold cursor-pointer"
       style={{
-        background: 'linear-gradient(135deg, #B07810, #D49820)',
-        color: '#09090A',
+        background: 'linear-gradient(135deg, #8B1010, #C41E1E)',
+        color: '#F0EDED',
         padding: '15px 36px',
         fontSize: '0.875rem',
         letterSpacing: '0.02em',
@@ -354,7 +354,7 @@ export default function QuoteForm() {
   };
 
   const ease = [0.16, 1, 0.3, 1] as const;
-  const GOLD = 'linear-gradient(to right, #B07810, #E8C050)';
+  const CRIMSON = 'linear-gradient(to right, #8B1010, #C41E1E, #D0D0D0)';
 
   return (
     <section id="quote" style={{ background: '#09090A', minHeight: '100svh', position: 'relative', overflow: 'hidden' }}>
@@ -364,7 +364,7 @@ export default function QuoteForm() {
       {phase === 'form' && (
         <motion.div
           className="absolute top-0 left-0 h-[2px] z-20"
-          style={{ background: GOLD }}
+          style={{ background: CRIMSON }}
           animate={{ width: `${progressPct}%` }}
           transition={{ duration: 0.55, ease }}
         />
@@ -381,7 +381,7 @@ export default function QuoteForm() {
 
             <motion.div className="flex items-center gap-4 mb-10"
               initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.6, ease }}>
-              <div className="w-8 h-px" style={{ background: GOLD }} />
+              <div className="w-8 h-px" style={{ background: CRIMSON }} />
               <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.35)' }}>
                 {questions.length} questions · 3 minutes
               </span>
@@ -418,7 +418,7 @@ export default function QuoteForm() {
 
             {/* Ambient glow */}
             <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(196,144,32,0.06) 0%, transparent 70%)' }} />
+              style={{ background: 'radial-gradient(circle, rgba(196,30,30,0.06) 0%, transparent 70%)' }} />
           </motion.div>
         )}
 
@@ -557,11 +557,11 @@ export default function QuoteForm() {
             {/* Animated check */}
             <motion.div
               className="w-16 h-16 rounded-full flex items-center justify-center mb-14"
-              style={{ background: 'linear-gradient(135deg, #B07810, #D49820)' }}
+              style={{ background: 'linear-gradient(135deg, #8B1010, #C41E1E)' }}
               initial={{ scale: 0, rotate: -45 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: 'spring', stiffness: 320, damping: 22, delay: 0.2 }}>
-              <Check size={28} style={{ color: '#09090A' }} />
+              <Check size={28} style={{ color: '#F0EDED' }} />
             </motion.div>
 
             <div className="overflow-hidden">
@@ -590,7 +590,7 @@ export default function QuoteForm() {
 
             {/* Ambient glow */}
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse 50% 40% at 30% 50%, rgba(196,144,32,0.06) 0%, transparent 70%)' }} />
+              style={{ background: 'radial-gradient(ellipse 50% 40% at 30% 50%, rgba(196,30,30,0.06) 0%, transparent 70%)' }} />
           </motion.div>
         )}
       </AnimatePresence>

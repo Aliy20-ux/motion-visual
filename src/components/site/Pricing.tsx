@@ -69,7 +69,7 @@ export default function Pricing() {
 
       {/* Atmospheric glow — centred */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(196,144,32,0.07) 0%, transparent 65%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(196,30,30,0.07) 0%, transparent 65%)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto">
 
@@ -114,7 +114,7 @@ export default function Pricing() {
               key={i}
               className="relative flex flex-col"
               style={{
-                background: tier.highlight ? 'rgba(196,144,32,0.04)' : '#0A0A0B',
+                background: tier.highlight ? 'rgba(196,30,30,0.04)' : '#0A0A0B',
                 padding: `${tier.highlight ? 'clamp(52px,4.5vw,72px)' : 'clamp(36px,4.5vw,56px)'} clamp(24px,3vw,40px) clamp(36px,4.5vw,56px)`,
               }}
               initial={{ opacity: 0, y: 32 }}
@@ -129,7 +129,7 @@ export default function Pricing() {
               {tier.highlight && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <span className="gradient-bg font-body text-[10px] tracking-[0.22em] uppercase rounded-full px-4 py-1.5"
-                    style={{ color: '#09090A' }}>
+                    style={{ color: '#F0EDED' }}>
                     Most Popular
                   </span>
                 </div>
@@ -137,7 +137,7 @@ export default function Pricing() {
 
               {/* Tier name */}
               <p className="font-body text-[10px] tracking-[0.3em] uppercase mb-4"
-                style={{ color: tier.highlight ? 'rgba(196,144,32,0.85)' : 'rgba(237,232,220,0.3)' }}>
+                style={{ color: tier.highlight ? 'rgba(196,30,30,0.85)' : 'rgba(237,232,220,0.3)' }}>
                 {tier.name}
               </p>
 
@@ -179,7 +179,7 @@ export default function Pricing() {
                 className={`inline-flex items-center justify-center gap-2 rounded-full font-body text-xs font-semibold cursor-pointer transition-all hover:opacity-90 hover:scale-[1.02] duration-200 ${tier.highlight ? 'gradient-bg' : ''}`}
                 style={{
                   padding: '14px 28px',
-                  color: tier.highlight ? '#09090A' : 'rgba(237,232,220,0.65)',
+                  color: tier.highlight ? '#F0EDED' : 'rgba(237,232,220,0.65)',
                   border: tier.highlight ? 'none' : '1px solid rgba(237,232,220,0.14)',
                 }}>
                 {tier.cta} <ArrowUpRight size={11} />
