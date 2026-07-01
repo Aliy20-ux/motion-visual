@@ -1,636 +1,381 @@
 'use client';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type QuoteSubmission } from '../../lib/supabase';
-import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 
-/* ── Question definitions ── */
-type QType = 'text' | 'email' | 'tel' | 'choice' | 'textarea';
-interface Question {
-  id: string;
-  q: string;
-  sub: string;
-  type: QType;
-  placeholder?: string;
-  options?: string[];
-  required: boolean;
-}
+const ease = [0.16, 1, 0.3, 1] as const;
 
-const questions: Question[] = [
-  {
-    id: 'project_type',
-    q: "What do you\nneed from us?",
-    sub: "Tell us what you're looking for — we'll tailor everything from here.",
-    type: 'choice',
-    options: ['New Website', 'Redesign', 'E-commerce Store', 'Something Else'],
-    required: true,
-  },
-  {
-    id: 'business_name',
-    q: "What's your\nbusiness called?",
-    sub: "We'll personalise everything around your brand.",
-    type: 'text',
-    placeholder: 'e.g. The Crown Hotel',
-    required: true,
-  },
-  {
-    id: 'contact_name',
-    q: "And your name?",
-    sub: "So we know who we're speaking to.",
-    type: 'text',
-    placeholder: 'First and last name',
-    required: true,
-  },
-  {
-    id: 'email',
-    q: "Best email\nto reach you?",
-    sub: "We'll send your proposal here. No spam, ever.",
-    type: 'email',
-    placeholder: 'you@yourbusiness.com',
-    required: true,
-  },
-  {
-    id: 'phone',
-    q: "Your phone\nnumber?",
-    sub: "We'll use this to arrange your free 20-minute consultation call.",
-    type: 'tel',
-    placeholder: '+44 7700 000 000',
-    required: false,
-  },
-  {
-    id: 'budget',
-    q: "What's your\nbudget?",
-    sub: "This helps us scope the right solution for you.",
-    type: 'choice',
-    options: ['£2,000 – £5,000', '£5,000 – £10,000', '£10,000 – £20,000', '£20,000+'],
-    required: true,
-  },
-  {
-    id: 'timeline',
-    q: "When do you\nneed it?",
-    sub: "We'll work backwards from your deadline.",
-    type: 'choice',
-    options: ['ASAP', '2–4 weeks', '1–2 months', 'No rush'],
-    required: true,
-  },
-  {
-    id: 'notes',
-    q: "Anything else\nto add?",
-    sub: "Goals, inspiration, existing brand — or skip and we'll cover it in our call.",
-    type: 'textarea',
-    placeholder: 'Start typing…',
-    required: false,
-  },
-];
+const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else'] as const;
+const budgets = ['£2,000 – £5,000', '£5,000 – £10,000', '£10,000 – £20,000', '£20,000+'] as const;
 
 type FormData = {
-  business_name: string; contact_name: string; email: string;
-  budget: string; timeline: string; notes: string;
-  phone: string; website: string; project_type: string; extras: string[];
+  name: string;
+  email: string;
+  phone: string;
+  project_type: string;
+  budget: string;
+  notes: string;
 };
 
-const initForm: FormData = {
-  business_name: '', contact_name: '', email: '',
-  budget: '', timeline: '', notes: '',
-  phone: '', website: '', project_type: '', extras: [],
-};
+const initForm: FormData = { name: '', email: '', phone: '', project_type: '', budget: '', notes: '' };
 
-type Phase = 'intro' | 'form' | 'success';
-
-/* ── Gold underline input ── */
-function GoldInput({
-  type = 'text',
-  value,
-  onChange,
-  onKeyDown,
-  placeholder,
-  inputRef,
-  autoFocus,
-}: {
-  type?: string; value: string; onChange: (v: string) => void;
-  onKeyDown: (e: React.KeyboardEvent) => void;
-  placeholder?: string; inputRef: React.RefObject<HTMLInputElement | null>; autoFocus?: boolean;
-}) {
+/* ── Styled text input ── */
+function StyledInput({
+  type = 'text', value, onChange, placeholder,
+}: { type?: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   const [focused, setFocused] = useState(false);
   return (
-    <div className="relative max-w-2xl">
-      <input
-        ref={inputRef as React.RefObject<HTMLInputElement>}
-        type={type}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        onKeyDown={onKeyDown}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        placeholder={placeholder}
-        autoComplete="off"
-        autoFocus={autoFocus}
-        className="w-full bg-transparent outline-none font-display italic pb-5"
-        style={{
-          fontSize: 'clamp(1.8rem,3.8vw,3.2rem)',
-          letterSpacing: '-0.02em',
-          color: '#EDE8DC',
-          borderBottom: '1px solid rgba(237,232,220,0.14)',
-          caretColor: '#C41E1E',
-        }}
-      />
-      {/* Animated gold underline */}
-      <motion.div
-        className="absolute bottom-0 left-0 h-px"
-        style={{ background: 'linear-gradient(to right, #8B1010, #E83838)' }}
-        animate={{ width: focused ? '100%' : '0%' }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      />
-    </div>
-  );
-}
-
-/* ── Gold underline textarea ── */
-function GoldTextarea({
-  value, onChange, placeholder, textareaRef,
-}: {
-  value: string; onChange: (v: string) => void;
-  placeholder?: string; textareaRef: React.RefObject<HTMLTextAreaElement | null>;
-}) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <div className="relative max-w-2xl">
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        placeholder={placeholder}
-        rows={5}
-        className="w-full bg-transparent outline-none resize-none font-body py-3 pb-4"
-        style={{
-          fontSize: 'clamp(1rem,1.4vw,1.25rem)',
-          lineHeight: 1.75,
-          color: '#EDE8DC',
-          borderBottom: '1px solid rgba(237,232,220,0.14)',
-          caretColor: '#C41E1E',
-        }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-0 h-px"
-        style={{ background: 'linear-gradient(to right, #8B1010, #E83838)' }}
-        animate={{ width: focused ? '100%' : '0%' }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      />
-    </div>
-  );
-}
-
-/* ── Choice card ── */
-function ChoiceCard({
-  label, keyHint, selected, onClick,
-}: { label: string; keyHint: string; selected: boolean; onClick: () => void }) {
-  return (
-    <motion.button
-      onClick={onClick}
-      className="relative text-left rounded-2xl cursor-pointer"
+    <input
+      type={type}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      placeholder={placeholder}
+      className="w-full bg-transparent font-body text-sm outline-none"
       style={{
-        padding: 'clamp(20px,2.5vw,32px) clamp(20px,2.5vw,32px)',
-        background: selected ? 'rgba(196,30,30,0.1)' : 'rgba(237,232,220,0.03)',
-        border: selected
-          ? '1px solid rgba(196,30,30,0.5)'
-          : '1px solid rgba(237,232,220,0.09)',
-      }}
-      whileHover={{ scale: 1.02, background: 'rgba(237,232,220,0.055)' }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {/* Key hint */}
-      <span className="absolute top-4 right-5 font-body text-[10px] tracking-widest"
-        style={{ color: selected ? 'rgba(196,30,30,0.8)' : 'rgba(237,232,220,0.2)' }}>
-        {keyHint}
-      </span>
-
-      {/* Label */}
-      <p className="font-display italic pr-8"
-        style={{
-          fontSize: 'clamp(1.2rem,2vw,1.75rem)',
-          letterSpacing: '-0.02em',
-          lineHeight: 1.1,
-          color: selected ? '#EDE8DC' : 'rgba(237,232,220,0.6)',
-        }}>
-        {label}
-      </p>
-
-      {/* Selected check */}
-      {selected && (
-        <motion.div
-          className="absolute top-4 left-5"
-          initial={{ scale: 0 }} animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-          <Check size={13} style={{ color: '#C41E1E' }} />
-        </motion.div>
-      )}
-    </motion.button>
-  );
-}
-
-/* ── Gold CTA button ── */
-function GoldButton({ children, onClick, disabled }: {
-  children: React.ReactNode; onClick?: () => void; disabled?: boolean;
-}) {
-  return (
-    <motion.button
-      onClick={onClick}
-      disabled={disabled}
-      className="inline-flex items-center gap-3 rounded-full font-body font-semibold cursor-pointer"
-      style={{
-        background: 'linear-gradient(135deg, #8B1010, #C41E1E)',
-        color: '#F0EDED',
-        padding: '15px 36px',
+        color: '#EDE8DC',
+        padding: '13px 16px',
+        borderRadius: 10,
+        border: focused ? '1px solid rgba(196,30,30,0.55)' : '1px solid rgba(237,232,220,0.1)',
+        background: focused ? 'rgba(196,30,30,0.04)' : 'rgba(237,232,220,0.03)',
+        transition: 'border-color 0.22s, background 0.22s',
         fontSize: '0.875rem',
-        letterSpacing: '0.02em',
-        opacity: disabled ? 0.6 : 1,
       }}
-      whileHover={disabled ? {} : { scale: 1.04, filter: 'brightness(1.08)' }}
-      whileTap={disabled ? {} : { scale: 0.97 }}
-      transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}>
+    />
+  );
+}
+
+/* ── Styled textarea ── */
+function StyledTextarea({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <textarea
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      placeholder="Goals, inspiration, existing brand — or leave blank and we'll cover it on the call."
+      rows={3}
+      className="w-full bg-transparent font-body text-sm outline-none resize-none"
+      style={{
+        color: '#EDE8DC',
+        padding: '13px 16px',
+        borderRadius: 10,
+        border: focused ? '1px solid rgba(196,30,30,0.55)' : '1px solid rgba(237,232,220,0.1)',
+        background: focused ? 'rgba(196,30,30,0.04)' : 'rgba(237,232,220,0.03)',
+        lineHeight: 1.75,
+        transition: 'border-color 0.22s, background 0.22s',
+        fontSize: '0.875rem',
+      }}
+    />
+  );
+}
+
+/* ── Field wrapper ── */
+function Field({ label, error, optional, children }: {
+  label: string; error?: string; optional?: boolean; children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-2">
+        <label className="font-body text-[10px] tracking-[0.24em] uppercase"
+          style={{ color: error ? '#F87171' : 'rgba(237,232,220,0.38)' }}>
+          {label}
+        </label>
+        {optional && (
+          <span className="font-body text-[9px] tracking-[0.15em] uppercase"
+            style={{ color: 'rgba(237,232,220,0.18)' }}>Optional</span>
+        )}
+      </div>
       {children}
-    </motion.button>
+      {error && (
+        <p className="font-body text-[10px] mt-1.5" style={{ color: '#F87171' }}>{error}</p>
+      )}
+    </div>
+  );
+}
+
+/* ── Choice chips ── */
+function ChipGroup({ label, options, value, onChange, error, optional }: {
+  label: string; options: readonly string[];
+  value: string; onChange: (v: string) => void; error?: string; optional?: boolean;
+}) {
+  return (
+    <Field label={label} error={error} optional={optional}>
+      <div className="flex flex-wrap gap-2 pt-0.5">
+        {options.map(opt => (
+          <button
+            key={opt}
+            type="button"
+            onClick={() => onChange(value === opt ? '' : opt)}
+            className="font-body text-xs rounded-full cursor-pointer"
+            style={{
+              padding: '9px 18px',
+              background: value === opt ? 'rgba(196,30,30,0.14)' : 'rgba(237,232,220,0.04)',
+              border: value === opt ? '1px solid rgba(196,30,30,0.5)' : '1px solid rgba(237,232,220,0.1)',
+              color: value === opt ? '#EDE8DC' : 'rgba(237,232,220,0.45)',
+              transition: 'all 0.18s',
+            }}>
+            {opt}
+          </button>
+        ))}
+      </div>
+    </Field>
   );
 }
 
 /* ── Main component ── */
 export default function QuoteForm() {
-  const [phase, setPhase] = useState<Phase>('intro');
-  const [qIdx, setQIdx] = useState(0);
-  const [dir, setDir] = useState(1);
   const [form, setForm] = useState<FormData>(initForm);
-  const [error, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  const q = questions[qIdx];
-  const isLast = qIdx === questions.length - 1;
-  const progressPct = ((qIdx + 1) / questions.length) * 100;
-
-  /* Auto-focus input on question change */
-  useEffect(() => {
-    if (phase !== 'form') return;
-    const t = setTimeout(() => {
-      if (q.type === 'textarea') textareaRef.current?.focus();
-      else inputRef.current?.focus();
-    }, 480);
-    return () => clearTimeout(t);
-  }, [qIdx, phase, q.type]);
-
-  /* Keyboard shortcuts for choice questions */
-  useEffect(() => {
-    if (phase !== 'form' || q.type !== 'choice') return;
-    const map: Record<string, number> = { a: 0, b: 1, c: 2, d: 3 };
-    const handler = (e: KeyboardEvent) => {
-      const i = map[e.key.toLowerCase()];
-      if (i !== undefined && q.options && i < q.options.length) {
-        selectChoice(q.options[i]);
-      }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [phase, qIdx, q.type]);
-
-  const getValue = () => (form as Record<string, unknown>)[q.id] as string;
-  const setValue = (val: string) => {
-    setForm(f => ({ ...f, [q.id]: val }));
-    setError('');
+  const set = (k: keyof FormData, v: string) => {
+    setForm(f => ({ ...f, [k]: v }));
+    setErrors(e => ({ ...e, [k]: undefined }));
   };
 
-  const validate = useCallback((): boolean => {
-    const val = getValue();
-    if (q.required && !String(val).trim()) {
-      setError('This field is required.');
-      return false;
-    }
-    if (q.id === 'email' && val && !/\S+@\S+\.\S+/.test(String(val))) {
-      setError('Please enter a valid email address.');
-      return false;
-    }
-    return true;
-  }, [q, form]);
+  const validate = (): boolean => {
+    const e: Partial<Record<keyof FormData, string>> = {};
+    if (!form.name.trim()) e.name = 'Please enter your name.';
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Please enter a valid email.';
+    if (!form.project_type) e.project_type = 'Please select one.';
+    if (!form.budget) e.budget = 'Please select one.';
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 
-  const advance = useCallback(async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!validate()) return;
-    setError('');
-    if (!isLast) {
-      setDir(1);
-      setQIdx(i => i + 1);
-    } else {
-      setLoading(true);
-      try {
-        const payload: QuoteSubmission = { ...form, status: 'new' };
-        const { error: err } = await supabase.from('quote_submissions').insert([payload]);
-        if (err) throw err;
-        setPhase('success');
-      } catch {
-        setError('Something went wrong. Please email hello@motionvisual.co.uk');
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, [validate, isLast, form]);
-
-  const goBack = () => {
-    if (qIdx > 0) { setDir(-1); setQIdx(i => i - 1); setError(''); }
-    else setPhase('intro');
-  };
-
-  const skip = () => {
-    if (!q.required) {
-      setError('');
-      if (!isLast) { setDir(1); setQIdx(i => i + 1); }
-      else advance();
+    setLoading(true);
+    try {
+      const payload: QuoteSubmission = {
+        business_name: form.name,
+        contact_name: form.name,
+        email: form.email,
+        phone: form.phone,
+        project_type: form.project_type,
+        budget: form.budget,
+        timeline: '',
+        notes: form.notes,
+        extras: [],
+        status: 'new',
+      };
+      const { error: err } = await supabase.from('quote_submissions').insert([payload]);
+      if (err) throw err;
+      setSubmitted(true);
+    } catch {
+      setErrors({ email: 'Something went wrong. Email us at hello@motionvisual.co.uk' });
+    } finally {
+      setLoading(false);
     }
   };
-
-  const selectChoice = (opt: string) => {
-    setForm(f => ({ ...f, [q.id]: opt }));
-    setError('');
-    setTimeout(() => {
-      if (!isLast) { setDir(1); setQIdx(i => i + 1); }
-      else advance();
-    }, 300);
-  };
-
-  const handleKey = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && q.type !== 'textarea') { e.preventDefault(); advance(); }
-  };
-
-  /* Slide variants */
-  const variants = {
-    enter: (d: number) => ({ y: d > 0 ? 64 : -64, opacity: 0 }),
-    center: { y: 0, opacity: 1 },
-    exit: (d: number) => ({ y: d > 0 ? -64 : 64, opacity: 0 }),
-  };
-
-  const ease = [0.16, 1, 0.3, 1] as const;
-  const CRIMSON = 'linear-gradient(to right, #8B1010, #C41E1E, #D0D0D0)';
 
   return (
-    <section id="quote" style={{ background: '#09090A', minHeight: '100svh', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
+    <section
+      id="quote"
+      className="relative overflow-hidden"
+      style={{ background: '#09090A', padding: 'clamp(100px,12vw,160px) clamp(24px,5vw,88px)' }}
+    >
+      {/* Top rule */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
-      {/* ── Gold progress bar ── */}
-      {phase === 'form' && (
-        <motion.div
-          className="absolute top-0 left-0 h-[2px] z-20"
-          style={{ background: CRIMSON }}
-          animate={{ width: `${progressPct}%` }}
-          transition={{ duration: 0.55, ease }}
-        />
-      )}
+      {/* Atmospheric glow */}
+      <div className="absolute bottom-0 right-0 w-[700px] h-[600px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle at 100% 100%, rgba(196,30,30,0.07) 0%, transparent 65%)' }} />
 
-      {/* ── INTRO ── */}
-      <AnimatePresence mode="wait">
-        {phase === 'intro' && (
-          <motion.div key="intro"
-            className="flex flex-col justify-center"
-            style={{ minHeight: '100svh', padding: 'clamp(80px,10vw,140px) clamp(24px,7vw,120px)' }}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -32 }}
-            transition={{ duration: 0.55 }}>
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <AnimatePresence mode="wait">
 
-            <motion.div className="flex items-center gap-4 mb-10"
-              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.6, ease }}>
-              <div className="w-8 h-px" style={{ background: CRIMSON }} />
-              <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.35)' }}>
-                Free Enquiry · {questions.length} questions · 3 minutes
-              </span>
-            </motion.div>
+          {/* ── Success ── */}
+          {submitted ? (
+            <motion.div key="success"
+              className="flex flex-col items-center justify-center py-24 text-center"
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
 
-            <div className="overflow-hidden">
-              <motion.h2 className="font-display italic"
-                style={{ fontSize: 'clamp(2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                initial={{ y: '108%' }} animate={{ y: 0 }}
-                transition={{ duration: 1.0, ease, delay: 0.2 }}>
-                Let's talk
-              </motion.h2>
-            </div>
-            <div className="overflow-hidden mb-12">
-              <motion.h2 className="font-display italic gradient-text"
-                style={{ fontSize: 'clamp(2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em' }}
-                initial={{ y: '108%' }} animate={{ y: 0 }}
-                transition={{ duration: 1.0, ease, delay: 0.32 }}>
-                about your site.
-              </motion.h2>
-            </div>
-
-            <motion.p className="font-body font-light text-sm leading-relaxed mb-6 max-w-sm"
-              style={{ color: 'rgba(237,232,220,0.42)' }}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.7 }}>
-              Fill in your details — including your number so we can call you — and we'll come back with a personalised proposal within 24 hours. No obligation, no sales pressure.
-            </motion.p>
-
-            {/* Trust row */}
-            <motion.div className="flex items-center gap-6 mb-12 flex-wrap"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.72, duration: 0.6 }}>
-              {[
-                { stat: '24h', label: 'proposal turnaround' },
-                { stat: '£0', label: 'consultation fee' },
-                { stat: '28+', label: 'sites delivered' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-baseline gap-2">
-                  <span className="font-display italic gradient-text" style={{ fontSize: '1.15rem', letterSpacing: '-0.02em' }}>
-                    {item.stat}
-                  </span>
-                  <span className="font-body text-[10px] tracking-[0.14em] uppercase" style={{ color: 'rgba(237,232,220,0.25)' }}>
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.82, duration: 0.6 }}>
-              <GoldButton onClick={() => setPhase('form')}>
-                Start Enquiry <ArrowRight size={16} />
-              </GoldButton>
-            </motion.div>
-
-            {/* Ambient glow */}
-            <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(196,30,30,0.07) 0%, transparent 70%)' }} />
-          </motion.div>
-        )}
-
-        {/* ── QUESTIONS ── */}
-        {phase === 'form' && (
-          <motion.div key="form"
-            className="flex flex-col"
-            style={{ minHeight: '100svh', padding: 'clamp(80px,10vw,120px) clamp(24px,7vw,120px)' }}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}>
-
-            <AnimatePresence mode="wait" custom={dir}>
               <motion.div
-                key={qIdx}
-                custom={dir}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.52, ease }}
-                className="flex flex-col justify-center flex-1 max-w-4xl">
+                className="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-10"
+                initial={{ scale: 0 }} animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 320, damping: 22, delay: 0.2 }}>
+                <Check size={26} style={{ color: '#F0EDED' }} />
+              </motion.div>
 
-                {/* Counter + back */}
-                <div className="flex items-center gap-6 mb-10">
-                  <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(237,232,220,0.28)' }}>
-                    {String(qIdx + 1).padStart(2, '0')} / {String(questions.length).padStart(2, '0')}
+              <h2 className="font-display italic mb-4"
+                style={{ fontSize: 'clamp(2.5rem,6vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}>
+                We'll be in touch.
+              </h2>
+              <p className="font-body font-light text-sm mt-4"
+                style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '38ch', lineHeight: 1.7 }}>
+                Thanks {form.name.split(' ')[0] || 'there'}. One of our founders will reach out at{' '}
+                <span style={{ color: '#EDE8DC' }}>{form.email}</span> within 24 hours.
+              </p>
+            </motion.div>
+          ) : (
+
+            /* ── Two-column layout ── */
+            <motion.div key="form"
+              className="grid grid-cols-1 lg:grid-cols-[1fr_1.55fr] gap-16 xl:gap-28 items-start"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}>
+
+              {/* ── LEFT: Headline + trust ── */}
+              <div className="lg:sticky lg:top-28">
+                <motion.div className="flex items-center gap-4 mb-8"
+                  initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }} transition={{ duration: 0.6 }}>
+                  <div className="w-8 h-px gradient-bg" />
+                  <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+                    style={{ color: 'rgba(237,232,220,0.35)' }}>
+                    Free Enquiry
                   </span>
-                  <button onClick={goBack}
-                    className="inline-flex items-center gap-1.5 font-body text-[10px] tracking-[0.2em] uppercase transition-opacity hover:opacity-80 cursor-pointer"
-                    style={{ color: 'rgba(237,232,220,0.28)' }}>
-                    <ArrowLeft size={10} /> Back
-                  </button>
+                </motion.div>
+
+                <div className="overflow-hidden mb-1">
+                  <motion.h2 className="font-display italic"
+                    style={{ fontSize: 'clamp(2.2rem,4.8vw,6.5rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+                    initial={{ y: '108%' }} whileInView={{ y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.85, ease }}>
+                    Start your
+                  </motion.h2>
+                </div>
+                <div className="overflow-hidden mb-8">
+                  <motion.h2 className="font-display italic gradient-text"
+                    style={{ fontSize: 'clamp(2.2rem,4.8vw,6.5rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}
+                    initial={{ y: '108%' }} whileInView={{ y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.85, ease, delay: 0.1 }}>
+                    project.
+                  </motion.h2>
                 </div>
 
-                {/* Question headline */}
-                <h2 className="font-display italic mb-4"
+                <motion.p
+                  className="font-body font-light text-sm leading-relaxed mb-12"
+                  style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '36ch' }}
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.25 }}>
+                  Fill in the form with your details — including your number so we can call you — and we'll come back with a personalised proposal within 24 hours. No obligation, no pressure.
+                </motion.p>
+
+                {/* Trust stats */}
+                <motion.div
+                  className="flex flex-col"
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.35 }}>
+                  {[
+                    { stat: '24h', label: 'Proposal turnaround' },
+                    { stat: '£0', label: 'Consultation fee' },
+                    { stat: '28+', label: 'Sites delivered' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-5 py-5"
+                      style={{ borderTop: '1px solid rgba(237,232,220,0.07)' }}>
+                      <span className="font-display italic gradient-text"
+                        style={{ fontSize: '1.5rem', letterSpacing: '-0.02em', minWidth: '3.8rem' }}>
+                        {item.stat}
+                      </span>
+                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.32)' }}>
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
+                  <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
+                </motion.div>
+              </div>
+
+              {/* ── RIGHT: Form card ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.8, ease, delay: 0.15 }}>
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="rounded-3xl"
                   style={{
-                    fontSize: 'clamp(2.6rem,5.5vw,8rem)',
-                    lineHeight: 0.92,
-                    letterSpacing: '-0.025em',
-                    color: '#EDE8DC',
-                    whiteSpace: 'pre-line',
+                    background: 'rgba(237,232,220,0.025)',
+                    border: '1px solid rgba(237,232,220,0.09)',
+                    padding: 'clamp(28px,4vw,52px)',
                   }}>
-                  {q.q}
-                </h2>
 
-                {/* Sub */}
-                <p className="font-body text-sm mb-10" style={{ color: 'rgba(237,232,220,0.38)', lineHeight: 1.6 }}>
-                  {q.sub}
-                </p>
-
-                {/* ── Text / Email / Tel ── */}
-                {(q.type === 'text' || q.type === 'email' || q.type === 'tel') && (
-                  <GoldInput
-                    type={q.type}
-                    value={getValue()}
-                    onChange={setValue}
-                    onKeyDown={handleKey}
-                    placeholder={q.placeholder}
-                    inputRef={inputRef}
-                    autoFocus
-                  />
-                )}
-
-                {/* ── Textarea ── */}
-                {q.type === 'textarea' && (
-                  <GoldTextarea
-                    value={getValue()}
-                    onChange={setValue}
-                    placeholder={q.placeholder}
-                    textareaRef={textareaRef}
-                  />
-                )}
-
-                {/* ── Choices ── */}
-                {q.type === 'choice' && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
-                    {q.options?.map((opt, oi) => (
-                      <ChoiceCard
-                        key={opt}
-                        label={opt}
-                        keyHint={['A', 'B', 'C', 'D'][oi]}
-                        selected={getValue() === opt}
-                        onClick={() => selectChoice(opt)}
-                      />
-                    ))}
+                  {/* Name + Phone */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <Field label="Your name" error={errors.name}>
+                      <StyledInput value={form.name} onChange={v => set('name', v)} placeholder="James Miller" />
+                    </Field>
+                    <Field label="Phone number" optional>
+                      <StyledInput type="tel" value={form.phone} onChange={v => set('phone', v)} placeholder="+44 7700 000 000" />
+                    </Field>
                   </div>
-                )}
 
-                {/* Error */}
-                <AnimatePresence>
-                  {error && (
-                    <motion.p className="font-body text-xs mt-5"
-                      style={{ color: '#F87171' }}
-                      initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                      {error}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-
-                {/* Navigation (text/textarea questions only; choices auto-advance) */}
-                {q.type !== 'choice' && (
-                  <div className="flex items-center gap-6 mt-12 flex-wrap">
-                    <GoldButton onClick={advance} disabled={loading}>
-                      {loading ? 'Sending…' : isLast ? 'Send Brief' : 'Next'}
-                      {!loading && <ArrowRight size={15} />}
-                    </GoldButton>
-
-                    {!q.required && (
-                      <button onClick={skip}
-                        className="font-body text-xs cursor-pointer transition-opacity hover:opacity-80"
-                        style={{ color: 'rgba(237,232,220,0.3)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-                        Skip this →
-                      </button>
-                    )}
-
-                    <span className="font-body text-[10px] tracking-[0.18em] uppercase hidden md:block"
-                      style={{ color: 'rgba(237,232,220,0.18)' }}>
-                      {isLast ? 'Enter ↵ to submit' : 'Enter ↵ to continue'}
-                    </span>
+                  {/* Email */}
+                  <div className="mb-6">
+                    <Field label="Email address" error={errors.email}>
+                      <StyledInput type="email" value={form.email} onChange={v => set('email', v)} placeholder="you@yourbusiness.com" />
+                    </Field>
                   </div>
-                )}
+
+                  {/* What do you need */}
+                  <div className="mb-6">
+                    <ChipGroup
+                      label="What do you need?"
+                      options={projectTypes}
+                      value={form.project_type}
+                      onChange={v => set('project_type', v)}
+                      error={errors.project_type}
+                    />
+                  </div>
+
+                  {/* Budget */}
+                  <div className="mb-6">
+                    <ChipGroup
+                      label="Budget range"
+                      options={budgets}
+                      value={form.budget}
+                      onChange={v => set('budget', v)}
+                      error={errors.budget}
+                    />
+                  </div>
+
+                  {/* Notes */}
+                  <div className="mb-8">
+                    <Field label="Anything to add" optional>
+                      <StyledTextarea value={form.notes} onChange={v => set('notes', v)} />
+                    </Field>
+                  </div>
+
+                  {/* Submit */}
+                  <motion.button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full flex items-center justify-center gap-3 font-body font-semibold cursor-pointer"
+                    style={{
+                      background: 'linear-gradient(135deg, #8B1010, #C41E1E)',
+                      color: '#F0EDED',
+                      padding: '17px 32px',
+                      fontSize: '0.875rem',
+                      letterSpacing: '0.04em',
+                      borderRadius: 12,
+                      border: 'none',
+                      opacity: loading ? 0.7 : 1,
+                    }}
+                    whileHover={loading ? {} : { filter: 'brightness(1.1)', scale: 1.01 }}
+                    whileTap={loading ? {} : { scale: 0.98 }}>
+                    {loading ? 'Sending…' : 'Send Enquiry'}
+                    {!loading && <ArrowRight size={16} />}
+                  </motion.button>
+
+                  <p className="text-center font-body text-[10px] tracking-[0.15em] uppercase mt-5"
+                    style={{ color: 'rgba(237,232,220,0.18)' }}>
+                    Free consultation · No obligation · Reply within 24h
+                  </p>
+                </form>
               </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        )}
-
-        {/* ── SUCCESS ── */}
-        {phase === 'success' && (
-          <motion.div key="success"
-            className="flex flex-col justify-center"
-            style={{ minHeight: '100svh', padding: 'clamp(80px,10vw,140px) clamp(24px,7vw,120px)' }}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}>
-
-            {/* Animated check */}
-            <motion.div
-              className="w-16 h-16 rounded-full flex items-center justify-center mb-14"
-              style={{ background: 'linear-gradient(135deg, #8B1010, #C41E1E)' }}
-              initial={{ scale: 0, rotate: -45 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 320, damping: 22, delay: 0.2 }}>
-              <Check size={28} style={{ color: '#F0EDED' }} />
             </motion.div>
-
-            <div className="overflow-hidden">
-              <motion.h2 className="font-display italic"
-                style={{ fontSize: 'clamp(3rem,7.5vw,10rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                initial={{ y: '108%' }} animate={{ y: 0 }}
-                transition={{ duration: 0.9, ease, delay: 0.3 }}>
-                We'll be
-              </motion.h2>
-            </div>
-            <div className="overflow-hidden mb-12">
-              <motion.h2 className="font-display italic gradient-text"
-                style={{ fontSize: 'clamp(3rem,7.5vw,10rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}
-                initial={{ y: '108%' }} animate={{ y: 0 }}
-                transition={{ duration: 0.9, ease, delay: 0.42 }}>
-                in touch.
-              </motion.h2>
-            </div>
-
-            <motion.p className="font-body font-light text-sm leading-relaxed max-w-sm"
-              style={{ color: 'rgba(237,232,220,0.42)' }}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85, duration: 0.7 }}>
-              Thanks {form.contact_name.split(' ')[0] || 'there'}. One of our founders will reach out at{' '}
-              <span style={{ color: '#EDE8DC' }}>{form.email}</span> within 24 hours.
-            </motion.p>
-
-            {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse 50% 40% at 30% 50%, rgba(196,30,30,0.06) 0%, transparent 70%)' }} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 }

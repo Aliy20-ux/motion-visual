@@ -25,13 +25,13 @@ export default function Manifesto() {
           backgroundImage: 'url(/manifesto-texture.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.09,
+          opacity: 0.18,
           y: useTransform(scrollYProgress, [0, 1], ['-4%', '4%']),
         }}
       />
       {/* Vignette — keeps text crisp */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 20%, #09090A 80%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 35%, #09090A 88%)' }} />
 
       {/* Atmospheric glow */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] pointer-events-none"
