@@ -89,7 +89,7 @@ export default function Pricing() {
           <motion.div className="overflow-hidden"
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <motion.h2 className="font-display italic"
-              style={{ fontSize: 'clamp(2.8rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+              style={{ fontSize: 'clamp(1.6rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
               variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.95, ease } } }}>
               Clear pricing.<br />
               <span className="gradient-text">No surprises.</span>
@@ -115,7 +115,7 @@ export default function Pricing() {
               className="relative flex flex-col"
               style={{
                 background: tier.highlight ? 'rgba(196,144,32,0.04)' : '#0A0A0B',
-                padding: 'clamp(36px,4.5vw,56px) clamp(24px,3vw,40px)',
+                padding: `${tier.highlight ? 'clamp(52px,4.5vw,72px)' : 'clamp(36px,4.5vw,56px)'} clamp(24px,3vw,40px) clamp(36px,4.5vw,56px)`,
               }}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}

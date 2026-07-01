@@ -113,7 +113,7 @@ export default function Hero() {
             <div key={i} className="overflow-hidden">
               <motion.span
                 className="block font-display italic"
-                style={{ fontSize: 'clamp(3.6rem,10.5vw,13rem)', lineHeight: 0.9, letterSpacing: '-0.028em' }}
+                style={{ fontSize: 'clamp(2rem,10.5vw,13rem)', lineHeight: 0.9, letterSpacing: '-0.028em' }}
                 initial={{ y: '110%' }} animate={{ y: 0 }}
                 transition={{ duration: 1.1, ease, delay: 1.3 + i * 0.12 }}>
                 <span className={i === 2 ? 'gradient-text' : ''} style={i === 2 ? {} : { color: '#EDE8DC' }}>

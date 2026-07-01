@@ -64,7 +64,7 @@ export default function Process() {
             <motion.div className="overflow-hidden"
               initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
               <motion.h2 className="font-display italic"
-                style={{ fontSize: 'clamp(2.8rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+                style={{ fontSize: 'clamp(1.6rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
                 variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.95, ease } } }}>
                 Live in 14 days.<br />
                 <span className="gradient-text">No exceptions.</span>

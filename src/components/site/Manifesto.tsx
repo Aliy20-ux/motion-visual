@@ -93,7 +93,7 @@ export default function Manifesto() {
             <motion.p
               className={i === 2 ? 'font-display italic gradient-text' : 'font-display italic'}
               style={{
-                fontSize: 'clamp(3.2rem,8.5vw,11.5rem)',
+                fontSize: 'clamp(1.8rem,8.5vw,11.5rem)',
                 lineHeight: 0.9,
                 letterSpacing: '-0.028em',
                 color: i === 2 ? undefined : '#EDE8DC',

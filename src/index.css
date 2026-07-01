@@ -83,6 +83,10 @@ body::before {
 ::-webkit-scrollbar-track { background: #09090A; }
 ::-webkit-scrollbar-thumb { background: rgba(196,144,32,0.35); border-radius: 2px; }
 
+/* Hide scrollbar on horizontal scroll tracks (SelectedWork) */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 :focus-visible { outline: 2px solid #C49020; outline-offset: 3px; }
 
 /* Form input placeholders */

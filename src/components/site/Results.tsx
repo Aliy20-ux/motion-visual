@@ -113,7 +113,7 @@ export default function Results() {
               initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
               <motion.h2
                 className="font-display italic"
-                style={{ fontSize: 'clamp(2.5rem,6vw,7rem)', lineHeight: 0.92, letterSpacing: '-0.02em', color: '#F4F1EC' }}
+                style={{ fontSize: 'clamp(1.6rem,6vw,7rem)', lineHeight: 0.92, letterSpacing: '-0.02em', color: '#F4F1EC' }}
                 variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.9, ease } } }}
               >
                 Results that<br />

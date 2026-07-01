@@ -92,11 +92,10 @@ export default function SelectedWork() {
       {/* Horizontal drag-scroll track */}
       <div
         ref={trackRef}
-        className="flex gap-5 overflow-x-auto"
+        className="flex gap-5 overflow-x-auto no-scrollbar"
         style={{
           padding: '40px clamp(20px,5vw,80px)',
           scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
           WebkitOverflowScrolling: 'touch',
           cursor: 'grab',
         }}
@@ -144,15 +143,20 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       whileHover={{ scale: 1.02, y: -6 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Real screenshot */}
+      {/* Real screenshot — 1440×1920 portrait capture, shown from top */}
       <img
         src={project.screenshot}
         alt={project.name}
         draggable={false}
         className="absolute inset-0 w-full h-full select-none"
-        style={{ objectFit: 'cover', objectPosition: 'top center', transition: 'transform 0.6s ease', userSelect: 'none' }}
-        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
-        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'top center',
+          transition: 'transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          userSelect: 'none',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1) translateY(-8%)')}
+        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1) translateY(0%)')}
       />
 
       {/* Gradient scrim — always present so text is readable */}

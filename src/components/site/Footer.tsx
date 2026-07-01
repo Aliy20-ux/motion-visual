@@ -45,7 +45,7 @@ export default function Footer() {
               <motion.div className="overflow-hidden"
                 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <motion.h2 className="font-display italic"
-                  style={{ fontSize: 'clamp(3.5rem,9vw,12rem)', lineHeight: 0.88, letterSpacing: '-0.028em', color: '#EDE8DC' }}
+                  style={{ fontSize: 'clamp(2rem,9vw,12rem)', lineHeight: 0.88, letterSpacing: '-0.028em', color: '#EDE8DC' }}
                   variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 1.0, ease } } }}>
                   Let's build
                 </motion.h2>
@@ -53,7 +53,7 @@ export default function Footer() {
               <motion.div className="overflow-hidden"
                 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <motion.h2 className="font-display italic"
-                  style={{ fontSize: 'clamp(3.5rem,9vw,12rem)', lineHeight: 0.88, letterSpacing: '-0.028em', color: '#EDE8DC' }}
+                  style={{ fontSize: 'clamp(2rem,9vw,12rem)', lineHeight: 0.88, letterSpacing: '-0.028em', color: '#EDE8DC' }}
                   variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 1.0, ease, delay: 0.1 } } }}>
                   something
                 </motion.h2>

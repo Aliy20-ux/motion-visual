@@ -389,7 +389,7 @@ export default function QuoteForm() {
 
             <div className="overflow-hidden">
               <motion.h2 className="font-display italic"
-                style={{ fontSize: 'clamp(3.2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+                style={{ fontSize: 'clamp(2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em', color: '#EDE8DC' }}
                 initial={{ y: '108%' }} animate={{ y: 0 }}
                 transition={{ duration: 1.0, ease, delay: 0.2 }}>
                 Start something
@@ -397,7 +397,7 @@ export default function QuoteForm() {
             </div>
             <div className="overflow-hidden mb-12">
               <motion.h2 className="font-display italic gradient-text"
-                style={{ fontSize: 'clamp(3.2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em' }}
+                style={{ fontSize: 'clamp(2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em' }}
                 initial={{ y: '108%' }} animate={{ y: 0 }}
                 transition={{ duration: 1.0, ease, delay: 0.32 }}>
                 remarkable.
