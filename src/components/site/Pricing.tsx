@@ -1,15 +1,31 @@
 'use client';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import NumberFlow from '@number-flow/react';
+import confetti from 'canvas-confetti';
+import { Check, Star } from 'lucide-react';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const tiers = [
+/* ── Pricing data ── */
+interface PricingTier {
+  name: string;
+  projectPrice: number;
+  retainerPrice: number;
+  tagline: string;
+  description: string;
+  features: string[];
+  cta: string;
+  isPopular: boolean;
+}
+
+const tiers: PricingTier[] = [
   {
     name: 'Essential',
-    from: '£3,995',
+    projectPrice: 3995,
+    retainerPrice: 895,
     tagline: 'A serious site for a serious business.',
-    ideal: 'Ideal for local businesses, sole traders, and new brands ready to compete online.',
+    description: 'Perfect for local businesses and new brands ready to compete online.',
     features: [
       'Up to 5 pages — fully custom',
       'No templates, no shortcuts',
@@ -19,13 +35,14 @@ const tiers = [
       '14-day delivery guarantee',
     ],
     cta: 'Start Essential',
-    highlight: false,
+    isPopular: false,
   },
   {
     name: 'Signature',
-    from: '£7,500',
+    projectPrice: 7500,
+    retainerPrice: 1795,
     tagline: 'The full Motion Visual experience.',
-    ideal: 'Ideal for hospitality, service brands, and businesses ready to convert at a higher rate.',
+    description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
     features: [
       'Up to 12 pages — fully bespoke',
       'Cinematic animations & scroll reveals',
@@ -36,28 +53,118 @@ const tiers = [
       '14-day delivery guarantee',
     ],
     cta: 'Start Signature',
-    highlight: true,
+    isPopular: true,
   },
   {
     name: 'Flagship',
-    from: '£16,000',
+    projectPrice: 16000,
+    retainerPrice: 3595,
     tagline: 'When you need to own your market.',
-    ideal: 'Ideal for premium brands, multi-location businesses, and high-traffic e-commerce.',
+    description: 'For premium brands, multi-location businesses, and high-traffic e-commerce.',
     features: [
       'Unlimited pages — no scope ceiling',
       'Custom 3D / WebGL hero experience',
       'Full e-commerce or ordering system',
-      'Performance engineering to Core Web Vitals A+',
+      'Performance to Core Web Vitals A+',
       'Cloudflare Enterprise delivery',
       'Dedicated project lead — direct access',
       '21–28 day delivery / phased if needed',
     ],
     cta: 'Start Flagship',
-    highlight: false,
+    isPopular: false,
   },
 ];
 
+/* ── Animated toggle ── */
+function BillingToggle({
+  isProject,
+  onChange,
+  switchRef,
+}: {
+  isProject: boolean;
+  onChange: (v: boolean) => void;
+  switchRef: React.RefObject<HTMLButtonElement | null>;
+}) {
+  return (
+    <div className="flex items-center justify-center gap-4">
+      <span
+        className="font-body text-xs tracking-wide cursor-pointer select-none"
+        style={{ color: isProject ? '#EDE8DC' : 'rgba(237,232,220,0.35)' }}
+        onClick={() => onChange(true)}>
+        One-off project
+      </span>
+
+      {/* Track */}
+      <button
+        ref={switchRef}
+        type="button"
+        role="switch"
+        aria-checked={!isProject}
+        onClick={() => onChange(!isProject)}
+        className="relative cursor-pointer"
+        style={{
+          width: 44, height: 24, borderRadius: 12,
+          background: isProject ? 'rgba(237,232,220,0.12)' : 'linear-gradient(135deg,#8B1010,#C41E1E)',
+          border: 'none',
+          flexShrink: 0,
+          transition: 'background 0.35s',
+        }}>
+        <motion.div
+          style={{
+            position: 'absolute', top: 2, width: 20, height: 20,
+            borderRadius: '50%', background: '#F0EDED',
+          }}
+          animate={{ left: isProject ? 2 : 22 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+        />
+      </button>
+
+      <span
+        className="font-body text-xs tracking-wide cursor-pointer select-none"
+        style={{ color: !isProject ? '#EDE8DC' : 'rgba(237,232,220,0.35)' }}
+        onClick={() => onChange(false)}>
+        Monthly retainer{' '}
+        <span style={{ color: '#C41E1E' }}>Save 30%</span>
+      </span>
+    </div>
+  );
+}
+
+/* ── Main component ── */
 export default function Pricing() {
+  const [isProject, setIsProject] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const switchRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(mq.matches);
+    const handler = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  const handleToggle = (toProject: boolean) => {
+    setIsProject(toProject);
+    if (!toProject && switchRef.current) {
+      const rect = switchRef.current.getBoundingClientRect();
+      confetti({
+        particleCount: 60,
+        spread: 65,
+        origin: {
+          x: (rect.left + rect.width / 2) / window.innerWidth,
+          y: (rect.top + rect.height / 2) / window.innerHeight,
+        },
+        colors: ['#C41E1E', '#E83838', '#C8C8C8', '#EDE8DC'],
+        ticks: 220,
+        gravity: 1.2,
+        decay: 0.93,
+        startVelocity: 30,
+        shapes: ['circle'],
+      });
+    }
+  };
+
   return (
     <section
       id="pricing"
@@ -74,7 +181,7 @@ export default function Pricing() {
       <div className="relative z-10 max-w-6xl mx-auto">
 
         {/* ── Header ── */}
-        <div className="text-center mb-20 md:mb-24">
+        <div className="text-center mb-14 md:mb-16">
           <motion.div className="flex items-center justify-center gap-4 mb-8"
             initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7 }}>
@@ -86,7 +193,7 @@ export default function Pricing() {
             <div className="w-8 h-px gradient-bg" />
           </motion.div>
 
-          <div className="overflow-hidden">
+          <div className="overflow-hidden mb-6">
             <motion.h2 className="font-display italic"
               style={{ fontSize: 'clamp(1.6rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
               initial={{ y: '110%' }} whileInView={{ y: 0 }}
@@ -98,89 +205,146 @@ export default function Pricing() {
           </div>
 
           <motion.p
-            className="font-body font-light text-sm leading-relaxed mx-auto mt-7"
+            className="font-body font-light text-sm leading-relaxed mx-auto mb-10"
             style={{ color: 'rgba(237,232,220,0.38)', maxWidth: '46ch' }}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
             viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
-            Every project is scoped individually — these are starting points.
-            Book a free call and we'll give you an exact number within 24 hours.
+            One-off project price or an ongoing monthly retainer — toggle to compare. Book a free call and we'll give you an exact number within 24 hours.
           </motion.p>
+
+          {/* Billing toggle */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.4 }}>
+            <BillingToggle isProject={isProject} onChange={handleToggle} switchRef={switchRef} />
+          </motion.div>
         </div>
 
         {/* ── Tier cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 items-center md:px-0">
           {tiers.map((tier, i) => (
             <motion.div
-              key={i}
-              className="relative flex flex-col rounded-2xl"
+              key={tier.name}
+              className="relative flex flex-col"
               style={{
-                background: tier.highlight ? 'rgba(196,30,30,0.045)' : 'rgba(237,232,220,0.02)',
-                border: tier.highlight
-                  ? '1px solid rgba(196,30,30,0.32)'
+                borderRadius: 20,
+                background: tier.isPopular ? 'rgba(196,30,30,0.05)' : 'rgba(237,232,220,0.025)',
+                border: tier.isPopular
+                  ? '2px solid rgba(196,30,30,0.45)'
                   : '1px solid rgba(237,232,220,0.09)',
-                padding: 'clamp(36px,3.5vw,52px) clamp(28px,2.8vw,40px)',
+                padding: tier.isPopular
+                  ? 'clamp(40px,4vw,56px) clamp(28px,3vw,40px)'
+                  : 'clamp(32px,3.5vw,48px) clamp(24px,2.5vw,36px)',
+                zIndex: tier.isPopular ? 10 : 0,
+                marginTop: tier.isPopular ? 0 : isDesktop ? 20 : 0,
               }}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.75, ease, delay: i * 0.1 }}>
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={
+                isDesktop
+                  ? {
+                      y: tier.isPopular ? -20 : 0,
+                      opacity: 1,
+                      x: i === 2 ? -16 : i === 0 ? 16 : 0,
+                      scale: i === 0 || i === 2 ? 0.95 : 1.0,
+                    }
+                  : { y: 0, opacity: 1 }
+              }
+              viewport={{ once: true }}
+              transition={{
+                duration: 1.5,
+                type: 'spring',
+                stiffness: 100,
+                damping: 30,
+                delay: 0.3 + i * 0.08,
+              }}>
 
-              {/* Top gradient accent line for highlight */}
-              {tier.highlight && (
-                <div className="absolute top-0 left-0 right-0 h-[2px] gradient-bg rounded-t-2xl" />
+              {/* Top gradient line for popular */}
+              {tier.isPopular && (
+                <div className="absolute top-0 left-0 right-0 h-[2px] gradient-bg"
+                  style={{ borderRadius: '20px 20px 0 0' }} />
               )}
 
-              {/* Most Popular badge — inside card, top right */}
-              {tier.highlight && (
-                <div className="absolute top-5 right-5">
-                  <span className="font-body text-[9px] tracking-[0.2em] uppercase rounded-full px-3 py-1"
-                    style={{
-                      background: 'rgba(196,30,30,0.14)',
-                      border: '1px solid rgba(196,30,30,0.28)',
-                      color: 'rgba(196,30,30,0.9)',
-                    }}>
-                    Most Popular
+              {/* Popular badge */}
+              {tier.isPopular && (
+                <div className="absolute top-0 right-0"
+                  style={{
+                    background: 'linear-gradient(135deg,#8B1010,#C41E1E)',
+                    padding: '5px 14px 5px 10px',
+                    borderRadius: '0 18px 0 14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 5,
+                  }}>
+                  <Star size={11} style={{ color: '#F0EDED', fill: '#F0EDED' }} />
+                  <span className="font-body text-[10px] tracking-[0.18em] uppercase font-semibold"
+                    style={{ color: '#F0EDED' }}>
+                    Popular
                   </span>
                 </div>
               )}
 
               {/* Tier name */}
-              <p className="font-body text-[10px] tracking-[0.3em] uppercase mb-5"
-                style={{ color: tier.highlight ? 'rgba(196,30,30,0.85)' : 'rgba(237,232,220,0.3)' }}>
+              <p className="font-body text-[10px] tracking-[0.32em] uppercase mb-5"
+                style={{ color: tier.isPopular ? 'rgba(196,30,30,0.9)' : 'rgba(237,232,220,0.32)' }}>
                 {tier.name}
               </p>
 
               {/* Price */}
-              <div className="flex items-baseline gap-2 mb-3">
-                <span className="font-body text-[10px] tracking-[0.1em] uppercase"
+              <div className="flex items-baseline gap-1.5 mb-1">
+                <span className="font-body text-[10px] tracking-wide"
                   style={{ color: 'rgba(237,232,220,0.28)' }}>from</span>
                 <span
-                  className={`font-display italic ${tier.highlight ? 'gradient-text' : ''}`}
+                  className={`font-display italic ${tier.isPopular ? 'gradient-text' : ''}`}
                   style={{
-                    fontSize: 'clamp(2.4rem,4.5vw,4rem)',
+                    fontSize: 'clamp(2.4rem,4.5vw,3.8rem)',
                     letterSpacing: '-0.03em',
                     lineHeight: 1,
-                    color: tier.highlight ? undefined : '#EDE8DC',
+                    color: tier.isPopular ? undefined : '#EDE8DC',
                   }}>
-                  {tier.from}
+                  £<NumberFlow
+                    value={isProject ? tier.projectPrice : tier.retainerPrice}
+                    format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
+                    transformTiming={{ duration: 600, easing: 'ease-out' }}
+                    willChange
+                  />
                 </span>
+                {!isProject && (
+                  <span className="font-body text-xs"
+                    style={{ color: 'rgba(237,232,220,0.3)', letterSpacing: '0.02em' }}>
+                    /mo
+                  </span>
+                )}
               </div>
 
-              <p className="font-body font-medium text-xs mb-1.5" style={{ color: 'rgba(237,232,220,0.55)' }}>
+              <p className="font-body text-[10px] mb-4"
+                style={{ color: 'rgba(237,232,220,0.25)' }}>
+                {isProject ? 'one-off payment' : 'billed monthly'}
+              </p>
+
+              <p className="font-body font-medium text-xs mb-1.5"
+                style={{ color: 'rgba(237,232,220,0.55)' }}>
                 {tier.tagline}
               </p>
-              <p className="font-body font-light text-xs mb-8 leading-relaxed" style={{ color: 'rgba(237,232,220,0.25)' }}>
-                {tier.ideal}
+              <p className="font-body font-light text-xs leading-relaxed mb-7"
+                style={{ color: 'rgba(237,232,220,0.22)' }}>
+                {tier.description}
               </p>
 
               {/* Divider */}
-              <div className="mb-8" style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
+              <div className="mb-7" style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
               {/* Features */}
-              <ul className="flex flex-col gap-3.5 flex-1 mb-10">
+              <ul className="flex flex-col gap-3 flex-1 mb-10">
                 {tier.features.map((f, j) => (
                   <li key={j} className="flex items-start gap-3">
-                    <div className="w-[5px] h-[5px] rounded-full mt-1 shrink-0 gradient-bg" />
+                    <Check
+                      size={13}
+                      style={{
+                        color: tier.isPopular ? '#C41E1E' : 'rgba(237,232,220,0.35)',
+                        marginTop: 2,
+                        flexShrink: 0,
+                      }}
+                    />
                     <span className="font-body font-light text-xs leading-relaxed"
                       style={{ color: 'rgba(237,232,220,0.5)' }}>
                       {f}
@@ -192,21 +356,22 @@ export default function Pricing() {
               {/* CTA */}
               <a
                 href="#quote"
-                className={`inline-flex items-center justify-center gap-2 rounded-full font-body text-xs font-semibold cursor-pointer transition-all duration-200 hover:opacity-90 ${tier.highlight ? 'gradient-bg' : ''}`}
+                className="inline-flex items-center justify-center gap-2 rounded-full font-body text-xs font-semibold cursor-pointer transition-all duration-200"
                 style={{
                   padding: '15px 28px',
-                  color: tier.highlight ? '#F0EDED' : 'rgba(237,232,220,0.6)',
-                  border: tier.highlight ? 'none' : '1px solid rgba(237,232,220,0.14)',
+                  background: tier.isPopular ? 'linear-gradient(135deg,#8B1010,#C41E1E)' : 'transparent',
+                  color: tier.isPopular ? '#F0EDED' : 'rgba(237,232,220,0.6)',
+                  border: tier.isPopular ? 'none' : '1px solid rgba(237,232,220,0.14)',
                 }}>
-                {tier.cta} <ArrowUpRight size={11} />
+                {tier.cta}
               </a>
             </motion.div>
           ))}
         </div>
 
-        {/* Reassurance note */}
+        {/* Reassurance */}
         <motion.p
-          className="text-center font-body font-light text-xs mt-12"
+          className="text-center font-body font-light text-xs mt-14"
           style={{ color: 'rgba(237,232,220,0.2)' }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
           viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
