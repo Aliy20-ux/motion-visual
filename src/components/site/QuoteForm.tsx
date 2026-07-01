@@ -5,7 +5,7 @@ import { supabase, type QuoteSubmission } from '../../lib/supabase';
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 
 /* ── Question definitions ── */
-type QType = 'text' | 'email' | 'choice' | 'textarea';
+type QType = 'text' | 'email' | 'tel' | 'choice' | 'textarea';
 interface Question {
   id: string;
   q: string;
@@ -17,6 +17,14 @@ interface Question {
 }
 
 const questions: Question[] = [
+  {
+    id: 'project_type',
+    q: "What do you\nneed from us?",
+    sub: "Tell us what you're looking for — we'll tailor everything from here.",
+    type: 'choice',
+    options: ['New Website', 'Redesign', 'E-commerce Store', 'Something Else'],
+    required: true,
+  },
   {
     id: 'business_name',
     q: "What's your\nbusiness called?",
@@ -40,6 +48,14 @@ const questions: Question[] = [
     type: 'email',
     placeholder: 'you@yourbusiness.com',
     required: true,
+  },
+  {
+    id: 'phone',
+    q: "Your phone\nnumber?",
+    sub: "We'll use this to arrange your free 20-minute consultation call.",
+    type: 'tel',
+    placeholder: '+44 7700 000 000',
+    required: false,
   },
   {
     id: 'budget',
@@ -383,7 +399,7 @@ export default function QuoteForm() {
               initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.6, ease }}>
               <div className="w-8 h-px" style={{ background: CRIMSON }} />
               <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.35)' }}>
-                {questions.length} questions · 3 minutes
+                Free Enquiry · {questions.length} questions · 3 minutes
               </span>
             </motion.div>
 
@@ -392,7 +408,7 @@ export default function QuoteForm() {
                 style={{ fontSize: 'clamp(2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em', color: '#EDE8DC' }}
                 initial={{ y: '108%' }} animate={{ y: 0 }}
                 transition={{ duration: 1.0, ease, delay: 0.2 }}>
-                Start something
+                Let's talk
               </motion.h2>
             </div>
             <div className="overflow-hidden mb-12">
@@ -400,25 +416,44 @@ export default function QuoteForm() {
                 style={{ fontSize: 'clamp(2rem,8vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em' }}
                 initial={{ y: '108%' }} animate={{ y: 0 }}
                 transition={{ duration: 1.0, ease, delay: 0.32 }}>
-                remarkable.
+                about your site.
               </motion.h2>
             </div>
 
-            <motion.p className="font-body font-light text-sm leading-relaxed mb-14 max-w-sm"
+            <motion.p className="font-body font-light text-sm leading-relaxed mb-6 max-w-sm"
               style={{ color: 'rgba(237,232,220,0.42)' }}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.7 }}>
-              Tell us about your project and we'll come back with a personalised proposal within 24 hours — no obligation, no sales pressure.
+              Fill in your details — including your number so we can call you — and we'll come back with a personalised proposal within 24 hours. No obligation, no sales pressure.
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.78, duration: 0.6 }}>
+            {/* Trust row */}
+            <motion.div className="flex items-center gap-6 mb-12 flex-wrap"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.72, duration: 0.6 }}>
+              {[
+                { stat: '24h', label: 'proposal turnaround' },
+                { stat: '£0', label: 'consultation fee' },
+                { stat: '28+', label: 'sites delivered' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-baseline gap-2">
+                  <span className="font-display italic gradient-text" style={{ fontSize: '1.15rem', letterSpacing: '-0.02em' }}>
+                    {item.stat}
+                  </span>
+                  <span className="font-body text-[10px] tracking-[0.14em] uppercase" style={{ color: 'rgba(237,232,220,0.25)' }}>
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.82, duration: 0.6 }}>
               <GoldButton onClick={() => setPhase('form')}>
-                Let's begin <ArrowRight size={16} />
+                Start Enquiry <ArrowRight size={16} />
               </GoldButton>
             </motion.div>
 
             {/* Ambient glow */}
             <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(196,30,30,0.06) 0%, transparent 70%)' }} />
+              style={{ background: 'radial-gradient(circle, rgba(196,30,30,0.07) 0%, transparent 70%)' }} />
           </motion.div>
         )}
 
@@ -470,8 +505,8 @@ export default function QuoteForm() {
                   {q.sub}
                 </p>
 
-                {/* ── Text / Email ── */}
-                {(q.type === 'text' || q.type === 'email') && (
+                {/* ── Text / Email / Tel ── */}
+                {(q.type === 'text' || q.type === 'email' || q.type === 'tel') && (
                   <GoldInput
                     type={q.type}
                     value={getValue()}

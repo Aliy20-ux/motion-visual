@@ -93,42 +93,45 @@ export default function Process() {
           {steps.map((step, i) => (
             <motion.div
               key={i}
-              className="group relative grid grid-cols-1 md:grid-cols-[120px_1fr_220px] gap-8 md:gap-12 py-10 md:py-12"
+              className="group relative"
               style={{ borderTop: '1px solid rgba(237,232,220,0.07)' }}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.75, ease, delay: i * 0.08 }}>
 
-              {/* Left: step number */}
-              <div className="flex md:flex-col gap-4 md:gap-2 items-center md:items-start">
-                <span className="font-display italic gradient-text"
-                  style={{ fontSize: 'clamp(1.6rem,3.5vw,3rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
-                  {step.num}
-                </span>
-                <span className="font-body text-[10px] tracking-[0.22em] uppercase"
-                  style={{ color: 'rgba(237,232,220,0.2)' }}>
-                  {step.duration}
-                </span>
-              </div>
+              <div className="grid grid-cols-[56px_1fr] md:grid-cols-[140px_1fr_200px] gap-x-8 md:gap-x-16 py-14 md:py-16">
 
-              {/* Centre: title + body */}
-              <div>
-                <h3 className="font-display italic mb-4"
-                  style={{ fontSize: 'clamp(1.5rem,2.8vw,2.6rem)', color: '#EDE8DC', letterSpacing: '-0.022em', lineHeight: 1.05 }}>
-                  {step.title}
-                </h3>
-                <p className="font-body font-light text-sm leading-relaxed"
-                  style={{ color: 'rgba(237,232,220,0.38)', maxWidth: '52ch' }}>
-                  {step.body}
-                </p>
-              </div>
+                {/* Left: step number + duration */}
+                <div className="flex flex-col gap-2 pt-1">
+                  <span className="font-display italic gradient-text"
+                    style={{ fontSize: 'clamp(1.6rem,3.5vw,3rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
+                    {step.num}
+                  </span>
+                  <span className="font-body text-[9px] tracking-[0.22em] uppercase leading-relaxed"
+                    style={{ color: 'rgba(237,232,220,0.22)' }}>
+                    {step.duration}
+                  </span>
+                </div>
 
-              {/* Right: decorative rule */}
-              <div className="hidden md:flex items-center justify-end">
-                <div
-                  className="h-px w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(to right, transparent, ${step.accent}60)` }} />
+                {/* Centre: title + body */}
+                <div>
+                  <h3 className="font-display italic mb-5"
+                    style={{ fontSize: 'clamp(1.5rem,2.8vw,2.8rem)', color: '#EDE8DC', letterSpacing: '-0.022em', lineHeight: 1.05 }}>
+                    {step.title}
+                  </h3>
+                  <p className="font-body font-light text-sm leading-[1.9]"
+                    style={{ color: 'rgba(237,232,220,0.4)', maxWidth: '52ch' }}>
+                    {step.body}
+                  </p>
+                </div>
+
+                {/* Right: decorative rule — desktop only */}
+                <div className="hidden md:flex items-center justify-end">
+                  <div
+                    className="h-px w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(to right, transparent, ${step.accent}60)` }} />
+                </div>
               </div>
 
               {/* Animated left border on hover */}
