@@ -18,6 +18,21 @@ export default function Manifesto() {
       className="relative overflow-hidden"
       style={{ background: '#09090A', padding: 'clamp(100px,13vw,180px) clamp(24px,5vw,88px)' }}
     >
+      {/* Edinburgh cityscape — AI-generated, parallax layer */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'url(/edinburgh-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 30%',
+          opacity: 0.07,
+          y: useTransform(scrollYProgress, [0, 1], ['-6%', '6%']),
+        }}
+      />
+      {/* Dark gradient overlay — keeps text sharp */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, #09090A 0%, rgba(9,9,10,0.6) 40%, rgba(9,9,10,0.7) 60%, #09090A 100%)' }} />
+
       {/* Atmospheric glow */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] pointer-events-none"
         style={{ background: 'radial-gradient(circle at 80% 10%, rgba(196,30,30,0.055) 0%, transparent 60%)' }} />

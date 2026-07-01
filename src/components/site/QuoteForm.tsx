@@ -374,6 +374,16 @@ export default function QuoteForm() {
 
   return (
     <section id="quote" style={{ background: '#09090A', minHeight: '100svh', position: 'relative', overflow: 'hidden' }}>
+      {/* AI-generated crimson atmosphere — only visible during intro/success */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'url(/og-social.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: phase === 'form' ? 0.03 : 0.08,
+          transition: 'opacity 0.8s ease',
+          mixBlendMode: 'screen',
+        }} />
       <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
       {/* ── Gold progress bar ── */}

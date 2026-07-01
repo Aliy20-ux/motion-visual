@@ -87,7 +87,19 @@ function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
 
 export default function Results() {
   return (
-    <section id="results" className="relative overflow-hidden" style={{ padding: 'clamp(80px,10vw,140px) clamp(20px,5vw,80px)' }}>
+    <section id="results" className="relative overflow-hidden" style={{ background: '#09090A', padding: 'clamp(80px,10vw,140px) clamp(20px,5vw,80px)' }}>
+      {/* AI-generated energy wave — crimson atmosphere */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'url(/hero-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.06,
+          mixBlendMode: 'screen',
+        }} />
+      {/* Vignette overlay */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, #09090A 80%)' }} />
       {/* Atmospheric depth */}
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] -translate-y-1/2 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(196,30,30,0.05) 0%, transparent 70%)' }} />
       <div className="max-w-7xl mx-auto">
