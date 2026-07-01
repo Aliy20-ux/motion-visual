@@ -98,6 +98,7 @@ export default function SelectedWork() {
       {/* Horizontal drag-scroll track */}
       <div
         ref={trackRef}
+        data-cursor="drag"
         className="flex gap-5 overflow-x-auto no-scrollbar"
         style={{
           padding: '40px clamp(20px,5vw,80px)',
@@ -138,6 +139,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
+      data-cursor="view"
       className="group relative flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer"
       style={{
         width: 'clamp(300px,38vw,480px)',

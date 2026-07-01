@@ -147,7 +147,7 @@ export default function Manifesto() {
       {/* Bottom gold rule */}
       <motion.div
         className="mt-24 h-px relative z-10"
-        style={{ background: 'linear-gradient(to right, rgba(176,120,16,0.65), rgba(232,192,80,0.4), transparent)' }}
+        style={{ background: 'linear-gradient(to right, rgba(196,30,30,0.6), rgba(200,200,200,0.25), transparent)' }}
         initial={{ scaleX: 0, originX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}

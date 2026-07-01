@@ -28,7 +28,7 @@ export default function Marquee() {
               letterSpacing: item === '×' ? '0' : '0.22em',
               textTransform: 'uppercase',
               fontWeight: item === '×' ? 300 : 400,
-              color: item === '×' ? 'rgba(176,120,16,0.45)' : 'rgba(237,232,220,0.22)',
+              color: item === '×' ? 'rgba(196,30,30,0.45)' : 'rgba(237,232,220,0.22)',
             }}>
             {item}
           </span>

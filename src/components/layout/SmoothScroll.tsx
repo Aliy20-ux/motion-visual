@@ -10,6 +10,11 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       touchMultiplier: 1.5,
     });
 
+    // Drive the CSS scroll progress bar
+    lenis.on('scroll', ({ progress }: { progress: number }) => {
+      document.documentElement.style.setProperty('--scroll-progress', String(progress));
+    });
+
     let raf: number;
     const tick = (time: number) => {
       lenis.raf(time);

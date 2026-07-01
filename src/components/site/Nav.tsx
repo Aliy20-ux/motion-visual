@@ -44,13 +44,26 @@ export default function Nav() {
           transition={{ duration: 0.4 }}
         >
           {/* Logo */}
-          <a href="/" className="flex items-center gap-3 group cursor-pointer">
-            <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center shrink-0">
-              <span className="font-display font-medium text-xs text-white">M</span>
+          <a href="/" className="flex items-center gap-2.5 group cursor-pointer">
+            {/* Mark: crimson M · V */}
+            <div className="flex items-baseline gap-0.5 shrink-0">
+              <span className="font-display italic leading-none"
+                style={{ fontSize: '1.15rem', letterSpacing: '-0.04em', color: '#C41E1E' }}>
+                M
+              </span>
+              <span className="font-body font-light leading-none"
+                style={{ fontSize: '0.5rem', color: 'rgba(196,30,30,0.45)', letterSpacing: '0' }}>
+                ·
+              </span>
+              <span className="font-display italic leading-none"
+                style={{ fontSize: '1.15rem', letterSpacing: '-0.04em', color: 'rgba(244,241,236,0.75)' }}>
+                V
+              </span>
             </div>
+            {/* Wordmark */}
             <span
-              className="font-body font-medium text-xs tracking-[0.14em] uppercase transition-colors duration-200 group-hover:text-off-white"
-              style={{ color: 'rgba(244,241,236,0.8)' }}
+              className="font-body text-[10px] tracking-[0.22em] uppercase transition-opacity duration-200 group-hover:opacity-100"
+              style={{ color: 'rgba(244,241,236,0.5)' }}
             >
               Motion Visual
             </span>

@@ -8,31 +8,31 @@ const team = [
     name: 'Ali',
     role: 'Web Designer & Developer',
     bio: 'Designs and builds premium websites from concept to launch. Every project is a chance to make something worth remembering.',
-    initials: 'A',
+    letter: 'A',
   },
   {
     name: 'Munib',
     role: 'Web Designer & Developer',
     bio: 'Turns briefs into fully coded, animated websites. Detail-obsessed and deadline-reliable — every time.',
-    initials: 'M',
+    letter: 'M',
   },
   {
     name: 'Nadir',
     role: 'Web Designer & Developer',
     bio: 'Builds sites that perform as well as they look. Clean code, sharp design, and nothing left to chance.',
-    initials: 'N',
+    letter: 'N',
   },
   {
     name: 'Robbie',
     role: 'Web Designer & Developer',
     bio: 'Crafts the interactions and transitions that make a site feel alive. If it moves well, it converts better.',
-    initials: 'R',
+    letter: 'R',
   },
   {
     name: 'Mia',
     role: 'Web Designer & Developer',
     bio: 'Brings precision and creativity to every build. From layout to launch, every pixel is intentional.',
-    initials: 'Mi',
+    letter: 'Mi',
   },
 ];
 
@@ -81,8 +81,8 @@ export default function About() {
             style={{ color: 'rgba(237,232,220,0.38)' }}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
             viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
-            We're a tight-knit team of five specialists who've worked together since the beginning.
-            No hand-offs, no outsourcing. Every project is seen through from brief to live by the same people.
+            A tight-knit team of five specialists — no hand-offs, no outsourcing.
+            Every project is owned start to finish by the same people.
           </motion.p>
         </div>
 
@@ -92,48 +92,60 @@ export default function About() {
           {team.map((member, i) => (
             <motion.div
               key={i}
-              className="flex flex-col gap-6"
-              style={{ background: '#080809', padding: 'clamp(28px,3.5vw,44px) clamp(20px,2.5vw,32px)' }}
+              className="group relative flex flex-col overflow-hidden"
+              style={{ background: '#080809', minHeight: 'clamp(280px,30vw,360px)' }}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.7, ease, delay: i * 0.08 }}>
 
-              {/* Initials avatar */}
-              <div className="flex items-center gap-4">
-                <div
-                  className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(196,30,30,0.1)', border: '1px solid rgba(196,30,30,0.25)' }}>
-                  <span className="font-display italic gradient-text"
-                    style={{ fontSize: '0.8rem', letterSpacing: '-0.01em' }}>
-                    {member.initials}
-                  </span>
-                </div>
-                {/* Index */}
-                <span className="font-body text-[10px] tracking-[0.24em]"
-                  style={{ color: 'rgba(237,232,220,0.15)' }}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
+              {/* Large editorial letter — fills the top */}
+              <div className="relative flex-1 overflow-hidden flex items-end"
+                style={{ padding: 'clamp(20px,2.5vw,28px) clamp(20px,2.5vw,28px) 0' }}>
+                <motion.span
+                  className="font-display italic select-none pointer-events-none block leading-none"
+                  style={{
+                    fontSize: 'clamp(5.5rem,9vw,9rem)',
+                    letterSpacing: '-0.04em',
+                    lineHeight: 0.85,
+                    background: 'linear-gradient(160deg, rgba(196,30,30,0.22) 0%, rgba(196,30,30,0.06) 60%, transparent 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    transition: 'all 0.6s ease',
+                  }}
+                  whileHover={{ scale: 1.04 }}
+                  transition={{ duration: 0.5, ease }}>
+                  {member.letter}
+                </motion.span>
+
+                {/* Hover crimson glow behind letter */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse at 30% 60%, rgba(196,30,30,0.07) 0%, transparent 70%)' }} />
               </div>
 
-              {/* Name + role */}
-              <div>
-                <p className="font-display italic"
-                  style={{ fontSize: 'clamp(1.1rem,1.8vw,1.5rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+              {/* Bottom info panel */}
+              <div style={{ padding: 'clamp(16px,2vw,24px) clamp(20px,2.5vw,28px) clamp(24px,2.5vw,32px)' }}>
+                {/* Thin rule */}
+                <div className="mb-4 h-px" style={{ background: 'rgba(237,232,220,0.07)' }} />
+
+                <p className="font-display italic mb-1"
+                  style={{ fontSize: 'clamp(1.1rem,1.8vw,1.55rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                   {member.name}
                 </p>
-                <p className="font-body text-[10px] tracking-[0.22em] uppercase mt-1.5"
-                  style={{ color: 'rgba(196,30,30,0.75)' }}>
+                <p className="font-body text-[9px] tracking-[0.24em] uppercase mb-3"
+                  style={{ color: 'rgba(196,30,30,0.65)' }}>
                   {member.role}
+                </p>
+                <p className="font-body font-light text-xs leading-relaxed"
+                  style={{ color: 'rgba(237,232,220,0.28)' }}>
+                  {member.bio}
                 </p>
               </div>
 
-              {/* Bio */}
-              <p className="font-body font-light text-xs leading-relaxed"
-                style={{ color: 'rgba(237,232,220,0.32)' }}>
-                {member.bio}
-              </p>
-
+              {/* Animated left border on hover */}
+              <div className="absolute left-0 top-0 w-px h-0 group-hover:h-full transition-all duration-500 pointer-events-none"
+                style={{ background: 'rgba(196,30,30,0.5)' }} />
             </motion.div>
           ))}
         </div>
