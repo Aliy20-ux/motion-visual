@@ -1,17 +1,16 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import NumberFlow from '@number-flow/react';
 import confetti from 'canvas-confetti';
-import { Check, Star } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const SPRING = { type: 'spring' as const, stiffness: 100, damping: 30 };
 
 const tiers = [
   {
-    name: 'ESSENTIAL',
-    projectPrice: 3995,
+    name: 'Essential',
+    projectPrice: 2500,
     retainerPrice: 895,
     tagline: 'A serious site for a serious business.',
     description: 'Perfect for local businesses and new brands ready to compete online.',
@@ -27,8 +26,8 @@ const tiers = [
     isPopular: false,
   },
   {
-    name: 'SIGNATURE',
-    projectPrice: 7500,
+    name: 'Signature',
+    projectPrice: 6000,
     retainerPrice: 1795,
     tagline: 'The full Motion Visual experience.',
     description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
@@ -45,8 +44,8 @@ const tiers = [
     isPopular: true,
   },
   {
-    name: 'FLAGSHIP',
-    projectPrice: 16000,
+    name: 'Flagship',
+    projectPrice: 15000,
     retainerPrice: 3595,
     tagline: 'When you need to own your market.',
     description: 'For premium brands, multi-location businesses, and high-traffic e-commerce.',
@@ -66,27 +65,18 @@ const tiers = [
 
 export default function Pricing() {
   const [isRetainer, setIsRetainer] = useState(false);
-  const [desktop, setDesktop] = useState(false);
-  const switchRef = useRef<HTMLButtonElement | null>(null);
+  const toggleRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)');
-    setDesktop(mq.matches);
-    const h = () => setDesktop(mq.matches);
-    mq.addEventListener('change', h);
-    return () => mq.removeEventListener('change', h);
-  }, []);
-
-  const handleToggle = (checked: boolean) => {
-    setIsRetainer(checked);
-    if (checked && switchRef.current) {
-      const r = switchRef.current.getBoundingClientRect();
+  const handleToggle = (retainer: boolean) => {
+    setIsRetainer(retainer);
+    if (retainer && toggleRef.current) {
+      const r = toggleRef.current.getBoundingClientRect();
       confetti({
-        particleCount: 60,
-        spread: 65,
+        particleCount: 55,
+        spread: 60,
         origin: { x: (r.left + r.width / 2) / window.innerWidth, y: (r.top + r.height / 2) / window.innerHeight },
         colors: ['#C41E1E', '#E83838', '#C8C8C8', '#EDE8DC'],
-        ticks: 200, gravity: 1.1, decay: 0.92, startVelocity: 28,
+        ticks: 200, gravity: 1.1, decay: 0.92, startVelocity: 26,
       });
     }
   };
@@ -99,24 +89,23 @@ export default function Pricing() {
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
-      {/* Radial glow — centred */}
+      {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none flex items-start justify-center">
         <div style={{
           width: 900, height: 500, flexShrink: 0,
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(196,30,30,0.11) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(196,30,30,0.1) 0%, transparent 65%)',
         }} />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto">
 
-        {/* ── Header ── always visible, animate on enter */}
+        {/* ── Header ── */}
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE }}>
 
-          {/* Section label */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.32em] uppercase"
@@ -124,77 +113,73 @@ export default function Pricing() {
             <div className="w-8 h-px gradient-bg" />
           </div>
 
-          {/* Headline */}
           <h2 className="font-display italic mb-5"
-            style={{ fontSize: 'clamp(2.2rem,5.5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}>
-            Clear pricing.<br />
+            style={{ fontSize: 'clamp(2.4rem,5.5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}>
+            <span style={{ color: '#EDE8DC' }}>Clear pricing.</span>
+            {' '}
             <span className="gradient-text">No surprises.</span>
           </h2>
 
           <p className="font-body font-light text-sm leading-relaxed mx-auto mb-10"
-            style={{ color: 'rgba(237,232,220,0.38)', maxWidth: '42ch' }}>
+            style={{ color: 'rgba(237,232,220,0.38)', maxWidth: '44ch' }}>
             One-off project or monthly retainer — toggle to compare.
             Book a free call and we'll give you an exact number within 24 hours.
           </p>
 
-          {/* ── Toggle — 21st.dev style: switch LEFT, label RIGHT ── */}
-          <div className="flex items-center justify-center gap-3">
+          {/* ── Pill segmented toggle ── */}
+          <div
+            ref={toggleRef}
+            className="inline-flex items-center p-1 rounded-full"
+            style={{
+              background: 'rgba(237,232,220,0.05)',
+              border: '1px solid rgba(237,232,220,0.1)',
+            }}>
             <button
-              ref={switchRef}
               type="button"
-              role="switch"
-              aria-checked={isRetainer}
-              onClick={() => handleToggle(!isRetainer)}
-              className="relative flex-shrink-0 cursor-pointer"
+              onClick={() => handleToggle(false)}
+              className="rounded-full font-body text-xs font-medium cursor-pointer transition-all duration-250"
               style={{
-                width: 44, height: 26, borderRadius: 13, border: 'none',
-                background: isRetainer
-                  ? 'linear-gradient(135deg,#8B1010,#C41E1E)'
-                  : 'rgba(237,232,220,0.15)',
-                transition: 'background 0.3s',
+                padding: '9px 22px',
+                background: !isRetainer ? 'linear-gradient(135deg, #8B1010, #C41E1E)' : 'transparent',
+                color: !isRetainer ? '#F0EDED' : 'rgba(237,232,220,0.45)',
+                boxShadow: !isRetainer ? '0 2px 12px rgba(196,30,30,0.3)' : 'none',
               }}>
-              <motion.span
-                style={{
-                  display: 'block', position: 'absolute', top: 3,
-                  width: 20, height: 20, borderRadius: '50%',
-                  background: '#EDE8DC', boxShadow: '0 1px 4px rgba(0,0,0,0.4)',
-                }}
-                animate={{ left: isRetainer ? 21 : 3 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 38 }}
-              />
+              One-off
             </button>
-            <span className="font-body text-sm" style={{ color: 'rgba(237,232,220,0.6)' }}>
-              Monthly retainer{' '}
-              <span className="font-medium" style={{ color: '#C41E1E' }}>(Save 30%)</span>
-            </span>
+            <button
+              type="button"
+              onClick={() => handleToggle(true)}
+              className="rounded-full font-body text-xs cursor-pointer transition-all duration-250"
+              style={{
+                padding: '9px 22px',
+                background: isRetainer ? 'linear-gradient(135deg, #8B1010, #C41E1E)' : 'transparent',
+                color: isRetainer ? '#F0EDED' : 'rgba(237,232,220,0.45)',
+                boxShadow: isRetainer ? '0 2px 12px rgba(196,30,30,0.3)' : 'none',
+              }}>
+              Monthly{' '}
+              <span style={{ color: isRetainer ? 'rgba(240,237,237,0.75)' : 'rgba(196,30,30,0.7)' }}>
+                (Save 30%)
+              </span>
+            </button>
           </div>
         </motion.div>
 
-        {/* ── Cards ──
-            Non-popular cards use mt-5 so they sit 20px lower.
-            Popular card animates to y:-20 so it sits 20px ABOVE the grid baseline.
-            Combined visual lift: 40px. Badge floats at the top border of the popular card.
-        ── */}
+        {/* ── Cards ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {tiers.map((tier, i) => (
             <motion.div
               key={tier.name}
-              className={`relative flex flex-col${!tier.isPopular && desktop ? ' mt-5' : ''}`}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{
-                opacity: 1,
-                y: tier.isPopular && desktop ? -20 : 0,
-                scale: !tier.isPopular && desktop ? 0.97 : 1,
-              }}
+              className="relative flex flex-col"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ ...SPRING, opacity: { duration: 0.5 }, delay: 0.4 + i * 0.08 }}>
+              transition={{ duration: 0.7, ease: EASE, delay: i * 0.1 }}>
 
-              {/* ── "★ Popular" badge — centred at the top border of the popular card ── */}
+              {/* POPULAR badge — centred at top border */}
               {tier.isPopular && (
                 <div className="absolute -top-[14px] left-0 right-0 flex justify-center z-20 pointer-events-none">
-                  <div className="inline-flex items-center gap-1.5 gradient-bg rounded-full px-4 py-1.5">
-                    <Star size={9} style={{ color: '#F0EDED', fill: '#F0EDED' }} />
-                    <span className="font-body font-semibold text-[9px] tracking-[0.22em] uppercase"
+                  <div className="inline-flex items-center gradient-bg rounded-full px-4 py-1.5">
+                    <span className="font-body font-semibold text-[10px] tracking-[0.22em] uppercase"
                       style={{ color: '#F0EDED' }}>Popular</span>
                   </div>
                 </div>
@@ -206,77 +191,96 @@ export default function Pricing() {
                 style={{
                   borderRadius: 16,
                   border: tier.isPopular
-                    ? '2px solid rgba(196,30,30,0.42)'
+                    ? '1.5px solid rgba(196,30,30,0.45)'
                     : '1px solid rgba(237,232,220,0.08)',
                   background: tier.isPopular
-                    ? 'rgba(196,30,30,0.055)'
+                    ? 'rgba(196,30,30,0.045)'
                     : 'rgba(237,232,220,0.02)',
                   boxShadow: tier.isPopular
-                    ? '0 0 80px rgba(196,30,30,0.13), 0 20px 60px rgba(0,0,0,0.55)'
+                    ? '0 0 70px rgba(196,30,30,0.12), 0 16px 48px rgba(0,0,0,0.5)'
                     : '0 4px 20px rgba(0,0,0,0.3)',
-                  /* Extra top padding on popular to clear the badge */
                   padding: tier.isPopular
-                    ? '36px clamp(22px,2.8vw,32px) clamp(28px,3vw,36px)'
-                    : 'clamp(28px,3vw,36px) clamp(22px,2.8vw,32px)',
+                    ? '36px clamp(20px,2.5vw,30px) clamp(26px,2.8vw,34px)'
+                    : 'clamp(26px,2.8vw,34px) clamp(20px,2.5vw,30px)',
                 }}>
 
-                {/* Top accent line */}
+                {/* Top accent line on popular */}
                 {tier.isPopular && (
-                  <div className="absolute top-0 left-0 right-0 h-[2px] gradient-bg"
+                  <div className="absolute top-0 left-0 right-0 h-[1.5px] gradient-bg"
                     style={{ borderRadius: '14px 14px 0 0' }} />
                 )}
 
                 {/* Tier name */}
-                <p className="font-body text-[10px] tracking-[0.32em] uppercase mb-5"
-                  style={{ color: tier.isPopular ? 'rgba(196,30,30,0.85)' : 'rgba(237,232,220,0.28)' }}>
+                <p className="font-display italic mb-4"
+                  style={{
+                    fontSize: 'clamp(1.4rem,2.2vw,2rem)',
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1,
+                    color: '#EDE8DC',
+                  }}>
                   {tier.name}
                 </p>
 
                 {/* Price */}
-                <div className="mb-1.5">
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <span className="font-body text-[10px]" style={{ color: 'rgba(237,232,220,0.28)' }}>from</span>
+                <div className="mb-4">
+                  <div className="flex items-baseline gap-1">
                     <span
-                      className={`font-display italic${tier.isPopular ? ' gradient-text' : ''}`}
+                      className="font-display italic"
                       style={{
-                        fontSize: 'clamp(2.4rem,4.2vw,3.8rem)',
-                        letterSpacing: '-0.03em', lineHeight: 1,
+                        fontSize: 'clamp(2.6rem,4.5vw,4.2rem)',
+                        letterSpacing: '-0.03em',
+                        lineHeight: 1,
                         color: tier.isPopular ? undefined : '#EDE8DC',
-                      }}>
-                      £<NumberFlow
-                        value={isRetainer ? tier.retainerPrice : tier.projectPrice}
-                        format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
-                        transformTiming={{ duration: 500, easing: 'ease-out' }}
-                        willChange
-                      />
+                      }}
+                    >
+                      {tier.isPopular ? (
+                        <span className="gradient-text">
+                          £<NumberFlow
+                            value={isRetainer ? tier.retainerPrice : tier.projectPrice}
+                            format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
+                            transformTiming={{ duration: 500, easing: 'ease-out' }}
+                            willChange
+                          />
+                        </span>
+                      ) : (
+                        <>
+                          £<NumberFlow
+                            value={isRetainer ? tier.retainerPrice : tier.projectPrice}
+                            format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
+                            transformTiming={{ duration: 500, easing: 'ease-out' }}
+                            willChange
+                          />
+                        </>
+                      )}
                     </span>
-                    {isRetainer && (
-                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.3)' }}>/mo</span>
-                    )}
                   </div>
-                  <p className="font-body text-[10px] mt-1 tracking-[0.06em]"
-                    style={{ color: 'rgba(237,232,220,0.2)' }}>
-                    {isRetainer ? 'billed monthly' : 'one-off payment'}
+                  <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.25)' }}>
+                    {isRetainer ? 'billed monthly' : 'one-off'}
                   </p>
                 </div>
 
-                <p className="font-body font-medium text-xs mt-5 mb-1"
-                  style={{ color: 'rgba(237,232,220,0.6)' }}>
+                {/* Tagline — red italic */}
+                <p className="font-display italic mb-2"
+                  style={{ fontSize: 'clamp(0.9rem,1.3vw,1.05rem)', color: '#C41E1E', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                   {tier.tagline}
                 </p>
+
+                {/* Description */}
                 <p className="font-body font-light text-xs leading-relaxed mb-6"
-                  style={{ color: 'rgba(237,232,220,0.22)' }}>
+                  style={{ color: 'rgba(237,232,220,0.3)' }}>
                   {tier.description}
                 </p>
 
+                {/* Divider */}
                 <div className="mb-6" style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
-                <ul className="flex flex-col gap-3 flex-1 mb-9">
+                {/* Features */}
+                <ul className="flex flex-col gap-3 flex-1 mb-8">
                   {tier.features.map((f, j) => (
                     <li key={j} className="flex items-start gap-2.5">
-                      <Check size={12} style={{
+                      <Check size={11} style={{
                         marginTop: 3, flexShrink: 0,
-                        color: tier.isPopular ? '#C41E1E' : 'rgba(237,232,220,0.28)',
+                        color: tier.isPopular ? '#C41E1E' : 'rgba(196,30,30,0.5)',
                       }} />
                       <span className="font-body font-light text-xs leading-relaxed"
                         style={{ color: 'rgba(237,232,220,0.5)' }}>
@@ -290,7 +294,7 @@ export default function Pricing() {
                 <a href="#quote"
                   className="inline-flex items-center justify-center font-body text-xs font-semibold cursor-pointer transition-opacity duration-200 hover:opacity-85"
                   style={{
-                    padding: '14px 24px', borderRadius: 10,
+                    padding: '14px 24px', borderRadius: 999,
                     background: tier.isPopular ? 'linear-gradient(135deg,#8B1010,#C41E1E)' : 'transparent',
                     color: tier.isPopular ? '#F0EDED' : 'rgba(237,232,220,0.5)',
                     border: tier.isPopular ? 'none' : '1px solid rgba(237,232,220,0.12)',

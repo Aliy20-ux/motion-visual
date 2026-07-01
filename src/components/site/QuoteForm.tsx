@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type QuoteSubmission } from '../../lib/supabase';
-import { ArrowRight, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -20,13 +20,14 @@ type FormData = {
 
 const initForm: FormData = { name: '', email: '', phone: '', project_type: '', budget: '', notes: '' };
 
-/* ── Styled text input ── */
-function StyledInput({
-  type = 'text', value, onChange, placeholder,
-}: { type?: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+/* ── Underline input ── */
+function UnderlineInput({
+  type = 'text', value, onChange, placeholder, id,
+}: { type?: string; value: string; onChange: (v: string) => void; placeholder?: string; id?: string }) {
   const [focused, setFocused] = useState(false);
   return (
     <input
+      id={id}
       type={type}
       value={value}
       onChange={e => onChange(e.target.value)}
@@ -36,93 +37,87 @@ function StyledInput({
       className="w-full bg-transparent font-body text-sm outline-none"
       style={{
         color: '#EDE8DC',
-        padding: '13px 16px',
-        borderRadius: 10,
-        border: focused ? '1px solid rgba(196,30,30,0.55)' : '1px solid rgba(237,232,220,0.1)',
-        background: focused ? 'rgba(196,30,30,0.04)' : 'rgba(237,232,220,0.03)',
-        transition: 'border-color 0.22s, background 0.22s',
-        fontSize: '0.875rem',
+        padding: '12px 0',
+        borderBottom: focused ? '1px solid rgba(196,30,30,0.6)' : '1px solid rgba(237,232,220,0.12)',
+        transition: 'border-color 0.22s',
+        fontSize: '0.9rem',
       }}
     />
   );
 }
 
-/* ── Styled textarea ── */
-function StyledTextarea({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+/* ── Underline textarea ── */
+function UnderlineTextarea({ value, onChange, id }: { value: string; onChange: (v: string) => void; id?: string }) {
   const [focused, setFocused] = useState(false);
   return (
     <textarea
+      id={id}
       value={value}
       onChange={e => onChange(e.target.value)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      placeholder="Goals, inspiration, existing brand — or leave blank and we'll cover it on the call."
+      placeholder="Tell us about your project..."
       rows={3}
       className="w-full bg-transparent font-body text-sm outline-none resize-none"
       style={{
         color: '#EDE8DC',
-        padding: '13px 16px',
-        borderRadius: 10,
-        border: focused ? '1px solid rgba(196,30,30,0.55)' : '1px solid rgba(237,232,220,0.1)',
-        background: focused ? 'rgba(196,30,30,0.04)' : 'rgba(237,232,220,0.03)',
-        lineHeight: 1.75,
-        transition: 'border-color 0.22s, background 0.22s',
-        fontSize: '0.875rem',
+        padding: '12px 0',
+        borderBottom: focused ? '1px solid rgba(196,30,30,0.6)' : '1px solid rgba(237,232,220,0.12)',
+        lineHeight: 1.7,
+        transition: 'border-color 0.22s',
+        fontSize: '0.9rem',
       }}
     />
   );
 }
 
-/* ── Field wrapper ── */
-function Field({ label, error, optional, children }: {
-  label: string; error?: string; optional?: boolean; children: React.ReactNode;
+/* ── Field label ── */
+function FieldLabel({ htmlFor, label, optional, error }: {
+  htmlFor?: string; label: string; optional?: boolean; error?: string;
 }) {
   return (
-    <div>
-      <div className="flex items-center gap-2 mb-2">
-        <label className="font-body text-[10px] tracking-[0.24em] uppercase"
-          style={{ color: error ? '#F87171' : 'rgba(237,232,220,0.38)' }}>
-          {label}
-        </label>
-        {optional && (
-          <span className="font-body text-[9px] tracking-[0.15em] uppercase"
-            style={{ color: 'rgba(237,232,220,0.18)' }}>Optional</span>
-        )}
-      </div>
-      {children}
+    <div className="flex items-center gap-2 mb-1">
+      <label htmlFor={htmlFor} className="font-body text-[9px] tracking-[0.28em] uppercase"
+        style={{ color: error ? '#F87171' : 'rgba(237,232,220,0.38)' }}>
+        {label}
+      </label>
+      {optional && (
+        <span className="font-body text-[9px] tracking-[0.15em] uppercase"
+          style={{ color: 'rgba(237,232,220,0.18)' }}>Optional</span>
+      )}
       {error && (
-        <p className="font-body text-[10px] mt-1.5" style={{ color: '#F87171' }}>{error}</p>
+        <span className="font-body text-[9px]" style={{ color: '#F87171' }}>{error}</span>
       )}
     </div>
   );
 }
 
-/* ── Choice chips ── */
+/* ── Chip button ── */
 function ChipGroup({ label, options, value, onChange, error, optional }: {
   label: string; options: readonly string[];
   value: string; onChange: (v: string) => void; error?: string; optional?: boolean;
 }) {
   return (
-    <Field label={label} error={error} optional={optional}>
-      <div className="flex flex-wrap gap-2 pt-0.5">
+    <div>
+      <FieldLabel label={label} error={error} optional={optional} />
+      <div className="flex flex-wrap gap-2 pt-2">
         {options.map(opt => (
           <button
             key={opt}
             type="button"
             onClick={() => onChange(value === opt ? '' : opt)}
-            className="font-body text-xs rounded-full cursor-pointer"
+            className="font-body text-xs rounded-full cursor-pointer transition-all duration-180"
             style={{
-              padding: '9px 18px',
-              background: value === opt ? 'rgba(196,30,30,0.14)' : 'rgba(237,232,220,0.04)',
-              border: value === opt ? '1px solid rgba(196,30,30,0.5)' : '1px solid rgba(237,232,220,0.1)',
-              color: value === opt ? '#EDE8DC' : 'rgba(237,232,220,0.45)',
-              transition: 'all 0.18s',
+              padding: '8px 16px',
+              background: value === opt ? 'rgba(196,30,30,0.12)' : 'transparent',
+              border: value === opt ? '1px solid rgba(196,30,30,0.48)' : '1px solid rgba(237,232,220,0.1)',
+              color: value === opt ? '#EDE8DC' : 'rgba(237,232,220,0.4)',
             }}>
             {opt}
           </button>
         ))}
       </div>
-    </Field>
+    </div>
   );
 }
 
@@ -140,10 +135,10 @@ export default function QuoteForm() {
 
   const validate = (): boolean => {
     const e: Partial<Record<keyof FormData, string>> = {};
-    if (!form.name.trim()) e.name = 'Please enter your name.';
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Please enter a valid email.';
-    if (!form.project_type) e.project_type = 'Please select one.';
-    if (!form.budget) e.budget = 'Please select one.';
+    if (!form.name.trim()) e.name = 'Required';
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Invalid email';
+    if (!form.project_type) e.project_type = 'Select one';
+    if (!form.budget) e.budget = 'Select one';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -181,7 +176,6 @@ export default function QuoteForm() {
       className="relative overflow-hidden"
       style={{ background: '#09090A', padding: 'clamp(100px,12vw,160px) clamp(24px,5vw,88px)' }}
     >
-      {/* Top rule */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
       {/* Atmospheric glow */}
@@ -237,7 +231,7 @@ export default function QuoteForm() {
 
                 <div className="overflow-hidden mb-1">
                   <motion.h2 className="font-display italic"
-                    style={{ fontSize: 'clamp(2.2rem,4.8vw,6.5rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+                    style={{ fontSize: 'clamp(2.4rem,5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
                     initial={{ y: '108%' }} whileInView={{ y: 0 }}
                     viewport={{ once: true }} transition={{ duration: 0.85, ease }}>
                     Start your
@@ -245,128 +239,114 @@ export default function QuoteForm() {
                 </div>
                 <div className="overflow-hidden mb-8">
                   <motion.h2 className="font-display italic gradient-text"
-                    style={{ fontSize: 'clamp(2.2rem,4.8vw,6.5rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}
+                    style={{ fontSize: 'clamp(2.4rem,5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}
                     initial={{ y: '108%' }} whileInView={{ y: 0 }}
-                    viewport={{ once: true }} transition={{ duration: 0.85, ease, delay: 0.1 }}>
+                    viewport={{ once: true }} transition={{ duration: 0.85, ease, delay: 0.08 }}>
                     project.
                   </motion.h2>
                 </div>
 
                 <motion.p
                   className="font-body font-light text-sm leading-relaxed mb-12"
-                  style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '36ch' }}
+                  style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '38ch' }}
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.25 }}>
-                  Fill in the form with your details — including your number so we can call you — and we'll come back with a personalised proposal within 24 hours. No obligation, no pressure.
+                  viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
+                  Fill in your details and we'll come back with a personalised proposal
+                  within 24 hours. No obligation, no pressure.
                 </motion.p>
 
-                {/* Trust stats */}
+                {/* ── Trust stats — horizontal row ── */}
                 <motion.div
-                  className="flex flex-col"
+                  className="flex items-start gap-10"
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.35 }}>
+                  viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}>
                   {[
                     { stat: '24h', label: 'Proposal turnaround' },
                     { stat: '£0', label: 'Consultation fee' },
                     { stat: '28+', label: 'Sites delivered' },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-5 py-5"
-                      style={{ borderTop: '1px solid rgba(237,232,220,0.07)' }}>
+                    <div key={i} className="flex flex-col gap-1">
                       <span className="font-display italic gradient-text"
-                        style={{ fontSize: '1.5rem', letterSpacing: '-0.02em', minWidth: '3.8rem' }}>
+                        style={{ fontSize: 'clamp(1.6rem,2.8vw,2.6rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
                         {item.stat}
                       </span>
-                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.32)' }}>
+                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.3)' }}>
                         {item.label}
                       </span>
                     </div>
                   ))}
-                  <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
                 </motion.div>
               </div>
 
-              {/* ── RIGHT: Form card ── */}
+              {/* ── RIGHT: Flat form ── */}
               <motion.div
                 initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.8, ease, delay: 0.15 }}>
 
-                <form
-                  onSubmit={handleSubmit}
-                  className="rounded-3xl"
-                  style={{
-                    background: 'rgba(237,232,220,0.025)',
-                    border: '1px solid rgba(237,232,220,0.09)',
-                    padding: 'clamp(28px,4vw,52px)',
-                  }}>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
                   {/* Name + Phone */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <Field label="Your name" error={errors.name}>
-                      <StyledInput value={form.name} onChange={v => set('name', v)} placeholder="James Miller" />
-                    </Field>
-                    <Field label="Phone number" optional>
-                      <StyledInput type="tel" value={form.phone} onChange={v => set('phone', v)} placeholder="+44 7700 000 000" />
-                    </Field>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div>
+                      <FieldLabel htmlFor="name" label="Your name" error={errors.name} />
+                      <UnderlineInput id="name" value={form.name} onChange={v => set('name', v)} placeholder="John Smith" />
+                    </div>
+                    <div>
+                      <FieldLabel htmlFor="phone" label="Phone number" optional />
+                      <UnderlineInput id="phone" type="tel" value={form.phone} onChange={v => set('phone', v)} placeholder="+44 7XXX XXXXXX" />
+                    </div>
                   </div>
 
                   {/* Email */}
-                  <div className="mb-6">
-                    <Field label="Email address" error={errors.email}>
-                      <StyledInput type="email" value={form.email} onChange={v => set('email', v)} placeholder="you@yourbusiness.com" />
-                    </Field>
+                  <div>
+                    <FieldLabel htmlFor="email" label="Email address" error={errors.email} />
+                    <UnderlineInput id="email" type="email" value={form.email} onChange={v => set('email', v)} placeholder="john@company.com" />
                   </div>
 
                   {/* What do you need */}
-                  <div className="mb-6">
-                    <ChipGroup
-                      label="What do you need?"
-                      options={projectTypes}
-                      value={form.project_type}
-                      onChange={v => set('project_type', v)}
-                      error={errors.project_type}
-                    />
-                  </div>
+                  <ChipGroup
+                    label="What do you need?"
+                    options={projectTypes}
+                    value={form.project_type}
+                    onChange={v => set('project_type', v)}
+                    error={errors.project_type}
+                  />
 
                   {/* Budget */}
-                  <div className="mb-6">
-                    <ChipGroup
-                      label="Budget range"
-                      options={budgets}
-                      value={form.budget}
-                      onChange={v => set('budget', v)}
-                      error={errors.budget}
-                    />
-                  </div>
+                  <ChipGroup
+                    label="Budget range"
+                    options={budgets}
+                    value={form.budget}
+                    onChange={v => set('budget', v)}
+                    error={errors.budget}
+                  />
 
                   {/* Notes */}
-                  <div className="mb-8">
-                    <Field label="Anything to add" optional>
-                      <StyledTextarea value={form.notes} onChange={v => set('notes', v)} />
-                    </Field>
+                  <div>
+                    <FieldLabel htmlFor="notes" label="Anything to add" optional />
+                    <UnderlineTextarea id="notes" value={form.notes} onChange={v => set('notes', v)} />
                   </div>
 
                   {/* Submit */}
                   <motion.button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-3 font-body font-semibold cursor-pointer"
+                    className="w-full flex items-center justify-center font-body font-semibold cursor-pointer rounded-full"
                     style={{
                       background: 'linear-gradient(135deg, #8B1010, #C41E1E)',
                       color: '#F0EDED',
                       padding: '17px 32px',
                       fontSize: '0.875rem',
                       letterSpacing: '0.04em',
-                      borderRadius: 12,
                       border: 'none',
                       opacity: loading ? 0.7 : 1,
                     }}
                     whileHover={loading ? {} : { filter: 'brightness(1.1)', scale: 1.01 }}
                     whileTap={loading ? {} : { scale: 0.98 }}>
                     {loading ? 'Sending…' : 'Send Enquiry'}
-                    {!loading && <ArrowRight size={16} />}
                   </motion.button>
 
-                  <p className="text-center font-body text-[10px] tracking-[0.15em] uppercase mt-5"
+                  <p className="text-center font-body text-[10px] tracking-[0.15em] uppercase -mt-4"
                     style={{ color: 'rgba(237,232,220,0.18)' }}>
                     Free consultation · No obligation · Reply within 24h
                   </p>
