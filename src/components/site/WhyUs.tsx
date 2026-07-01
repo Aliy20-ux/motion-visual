@@ -70,18 +70,17 @@ export default function WhyUs() {
                 style={{ color: 'rgba(237,232,220,0.35)' }}>Services</span>
             </motion.div>
 
-            <div className="overflow-hidden mb-8">
-              <motion.h2
-                className="font-display italic"
-                style={{ fontSize: 'clamp(2rem,5.5vw,7rem)', lineHeight: 0.92, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                initial={{ y: '110%' }} whileInView={{ y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.95, ease }}>
-                The architecture<br />
-                behind every<br />
-                <span className="gradient-text">build.</span>
-              </motion.h2>
-            </div>
+            <motion.h2
+              className="font-display italic mb-8"
+              style={{ fontSize: 'clamp(2rem,5.5vw,7rem)', lineHeight: 0.92, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0 }}
+              transition={{ duration: 0.85, ease }}>
+              The architecture<br />
+              behind every<br />
+              <span className="gradient-text">build.</span>
+            </motion.h2>
 
             <motion.p
               className="font-body font-light text-sm leading-relaxed"

@@ -229,22 +229,22 @@ export default function QuoteForm() {
                   </span>
                 </motion.div>
 
-                <div className="overflow-hidden mb-1">
-                  <motion.h2 className="font-display italic"
-                    style={{ fontSize: 'clamp(2.4rem,5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                    initial={{ y: '108%' }} whileInView={{ y: 0 }}
-                    viewport={{ once: true }} transition={{ duration: 0.85, ease }}>
-                    Start your
-                  </motion.h2>
-                </div>
-                <div className="overflow-hidden mb-8">
-                  <motion.h2 className="font-display italic gradient-text"
-                    style={{ fontSize: 'clamp(2.4rem,5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}
-                    initial={{ y: '108%' }} whileInView={{ y: 0 }}
-                    viewport={{ once: true }} transition={{ duration: 0.85, ease, delay: 0.08 }}>
-                    project.
-                  </motion.h2>
-                </div>
+                <motion.h2 className="font-display italic mb-1"
+                  style={{ fontSize: 'clamp(2.4rem,5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0 }}
+                  transition={{ duration: 0.85, ease }}>
+                  Start your
+                </motion.h2>
+                <motion.h2 className="font-display italic gradient-text mb-8"
+                  style={{ fontSize: 'clamp(2.4rem,5vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em' }}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0 }}
+                  transition={{ duration: 0.85, ease, delay: 0.08 }}>
+                  project.
+                </motion.h2>
 
                 <motion.p
                   className="font-body font-light text-sm leading-relaxed mb-12"
