@@ -7,172 +7,155 @@ const team = [
   {
     name: 'Ali',
     role: 'Web Designer & Developer',
-    bio: 'Designs and builds premium websites from concept to launch. Every project is a chance to make something worth remembering.',
+    bio: 'Designs and builds premium websites from concept to launch.',
     letter: 'A',
   },
   {
     name: 'Munib',
     role: 'Web Designer & Developer',
-    bio: 'Turns briefs into fully coded, animated websites. Detail-obsessed and deadline-reliable — every time.',
+    bio: 'Turns briefs into fully coded, animated websites.',
     letter: 'M',
   },
   {
     name: 'Nadir',
     role: 'Web Designer & Developer',
-    bio: 'Builds sites that perform as well as they look. Clean code, sharp design, and nothing left to chance.',
+    bio: 'Builds sites that perform as well as they look.',
     letter: 'N',
   },
   {
     name: 'Robbie',
     role: 'Web Designer & Developer',
-    bio: 'Crafts the interactions and transitions that make a site feel alive. If it moves well, it converts better.',
+    bio: 'Crafts the interactions and transitions that make a site feel alive.',
     letter: 'R',
   },
   {
     name: 'Mia',
     role: 'Web Designer & Developer',
-    bio: 'Brings precision and creativity to every build. From layout to launch, every pixel is intentional.',
+    bio: 'Brings precision and creativity to every build.',
     letter: 'M',
   },
 ];
+
+const badges = ['No Contractors', 'No Outsourcing', 'Every Project Built In-House'];
 
 export default function About() {
   return (
     <section
       id="about"
       className="relative overflow-hidden"
-      style={{ background: '#080809', padding: 'clamp(100px,12vw,160px) clamp(24px,5vw,88px)' }}
+      style={{ background: '#080809', padding: 'clamp(80px,11vw,150px) clamp(24px,5vw,88px)' }}
     >
-      {/* Top border */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
-      {/* Atmospheric glow — bottom left */}
+      {/* Atmospheric glow */}
       <div className="absolute bottom-0 left-0 w-[700px] h-[600px] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(196,30,30,0.09) 0%, transparent 60%)' }} />
-      {/* Secondary glow — top right */}
-      <div className="absolute top-0 right-0 w-[500px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 100% 0%, rgba(196,30,30,0.04) 0%, transparent 60%)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto">
 
-        {/* ── Header row ── */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-20 md:mb-28">
-          <div>
-            <motion.div className="flex items-center gap-4 mb-8"
-              initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <div className="w-8 h-px gradient-bg" />
-              <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-                style={{ color: 'rgba(237,232,220,0.35)' }}>
-                The Team
-              </span>
-            </motion.div>
+        {/* ── Centered header ── */}
+        <div className="text-center mb-16 md:mb-20">
+          <motion.div
+            className="flex items-center justify-center gap-4 mb-8"
+            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <div className="w-8 h-px gradient-bg" />
+            <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+              style={{ color: 'rgba(237,232,220,0.35)' }}>The Team</span>
+            <div className="w-8 h-px gradient-bg" />
+          </motion.div>
 
-            <motion.div className="overflow-hidden"
-              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-              <motion.h2 className="font-display italic"
-                style={{ fontSize: 'clamp(1.6rem,6.5vw,8rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
-                variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.95, ease } } }}>
-                Five minds.<br />
-                <span className="gradient-text">One standard.</span>
-              </motion.h2>
-            </motion.div>
+          <div className="overflow-hidden mb-6">
+            <motion.h2
+              className="font-display italic"
+              style={{ fontSize: 'clamp(2rem,6vw,7rem)', lineHeight: 0.9, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+              initial={{ y: '110%' }} whileInView={{ y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.95, ease }}>
+              Five minds.{' '}
+              <span className="gradient-text">One standard.</span>
+            </motion.h2>
           </div>
 
-          <motion.div className="lg:max-w-xs"
+          <motion.p
+            className="font-body font-light text-sm leading-relaxed mx-auto"
+            style={{ color: 'rgba(237,232,220,0.4)', maxWidth: '52ch' }}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
-            <p className="font-body font-light text-sm leading-relaxed mb-6"
-              style={{ color: 'rgba(237,232,220,0.4)' }}>
-              A tight-knit team of five specialists — no hand-offs, no outsourcing.
-              Every project is owned start to finish by the same people who took your brief.
-            </p>
-            <span className="font-body text-[10px] tracking-[0.28em] uppercase"
-              style={{ color: 'rgba(196,30,30,0.55)' }}>
-              Edinburgh-based · Est. 2023
-            </span>
-          </motion.div>
+            viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}>
+            A tight-knit team of five specialists — no hand-offs, no outsourcing.
+            Every project is owned start to finish.
+          </motion.p>
         </div>
 
-        {/* ── Team cards — full 5-col row ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px"
-          style={{ background: 'rgba(237,232,220,0.08)' }}>
+        {/* ── Team cards — 5 columns ── */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 mb-12">
           {team.map((member, i) => (
             <motion.div
               key={i}
-              className="group relative flex flex-col overflow-hidden"
-              style={{ background: '#080809', minHeight: 'clamp(260px,28vw,360px)' }}
-              initial={{ opacity: 0, y: 28 }}
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.7, ease, delay: i * 0.08 }}>
 
-              {/* Large editorial letter */}
-              <div className="relative flex-1 overflow-hidden flex items-end"
-                style={{ padding: 'clamp(20px,2.5vw,32px) clamp(20px,2.5vw,32px) 0' }}>
-                <motion.span
-                  className="font-display italic select-none pointer-events-none block leading-none"
-                  style={{
-                    fontSize: 'clamp(5.5rem,9vw,9.5rem)',
-                    letterSpacing: '-0.04em',
-                    lineHeight: 0.85,
-                    background: 'linear-gradient(160deg, rgba(196,30,30,0.65) 0%, rgba(232,56,56,0.3) 50%, rgba(200,200,200,0.08) 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.5, ease }}>
+              {/* Circle avatar */}
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center mb-4"
+                style={{
+                  background: 'rgba(237,232,220,0.06)',
+                  border: '1px solid rgba(237,232,220,0.1)',
+                }}>
+                <span className="font-display italic"
+                  style={{ fontSize: '2rem', letterSpacing: '-0.04em', color: 'rgba(237,232,220,0.7)' }}>
                   {member.letter}
-                </motion.span>
-
-                {/* Hover crimson glow */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                  style={{ background: 'radial-gradient(ellipse at 30% 60%, rgba(196,30,30,0.1) 0%, transparent 70%)' }} />
+                </span>
               </div>
 
-              {/* Info panel */}
-              <div style={{ padding: 'clamp(16px,2vw,24px) clamp(20px,2.5vw,32px) clamp(24px,2.5vw,36px)' }}>
-                <div className="mb-4 h-px" style={{ background: 'rgba(237,232,220,0.08)' }} />
+              {/* Name */}
+              <p className="font-display italic mb-1"
+                style={{ fontSize: 'clamp(1rem,1.4vw,1.25rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                {member.name}
+              </p>
 
-                <p className="font-display italic mb-1.5"
-                  style={{ fontSize: 'clamp(1.1rem,1.8vw,1.55rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                  {member.name}
-                </p>
-                <p className="font-body text-[9px] tracking-[0.24em] uppercase mb-3"
-                  style={{ color: 'rgba(196,30,30,0.7)' }}>
-                  {member.role}
-                </p>
-                <p className="font-body font-light text-xs leading-relaxed"
-                  style={{ color: 'rgba(237,232,220,0.32)' }}>
-                  {member.bio}
-                </p>
-              </div>
+              {/* Role */}
+              <p className="font-body text-[9px] tracking-[0.22em] uppercase mb-3"
+                style={{ color: 'rgba(196,30,30,0.8)' }}>
+                {member.role}
+              </p>
 
-              {/* Animated left border */}
-              <div className="absolute left-0 top-0 w-px h-0 group-hover:h-full transition-all duration-500 pointer-events-none"
-                style={{ background: 'linear-gradient(to bottom, #C41E1E, #E83838)' }} />
+              {/* Bio */}
+              <p className="font-body font-light text-xs leading-relaxed"
+                style={{ color: 'rgba(237,232,220,0.3)' }}>
+                {member.bio}
+              </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom note */}
+        {/* ── Badge pills ── */}
         <motion.div
-          className="flex items-center gap-6 mt-16"
+          className="flex flex-wrap items-center justify-center gap-3"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease, delay: 0.2 }}>
-          <div className="h-px flex-1" style={{ background: 'rgba(237,232,220,0.06)' }} />
-          <p className="font-body font-light text-xs shrink-0" style={{ color: 'rgba(237,232,220,0.22)' }}>
-            No contractors · No outsourcing · Every project built in-house
-          </p>
-          <div className="h-px flex-1" style={{ background: 'rgba(237,232,220,0.06)' }} />
+          transition={{ duration: 0.7, ease, delay: 0.4 }}>
+          {badges.map((badge, i) => (
+            <span
+              key={i}
+              className="font-body text-[10px] tracking-[0.2em] uppercase rounded-full"
+              style={{
+                padding: '10px 20px',
+                background: 'rgba(237,232,220,0.03)',
+                border: '1px solid rgba(237,232,220,0.12)',
+                color: 'rgba(237,232,220,0.45)',
+              }}>
+              {badge}
+            </span>
+          ))}
         </motion.div>
 
       </div>
 
-      {/* Bottom border */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
     </section>
   );

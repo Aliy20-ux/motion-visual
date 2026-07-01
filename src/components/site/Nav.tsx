@@ -100,7 +100,7 @@ export default function Nav() {
                 className="gradient-bg font-body text-[11px] font-medium tracking-[0.14em] uppercase text-white rounded-full transition-all duration-300 hover:opacity-85 hover:scale-105 cursor-pointer flex items-center"
                 style={{ padding: '9px 20px' }}
               >
-                Book a Free Call
+                Start a Project
               </a>
             </div>
 
@@ -152,7 +152,7 @@ export default function Nav() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.32 }}
             >
-              Book a Free Call
+              Start a Project
             </motion.a>
           </motion.div>
         )}
