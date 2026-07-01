@@ -1,11 +1,8 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { motion } from 'motion/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -230,41 +227,13 @@ function SiteMockup({ project }: { project: typeof projects[0] }) {
 }
 
 export default function SelectedWork() {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobile = window.innerWidth < 768;
-    if (!sectionRef.current || !trackRef.current || prefersReduced || isMobile) return;
-
-    const track = trackRef.current;
-
-    const ctx = gsap.context(() => {
-      const totalWidth = track.scrollWidth - window.innerWidth;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          start: 'top top',
-          end: () => `+=${totalWidth + 200}`,
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      tl.to(track, { x: -totalWidth, ease: 'none' });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="work" ref={sectionRef} className="relative overflow-hidden" style={{ minHeight: '100vh' }}>
+    <section id="work" className="relative" style={{ padding: 'clamp(80px,10vw,140px) 0' }}>
       {/* Header */}
       <div
-        className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-[clamp(20px,5vw,80px)] pt-20 pb-8"
+        className="flex items-end justify-between px-[clamp(20px,5vw,80px)] pb-12"
         style={{ borderBottom: '1px solid rgba(244,241,236,0.06)' }}
       >
         <div>
@@ -277,28 +246,40 @@ export default function SelectedWork() {
           </h2>
         </div>
         <span className="font-body text-xs hidden md:block" style={{ color: 'rgba(244,241,236,0.25)' }}>
-          ← scroll to explore →
+          drag to explore →
         </span>
       </div>
 
-      {/* Horizontal track — desktop */}
+      {/* Horizontal drag-scroll track */}
       <div
         ref={trackRef}
-        className="hidden md:flex items-center gap-6 absolute left-0"
+        className="flex gap-5 overflow-x-auto pt-10 pb-4"
         style={{
-          top: '50%',
-          transform: 'translateY(-50%)',
-          padding: '0 clamp(20px,5vw,80px)',
-          willChange: 'transform',
+          padding: '40px clamp(20px,5vw,80px)',
+          scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none',
+          WebkitOverflowScrolling: 'touch',
+          cursor: 'grab',
+        }}
+        onMouseDown={(e) => {
+          const el = trackRef.current;
+          if (!el) return;
+          el.style.cursor = 'grabbing';
+          const startX = e.pageX - el.offsetLeft;
+          const scrollLeft = el.scrollLeft;
+          const onMove = (ev: MouseEvent) => {
+            const x = ev.pageX - el.offsetLeft;
+            el.scrollLeft = scrollLeft - (x - startX);
+          };
+          const onUp = () => {
+            el.style.cursor = 'grab';
+            window.removeEventListener('mousemove', onMove);
+            window.removeEventListener('mouseup', onUp);
+          };
+          window.addEventListener('mousemove', onMove);
+          window.addEventListener('mouseup', onUp);
         }}
       >
-        {projects.map((project, i) => (
-          <ProjectCard key={i} project={project} index={i} />
-        ))}
-      </div>
-
-      {/* Vertical stack — mobile */}
-      <div className="md:hidden flex flex-col gap-6 px-5 pt-48 pb-20">
         {projects.map((project, i) => (
           <ProjectCard key={i} project={project} index={i} />
         ))}

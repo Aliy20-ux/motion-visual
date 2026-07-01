@@ -2,6 +2,8 @@
 import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function Footer() {
   const wordmarkRef = useRef<HTMLHeadingElement>(null);
   const [distorted, setDistorted] = useState(false);
@@ -27,49 +29,63 @@ export default function Footer() {
 
   return (
     <>
-      {/* Full-bleed CTA */}
-      <section className="relative overflow-hidden" style={{ padding: 'clamp(80px,12vw,160px) clamp(20px,5vw,80px)', background: '#111114' }}>
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 0%, #7C3AED, transparent 60%)' }} />
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.p
-            className="font-body text-xs tracking-[0.3em] uppercase mb-6"
-            style={{ color: 'rgba(244,241,236,0.35)' }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            Ready to begin?
-          </motion.p>
-          <motion.h2
-            className="font-display italic mb-10"
-            style={{ fontSize: 'clamp(3rem,8vw,9rem)', lineHeight: 0.9, letterSpacing: '-0.02em', color: '#F4F1EC' }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
-          >
-            Let's build<br /><span className="gradient-text">something great.</span>
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <a
-              href="#quote"
-              className="gradient-bg inline-flex items-center gap-3 rounded-full font-body font-medium text-base text-white px-10 py-5 hover:opacity-90 hover:scale-105 transition-all duration-300"
-            >
-              Start Your Project
-            </a>
-          </motion.div>
+      {/* ── Full-bleed CTA ── */}
+      <section className="relative overflow-hidden" style={{ background: '#0C0C0F' }}>
+        {/* Top gradient glow */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(196,144,32,0.12), transparent 65%)' }} />
+        {/* Bottom fade to footer */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, #080809, transparent)' }} />
+
+        <div className="relative" style={{ padding: 'clamp(100px,13vw,180px) clamp(24px,5vw,88px)' }}>
+          <div className="max-w-5xl mx-auto text-center">
+            <motion.p className="font-body text-[10px] tracking-[0.35em] uppercase mb-8"
+              style={{ color: 'rgba(237,232,220,0.3)' }}
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+              Ready to begin?
+            </motion.p>
+
+            {/* Huge display line */}
+            <div className="overflow-hidden mb-4">
+              <motion.h2 className="font-display italic"
+                style={{ fontSize: 'clamp(3.5rem,9vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em', color: '#EDE8DC' }}
+                initial={{ y: '110%' }} whileInView={{ y: 0 }} viewport={{ once: true }}
+                transition={{ duration: 0.95, ease }}>
+                Let's build
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden mb-14">
+              <motion.h2 className="font-display italic gradient-text"
+                style={{ fontSize: 'clamp(3.5rem,9vw,11rem)', lineHeight: 0.88, letterSpacing: '-0.025em' }}
+                initial={{ y: '110%' }} whileInView={{ y: 0 }} viewport={{ once: true }}
+                transition={{ duration: 0.95, ease, delay: 0.1 }}>
+                something great.
+              </motion.h2>
+            </div>
+
+            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: 0.35, duration: 0.7 }}>
+              <a href="#quote"
+                className="gradient-bg inline-flex items-center gap-3 rounded-full font-body font-medium text-base text-white hover:opacity-90 hover:scale-105 transition-all duration-300 cursor-pointer"
+                style={{ padding: '18px 40px' }}>
+                Start Your Project
+              </a>
+              <a href="mailto:hello@motionvisual.co.uk"
+                className="font-body text-sm transition-opacity hover:opacity-80"
+                style={{ color: 'rgba(237,232,220,0.42)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                or email us directly
+              </a>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ background: '#0A0A0B', borderTop: '1px solid rgba(244,241,236,0.06)' }}>
+      {/* ── Footer ── */}
+      <footer style={{ background: '#080809', borderTop: '1px solid rgba(237,232,220,0.06)' }}>
         {/* Kinetic wordmark */}
-        <div className="overflow-hidden px-[clamp(20px,5vw,80px)] pt-16 pb-12" style={{ borderBottom: '1px solid rgba(244,241,236,0.06)' }}>
+        <div className="overflow-hidden px-[clamp(24px,5vw,88px)] pt-16 pb-12" style={{ borderBottom: '1px solid rgba(237,232,220,0.06)' }}>
           <h2
             ref={wordmarkRef}
             className="font-display italic select-none transition-all duration-150"
@@ -79,8 +95,8 @@ export default function Footer() {
               letterSpacing: '0.05em',
               cursor: 'default',
               background: distorted
-                ? 'linear-gradient(135deg,#7C3AED,#06B6D4)'
-                : 'linear-gradient(180deg, rgba(244,241,236,0.6) 0%, rgba(244,241,236,0.22) 100%)',
+                ? 'linear-gradient(135deg,#B07810,#E8C050)'
+                : 'linear-gradient(180deg, rgba(237,232,220,0.55) 0%, rgba(237,232,220,0.18) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -92,19 +108,19 @@ export default function Footer() {
           </h2>
         </div>
 
-        {/* Footer bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-[clamp(20px,5vw,80px)] py-8">
+        {/* Footer bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-[clamp(24px,5vw,88px)] py-8">
           <div className="flex items-center gap-6">
-            <span className="font-body text-xs" style={{ color: 'rgba(244,241,236,0.25)' }}>© 2026 Motion Visual Agency Ltd</span>
-            <span className="font-body text-xs hidden sm:block" style={{ color: 'rgba(244,241,236,0.15)' }}>Edinburgh, Scotland</span>
+            <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.22)' }}>© 2026 Motion Visual Agency Ltd</span>
+            <span className="font-body text-xs hidden sm:block" style={{ color: 'rgba(237,232,220,0.12)' }}>Edinburgh, Scotland</span>
           </div>
           <div className="flex items-center gap-6">
             {['Privacy', 'Terms', 'Contact'].map(link => (
-              <a key={link} href={`/${link.toLowerCase()}`} className="font-body text-xs transition-colors duration-200 hover:text-off-white/70" style={{ color: 'rgba(244,241,236,0.25)' }}>
+              <a key={link} href={`/${link.toLowerCase()}`} className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer" style={{ color: 'rgba(237,232,220,0.22)' }}>
                 {link}
               </a>
             ))}
-            <a href="/admin" className="font-body text-xs transition-colors duration-200 hover:text-violet-400" style={{ color: 'rgba(124,58,237,0.4)' }}>
+            <a href="/admin" className="font-body text-xs transition-colors duration-200 hover:opacity-80" style={{ color: 'rgba(196,144,32,0.38)' }}>
               Admin
             </a>
           </div>

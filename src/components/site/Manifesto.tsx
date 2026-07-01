@@ -30,15 +30,15 @@ export default function Manifesto() {
       className="relative overflow-hidden"
       style={{ padding: 'clamp(100px,13vw,180px) clamp(20px,5vw,80px)' }}
     >
-      {/* Atmospheric violet glow top-left */}
+      {/* Atmospheric gold glow top-left */}
       <div
         className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(196,144,32,0.07) 0%, transparent 70%)' }}
       />
-      {/* Atmospheric cyan glow bottom-right */}
+      {/* Atmospheric gold glow bottom-right */}
       <div
         className="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(176,120,16,0.05) 0%, transparent 70%)' }}
       />
 
       {/* Section header row */}
@@ -121,7 +121,7 @@ export default function Manifesto() {
         className="mt-20 md:mt-28 h-px relative z-10"
         style={{
           background:
-            'linear-gradient(to right, rgba(124,58,237,0.6), rgba(6,182,212,0.6), transparent)',
+            'linear-gradient(to right, rgba(176,120,16,0.7), rgba(232,192,80,0.5), transparent)',
         }}
         initial={{ scaleX: 0, originX: 0 }}
         whileInView={{ scaleX: 1 }}
