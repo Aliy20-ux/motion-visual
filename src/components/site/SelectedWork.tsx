@@ -3,228 +3,58 @@ import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const projects = [
   {
     name: 'Thomas J Walls',
     type: 'Coffee House · Edinburgh',
     url: 'https://thomas-j-walls-coffee.aliy20.workers.dev',
-    color: '#2D1B0E',
-    accent: '#C8924A',
+    screenshot: '/work/thomas-j-walls.jpg',
     year: '2025',
     tags: ['E-commerce', 'Branding', 'Animation'],
-    nav: ['Menu', 'Our Story', 'Order'],
-    hero: "Edinburgh's\nfinest coffee",
-    sub: 'Speciality coffee & pastries, Old Town',
-    cta: 'Order Online',
-    blocks: [0.9, 0.6, 0.75],
   },
   {
     name: 'Texture Lounge',
     type: 'Beauty & Hair · Edinburgh',
     url: 'https://texture-lounge-website.pages.dev',
-    color: '#1A0F14',
-    accent: '#D4A5C0',
+    screenshot: '/work/texture-lounge.jpg',
     year: '2025',
     tags: ['Booking System', 'CMS', 'SEO'],
-    nav: ['Services', 'Gallery', 'Book'],
-    hero: 'Beauty\nthat lasts.',
-    sub: 'Premium hair & beauty, Edinburgh',
-    cta: 'Book Now',
-    blocks: [0.7, 1, 0.55],
   },
   {
     name: 'CHE Edinburgh',
     type: 'Hospitality · Edinburgh',
     url: 'https://che-edinburgh.aliy20.workers.dev',
-    color: '#0D1A0D',
-    accent: '#6BAF6B',
+    screenshot: '/work/che-edinburgh.jpg',
     year: '2025',
     tags: ['Restaurant', 'Reservations', 'Animation'],
-    nav: ['Menus', 'Reservations', 'Private'],
-    hero: 'Modern\nEuropean\ndining.',
-    sub: 'CHE Edinburgh — New Town',
-    cta: 'Reserve a Table',
-    blocks: [1, 0.65, 0.8],
   },
   {
     name: 'S2 Studio Cuts',
     type: 'Barbershop · Edinburgh',
     url: 'https://s2-studio-cuts.aliy20.workers.dev',
-    color: '#0A0A14',
-    accent: '#7C3AED',
+    screenshot: '/work/s2-studio-cuts.jpg',
     year: '2025',
     tags: ['Booking', 'Gallery', 'Branding'],
-    nav: ['Services', 'Gallery', 'Book'],
-    hero: 'Premium\ncuts.\nSharp looks.',
-    sub: 'S2 Studio Cuts — Leith',
-    cta: 'Book a Cut',
-    blocks: [0.6, 1, 0.7],
   },
   {
     name: 'Lucky Chen',
     type: 'Restaurant · Edinburgh',
     url: 'https://lucky-chen-edinburgh.aliy20.workers.dev',
-    color: '#1A0A00',
-    accent: '#F59E0B',
+    screenshot: '/work/lucky-chen.jpg',
     year: '2025',
     tags: ['Menu System', 'Ordering', 'SEO'],
-    nav: ['Menu', 'Reservations', 'Order'],
-    hero: 'Pan-Asian\ndining in\nEdinburgh.',
-    sub: 'Lucky Chen — Grassmarket',
-    cta: 'View Menu',
-    blocks: [0.8, 0.5, 0.9],
   },
   {
     name: 'The Mid Yoken',
     type: 'Community Pub · Edinburgh',
     url: 'https://mid-yoken.aliy20.workers.dev',
-    color: '#100A06',
-    accent: '#D97706',
+    screenshot: '/work/mid-yoken.jpg',
     year: '2025',
     tags: ['Events', 'Gallery', 'Local SEO'],
-    nav: ['Food', 'Events', 'Find Us'],
-    hero: 'Your local\nEdinburgh\npub.',
-    sub: 'The Mid Yoken — Morningside',
-    cta: 'See What\'s On',
-    blocks: [0.75, 1, 0.6],
   },
 ];
-
-function SiteMockup({ project }: { project: typeof projects[0] }) {
-  return (
-    <div className="absolute inset-0 overflow-hidden select-none">
-      {/* Browser chrome */}
-      <div
-        className="flex items-center gap-1.5 px-3 shrink-0"
-        style={{ height: 26, background: 'rgba(0,0,0,0.5)', borderBottom: `1px solid ${project.accent}15` }}
-      >
-        <div className="w-2 h-2 rounded-full" style={{ background: '#FF5F57' }} />
-        <div className="w-2 h-2 rounded-full" style={{ background: '#FFBD2E' }} />
-        <div className="w-2 h-2 rounded-full" style={{ background: '#28C840' }} />
-        <div
-          className="ml-2 flex-1 rounded flex items-center px-2"
-          style={{ height: 14, background: 'rgba(255,255,255,0.06)', maxWidth: 150 }}
-        >
-          <span className="font-body truncate" style={{ fontSize: 7, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.03em' }}>
-            {project.url.replace('https://', '')}
-          </span>
-        </div>
-      </div>
-
-      {/* Site body */}
-      <div
-        className="flex flex-col overflow-hidden"
-        style={{ background: project.color, height: 'calc(100% - 26px)' }}
-      >
-        {/* Nav */}
-        <div
-          className="flex items-center justify-between shrink-0"
-          style={{
-            padding: '8px 14px',
-            borderBottom: `1px solid ${project.accent}18`,
-            background: `${project.color}e0`,
-          }}
-        >
-          <span
-            className="font-body font-semibold tracking-[0.18em] uppercase"
-            style={{ fontSize: 8, color: project.accent }}
-          >
-            {project.name}
-          </span>
-          <div className="flex items-center gap-3">
-            {project.nav.map((item) => (
-              <span key={item} className="font-body uppercase tracking-[0.1em]" style={{ fontSize: 7, color: 'rgba(255,255,255,0.3)' }}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Hero */}
-        <div className="flex-1 flex flex-col justify-center relative overflow-hidden" style={{ padding: '12px 14px 10px' }}>
-          {/* Accent glow */}
-          <div
-            className="absolute -top-8 -right-8 rounded-full pointer-events-none"
-            style={{
-              width: 120,
-              height: 120,
-              background: `radial-gradient(circle, ${project.accent}30 0%, transparent 70%)`,
-            }}
-          />
-          {/* Subtle diagonal lines texture */}
-          <div
-            className="absolute inset-0 opacity-5 pointer-events-none"
-            style={{
-              backgroundImage: `repeating-linear-gradient(45deg, ${project.accent} 0px, ${project.accent} 1px, transparent 1px, transparent 12px)`,
-            }}
-          />
-
-          <div
-            className="font-body uppercase tracking-[0.22em] mb-2 relative"
-            style={{ fontSize: 7, color: project.accent }}
-          >
-            {project.type}
-          </div>
-
-          <div
-            className="font-display italic relative"
-            style={{
-              fontSize: 'clamp(1rem, 3vw, 1.8rem)',
-              lineHeight: 1.0,
-              letterSpacing: '-0.02em',
-              color: '#F4F1EC',
-              whiteSpace: 'pre-line',
-              marginBottom: 10,
-            }}
-          >
-            {project.hero}
-          </div>
-
-          <div
-            className="font-body mb-5 relative"
-            style={{ fontSize: 8, color: 'rgba(255,255,255,0.38)', lineHeight: 1.4 }}
-          >
-            {project.sub}
-          </div>
-
-          <div
-            className="inline-flex items-center gap-1.5 rounded-full font-body font-semibold self-start relative"
-            style={{
-              fontSize: 7.5,
-              padding: '5px 11px',
-              background: project.accent,
-              color: project.color,
-              letterSpacing: '0.08em',
-            }}
-          >
-            {project.cta}
-            <ArrowUpRight size={8} />
-          </div>
-        </div>
-
-        {/* Bottom content blocks */}
-        <div
-          className="shrink-0 flex gap-1.5"
-          style={{ padding: '0 14px 12px' }}
-        >
-          {project.blocks.map((w, i) => (
-            <div
-              key={i}
-              className="rounded"
-              style={{
-                flex: w,
-                height: 22,
-                background: i === 0 ? `${project.accent}22` : 'rgba(255,255,255,0.04)',
-                border: `1px solid ${project.accent}${i === 0 ? '30' : '10'}`,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function SelectedWork() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -237,13 +67,22 @@ export default function SelectedWork() {
         style={{ borderBottom: '1px solid rgba(244,241,236,0.06)' }}
       >
         <div>
-          <div className="flex items-center gap-4 mb-4">
+          <motion.div className="flex items-center gap-4 mb-4"
+            initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(244,241,236,0.35)' }}>Selected Work</span>
-          </div>
-          <h2 className="font-display italic" style={{ fontSize: 'clamp(2rem,5vw,5rem)', lineHeight: 0.92, letterSpacing: '-0.02em', color: '#F4F1EC' }}>
-            Projects we're <span className="gradient-text">proud of.</span>
-          </h2>
+            <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(244,241,236,0.35)' }}>
+              Selected Work
+            </span>
+          </motion.div>
+          <motion.div className="overflow-hidden"
+            initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <motion.h2 className="font-display italic"
+              style={{ fontSize: 'clamp(2rem,5vw,5rem)', lineHeight: 0.92, letterSpacing: '-0.02em', color: '#F4F1EC' }}
+              variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.9, ease } } }}>
+              Projects we're <span className="gradient-text">proud of.</span>
+            </motion.h2>
+          </motion.div>
         </div>
         <span className="font-body text-xs hidden md:block" style={{ color: 'rgba(244,241,236,0.25)' }}>
           drag to explore →
@@ -253,7 +92,7 @@ export default function SelectedWork() {
       {/* Horizontal drag-scroll track */}
       <div
         ref={trackRef}
-        className="flex gap-5 overflow-x-auto pt-10 pb-4"
+        className="flex gap-5 overflow-x-auto"
         style={{
           padding: '40px clamp(20px,5vw,80px)',
           scrollSnapType: 'x mandatory',
@@ -298,64 +137,77 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       style={{
         width: 'clamp(300px,38vw,480px)',
         height: 'clamp(360px,55vh,600px)',
-        background: project.color,
+        background: '#111',
         border: '1px solid rgba(244,241,236,0.08)',
+        scrollSnapAlign: 'start',
       }}
       whileHover={{ scale: 1.02, y: -6 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Static site mockup */}
-      <SiteMockup project={project} />
-
-      {/* Hover gradient overlay */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at 30% 40%, ${project.accent}14 0%, transparent 70%)` }}
+      {/* Real screenshot */}
+      <img
+        src={project.screenshot}
+        alt={project.name}
+        draggable={false}
+        className="absolute inset-0 w-full h-full select-none"
+        style={{ objectFit: 'cover', objectPosition: 'top center', transition: 'transform 0.6s ease', userSelect: 'none' }}
+        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
+        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
       />
 
-      {/* Bottom scrim always present */}
+      {/* Gradient scrim — always present so text is readable */}
       <div
-        className="absolute inset-0 z-20 pointer-events-none"
-        style={{ background: `linear-gradient(to top, ${project.color} 0%, transparent 55%)` }}
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to top, rgba(8,8,9,0.97) 0%, rgba(8,8,9,0.4) 48%, transparent 100%)' }}
       />
 
-      {/* Info overlay */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 p-7">
-        <div className="flex items-start justify-between">
+      {/* Hover accent glow */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 40% 60%, rgba(196,144,32,0.12) 0%, transparent 65%)' }}
+      />
+
+      {/* Index — top left */}
+      <span className="absolute top-6 left-7 z-20 font-body text-[10px] tracking-[0.2em]"
+        style={{ color: 'rgba(244,241,236,0.28)' }}>
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      {/* Year — top right */}
+      <span className="absolute top-6 right-7 z-20 font-body text-[10px] tracking-[0.2em]"
+        style={{ color: 'rgba(244,241,236,0.28)' }}>
+        {project.year}
+      </span>
+
+      {/* Info — bottom */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 p-7">
+        <div className="flex items-end justify-between">
           <div>
-            <p className="font-body text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: 'rgba(244,241,236,0.4)' }}>
+            <p className="font-body text-[10px] tracking-[0.25em] uppercase mb-2"
+              style={{ color: 'rgba(244,241,236,0.42)' }}>
               {project.type}
             </p>
-            <h3 className="font-display italic text-2xl md:text-3xl" style={{ color: '#F4F1EC', letterSpacing: '-0.02em' }}>
+            <h3 className="font-display italic text-2xl md:text-3xl mb-3"
+              style={{ color: '#F4F1EC', letterSpacing: '-0.02em' }}>
               {project.name}
             </h3>
-            <div className="flex flex-wrap gap-2 mt-3">
+            <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <span
-                  key={tag}
+                <span key={tag}
                   className="font-body text-[10px] tracking-[0.15em] uppercase px-2 py-1 rounded"
-                  style={{ background: 'rgba(244,241,236,0.07)', color: 'rgba(244,241,236,0.45)' }}
-                >
+                  style={{ background: 'rgba(244,241,236,0.07)', color: 'rgba(244,241,236,0.45)' }}>
                   {tag}
                 </span>
               ))}
             </div>
           </div>
-          <div className="w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
-            <ArrowUpRight size={14} style={{ color: '#F4F1EC' }} />
+          <div
+            className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
+            style={{ border: '1px solid rgba(196,144,32,0.4)', background: 'rgba(196,144,32,0.08)' }}>
+            <ArrowUpRight size={14} style={{ color: '#C49020' }} />
           </div>
         </div>
       </div>
-
-      {/* Index */}
-      <span className="absolute top-6 left-7 z-30 font-body text-[10px] tracking-[0.2em]" style={{ color: 'rgba(244,241,236,0.2)' }}>
-        {String(index + 1).padStart(2, '0')}
-      </span>
-
-      {/* Year */}
-      <span className="absolute top-6 right-7 z-30 font-body text-[10px] tracking-[0.2em]" style={{ color: 'rgba(244,241,236,0.2)' }}>
-        {project.year}
-      </span>
     </motion.a>
   );
 }
