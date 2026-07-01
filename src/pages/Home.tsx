@@ -1,6 +1,7 @@
 import Nav from '../components/site/Nav';
 import Hero from '../components/site/Hero';
 import Marquee from '../components/site/Marquee';
+import Clients from '../components/site/Clients';
 import Manifesto from '../components/site/Manifesto';
 import WhyUs from '../components/site/WhyUs';
 import SelectedWork from '../components/site/SelectedWork';
@@ -19,6 +20,7 @@ export default function Home() {
       <main>
         <Hero />
         <Marquee />
+        <Clients />
         <Manifesto />
         <WhyUs />
         <SelectedWork />

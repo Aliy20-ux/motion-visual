@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 
 const stats = [
-  { value: 47, suffix: '+', label: 'Websites Delivered', description: 'Across hospitality, retail, and professional services' },
-  { value: 98, suffix: '%', label: 'Client Satisfaction', description: 'Measured post-launch across every project' },
-  { value: 3, suffix: '×', label: 'Average Traffic Lift', description: 'Organic search growth within 90 days of launch' },
-  { value: 14, suffix: 'd', label: 'Average Delivery', description: 'From brief to live site — without compromising quality' },
+  { value: 28, suffix: '+', label: 'Projects Delivered', description: 'Across Edinburgh\'s hospitality, retail, and service sector' },
+  { value: 98, suffix: '%', label: 'On-Time Delivery', description: 'Every project shipped within the agreed timeline, no exceptions' },
+  { value: 3, suffix: '×', label: 'Avg Enquiry Lift', description: 'Client enquiries within 90 days of launch, across all projects' },
+  { value: 13, suffix: 'd', label: 'Avg Delivery Time', description: 'From signed brief to live, production-ready site' },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;

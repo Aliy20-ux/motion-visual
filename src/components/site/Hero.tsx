@@ -63,6 +63,7 @@ export default function Hero() {
       <motion.div className="absolute inset-0 z-0" style={{ scale: videoScale, transformOrigin: 'center center' }}>
         <video
           autoPlay muted loop playsInline preload="auto"
+          poster="/hero-poster.jpg"
           className="absolute inset-0 w-full h-full"
           style={{ objectFit: 'cover', objectPosition: 'center center' }}
         >
@@ -86,7 +87,7 @@ export default function Hero() {
 
       {/* ── Entrance veil ── */}
       <motion.div className="absolute inset-0 z-[30] pointer-events-none" style={{ background: '#0A0505' }}
-        initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 1.5, delay: 0.15, ease: 'easeOut' }} />
+        initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 1.1, delay: 0.1, ease: 'easeOut' }} />
 
       {/* ── Main content ── */}
       <motion.div
@@ -129,10 +130,10 @@ export default function Hero() {
 
         {/* CTA sub-row */}
         <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10 lg:mt-14"
-          initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.9 }}>
+          initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.55 }}>
           <p className="font-body font-light text-sm leading-relaxed max-w-[260px]"
             style={{ color: 'rgba(237,232,220,0.52)' }}>
-            Award-quality websites for brands<br />that refuse to be forgettable.
+            Bespoke websites for brands<br />that refuse to be forgettable.
           </p>
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
           <div className="flex items-center gap-5 flex-wrap">

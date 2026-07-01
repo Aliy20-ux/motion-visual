@@ -128,18 +128,18 @@ export default function Manifesto() {
           Every pixel, every transition,<br />every word is intentional.
         </p>
 
-        {/* Right — body + gold tagline */}
+        {/* Right — body + tagline */}
         <div className="flex flex-col gap-5">
           <p
             className="font-body font-light text-sm leading-relaxed"
             style={{ color: 'rgba(237,232,220,0.28)', maxWidth: '42ch' }}>
-            We obsess over the 1% of details that visitors feel but never consciously notice.
-            That's what separates a site from an unforgettable brand statement.
+            The difference between a decent site and a brand statement isn't budget —
+            it's the standard held on every single decision, every single day.
           </p>
           <span
             className="gradient-text font-display italic"
             style={{ fontSize: 'clamp(1.1rem,1.8vw,1.9rem)', letterSpacing: '-0.02em' }}>
-            Edinburgh-born. Internet-renowned.
+            Edinburgh-built. Scotland-trusted.
           </span>
         </div>
       </motion.div>

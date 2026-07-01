@@ -6,14 +6,14 @@ const features = [
   {
     num: '01',
     title: 'Days, Not Months',
-    body: 'Most agencies take 3–6 months. We deliver fully bespoke, award-tier sites in weeks — without cutting a single corner. Speed is craft, not compromise.',
+    body: 'Most agencies take 3–6 months. We deliver fully bespoke, award-tier sites in under two weeks — without cutting a single corner. Speed is craft, not compromise.',
     accent: '#C41E1E',
     tag: 'Delivery',
   },
   {
     num: '02',
     title: 'Obsessively Crafted',
-    body: 'Every micro-interaction, easing curve, and typographic choice is deliberate. We obsess over the 1% details that visitors feel but never consciously notice.',
+    body: 'Every micro-interaction, easing curve, and typographic choice is deliberate. Nothing ships until it feels right — not just looks right.',
     accent: '#8B1010',
     tag: 'Quality',
   },
@@ -26,10 +26,10 @@ const features = [
   },
   {
     num: '04',
-    title: 'Secure by Default',
-    body: "Enterprise-grade infrastructure, encrypted data flows, and hardened Cloudflare delivery. Your clients' data is as protected as your reputation.",
+    title: 'Radically Transparent',
+    body: 'You get a direct line to the person building your site — not an account manager. Daily updates, no jargon, no surprises. You always know exactly where your project stands.',
     accent: '#8B1010',
-    tag: 'Security',
+    tag: 'Process',
   },
 ];
 

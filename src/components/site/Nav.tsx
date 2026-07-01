@@ -87,13 +87,22 @@ export default function Nav() {
 
           {/* CTA + hamburger */}
           <div className="flex items-center gap-3">
-            <a
-              href="#quote"
-              className="hidden md:flex gradient-bg font-body text-[11px] font-medium tracking-[0.14em] uppercase text-white rounded-full transition-all duration-300 hover:opacity-85 hover:scale-105 cursor-pointer items-center"
-              style={{ padding: '9px 20px' }}
-            >
-              Get a Quote
-            </a>
+            <div className="hidden md:flex items-center gap-3">
+              {/* Availability indicator */}
+              <span className="font-body text-[9px] tracking-[0.16em] uppercase"
+                style={{ color: 'rgba(196,30,30,0.7)' }}>
+                <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5 align-middle"
+                  style={{ background: '#C41E1E', boxShadow: '0 0 5px rgba(196,30,30,0.6)' }} />
+                2 spots · July
+              </span>
+              <a
+                href="#quote"
+                className="gradient-bg font-body text-[11px] font-medium tracking-[0.14em] uppercase text-white rounded-full transition-all duration-300 hover:opacity-85 hover:scale-105 cursor-pointer flex items-center"
+                style={{ padding: '9px 20px' }}
+              >
+                Book a Free Call
+              </a>
+            </div>
 
             <button
               className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
@@ -143,7 +152,7 @@ export default function Nav() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.32 }}
             >
-              Get a Quote
+              Book a Free Call
             </motion.a>
           </motion.div>
         )}

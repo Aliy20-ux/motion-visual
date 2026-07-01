@@ -7,6 +7,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 const navLinks = [
   { label: 'Work', href: '#work' },
   { label: 'Services', href: '#why-us' },
+  { label: 'Pricing', href: '#pricing' },
   { label: 'Results', href: '#results' },
   { label: 'Contact', href: '#quote' },
 ];
@@ -144,7 +145,7 @@ export default function Footer() {
               </p>
               <span className="gradient-text font-display italic"
                 style={{ fontSize: '0.9rem', letterSpacing: '-0.01em' }}>
-                Edinburgh-born. Internet-renowned.
+                Edinburgh-built. Scotland-trusted.
               </span>
             </div>
 
@@ -184,8 +185,27 @@ export default function Footer() {
                 <a href="#quote"
                   className="inline-flex items-center gap-1.5 font-body text-xs mt-2 transition-opacity hover:opacity-80 cursor-pointer w-fit"
                   style={{ color: 'rgba(196,30,30,0.7)' }}>
-                  Get a quote <ArrowUpRight size={11} />
+                  Book a free call <ArrowUpRight size={11} />
                 </a>
+                {/* Social */}
+                <div className="flex items-center gap-3 mt-1">
+                  <a href="https://instagram.com/motionvisual" target="_blank" rel="noopener noreferrer"
+                    className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-opacity hover:opacity-70"
+                    style={{ border: '1px solid rgba(237,232,220,0.1)' }}
+                    aria-label="Instagram">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(237,232,220,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  </a>
+                  <a href="https://linkedin.com/company/motion-visual" target="_blank" rel="noopener noreferrer"
+                    className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-opacity hover:opacity-70"
+                    style={{ border: '1px solid rgba(237,232,220,0.1)' }}
+                    aria-label="LinkedIn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(237,232,220,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -206,11 +226,6 @@ export default function Footer() {
                   {link.label}
                 </a>
               ))}
-              <a href="/admin"
-                className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
-                style={{ color: 'rgba(196,30,30,0.28)' }}>
-                Admin
-              </a>
             </div>
           </div>
         </div>
