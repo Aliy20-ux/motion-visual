@@ -11,6 +11,7 @@ const projects = [
     type: 'Coffee House · Edinburgh',
     url: 'https://thomas-j-walls-coffee.aliy20.workers.dev',
     screenshot: '/work/thomas-j-walls.jpg',
+    bg: '#2D1B0E',
     year: '2025',
     tags: ['E-commerce', 'Branding', 'Animation'],
   },
@@ -19,6 +20,7 @@ const projects = [
     type: 'Beauty & Hair · Edinburgh',
     url: 'https://texture-lounge-website.pages.dev',
     screenshot: '/work/texture-lounge.jpg',
+    bg: '#1A0F14',
     year: '2025',
     tags: ['Booking System', 'CMS', 'SEO'],
   },
@@ -27,6 +29,7 @@ const projects = [
     type: 'Hospitality · Edinburgh',
     url: 'https://che-edinburgh.aliy20.workers.dev',
     screenshot: '/work/che-edinburgh.jpg',
+    bg: '#0D1A0D',
     year: '2025',
     tags: ['Restaurant', 'Reservations', 'Animation'],
   },
@@ -35,6 +38,7 @@ const projects = [
     type: 'Barbershop · Edinburgh',
     url: 'https://s2-studio-cuts.aliy20.workers.dev',
     screenshot: '/work/s2-studio-cuts.jpg',
+    bg: '#0A0A14',
     year: '2025',
     tags: ['Booking', 'Gallery', 'Branding'],
   },
@@ -43,6 +47,7 @@ const projects = [
     type: 'Restaurant · Edinburgh',
     url: 'https://lucky-chen-edinburgh.aliy20.workers.dev',
     screenshot: '/work/lucky-chen.jpg',
+    bg: '#1A0A00',
     year: '2025',
     tags: ['Menu System', 'Ordering', 'SEO'],
   },
@@ -51,6 +56,7 @@ const projects = [
     type: 'Community Pub · Edinburgh',
     url: 'https://mid-yoken.aliy20.workers.dev',
     screenshot: '/work/mid-yoken.jpg',
+    bg: '#100A06',
     year: '2025',
     tags: ['Events', 'Gallery', 'Local SEO'],
   },
@@ -126,7 +132,7 @@ export default function SelectedWork() {
   );
 }
 
-function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
+function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
   return (
     <motion.a
       href={project.url}
@@ -136,14 +142,14 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       style={{
         width: 'clamp(300px,38vw,480px)',
         height: 'clamp(360px,55vh,600px)',
-        background: '#111',
+        background: project.bg,
         border: '1px solid rgba(244,241,236,0.08)',
         scrollSnapAlign: 'start',
       }}
       whileHover={{ scale: 1.02, y: -6 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Real screenshot — 1440×1920 portrait capture, shown from top */}
+      {/* Real screenshot — 1440×1920 portrait, brightness-boosted */}
       <img
         src={project.screenshot}
         alt={project.name}
@@ -154,15 +160,16 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           objectPosition: 'top center',
           transition: 'transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           userSelect: 'none',
+          filter: 'brightness(1.35) contrast(1.05) saturate(1.15)',
         }}
         onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1) translateY(-8%)')}
         onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1) translateY(0%)')}
       />
 
-      {/* Gradient scrim — always present so text is readable */}
+      {/* Scrim — only covers the bottom 40% for text legibility, top is clean */}
       <div
         className="absolute inset-0 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to top, rgba(8,8,9,0.97) 0%, rgba(8,8,9,0.4) 48%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(to top, rgba(8,8,9,0.96) 0%, rgba(8,8,9,0.55) 28%, rgba(8,8,9,0.0) 52%)' }}
       />
 
       {/* Hover accent glow */}
