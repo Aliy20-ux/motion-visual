@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { supabase, type QuoteSubmission } from '../../lib/supabase';
+import { supabase, type Lead } from '../../lib/supabase';
 import { Check } from 'lucide-react';
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -152,21 +152,22 @@ export default function QuoteForm() {
     // notification paths for the same enquiry — run both and consider the
     // submission a success if either one lands, so a problem with one
     // channel never causes a lead to silently vanish for the visitor.
-    const payload: QuoteSubmission = {
+    const payload: Lead = {
       business_name: form.name,
       contact_name: form.name,
       email: form.email,
       phone: form.phone,
-      project_type: form.project_type,
-      budget: form.budget,
-      timeline: '',
-      notes: form.notes,
-      extras: [],
-      status: 'new',
+      source: 'Website Quote Form',
+      stage: 'New Lead',
+      notes: [
+        `Project type: ${form.project_type}`,
+        `Budget: ${form.budget}`,
+        form.notes.trim() ? `\n${form.notes.trim()}` : '',
+      ].filter(Boolean).join('\n'),
     };
 
     const [dbResult, emailResult] = await Promise.allSettled([
-      supabase.from('quote_submissions').insert([payload]).then(({ error: err }) => {
+      supabase.from('leads').insert([payload]).then(({ error: err }) => {
         if (err) throw err;
       }),
       fetch('/api/send-quote-email', {
