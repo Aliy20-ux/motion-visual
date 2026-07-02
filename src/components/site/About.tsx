@@ -7,31 +7,31 @@ const team = [
   {
     name: 'Ali',
     role: 'Web Designer & Developer',
-    bio: 'Designs and builds premium websites from concept to launch.',
+    bio: 'Leads every project from first sketch to final pixel.',
     letter: 'A',
   },
   {
     name: 'Munib',
     role: 'Web Designer & Developer',
-    bio: 'Turns briefs into fully coded, animated websites.',
+    bio: 'Writes the code that makes the design actually work.',
     letter: 'M',
   },
   {
     name: 'Nadir',
     role: 'Web Designer & Developer',
-    bio: 'Builds sites that perform as well as they look.',
+    bio: 'Obsesses over load times most agencies never check.',
     letter: 'N',
   },
   {
     name: 'Robbie',
     role: 'Web Designer & Developer',
-    bio: 'Crafts the interactions and transitions that make a site feel alive.',
+    bio: 'Builds the small moments that make people stop scrolling.',
     letter: 'R',
   },
   {
     name: 'Mia',
     role: 'Web Designer & Developer',
-    bio: 'Brings precision and creativity to every build.',
+    bio: 'Catches the details everyone else would ship without.',
     letter: 'M',
   },
 ];
@@ -89,7 +89,7 @@ export default function About() {
         </div>
 
         {/* ── Team cards — 5 columns ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-10 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-6 md:gap-10 mb-14">
           {team.map((member, i) => (
             <motion.div
               key={i}
@@ -123,7 +123,7 @@ export default function About() {
               </p>
 
               <p className="font-body font-light text-xs leading-relaxed"
-                style={{ color: 'rgba(237,232,220,0.3)' }}>
+                style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '22ch' }}>
                 {member.bio}
               </p>
             </motion.div>
