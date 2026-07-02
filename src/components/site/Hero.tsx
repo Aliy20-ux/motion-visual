@@ -67,6 +67,7 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full"
           style={{ objectFit: 'cover', objectPosition: 'center center' }}
         >
+          <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
           <source src="/hero.mp4" type="video/mp4" />
         </video>
       </motion.div>

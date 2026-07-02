@@ -32,8 +32,15 @@ export default function CustomCursor() {
 
   const [variant, setVariant] = useState<Variant>('default');
   const [visible, setVisible] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    setEnabled(window.matchMedia('(pointer: fine)').matches);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+
     const move = (e: MouseEvent) => {
       const r = RING_SIZE[variant] / 2;
       cursorX.set(e.clientX - r);
@@ -43,32 +50,45 @@ export default function CustomCursor() {
       if (!visible) setVisible(true);
     };
 
-    const onEnter = (v: Variant) => () => setVariant(v);
+    const onDocLeave = () => setVisible(false);
+    const onDocEnter = () => setVisible(true);
+    const makeEnter = (v: Variant) => () => setVariant(v);
     const onLeave = () => setVariant('default');
 
     window.addEventListener('mousemove', move);
-    document.addEventListener('mouseleave', () => setVisible(false));
-    document.addEventListener('mouseenter', () => setVisible(true));
+    document.addEventListener('mouseleave', onDocLeave);
+    document.addEventListener('mouseenter', onDocEnter);
 
-    const links = document.querySelectorAll<HTMLElement>('a, button');
-    const viewEls = document.querySelectorAll<HTMLElement>('[data-cursor="view"]');
-    const dragEls = document.querySelectorAll<HTMLElement>('[data-cursor="drag"]');
-    const mediaEls = document.querySelectorAll<HTMLElement>('img, video, canvas');
+    const groups: [NodeListOf<HTMLElement>, Variant][] = [
+      [document.querySelectorAll<HTMLElement>('a, button'), 'hover'],
+      [document.querySelectorAll<HTMLElement>('[data-cursor="view"]'), 'view'],
+      [document.querySelectorAll<HTMLElement>('[data-cursor="drag"]'), 'drag'],
+      [document.querySelectorAll<HTMLElement>('img, video, canvas'), 'invert'],
+    ];
+    const onEnterByGroup = groups.map(([, v]) => makeEnter(v));
 
-    links.forEach(el => { el.addEventListener('mouseenter', onEnter('hover')); el.addEventListener('mouseleave', onLeave); });
-    viewEls.forEach(el => { el.addEventListener('mouseenter', onEnter('view')); el.addEventListener('mouseleave', onLeave); });
-    dragEls.forEach(el => { el.addEventListener('mouseenter', onEnter('drag')); el.addEventListener('mouseleave', onLeave); });
-    mediaEls.forEach(el => { el.addEventListener('mouseenter', onEnter('invert')); el.addEventListener('mouseleave', onLeave); });
+    groups.forEach(([els], i) => {
+      els.forEach(el => {
+        el.addEventListener('mouseenter', onEnterByGroup[i]);
+        el.addEventListener('mouseleave', onLeave);
+      });
+    });
 
     return () => {
       window.removeEventListener('mousemove', move);
-      links.forEach(el => { el.removeEventListener('mouseenter', onEnter('hover')); el.removeEventListener('mouseleave', onLeave); });
-      viewEls.forEach(el => { el.removeEventListener('mouseenter', onEnter('view')); el.removeEventListener('mouseleave', onLeave); });
-      dragEls.forEach(el => { el.removeEventListener('mouseenter', onEnter('drag')); el.removeEventListener('mouseleave', onLeave); });
-      mediaEls.forEach(el => { el.removeEventListener('mouseenter', onEnter('invert')); el.removeEventListener('mouseleave', onLeave); });
+      document.removeEventListener('mouseleave', onDocLeave);
+      document.removeEventListener('mouseenter', onDocEnter);
+      groups.forEach(([els], i) => {
+        els.forEach(el => {
+          el.removeEventListener('mouseenter', onEnterByGroup[i]);
+          el.removeEventListener('mouseleave', onLeave);
+        });
+      });
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   const size = RING_SIZE[variant];
   const isLabel = variant === 'view' || variant === 'drag';

@@ -162,6 +162,8 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         src={project.screenshot}
         alt={project.name}
         draggable={false}
+        loading={index === 0 ? 'eager' : 'lazy'}
+        decoding="async"
         className="absolute inset-0 w-full h-full select-none"
         style={{
           objectFit: 'cover',
