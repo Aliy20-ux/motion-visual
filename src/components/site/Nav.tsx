@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const links = [
@@ -9,6 +9,31 @@ const links = [
   { label: 'Pricing', href: '#pricing' },
   { label: 'Contact', href: '#quote' },
 ];
+
+function MagneticNavCTA({ children, href, className, style }: {
+  children: React.ReactNode; href: string; className?: string; style?: React.CSSProperties;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const handleMove = (e: React.MouseEvent) => {
+    const rect = ref.current!.getBoundingClientRect();
+    setPos({ x: (e.clientX - rect.left - rect.width / 2) * 0.22, y: (e.clientY - rect.top - rect.height / 2) * 0.3 });
+  };
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      animate={{ x: pos.x, y: pos.y }}
+      transition={{ type: 'spring', stiffness: 320, damping: 20 }}
+      onMouseMove={handleMove}
+      onMouseLeave={() => setPos({ x: 0, y: 0 })}
+      className={className}
+      style={style}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -36,15 +61,16 @@ export default function Nav() {
           className="flex items-center justify-between px-5 md:px-6 rounded-2xl"
           style={{
             height: 58,
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
+            willChange: 'backdrop-filter',
           }}
           initial={{
-            background: 'rgba(10,10,11,0.65)',
+            background: 'rgba(10,10,11,0.74)',
             border: '1px solid rgba(244,241,236,0.06)',
           }}
           animate={{
-            background: scrolled ? 'rgba(10,10,11,0.92)' : 'rgba(10,10,11,0.65)',
+            background: scrolled ? 'rgba(10,10,11,0.92)' : 'rgba(10,10,11,0.74)',
             border: scrolled
               ? '1px solid rgba(244,241,236,0.12)'
               : '1px solid rgba(244,241,236,0.06)',
@@ -103,13 +129,13 @@ export default function Nav() {
                   style={{ background: '#C41E1E', boxShadow: '0 0 5px rgba(196,30,30,0.6)' }} />
                 2 spots · July
               </span>
-              <a
+              <MagneticNavCTA
                 href="#quote"
-                className="gradient-bg font-body text-[11px] font-medium tracking-[0.14em] uppercase text-white rounded-full transition-all duration-300 hover:opacity-85 hover:scale-105 cursor-pointer flex items-center"
+                className="gradient-bg font-body text-[11px] font-medium tracking-[0.14em] uppercase text-white rounded-full transition-opacity duration-300 hover:opacity-85 cursor-pointer flex items-center"
                 style={{ padding: '9px 20px' }}
               >
                 Start a Project
-              </a>
+              </MagneticNavCTA>
             </div>
 
             <button
