@@ -147,26 +147,28 @@ export default function QuoteForm() {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    try {
-      const payload: QuoteSubmission = {
-        business_name: form.name,
-        contact_name: form.name,
-        email: form.email,
-        phone: form.phone,
-        project_type: form.project_type,
-        budget: form.budget,
-        timeline: '',
-        notes: form.notes,
-        extras: [],
-        status: 'new',
-      };
-      const { error: err } = await supabase.from('quote_submissions').insert([payload]);
-      if (err) throw err;
-      setSubmitted(true);
 
-      // Best-effort email notification to the team inbox — the lead is
-      // already saved in Supabase above, so a failure here shouldn't
-      // block the success state or surface an error to the visitor.
+    // The database record and the team-inbox email are independent
+    // notification paths for the same enquiry — run both and consider the
+    // submission a success if either one lands, so a problem with one
+    // channel never causes a lead to silently vanish for the visitor.
+    const payload: QuoteSubmission = {
+      business_name: form.name,
+      contact_name: form.name,
+      email: form.email,
+      phone: form.phone,
+      project_type: form.project_type,
+      budget: form.budget,
+      timeline: '',
+      notes: form.notes,
+      extras: [],
+      status: 'new',
+    };
+
+    const [dbResult, emailResult] = await Promise.allSettled([
+      supabase.from('quote_submissions').insert([payload]).then(({ error: err }) => {
+        if (err) throw err;
+      }),
       fetch('/api/send-quote-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -178,11 +180,17 @@ export default function QuoteForm() {
           budget: form.budget,
           notes: form.notes,
         }),
-      }).catch(() => {});
-    } catch {
+      }).then((res) => {
+        if (!res.ok) throw new Error('Email send failed');
+      }),
+    ]);
+
+    setLoading(false);
+
+    if (dbResult.status === 'fulfilled' || emailResult.status === 'fulfilled') {
+      setSubmitted(true);
+    } else {
       setErrors({ email: 'Something went wrong. Email us at hello@motionvisual.co.uk' });
-    } finally {
-      setLoading(false);
     }
   };
 
