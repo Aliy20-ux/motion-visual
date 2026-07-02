@@ -163,6 +163,22 @@ export default function QuoteForm() {
       const { error: err } = await supabase.from('quote_submissions').insert([payload]);
       if (err) throw err;
       setSubmitted(true);
+
+      // Best-effort email notification to the team inbox — the lead is
+      // already saved in Supabase above, so a failure here shouldn't
+      // block the success state or surface an error to the visitor.
+      fetch('/api/send-quote-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          project_type: form.project_type,
+          budget: form.budget,
+          notes: form.notes,
+        }),
+      }).catch(() => {});
     } catch {
       setErrors({ email: 'Something went wrong. Email us at hello@motionvisual.co.uk' });
     } finally {
