@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Lock } from 'lucide-react';
 
 const links = [
   { label: 'Work', href: '#work' },
@@ -124,6 +125,20 @@ export default function Nav() {
               </MagneticNavCTA>
             </div>
 
+            <a
+              href="https://admin.motion-visual.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Team admin login"
+              title="Team admin login"
+              className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full cursor-pointer transition-colors duration-200"
+              style={{ border: '1px solid rgba(244,241,236,0.1)', color: 'rgba(244,241,236,0.4)' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#F4F1EC'; e.currentTarget.style.borderColor = 'rgba(244,241,236,0.3)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(244,241,236,0.4)'; e.currentTarget.style.borderColor = 'rgba(244,241,236,0.1)'; }}
+            >
+              <Lock size={13} strokeWidth={1.75} />
+            </a>
+
             <button
               className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -173,6 +188,19 @@ export default function Nav() {
               transition={{ delay: 0.32 }}
             >
               Start a Project
+            </motion.a>
+            <motion.a
+              href="https://admin.motion-visual.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="mt-6 flex items-center gap-2 font-body text-xs tracking-[0.2em] uppercase cursor-pointer"
+              style={{ color: 'rgba(244,241,236,0.35)' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Lock size={11} strokeWidth={1.75} /> Team Admin
             </motion.a>
           </motion.div>
         )}

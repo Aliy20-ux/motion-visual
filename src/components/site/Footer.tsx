@@ -80,10 +80,10 @@ export default function Footer() {
                   style={{ color: 'rgba(237,232,220,0.25)' }}>
                   Get in touch
                 </span>
-                <a href="mailto:hello@motionvisual.co.uk"
+                <a href="mailto:admin.team@motion-visual.com"
                   className="font-body text-sm transition-opacity hover:opacity-70"
                   style={{ color: 'rgba(237,232,220,0.55)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-                  hello@motionvisual.co.uk
+                  admin.team@motion-visual.com
                 </a>
                 <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.2)' }}>
                   Edinburgh, Scotland
@@ -96,7 +96,7 @@ export default function Footer() {
                   style={{ padding: '16px 36px', color: '#F0EDED' }}>
                   Start Your Project <ArrowUpRight size={14} />
                 </a>
-                <a href="mailto:hello@motionvisual.co.uk"
+                <a href="mailto:admin.team@motion-visual.com"
                   className="font-body text-xs text-center transition-opacity hover:opacity-70"
                   style={{ color: 'rgba(237,232,220,0.3)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
                   or email us directly
@@ -160,10 +160,10 @@ export default function Footer() {
                 Contact
               </span>
               <div className="flex flex-col gap-3">
-                <a href="mailto:hello@motionvisual.co.uk"
+                <a href="mailto:admin.team@motion-visual.com"
                   className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
                   style={{ color: 'rgba(237,232,220,0.45)' }}>
-                  hello@motionvisual.co.uk
+                  admin.team@motion-visual.com
                 </a>
                 <span className="font-body text-sm"
                   style={{ color: 'rgba(237,232,220,0.28)' }}>
@@ -213,6 +213,11 @@ export default function Footer() {
                   {link.label}
                 </a>
               ))}
+              <a href="https://admin.motion-visual.com" target="_blank" rel="noopener noreferrer"
+                className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
+                style={{ color: 'rgba(237,232,220,0.18)' }}>
+                Admin
+              </a>
             </div>
           </div>
         </div>
