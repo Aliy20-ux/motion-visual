@@ -56,16 +56,6 @@ const projects = [
     tags: ['Menu System', 'Ordering', 'SEO'],
     result: '+52% online orders',
   },
-  {
-    name: 'The Mid Yoken',
-    type: 'Community Pub · Edinburgh',
-    url: 'https://mid-yoken.aliy20.workers.dev',
-    screenshot: '/work/mid-yoken.jpg',
-    bg: '#100A06',
-    year: '2025',
-    tags: ['Events', 'Gallery', 'Local SEO'],
-    result: '2× event footfall',
-  },
 ];
 
 export default function SelectedWork() {
