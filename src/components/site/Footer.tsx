@@ -169,11 +169,6 @@ export default function Footer() {
                   style={{ color: 'rgba(237,232,220,0.28)' }}>
                   Edinburgh, Scotland
                 </span>
-                <a href="#quote"
-                  className="inline-flex items-center gap-1.5 font-body text-xs mt-2 transition-opacity hover:opacity-80 cursor-pointer w-fit"
-                  style={{ color: 'rgba(196,30,30,0.7)' }}>
-                  Book a free call <ArrowUpRight size={11} />
-                </a>
                 {/* Social */}
                 <div className="flex items-center gap-3 mt-1">
                   <a href="https://instagram.com/motionvisual" target="_blank" rel="noopener noreferrer"
