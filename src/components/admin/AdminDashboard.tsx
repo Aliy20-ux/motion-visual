@@ -48,9 +48,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
       {/* Header */}
       <header className="flex items-center justify-between px-8 py-5" style={{ borderBottom: '1px solid rgba(244,241,236,0.07)', background: '#111114' }}>
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center">
-            <span className="font-display text-sm text-white font-medium">M</span>
-          </div>
+          <img src="/logo-dark.png" alt="Motion Visual" className="h-8 w-8 object-contain" />
           <span className="font-body text-xs tracking-[0.15em] uppercase" style={{ color: 'rgba(244,241,236,0.5)' }}>Motion Visual — Dashboard</span>
         </div>
         <div className="flex items-center gap-3">

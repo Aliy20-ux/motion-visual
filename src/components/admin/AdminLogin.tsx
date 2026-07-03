@@ -53,9 +53,7 @@ export default function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
 
         {/* Logo */}
         <div className="flex items-center gap-3 relative z-10">
-          <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center">
-            <span className="font-display font-medium text-sm text-white">M</span>
-          </div>
+          <img src="/logo-dark.png" alt="Motion Visual" className="h-9 w-9 object-contain" />
           <span className="font-body text-xs tracking-[0.18em] uppercase" style={{ color: 'rgba(244,241,236,0.5)' }}>Motion Visual Admin</span>
         </div>
 
@@ -138,17 +136,13 @@ export default function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="flex items-center gap-3 mb-12 lg:hidden">
-            <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center">
-              <span className="font-display font-medium text-sm text-white">M</span>
-            </div>
+            <img src="/logo-dark.png" alt="Motion Visual" className="h-9 w-9 object-contain" />
             <span className="font-body text-xs tracking-[0.18em] uppercase" style={{ color: 'rgba(244,241,236,0.5)' }}>Motion Visual Admin</span>
           </div>
 
           {/* Logo */}
           <div className="hidden lg:flex items-center gap-3 mb-12">
-            <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center">
-              <span className="font-display font-medium text-sm text-white">M</span>
-            </div>
+            <img src="/logo-dark.png" alt="Motion Visual" className="h-9 w-9 object-contain" />
             <span className="font-body text-xs tracking-[0.18em] uppercase" style={{ color: 'rgba(244,241,236,0.5)' }}>Motion Visual Admin</span>
           </div>
 
