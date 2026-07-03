@@ -84,7 +84,7 @@
             "name": "How much does a website cost at Motion Visual?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Our Essential package starts from £3,995, Signature from £7,500, and Flagship from £16,000. Every project is scoped individually — book a free call and we'll give you an exact number within 24 hours."
+              "text": "Our Essential package ranges from £1,499 to £3,499, Signature from £3,999 to £6,999, and Flagship is scoped individually and quoted on a call. Book a free call and we'll give you an exact number within 24 hours."
             }
           },
           {
@@ -103,6 +103,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="preload" href="/hero-poster.jpg" as="image" fetchpriority="high" />
+    <!-- Discovered/fetched by the browser's preload scanner immediately on HTML parse, well
+         before the JS bundle downloads/parses/mounts React and renders the <video> tag —
+         without this, the video's first byte doesn't start fetching until after hydration. -->
+    <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 769px)" fetchpriority="high" />
+    <link rel="preload" href="/hero-mobile.mp4" as="video" type="video/mp4" media="(max-width: 768px)" fetchpriority="high" />
   </head>
   <body>
     <div id="root"></div>

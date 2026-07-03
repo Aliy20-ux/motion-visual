@@ -9,7 +9,7 @@ const clients = [
   { name: 'CHE Edinburgh', industry: 'Hospitality', location: 'Edinburgh City Centre' },
   { name: 'S2 Studio Cuts', industry: 'Barbershop', location: 'Edinburgh North' },
   { name: 'Lucky Chen', industry: 'Restaurant', location: 'Edinburgh South Side' },
-  { name: 'The Mid Yoken', industry: 'Community Pub', location: 'Edinburgh' },
+  { name: 'Trim2Fresh', industry: 'Barbershop', location: 'Edinburgh Leith' },
 ];
 
 export default function Clients() {

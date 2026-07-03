@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const clients = ['Thomas J Walls', 'Texture Lounge', 'CHE Edinburgh', 'S2 Studio', 'Lucky Chen', 'The Mid Yoken'];
+const clients = ['Thomas J Walls', 'Texture Lounge', 'CHE Edinburgh', 'S2 Studio', 'Lucky Chen', 'Trim2Fresh'];
 
 function ClientTicker() {
   const [idx, setIdx] = useState(0);
@@ -86,9 +86,10 @@ export default function Hero() {
       <motion.div className="absolute inset-0 z-[2] pointer-events-none"
         style={{ background: '#080404', opacity: scrollOverlay }} />
 
-      {/* ── Entrance veil ── */}
+      {/* ── Entrance veil — kept short so the video reads as appearing instantly rather than
+          fading in over a beat; still enough to smooth the very first frame. ── */}
       <motion.div className="absolute inset-0 z-[30] pointer-events-none" style={{ background: '#0A0505' }}
-        initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 1.1, delay: 0.1, ease: 'easeOut' }} />
+        initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.45, ease: 'easeOut' }} />
 
       {/* ── Main content ── */}
       <motion.div
