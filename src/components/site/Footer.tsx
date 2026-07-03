@@ -120,20 +120,7 @@ export default function Footer() {
             {/* Brand column */}
             <div className="flex flex-col gap-6 max-w-xs">
               <div className="flex items-center gap-2.5">
-                <div className="flex items-baseline gap-0.5 shrink-0">
-                  <span className="font-display italic leading-none"
-                    style={{ fontSize: '1.15rem', letterSpacing: '-0.04em', color: '#C41E1E' }}>
-                    M
-                  </span>
-                  <span className="font-body font-light leading-none"
-                    style={{ fontSize: '0.5rem', color: 'rgba(196,30,30,0.4)', letterSpacing: '0' }}>
-                    ·
-                  </span>
-                  <span className="font-display italic leading-none"
-                    style={{ fontSize: '1.15rem', letterSpacing: '-0.04em', color: 'rgba(237,232,220,0.65)' }}>
-                    V
-                  </span>
-                </div>
+                <img src="/logo-dark.png" alt="Motion Visual" className="h-10 w-10 shrink-0 object-contain" />
                 <span className="font-body text-[10px] tracking-[0.22em] uppercase"
                   style={{ color: 'rgba(237,232,220,0.5)' }}>
                   Motion Visual

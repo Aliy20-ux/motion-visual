@@ -79,24 +79,10 @@ export default function Nav() {
         >
           {/* Logo */}
           <a href="/" className="flex items-center gap-2.5 group cursor-pointer">
-            {/* Mark: crimson M · V */}
-            <div className="flex items-baseline gap-0.5 shrink-0">
-              <span className="font-display italic leading-none"
-                style={{ fontSize: '1.15rem', letterSpacing: '-0.04em', color: '#C41E1E' }}>
-                M
-              </span>
-              <span className="font-body font-light leading-none"
-                style={{ fontSize: '0.5rem', color: 'rgba(196,30,30,0.45)', letterSpacing: '0' }}>
-                ·
-              </span>
-              <span className="font-display italic leading-none"
-                style={{ fontSize: '1.15rem', letterSpacing: '-0.04em', color: 'rgba(244,241,236,0.75)' }}>
-                V
-              </span>
-            </div>
+            <img src="/logo-dark.png" alt="Motion Visual" className="h-9 w-9 shrink-0 object-contain" />
             {/* Wordmark */}
             <span
-              className="font-body text-[10px] tracking-[0.22em] uppercase transition-opacity duration-200 group-hover:opacity-100"
+              className="hidden sm:inline font-body text-[10px] tracking-[0.22em] uppercase transition-opacity duration-200 group-hover:opacity-100"
               style={{ color: 'rgba(244,241,236,0.5)' }}
             >
               Motion Visual
