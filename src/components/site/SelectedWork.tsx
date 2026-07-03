@@ -9,7 +9,7 @@ const projects = [
   {
     name: 'Thomas J Walls',
     type: 'Coffee House · Edinburgh',
-    url: 'https://thomas-j-walls-coffee.aliy20.workers.dev',
+    url: 'https://thomas-j-walls.pages.dev',
     screenshot: '/work/thomas-j-walls.jpg',
     bg: '#2D1B0E',
     year: '2025',
@@ -29,11 +29,11 @@ const projects = [
   {
     name: 'CHE Edinburgh',
     type: 'Hospitality · Edinburgh',
-    url: 'https://che-edinburgh.aliy20.workers.dev',
+    url: 'https://che-website-best.pages.dev',
     screenshot: '/work/che-edinburgh.jpg',
     bg: '#0D1A0D',
     year: '2025',
-    tags: ['Restaurant', 'Reservations', 'Animation'],
+    tags: ['Restaurant', 'Online Ordering', 'Branding'],
     result: 'Live in 12 days',
   },
   {
