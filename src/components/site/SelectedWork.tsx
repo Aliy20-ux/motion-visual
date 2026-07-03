@@ -134,11 +134,15 @@ export default function SelectedWork() {
           window.addEventListener('mouseup', onUp);
         }}
       >
-        <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)' }} />
+        {/* scroll-snap-align:start is required here — without it, scroll-snap-type:mandatory
+            on the track has no valid snap point at scrollLeft:0 (only the cards below have
+            scroll-snap-align), so the browser snaps straight past this spacer to the first
+            card on load, silently defeating the whole point of it. */}
+        <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)', scrollSnapAlign: 'start' }} />
         {projects.map((project, i) => (
           <ProjectCard key={i} project={project} index={i} />
         ))}
-        <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)' }} />
+        <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)', scrollSnapAlign: 'end' }} />
       </div>
     </section>
   );
