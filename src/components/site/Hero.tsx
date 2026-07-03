@@ -99,12 +99,33 @@ export default function Hero() {
           y: textY, opacity: contentOpacity,
         }}>
 
-        {/* Location + ticker */}
+        {/* Location + 14-day badge + ticker */}
         <motion.div className="flex items-center justify-between mb-6 flex-wrap gap-3"
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.05, ease }}>
-          <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.42)' }}>
-            Edinburgh, Scotland
-          </span>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.42)' }}>
+              Edinburgh, Scotland
+            </span>
+            <div className="hidden sm:block w-px h-3" style={{ background: 'rgba(237,232,220,0.15)' }} />
+            {/* Pill chip (not plain text) so it stays legible against the video regardless of
+                what's playing behind it at any given frame — plain crimson text on a red/bright
+                video highlight was reading as low-contrast. */}
+            <span
+              className="inline-flex items-center rounded-full font-body text-xs tracking-[0.2em] uppercase"
+              style={{
+                color: '#F0B8B8',
+                background: 'rgba(196,30,30,0.16)',
+                border: '1px solid rgba(196,30,30,0.35)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                padding: '5px 12px',
+              }}
+            >
+              <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5 align-middle"
+                style={{ background: '#E83838', boxShadow: '0 0 6px rgba(196,30,30,0.8)' }} />
+              Live in 14 days
+            </span>
+          </div>
           <ClientTicker />
         </motion.div>
 
@@ -134,7 +155,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.55 }}>
           <p className="font-body font-light text-sm leading-relaxed max-w-[260px]"
             style={{ color: 'rgba(237,232,220,0.52)' }}>
-            Bespoke websites for brands<br />that refuse to be forgettable.
+            Bespoke websites, live in 14 days.<br />Brands that refuse to be forgettable.
           </p>
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
           <div className="flex items-center gap-5 flex-wrap">

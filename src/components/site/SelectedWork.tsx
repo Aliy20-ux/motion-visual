@@ -102,12 +102,15 @@ export default function SelectedWork() {
       </div>
 
       {/* Horizontal drag-scroll track */}
+      {/* Leading padding on a horizontal scroll container is unreliable across browsers at
+          scrollLeft:0 (it gets collapsed) — use explicit spacer flex items instead so the
+          first/last card always sit with real breathing room, not flush against the edge. */}
       <div
         ref={trackRef}
         data-cursor="drag"
         className="flex gap-5 overflow-x-auto no-scrollbar"
         style={{
-          padding: '40px clamp(20px,5vw,80px)',
+          padding: '40px 0',
           scrollSnapType: 'x mandatory',
           WebkitOverflowScrolling: 'touch',
           cursor: 'grab',
@@ -131,9 +134,11 @@ export default function SelectedWork() {
           window.addEventListener('mouseup', onUp);
         }}
       >
+        <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)' }} />
         {projects.map((project, i) => (
           <ProjectCard key={i} project={project} index={i} />
         ))}
+        <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)' }} />
       </div>
     </section>
   );
