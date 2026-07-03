@@ -56,6 +56,16 @@ const projects = [
     tags: ['Menu System', 'Ordering', 'SEO'],
     result: '+52% online orders',
   },
+  {
+    name: 'Trim2Fresh',
+    type: 'Barbershop · Edinburgh',
+    url: 'https://trim2fresh-website.aliy20.workers.dev',
+    screenshot: '/work/trim2fresh.jpg',
+    bg: '#1A1400',
+    year: '2025',
+    tags: ['Booking System', 'Branding', 'Reviews'],
+    result: '4.9★ · 500+ clients',
+  },
 ];
 
 export default function SelectedWork() {
