@@ -10,7 +10,8 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const tiers = [
   {
     name: 'Essential',
-    projectPrice: 2500,
+    priceMin: 1499,
+    priceMax: 3499,
     retainerPrice: 895,
     tagline: 'A serious site for a serious business.',
     description: 'Perfect for local businesses and new brands ready to compete online.',
@@ -27,7 +28,8 @@ const tiers = [
   },
   {
     name: 'Signature',
-    projectPrice: 6000,
+    priceMin: 3999,
+    priceMax: 6900,
     retainerPrice: 1795,
     tagline: 'The full Motion Visual experience.',
     description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
@@ -45,8 +47,7 @@ const tiers = [
   },
   {
     name: 'Flagship',
-    projectPrice: 15000,
-    retainerPrice: 3595,
+    customPrice: true,
     tagline: 'When you need to own your market.',
     description: 'For premium brands, multi-location businesses, and high-traffic e-commerce.',
     features: [
@@ -224,38 +225,57 @@ export default function Pricing() {
                 {/* Price */}
                 <div className="mb-4">
                   <div className="flex items-baseline gap-1">
-                    <span
-                      className="font-display italic"
-                      style={{
-                        fontSize: 'clamp(2.6rem,4.5vw,4.2rem)',
-                        letterSpacing: '-0.03em',
-                        lineHeight: 1,
-                        color: tier.isPopular ? undefined : '#EDE8DC',
-                      }}
-                    >
-                      {tier.isPopular ? (
-                        <span className="gradient-text">
-                          £<NumberFlow
-                            value={isRetainer ? tier.retainerPrice : tier.projectPrice}
-                            format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
-                            transformTiming={{ duration: 500, easing: 'ease-out' }}
-                            willChange
-                          />
+                    {tier.customPrice ? (
+                      <span
+                        className="font-display italic"
+                        style={{
+                          fontSize: 'clamp(2.6rem,4.5vw,4.2rem)',
+                          letterSpacing: '-0.03em',
+                          lineHeight: 1,
+                          color: '#EDE8DC',
+                        }}
+                      >
+                        Custom
+                      </span>
+                    ) : !isRetainer ? (
+                      <span
+                        className="font-display italic"
+                        style={{
+                          fontSize: 'clamp(1.7rem,3vw,2.6rem)',
+                          letterSpacing: '-0.02em',
+                          lineHeight: 1,
+                          color: tier.isPopular ? undefined : '#EDE8DC',
+                        }}
+                      >
+                        <span className={tier.isPopular ? 'gradient-text' : undefined}>
+                          £{tier.priceMin!.toLocaleString('en-GB')}–£{tier.priceMax!.toLocaleString('en-GB')}
                         </span>
-                      ) : (
-                        <>
-                          £<NumberFlow
-                            value={isRetainer ? tier.retainerPrice : tier.projectPrice}
-                            format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
-                            transformTiming={{ duration: 500, easing: 'ease-out' }}
-                            willChange
-                          />
-                        </>
-                      )}
-                    </span>
+                      </span>
+                    ) : (
+                      <span
+                        className="font-display italic"
+                        style={{
+                          fontSize: 'clamp(2.6rem,4.5vw,4.2rem)',
+                          letterSpacing: '-0.03em',
+                          lineHeight: 1,
+                          // NumberFlow renders its digits inside a shadow root, which a
+                          // background-clip:text gradient (gradient-text) can't paint through —
+                          // it inherits transparent fill but no background crosses the shadow
+                          // boundary, so the digits go invisible. Solid crimson instead.
+                          color: tier.isPopular ? '#E83838' : '#EDE8DC',
+                        }}
+                      >
+                        £<NumberFlow
+                          value={tier.retainerPrice!}
+                          format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
+                          transformTiming={{ duration: 500, easing: 'ease-out' }}
+                          willChange
+                        />
+                      </span>
+                    )}
                   </div>
                   <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.25)' }}>
-                    {isRetainer ? 'billed monthly' : 'one-off'}
+                    {tier.customPrice ? 'scoped together, on a call' : isRetainer ? 'billed monthly' : 'one-off'}
                   </p>
                 </div>
 
