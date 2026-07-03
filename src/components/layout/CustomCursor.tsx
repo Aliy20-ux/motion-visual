@@ -41,6 +41,28 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!enabled) return undefined;
 
+    // Variant lookup runs against whatever's under the pointer at move-time via
+    // closest() (event delegation) rather than attaching a listener to every
+    // matching element up front — that earlier approach snapshotted the DOM once
+    // on mount via querySelectorAll, so anything rendered later (lazy-loaded
+    // sections, dynamically mounted content) never got hover listeners attached
+    // and silently kept the default cursor. Delegation also means 2 listeners
+    // total instead of one per interactive element.
+    const SELECTORS: [string, Variant][] = [
+      ['[data-cursor="view"]', 'view'],
+      ['[data-cursor="drag"]', 'drag'],
+      ['img, video, canvas', 'invert'],
+      ['a, button', 'hover'],
+    ];
+
+    const variantFor = (target: EventTarget | null): Variant => {
+      if (!(target instanceof Element)) return 'default';
+      for (const [selector, v] of SELECTORS) {
+        if (target.closest(selector)) return v;
+      }
+      return 'default';
+    };
+
     const move = (e: MouseEvent) => {
       const r = RING_SIZE[variant] / 2;
       cursorX.set(e.clientX - r);
@@ -50,40 +72,20 @@ export default function CustomCursor() {
       if (!visible) setVisible(true);
     };
 
+    const onOver = (e: MouseEvent) => setVariant(variantFor(e.target));
     const onDocLeave = () => setVisible(false);
     const onDocEnter = () => setVisible(true);
-    const makeEnter = (v: Variant) => () => setVariant(v);
-    const onLeave = () => setVariant('default');
 
     window.addEventListener('mousemove', move);
+    window.addEventListener('mouseover', onOver);
     document.addEventListener('mouseleave', onDocLeave);
     document.addEventListener('mouseenter', onDocEnter);
 
-    const groups: [NodeListOf<HTMLElement>, Variant][] = [
-      [document.querySelectorAll<HTMLElement>('a, button'), 'hover'],
-      [document.querySelectorAll<HTMLElement>('[data-cursor="view"]'), 'view'],
-      [document.querySelectorAll<HTMLElement>('[data-cursor="drag"]'), 'drag'],
-      [document.querySelectorAll<HTMLElement>('img, video, canvas'), 'invert'],
-    ];
-    const onEnterByGroup = groups.map(([, v]) => makeEnter(v));
-
-    groups.forEach(([els], i) => {
-      els.forEach(el => {
-        el.addEventListener('mouseenter', onEnterByGroup[i]);
-        el.addEventListener('mouseleave', onLeave);
-      });
-    });
-
     return () => {
       window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseover', onOver);
       document.removeEventListener('mouseleave', onDocLeave);
       document.removeEventListener('mouseenter', onDocEnter);
-      groups.forEach(([els], i) => {
-        els.forEach(el => {
-          el.removeEventListener('mouseenter', onEnterByGroup[i]);
-          el.removeEventListener('mouseleave', onLeave);
-        });
-      });
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled]);

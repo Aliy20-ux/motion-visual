@@ -7,7 +7,7 @@ import { Check } from 'lucide-react';
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else'] as const;
-const budgets = ['£2,000 – £5,000', '£5,000 – £10,000', '£10,000 – £20,000', '£20,000+'] as const;
+const budgets = ['£1,499 – £3,499', '£3,999 – £6,999', '£7,000+'] as const;
 
 type FormData = {
   name: string;
@@ -277,7 +277,8 @@ export default function QuoteForm() {
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                   viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
                   Fill in your details and we'll come back with a personalised proposal
-                  within 24 hours. No obligation, no pressure.
+                  within 24 hours. No obligation, no pressure — based in Edinburgh, working
+                  with clients across the UK.
                 </motion.p>
 
                 {/* ── Trust stats — horizontal row ── */}

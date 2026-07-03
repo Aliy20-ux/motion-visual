@@ -128,11 +128,11 @@ export default function Footer() {
               </div>
               <p className="font-body font-light text-xs leading-relaxed"
                 style={{ color: 'rgba(237,232,220,0.28)' }}>
-                Edinburgh's premium web design agency. Award-quality sites delivered in days, not months.
+                Edinburgh's premium web design agency, serving clients across the UK. Award-quality sites delivered in days, not months.
               </p>
               <span className="gradient-text font-display italic"
                 style={{ fontSize: '0.9rem', letterSpacing: '-0.01em' }}>
-                Edinburgh-built. Scotland-trusted.
+                Edinburgh-built. Trusted UK-wide.
               </span>
             </div>
 
