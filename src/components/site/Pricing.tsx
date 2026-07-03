@@ -29,7 +29,7 @@ const tiers = [
   {
     name: 'Signature',
     priceMin: 3999,
-    priceMax: 6900,
+    priceMax: 6999,
     retainerPrice: 1795,
     tagline: 'The full Motion Visual experience.',
     description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
