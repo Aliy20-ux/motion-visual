@@ -54,6 +54,18 @@ export default function Hero() {
   const scrollOverlay = useTransform(scrollYProgress, [0, 0.5], [0, 0.55]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  // The veil used to clear on a fixed timer regardless of whether the video had actually
+  // decoded a frame yet — on a cold cache/slower connection this let the static poster
+  // image flash through before the video caught up and swapped in. Now it only clears once
+  // the video really is ready (or a safety cap trips, so a slow/failed load never leaves
+  // the hero stuck black).
+  const [videoReady, setVideoReady] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setVideoReady(true), 900);
+    return () => clearTimeout(t);
+  }, []);
+  const markVideoReady = () => setVideoReady(true);
+
   const headline = ['We build', "the internet's", 'most wanted.'];
 
   return (
@@ -65,6 +77,9 @@ export default function Hero() {
         <video
           autoPlay muted loop playsInline preload="auto"
           poster="/hero-poster.jpg"
+          onLoadedData={markVideoReady}
+          onCanPlay={markVideoReady}
+          onPlaying={markVideoReady}
           className="absolute inset-0 w-full h-full"
           style={{ objectFit: 'cover', objectPosition: 'center center' }}
         >
@@ -87,10 +102,11 @@ export default function Hero() {
       <motion.div className="absolute inset-0 z-[2] pointer-events-none"
         style={{ background: '#080404', opacity: scrollOverlay }} />
 
-      {/* ── Entrance veil — kept short so the video reads as appearing instantly rather than
-          fading in over a beat; still enough to smooth the very first frame. ── */}
+      {/* ── Entrance veil — stays opaque until the video actually has a frame ready, so the
+          poster image is never visible on its own; the 900ms setTimeout above is just a
+          safety cap in case the video is slow or fails to load. ── */}
       <motion.div className="absolute inset-0 z-[30] pointer-events-none" style={{ background: '#0A0505' }}
-        initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.45, ease: 'easeOut' }} />
+        initial={{ opacity: 1 }} animate={{ opacity: videoReady ? 0 : 1 }} transition={{ duration: 0.5, ease: 'easeOut' }} />
 
       {/* ── Main content ── */}
       <motion.div
