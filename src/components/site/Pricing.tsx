@@ -200,6 +200,11 @@ export default function Pricing() {
                   <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.25)' }}>
                     {tier.customPrice ? 'scoped together, on a call' : 'one-off'}
                   </p>
+                  {!tier.customPrice && (
+                    <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.35)' }}>
+                      £100 deposit to secure your start date
+                    </p>
+                  )}
                   <p className="font-body text-[11px] mt-2" style={{ color: 'rgba(196,30,30,0.55)' }}>
                     + Care plan {tier.customPrice ? '— custom, scoped with you' : `from £${tier.carePlanPrice}/mo`}
                   </p>
