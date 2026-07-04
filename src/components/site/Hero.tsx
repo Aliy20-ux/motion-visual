@@ -66,6 +66,21 @@ export default function Hero() {
   }, []);
   const markVideoReady = () => setVideoReady(true);
 
+  // Some mobile browsers evaluate autoplay eligibility before React's `muted` JSX attribute
+  // has definitely landed as the live IDL property, so the native `autoPlay` attribute can
+  // get silently blocked with no error — leaving the video paused on frame one until the
+  // visitor taps it. Forcing `.muted = true` and calling `.play()` explicitly (and again on
+  // canplay, in case the first attempt races the video's readiness) makes it actually stick.
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const tryPlay = () => {
+    const v = videoRef.current;
+    if (v && v.paused) {
+      v.muted = true;
+      v.play().catch(() => {});
+    }
+  };
+  useEffect(() => { tryPlay(); }, []);
+
   const headline = ['We build', "the internet's", 'most wanted.'];
 
   return (
@@ -75,10 +90,11 @@ export default function Hero() {
       {/* ── Video layer with scroll-parallax scale ── */}
       <motion.div className="absolute inset-0 z-0" style={{ scale: videoScale, transformOrigin: 'center center' }}>
         <video
+          ref={videoRef}
           autoPlay muted loop playsInline preload="auto"
           poster="/hero-poster.jpg"
-          onLoadedData={markVideoReady}
-          onCanPlay={markVideoReady}
+          onLoadedData={() => { markVideoReady(); tryPlay(); }}
+          onCanPlay={() => { markVideoReady(); tryPlay(); }}
           onPlaying={markVideoReady}
           className="absolute inset-0 w-full h-full"
           style={{ objectFit: 'cover', objectPosition: 'center center' }}
