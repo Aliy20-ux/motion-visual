@@ -5,6 +5,12 @@ import { scrollToHash } from '../../lib/smoothScroll';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+// Launch offer — 50% off one-off build prices for the first 30 days.
+// Self-expiring: once PROMO_ENDS passes, this block goes inert on its own — no manual removal needed.
+const PROMO_ENDS = new Date('2026-08-03T23:59:59');
+const isPromoActive = () => Date.now() < PROMO_ENDS.getTime();
+const promoDateLabel = PROMO_ENDS.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+
 const tiers = [
   {
     name: 'Essential',
@@ -63,6 +69,8 @@ const tiers = [
 ];
 
 export default function Pricing() {
+  const promoActive = isPromoActive();
+
   return (
     <section
       id="pricing"
@@ -107,6 +115,16 @@ export default function Pricing() {
             One-off project pricing, no ongoing retainer.
             Book a free call and we'll give you an exact number within 24 hours.
           </p>
+
+          {promoActive && (
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5"
+              style={{ border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
+              <span className="font-body font-semibold text-[10px] tracking-[0.2em] uppercase"
+                style={{ color: '#C41E1E' }}>
+                Launch offer — 50% off, ends {promoDateLabel}
+              </span>
+            </div>
+          )}
         </motion.div>
 
         {/* ── Cards ── */}
@@ -182,19 +200,26 @@ export default function Pricing() {
                         Custom
                       </span>
                     ) : (
-                      <span
-                        className="font-display italic"
-                        style={{
-                          fontSize: 'clamp(1.7rem,3vw,2.6rem)',
-                          letterSpacing: '-0.02em',
-                          lineHeight: 1,
-                          color: tier.isPopular ? undefined : '#EDE8DC',
-                        }}
-                      >
-                        <span className={tier.isPopular ? 'gradient-text' : undefined}>
-                          £{tier.priceMin!.toLocaleString('en-GB')}–£{tier.priceMax!.toLocaleString('en-GB')}
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        {promoActive && (
+                          <span className="font-body text-sm" style={{ color: 'rgba(237,232,220,0.25)', textDecoration: 'line-through' }}>
+                            £{tier.priceMin!.toLocaleString('en-GB')}–£{tier.priceMax!.toLocaleString('en-GB')}
+                          </span>
+                        )}
+                        <span
+                          className="font-display italic"
+                          style={{
+                            fontSize: 'clamp(1.7rem,3vw,2.6rem)',
+                            letterSpacing: '-0.02em',
+                            lineHeight: 1,
+                            color: tier.isPopular ? undefined : '#EDE8DC',
+                          }}
+                        >
+                          <span className={tier.isPopular ? 'gradient-text' : undefined}>
+                            £{Math.round(promoActive ? tier.priceMin! / 2 : tier.priceMin!).toLocaleString('en-GB')}–£{Math.round(promoActive ? tier.priceMax! / 2 : tier.priceMax!).toLocaleString('en-GB')}
+                          </span>
                         </span>
-                      </span>
+                      </div>
                     )}
                   </div>
                   <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.25)' }}>
