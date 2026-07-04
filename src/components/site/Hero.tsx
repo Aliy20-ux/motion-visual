@@ -210,10 +210,10 @@ export default function Hero() {
           </p>
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
           <div className="flex items-center gap-5 flex-wrap">
-            <MagneticCTA href="#work">See Our Work <ArrowUpRight size={14} /></MagneticCTA>
-            <a href="#quote" onClick={scrollToHash('#quote')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
+            <MagneticCTA href="#quote">Get a Quote <ArrowUpRight size={14} /></MagneticCTA>
+            <a href="#work" onClick={scrollToHash('#work')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
               style={{ color: 'rgba(237,232,220,0.48)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-              Get a quote →
+              See your work →
             </a>
           </div>
         </motion.div>
