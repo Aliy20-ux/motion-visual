@@ -2,6 +2,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { scrollToHash } from '../../lib/smoothScroll';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const clients = ['Thomas J Walls', 'Texture Lounge', 'CHE Edinburgh', 'S2 Studio', 'Lucky Chen', 'Trim2Fresh'];
@@ -34,7 +35,7 @@ function MagneticCTA({ children, href }: { children: React.ReactNode; href: stri
     setPos({ x: (e.clientX - rect.left - rect.width / 2) * 0.35, y: (e.clientY - rect.top - rect.height / 2) * 0.35 });
   };
   return (
-    <motion.a ref={ref} href={href}
+    <motion.a ref={ref} href={href} onClick={scrollToHash(href)}
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
       onMouseMove={handleMove} onMouseLeave={() => setPos({ x: 0, y: 0 })}
@@ -161,7 +162,7 @@ export default function Hero() {
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
           <div className="flex items-center gap-5 flex-wrap">
             <MagneticCTA href="#work">See Our Work <ArrowUpRight size={14} /></MagneticCTA>
-            <a href="#quote" className="font-body font-light text-sm transition-opacity hover:opacity-80"
+            <a href="#quote" onClick={scrollToHash('#quote')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
               style={{ color: 'rgba(237,232,220,0.48)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
               Get a quote →
             </a>

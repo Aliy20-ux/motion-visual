@@ -98,39 +98,43 @@ export default function WhyUs() {
             {services.map((svc, i) => (
               <motion.div
                 key={svc.num}
-                className="group relative flex flex-col overflow-hidden"
+                className="group relative flex flex-col overflow-hidden cursor-default"
                 style={{ background: '#080809', padding: 'clamp(28px,3vw,40px)', minHeight: 220 }}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
+                whileHover={{ y: -6, background: '#0C0A0B' }}
                 transition={{ duration: 0.6, ease, delay: i * 0.06 }}>
 
                 {/* Hover glow */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                  style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(196,30,30,0.08) 0%, transparent 65%)' }} />
+                  style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(196,30,30,0.1) 0%, transparent 65%)' }} />
 
                 {/* Animated left border */}
                 <div className="absolute left-0 top-0 w-px h-0 group-hover:h-full transition-all duration-500 pointer-events-none"
                   style={{ background: '#C41E1E' }} />
 
                 {/* Icon + number row */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-                    style={{ background: 'rgba(196,30,30,0.1)', border: '1px solid rgba(196,30,30,0.18)' }}>
+                <div className="relative flex items-start justify-between mb-6">
+                  <motion.div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    style={{ background: 'rgba(196,30,30,0.1)', border: '1px solid rgba(196,30,30,0.18)' }}
+                    whileHover={{ scale: 1.12, rotate: -6, background: 'rgba(196,30,30,0.18)', borderColor: 'rgba(196,30,30,0.4)' }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
                     <svc.Icon size={16} style={{ color: 'rgba(196,30,30,0.8)' }} />
-                  </div>
-                  <span className="font-body text-[11px] tracking-[0.2em]"
+                  </motion.div>
+                  <span className="font-body text-[11px] tracking-[0.2em] transition-colors duration-500"
                     style={{ color: 'rgba(237,232,220,0.12)' }}>{svc.num}</span>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-display italic mb-3"
+                <h3 className="relative font-display italic mb-3 transition-transform duration-400 group-hover:translate-x-[3px]"
                   style={{ fontSize: 'clamp(1.1rem,1.8vw,1.5rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                   {svc.title}
                 </h3>
 
                 {/* Body */}
-                <p className="font-body font-light text-xs leading-relaxed"
+                <p className="relative font-body font-light text-xs leading-relaxed"
                   style={{ color: 'rgba(237,232,220,0.38)' }}>
                   {svc.body}
                 </p>

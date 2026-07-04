@@ -1,6 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { setLenisInstance } from '../../lib/smoothScroll';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       touchMultiplier: 1.5,
     });
+    setLenisInstance(lenis);
 
     // Drive the CSS scroll progress bar
     lenis.on('scroll', ({ progress }: { progress: number }) => {
@@ -50,6 +52,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      setLenisInstance(null);
     };
   }, []);
 

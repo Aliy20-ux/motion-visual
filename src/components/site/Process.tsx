@@ -158,34 +158,35 @@ export default function Process() {
           {steps.map((step, i) => (
             <motion.div
               key={step.num}
-              className="relative flex flex-col gap-4"
+              className="group relative flex flex-col gap-4 cursor-default"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, ease, delay: 0.3 + i * STEP_DELAY }}>
 
               {/* Crimson numbered circle */}
-              <div
+              <motion.div
                 ref={(el) => { circleRefs.current[i] = el; }}
                 className="relative z-10 shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
-                style={{
-                  background: '#09090A',
-                  border: '1.5px solid #C41E1E',
-                  boxShadow: '0 0 12px rgba(196,30,30,0.25)',
-                }}>
+                style={{ background: '#09090A', border: '1.5px solid #C41E1E' }}
+                initial={{ boxShadow: '0 0 12px rgba(196,30,30,0.25)' }}
+                whileHover={{ scale: 1.15, boxShadow: '0 0 20px rgba(196,30,30,0.5)' }}
+                transition={{ type: 'spring', stiffness: 400, damping: 14 }}>
                 <span className="font-body text-[10px] font-semibold tracking-[0.08em]"
                   style={{ color: '#C41E1E' }}>
                   {step.num}
                 </span>
-              </div>
+              </motion.div>
 
-              {/* Content */}
-              <div>
+              {/* Content — lifts on hover independently of the circle above, so the
+                  connecting line (anchored to the circle's measured, unmoving center)
+                  never drifts out of alignment when a card is hovered. */}
+              <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.3, ease }}>
                 <p className="font-body text-[10px] tracking-[0.28em] uppercase mb-2"
                   style={{ color: 'rgba(237,232,220,0.3)' }}>
                   {step.duration}
                 </p>
-                <h3 className="font-display italic mb-3"
+                <h3 className="font-display italic mb-3 transition-transform duration-400 group-hover:translate-x-[3px]"
                   style={{ fontSize: 'clamp(1.2rem,1.8vw,1.6rem)', color: '#EDE8DC', letterSpacing: '-0.022em', lineHeight: 1.1 }}>
                   {step.title}
                 </h3>
@@ -193,7 +194,7 @@ export default function Process() {
                   style={{ color: 'rgba(237,232,220,0.38)' }}>
                   {step.body}
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
+import { scrollToHash } from '../../lib/smoothScroll';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -236,7 +237,7 @@ export default function Pricing() {
                 </ul>
 
                 {/* CTA */}
-                <a href="#quote"
+                <a href="#quote" onClick={scrollToHash('#quote')}
                   className="inline-flex items-center justify-center font-body text-xs font-semibold cursor-pointer transition-opacity duration-200 hover:opacity-85"
                   style={{
                     padding: '14px 24px', borderRadius: 999,

@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock } from 'lucide-react';
+import { scrollToHash } from '../../lib/smoothScroll';
 
 const links = [
   { label: 'Work', href: '#work' },
@@ -11,8 +12,9 @@ const links = [
   { label: 'Contact', href: '#quote' },
 ];
 
-function MagneticNavCTA({ children, href, className, style }: {
+function MagneticNavCTA({ children, href, className, style, onClick }: {
   children: React.ReactNode; href: string; className?: string; style?: React.CSSProperties;
+  onClick?: (e: React.MouseEvent) => void;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -24,6 +26,7 @@ function MagneticNavCTA({ children, href, className, style }: {
     <motion.a
       ref={ref}
       href={href}
+      onClick={onClick}
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: 'spring', stiffness: 320, damping: 20 }}
       onMouseMove={handleMove}
@@ -96,6 +99,7 @@ export default function Nav() {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={scrollToHash(link.href)}
                 className="font-body text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 cursor-pointer"
                 style={{ color: 'rgba(244,241,236,0.55)' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#F4F1EC')}
@@ -118,6 +122,7 @@ export default function Nav() {
               </span>
               <MagneticNavCTA
                 href="#quote"
+                onClick={scrollToHash('#quote')}
                 className="gradient-bg font-body text-[11px] font-medium tracking-[0.14em] uppercase text-white rounded-full transition-opacity duration-300 hover:opacity-85 cursor-pointer flex items-center"
                 style={{ padding: '9px 20px' }}
               >
@@ -167,7 +172,7 @@ export default function Nav() {
               <motion.a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => { setMenuOpen(false); scrollToHash(link.href)(e); }}
                 className="font-display italic text-5xl py-3 cursor-pointer"
                 style={{ color: 'rgba(244,241,236,0.8)' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#F4F1EC')}
@@ -181,7 +186,7 @@ export default function Nav() {
             ))}
             <motion.a
               href="#quote"
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => { setMenuOpen(false); scrollToHash('#quote')(e); }}
               className="mt-10 gradient-bg text-white font-body text-sm tracking-widest uppercase rounded-full px-8 py-4 cursor-pointer"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

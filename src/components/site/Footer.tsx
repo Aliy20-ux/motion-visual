@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { scrollToHash } from '../../lib/smoothScroll';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -90,7 +91,7 @@ export default function Footer() {
               </div>
 
               <div className="flex flex-col gap-4">
-                <a href="#quote"
+                <a href="#quote" onClick={scrollToHash('#quote')}
                   className="gradient-bg inline-flex items-center justify-center gap-2 rounded-full font-body font-semibold text-sm cursor-pointer transition-all hover:opacity-90 hover:scale-[1.03] duration-200"
                   style={{ padding: '16px 36px', color: '#F0EDED' }}>
                   Start Your Project <ArrowUpRight size={14} />
@@ -143,7 +144,7 @@ export default function Footer() {
               </span>
               <nav className="flex flex-col gap-3">
                 {navLinks.map(link => (
-                  <a key={link.label} href={link.href}
+                  <a key={link.label} href={link.href} onClick={scrollToHash(link.href)}
                     className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
                     style={{ color: 'rgba(237,232,220,0.45)' }}>
                     {link.label}
