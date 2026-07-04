@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import SmoothScroll from './components/layout/SmoothScroll';
 import CustomCursor from './components/layout/CustomCursor';
 import Home from './pages/Home';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -13,6 +15,8 @@ export default function App() {
         <CustomCursor />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
 
         {/* Global fade-in on first load — sits above everything (including Nav) so the
