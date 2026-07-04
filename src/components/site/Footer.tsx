@@ -12,10 +12,6 @@ const navLinks = [
   { label: 'Contact', href: '#quote' },
 ];
 
-const legalLinks = [
-  { label: 'Privacy', href: '/privacy' },
-  { label: 'Terms', href: '/terms' },
-];
 
 export default function Footer() {
   return (
@@ -201,13 +197,6 @@ export default function Footer() {
               © 2026 Motion Visual Agency Ltd
             </span>
             <div className="flex items-center gap-5">
-              {legalLinks.map(link => (
-                <a key={link.label} href={link.href}
-                  className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
-                  style={{ color: 'rgba(237,232,220,0.18)' }}>
-                  {link.label}
-                </a>
-              ))}
               <a href="https://admin.motion-visual.com" target="_blank" rel="noopener noreferrer"
                 className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
                 style={{ color: 'rgba(237,232,220,0.18)' }}>
