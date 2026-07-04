@@ -57,10 +57,15 @@ export default function ManifestoBackground() {
     const ctx = context2d; // rebind so the null-check narrowing survives into closures below
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Touch devices skew toward weaker GPUs, and shadowBlur (used for the glow pass below)
+    // is one of the most expensive things you can ask a <canvas> to do per frame — halving
+    // particle count, capping DPR lower, and dropping the glow pass entirely keeps this at
+    // a real 60fps on mid-range phones instead of quietly dropping frames.
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
 
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -73,7 +78,12 @@ export default function ManifestoBackground() {
     resize();
     window.addEventListener('resize', resize);
 
-    const particles = Array.from({ length: 160 }, () => ({
+    // Fewer simultaneous curves on mobile — direct reduction in per-frame draw calls,
+    // and a narrower viewport has less area for ten overlapping sweeps to read clearly anyway.
+    const activeCurves = isMobile ? CURVES.slice(0, 6) : CURVES;
+
+    const particleCount = isMobile ? 70 : 160;
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random(),
       y: Math.random(),
       r: Math.random() * 1.4 + 0.3,
@@ -83,7 +93,7 @@ export default function ManifestoBackground() {
       baseAlpha: Math.random() * 0.5 + 0.15,
     }));
 
-    function drawCurve(ctx: CanvasRenderingContext2D, curve: Curve, time: number) {
+    function drawCurve(ctx: CanvasRenderingContext2D, curve: Curve, time: number, isMobile: boolean) {
       const cyclePos = ((time * curve.speed + curve.offset) % 1 + 1) % 1;
       // Draw phase (0 -> 0.6 of the cycle): the line sweeps in. Hold briefly, then
       // fade phase (0.8 -> 1): it dissolves before the next sweep begins.
@@ -104,7 +114,9 @@ export default function ManifestoBackground() {
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
 
-      // Soft outer glow pass
+      // Soft outer glow pass — shadowBlur is one of the priciest things a canvas can do
+      // per frame, so mobile trades it for a plain wider translucent stroke instead of
+      // skipping the glow look entirely.
       ctx.beginPath();
       for (let i = 0; i <= upTo; i++) {
         const [x, y] = bezierPoint(pts, i / steps);
@@ -112,8 +124,10 @@ export default function ManifestoBackground() {
       }
       ctx.strokeStyle = `rgba(${c.glow},${opacity * 0.35})`;
       ctx.lineWidth = curve.width + curve.glow;
-      ctx.shadowColor = `rgba(${c.glow},${opacity * 0.6})`;
-      ctx.shadowBlur = curve.glow * 2;
+      if (!isMobile) {
+        ctx.shadowColor = `rgba(${c.glow},${opacity * 0.6})`;
+        ctx.shadowBlur = curve.glow * 2;
+      }
       ctx.stroke();
 
       // Bright core pass
@@ -145,7 +159,7 @@ export default function ManifestoBackground() {
     function render(time: number) {
       ctx!.clearRect(0, 0, width, height);
       drawParticles(ctx, time);
-      for (const curve of CURVES) drawCurve(ctx, curve, time);
+      for (const curve of activeCurves) drawCurve(ctx, curve, time, isMobile);
       raf = requestAnimationFrame(render);
     }
 
@@ -153,7 +167,7 @@ export default function ManifestoBackground() {
       // Single still frame — every curve fully drawn, no motion, particles at rest.
       ctx.clearRect(0, 0, width, height);
       drawParticles(ctx, 0);
-      for (const curve of CURVES) drawCurve(ctx, { ...curve, offset: 0.3 }, 4000);
+      for (const curve of activeCurves) drawCurve(ctx, { ...curve, offset: 0.3 }, 4000, isMobile);
     } else {
       raf = requestAnimationFrame(render);
     }

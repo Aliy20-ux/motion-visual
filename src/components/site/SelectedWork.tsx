@@ -179,10 +179,11 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1) translateY(0%)')}
       />
 
-      {/* Scrim — only covers the bottom 40% for text legibility, top is clean */}
+      {/* Scrim — a light overall vignette only; the real legibility work happens on the
+          info block below, sized to its own content instead of a fixed % of card height. */}
       <div
         className="absolute inset-0 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to top, rgba(8,8,9,0.96) 0%, rgba(8,8,9,0.55) 28%, rgba(8,8,9,0.0) 52%)' }}
+        style={{ background: 'linear-gradient(to top, rgba(8,8,9,0.5) 0%, rgba(8,8,9,0.0) 35%)' }}
       />
 
       {/* Hover accent glow */}
@@ -197,8 +198,20 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         {String(index + 1).padStart(2, '0')}
       </span>
 
-      {/* Info — bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 p-7">
+      {/* Info — bottom. A gradient tied to a percentage of card height reads fine on a wide
+          desktop card but leaves text sitting on the *lighter* part of the gradient once the
+          card gets tall and narrow on mobile — exactly where it overlapped the screenshot's
+          own baked-in text. A blurred, darkened panel guarantees legibility no matter what's
+          behind it or how tall the card is; the mask just softens its top edge so it doesn't
+          read as a hard box. */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 px-7 pb-7 pt-10"
+        style={{
+          background: 'rgba(8,8,9,0.72)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          maskImage: 'linear-gradient(to top, black 65%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to top, black 65%, transparent 100%)',
+        }}>
         <div className="flex items-end justify-between">
           <div>
             <p className="font-body text-[10px] tracking-[0.25em] uppercase mb-2"

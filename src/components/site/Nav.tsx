@@ -2,7 +2,21 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock } from 'lucide-react';
-import { scrollToHash } from '../../lib/smoothScroll';
+import { scrollToHash, scrollToTarget } from '../../lib/smoothScroll';
+
+// The mobile menu is near-opaque, so starting the scroll the instant a link is tapped just
+// hides it happening behind the closing overlay — the user never sees the "smooth" part of
+// smooth-scroll, only a jump-cut once the menu clears. Closing the menu first and waiting
+// for its own exit transition (250ms) to finish means the scroll plays out on the visible
+// page instead.
+const MOBILE_MENU_CLOSE_MS = 260;
+function handleMobileNavClick(href: string, closeMenu: () => void) {
+  return (e: React.MouseEvent) => {
+    e.preventDefault();
+    closeMenu();
+    setTimeout(() => scrollToTarget(href), MOBILE_MENU_CLOSE_MS);
+  };
+}
 
 const links = [
   { label: 'Work', href: '#work' },
@@ -172,7 +186,7 @@ export default function Nav() {
               <motion.a
                 key={link.href}
                 href={link.href}
-                onClick={(e) => { setMenuOpen(false); scrollToHash(link.href)(e); }}
+                onClick={handleMobileNavClick(link.href, () => setMenuOpen(false))}
                 className="font-display italic text-5xl py-3 cursor-pointer"
                 style={{ color: 'rgba(244,241,236,0.8)' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#F4F1EC')}
@@ -186,7 +200,7 @@ export default function Nav() {
             ))}
             <motion.a
               href="#quote"
-              onClick={(e) => { setMenuOpen(false); scrollToHash('#quote')(e); }}
+              onClick={handleMobileNavClick('#quote', () => setMenuOpen(false))}
               className="mt-10 gradient-bg text-white font-body text-sm tracking-widest uppercase rounded-full px-8 py-4 cursor-pointer"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
