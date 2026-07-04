@@ -3,15 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-// Drive the CSS scroll-progress bar via a custom property (no React needed)
-function initScrollProgress() {
-  const update = () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    document.documentElement.style.setProperty('--scroll-progress', String(pct));
-  };
-  window.addEventListener('scroll', update, { passive: true });
-}
-initScrollProgress();
+// --scroll-progress is set by SmoothScroll.tsx, which already branches on device type
+// (Lenis's own scroll callback on desktop, a plain scroll listener on touch/reduced-motion) —
+// this used to duplicate that with a third, always-on listener computing the same value.
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
