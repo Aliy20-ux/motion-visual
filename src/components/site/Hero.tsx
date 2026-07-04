@@ -213,7 +213,7 @@ export default function Hero() {
             <MagneticCTA href="#quote">Get a Quote <ArrowUpRight size={14} /></MagneticCTA>
             <a href="#work" onClick={scrollToHash('#work')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
               style={{ color: 'rgba(237,232,220,0.48)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-              See your work →
+              See our work →
             </a>
           </div>
         </motion.div>
