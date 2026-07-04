@@ -1,6 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import ManifestoBackground from './ManifestoBackground';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -18,17 +19,18 @@ export default function Manifesto() {
       className="relative overflow-hidden"
       style={{ background: '#09090A', padding: 'clamp(100px,13vw,180px) clamp(24px,5vw,88px)' }}
     >
-      {/* Abstract crimson texture — AI-generated, parallax layer */}
+      {/* Animated crimson/grey line-trail texture — same palette and sweeping composition
+          as the original static photo, but the lines actually draw and dissolve on a loop.
+          Canvas-based (see ManifestoBackground.tsx), still riding the same parallax drift. */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'url(/manifesto-texture.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.18,
+          opacity: 0.4,
           y: useTransform(scrollYProgress, [0, 1], ['-4%', '4%']),
         }}
-      />
+      >
+        <ManifestoBackground />
+      </motion.div>
       {/* Vignette — keeps text crisp */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 35%, #09090A 88%)' }} />
