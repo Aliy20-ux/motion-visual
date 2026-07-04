@@ -4,6 +4,13 @@ import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type Lead } from '../../lib/supabase';
 import { Check } from 'lucide-react';
 
+// Bots that auto-fill every field on a page will fill this too; real visitors never see it
+// (visually hidden, not display:none — some scrapers skip display:none fields specifically).
+// Combined with the mount-time check below, submissions that either fill this field or land
+// suspiciously fast are treated as spam and silently no-op instead of erroring, so a bot gets
+// no signal that anything was detected.
+const MIN_HUMAN_FILL_MS = 2500;
+
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else'] as const;
@@ -124,6 +131,8 @@ function ChipGroup({ label, options, value, onChange, error, optional }: {
 /* ── Main component ── */
 export default function QuoteForm() {
   const [form, setForm] = useState<FormData>(initForm);
+  const [honeypot, setHoneypot] = useState('');
+  const [mountedAt] = useState(() => Date.now());
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
@@ -146,6 +155,15 @@ export default function QuoteForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+
+    // Bot-shaped submission: honeypot filled, or the whole form completed faster than a human
+    // could. Show the normal success state without touching Supabase or sending an email —
+    // giving no signal back to the bot is what keeps it from adapting around the check.
+    if (honeypot.trim() || Date.now() - mountedAt < MIN_HUMAN_FILL_MS) {
+      setSubmitted(true);
+      return;
+    }
+
     setLoading(true);
 
     // The database record and the team-inbox email are independent
@@ -309,6 +327,20 @@ export default function QuoteForm() {
                 viewport={{ once: true }} transition={{ duration: 0.8, ease, delay: 0.15 }}>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+
+                  {/* Honeypot — invisible to real visitors, tempting to bots that auto-fill every field */}
+                  <div style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }} aria-hidden="true">
+                    <label htmlFor="company">Company</label>
+                    <input
+                      id="company"
+                      name="company"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={e => setHoneypot(e.target.value)}
+                    />
+                  </div>
 
                   {/* Name + Phone */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">

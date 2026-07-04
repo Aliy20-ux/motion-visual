@@ -89,8 +89,8 @@ export default function Process() {
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.4 }}>
             <span className="w-2 h-2 rounded-full shrink-0"
               style={{ background: '#C41E1E', boxShadow: '0 0 6px rgba(196,30,30,0.7)' }} />
-            Average delivery:{' '}
-            <span className="font-semibold" style={{ color: '#EDE8DC' }}>11.4 days</span>
+            Delivery guarantee:{' '}
+            <span className="font-semibold" style={{ color: '#EDE8DC' }}>14 days</span>
           </motion.div>
         </div>
 

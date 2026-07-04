@@ -27,7 +27,7 @@ const services = [
     num: '04',
     Icon: TrendingUp,
     title: 'SEO & Performance',
-    body: 'Core Web Vitals A+. Lightning-fast load times. Structured data and local SEO that puts you on the map.',
+    body: 'Built to Core Web Vitals standards. Lightning-fast load times. Structured data and local SEO that puts you on the map.',
   },
   {
     num: '05',
@@ -38,8 +38,8 @@ const services = [
   {
     num: '06',
     Icon: Shield,
-    title: 'Enterprise Security',
-    body: 'SSL, DDoS protection, secure form handling, and Cloudflare Enterprise delivery on every site.',
+    title: 'Security by Default',
+    body: 'SSL, DDoS protection, secure form handling, and Cloudflare-backed global delivery on every site.',
   },
 ];
 
