@@ -14,7 +14,6 @@ const projects = [
     bg: '#2D1B0E',
     year: '2025',
     tags: ['E-commerce', 'Branding', 'Animation'],
-    result: '+34% bookings',
   },
   {
     name: 'Texture Lounge',
@@ -24,7 +23,6 @@ const projects = [
     bg: '#1A0F14',
     year: '2025',
     tags: ['Booking System', 'CMS', 'SEO'],
-    result: '3× enquiries',
   },
   {
     name: 'CHE Edinburgh',
@@ -34,7 +32,6 @@ const projects = [
     bg: '#0D1A0D',
     year: '2025',
     tags: ['Restaurant', 'Online Ordering', 'Branding'],
-    result: 'Live in 12 days',
   },
   {
     name: 'S2 Studio Cuts',
@@ -44,7 +41,6 @@ const projects = [
     bg: '#0A0A14',
     year: '2025',
     tags: ['Booking', 'Gallery', 'Branding'],
-    result: '+41% bookings',
   },
   {
     name: 'Lucky Chen',
@@ -54,7 +50,6 @@ const projects = [
     bg: '#1A0A00',
     year: '2025',
     tags: ['Menu System', 'Ordering', 'SEO'],
-    result: '+52% online orders',
   },
   {
     name: 'Trim2Fresh',
@@ -64,7 +59,6 @@ const projects = [
     bg: '#1A1400',
     year: '2025',
     tags: ['Booking System', 'Branding', 'Reviews'],
-    result: '4.9★ · 500+ clients',
   },
 ];
 
@@ -201,17 +195,6 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
       <span className="absolute top-6 left-7 z-20 font-body text-[10px] tracking-[0.2em]"
         style={{ color: 'rgba(244,241,236,0.28)' }}>
         {String(index + 1).padStart(2, '0')}
-      </span>
-
-      {/* Result metric badge — top right */}
-      <span className="absolute top-5 right-5 z-20 font-body text-[10px] font-medium tracking-[0.1em] px-2.5 py-1.5 rounded-full"
-        style={{
-          background: 'rgba(196,30,30,0.15)',
-          color: '#E83838',
-          border: '1px solid rgba(196,30,30,0.25)',
-          backdropFilter: 'blur(8px)',
-        }}>
-        {project.result}
       </span>
 
       {/* Info — bottom */}

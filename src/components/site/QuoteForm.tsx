@@ -289,7 +289,6 @@ export default function QuoteForm() {
                   {[
                     { stat: '24h', label: 'Proposal turnaround' },
                     { stat: '£0', label: 'Consultation fee' },
-                    { stat: '28+', label: 'Sites delivered' },
                   ].map((item, i) => (
                     <div key={i} className="flex flex-col gap-1">
                       <span className="font-display italic gradient-text"

@@ -8,7 +8,6 @@ import WhyUs from '../components/site/WhyUs';
 import SelectedWork from '../components/site/SelectedWork';
 import About from '../components/site/About';
 import Process from '../components/site/Process';
-import Results from '../components/site/Results';
 import Pricing from '../components/site/Pricing';
 import Footer from '../components/site/Footer';
 
@@ -30,7 +29,6 @@ export default function Home() {
         <SelectedWork />
         <About />
         <Process />
-        <Results />
         <Pricing />
         <Suspense fallback={<div style={{ minHeight: 600 }} />}>
           <QuoteForm />
