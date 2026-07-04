@@ -81,6 +81,23 @@ export default function Hero() {
   };
   useEffect(() => { tryPlay(); }, []);
 
+  // Belt-and-suspenders: on some real devices even an explicit programmatic .play() call
+  // gets rejected (Low Power Mode, or a per-site "Never Auto-Play" Safari setting), and the
+  // browser falls back to its native tap-to-play affordance. A genuine user gesture always
+  // overrides autoplay restrictions, so retry on the very first touch/scroll/click anywhere
+  // on the page — the video starts the instant the visitor does anything, no direct tap on
+  // the video itself required.
+  useEffect(() => {
+    if (videoRef.current && !videoRef.current.paused) return;
+    const events = ['touchstart', 'scroll', 'click', 'pointerdown'] as const;
+    const handler = () => {
+      tryPlay();
+      events.forEach(e => window.removeEventListener(e, handler));
+    };
+    events.forEach(e => window.addEventListener(e, handler, { passive: true, once: true }));
+    return () => events.forEach(e => window.removeEventListener(e, handler));
+  }, []);
+
   const headline = ['We build', "the internet's", 'most wanted.'];
 
   return (
