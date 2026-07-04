@@ -1,7 +1,9 @@
 'use client';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const STEP_DELAY = 0.35;
 
 const steps = [
   {
@@ -31,6 +33,44 @@ const steps = [
 ];
 
 export default function Process() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [segments, setSegments] = useState<{ left: number; top: number; width: number }[]>([]);
+
+  // The connecting line used to be positioned with guessed percentages (left-[12.5%],
+  // right-[12.5%]), which assumes each grid column is an even fraction of the container —
+  // untrue once gap-x-8 eats fixed pixel space out of a percentage-based grid, so the line
+  // drifted out of alignment with the actual circle centers. Measuring the real rendered
+  // positions and drawing one segment per gap is the only way this stays aligned at every
+  // viewport width.
+  useLayoutEffect(() => {
+    function measure() {
+      const rail = railRef.current;
+      if (!rail) return;
+      const railRect = rail.getBoundingClientRect();
+      const centers = circleRefs.current.map((el) => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - railRect.left, y: r.top + r.height / 2 - railRect.top };
+      });
+      const next: { left: number; top: number; width: number }[] = [];
+      for (let i = 0; i < centers.length - 1; i++) {
+        const a = centers[i];
+        const b = centers[i + 1];
+        if (!a || !b) continue;
+        next.push({ left: a.x, top: a.y, width: b.x - a.x });
+      }
+      setSegments(next);
+    }
+    measure();
+    const raf = requestAnimationFrame(measure);
+    window.addEventListener('resize', measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
   return (
     <section
       id="process"
@@ -95,15 +135,25 @@ export default function Process() {
         </div>
 
         {/* ── Horizontal step rail ── */}
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-14">
-          {/* Connecting line — desktop only, runs behind the number badges */}
-          <motion.div
-            className="hidden md:block absolute top-[19px] left-[calc(12.5%)] right-[calc(12.5%)] h-px"
-            style={{ background: 'linear-gradient(to right, #C41E1E 0%, rgba(196,30,30,0.15) 100%)' }}
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease, delay: 0.2 }} />
+        <div ref={railRef} className="relative grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-14">
+          {/* Connecting line — one measured segment per gap, so it always meets the
+              actual circle centers exactly, and lights up in step with each stage. */}
+          {segments.map((seg, i) => (
+            <motion.div
+              key={i}
+              className="hidden md:block absolute h-px"
+              style={{
+                left: seg.left,
+                top: seg.top,
+                width: seg.width,
+                transformOrigin: 'left',
+                background: 'linear-gradient(to right, #C41E1E 0%, rgba(196,30,30,0.15) 100%)',
+              }}
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease, delay: 0.3 + (i + 1) * STEP_DELAY }} />
+          ))}
 
           {steps.map((step, i) => (
             <motion.div
@@ -112,10 +162,11 @@ export default function Process() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, ease, delay: 0.3 + i * 0.1 }}>
+              transition={{ duration: 0.6, ease, delay: 0.3 + i * STEP_DELAY }}>
 
               {/* Crimson numbered circle */}
               <div
+                ref={(el) => { circleRefs.current[i] = el; }}
                 className="relative z-10 shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
                 style={{
                   background: '#09090A',

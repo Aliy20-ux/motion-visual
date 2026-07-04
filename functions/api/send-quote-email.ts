@@ -49,7 +49,7 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
         <tr><td style="padding: 8px 0; color: #666;">Email</td><td style="padding: 8px 0;">${escapeHtml(email)}</td></tr>
         <tr><td style="padding: 8px 0; color: #666;">Phone</td><td style="padding: 8px 0;">${escapeHtml(phone?.trim() || 'Not provided')}</td></tr>
         <tr><td style="padding: 8px 0; color: #666;">Project type</td><td style="padding: 8px 0;">${escapeHtml(project_type)}</td></tr>
-        <tr><td style="padding: 8px 0; color: #666;">Budget</td><td style="padding: 8px 0;">${escapeHtml(budget)}</td></tr>
+        <tr><td style="padding: 8px 0; color: #666;">Package</td><td style="padding: 8px 0;">${escapeHtml(budget)}</td></tr>
         <tr><td style="padding: 8px 0; color: #666; vertical-align: top;">Notes</td><td style="padding: 8px 0;">${escapeHtml(notes?.trim() || 'None').replace(/\n/g, '<br>')}</td></tr>
       </table>
     </div>

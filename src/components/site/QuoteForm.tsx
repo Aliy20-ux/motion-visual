@@ -14,7 +14,9 @@ const MIN_HUMAN_FILL_MS = 2500;
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else'] as const;
-const budgets = ['£1,499 – £3,499', '£3,999 – £6,999', '£7,000+'] as const;
+// Kept in sync with the tiers in Pricing.tsx — same names, same prices, so a visitor
+// picks the same package here that they saw on the pricing section.
+const budgets = ['Essential — £1,499–£3,499', 'Signature — £3,999–£6,999', 'Flagship — Custom'] as const;
 
 type FormData = {
   name: string;
@@ -179,7 +181,7 @@ export default function QuoteForm() {
       stage: 'New Lead',
       notes: [
         `Project type: ${form.project_type}`,
-        `Budget: ${form.budget}`,
+        `Package: ${form.budget}`,
         form.notes.trim() ? `\n${form.notes.trim()}` : '',
       ].filter(Boolean).join('\n'),
     };
@@ -369,9 +371,9 @@ export default function QuoteForm() {
                     error={errors.project_type}
                   />
 
-                  {/* Budget */}
+                  {/* Package */}
                   <ChipGroup
-                    label="Budget range"
+                    label="Which package?"
                     options={budgets}
                     value={form.budget}
                     onChange={v => set('budget', v)}
