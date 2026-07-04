@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import { useIsTouch } from '../../hooks/useIsTouch';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -13,6 +14,8 @@ const clients = [
 ];
 
 export default function Clients() {
+  const isTouch = useIsTouch();
+
   return (
     <section
       className="relative overflow-hidden"
@@ -58,8 +61,9 @@ export default function Clients() {
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(196,30,30,0.07) 0%, transparent 70%)' }} />
 
-              {/* Animated left border */}
-              <div className="absolute left-0 top-0 w-px h-0 group-hover:h-full transition-all duration-400 pointer-events-none"
+              {/* Left border — a permanent accent on touch (no hover to reveal it otherwise),
+                  still an animated reveal on desktop */}
+              <div className={`absolute left-0 top-0 w-px transition-all duration-400 pointer-events-none ${isTouch ? 'h-full' : 'h-0 group-hover:h-full'}`}
                 style={{ background: 'linear-gradient(to bottom, #C41E1E, #E83838)' }} />
 
               <div>
@@ -67,18 +71,18 @@ export default function Clients() {
                   style={{ color: 'rgba(237,232,220,0.2)' }}>
                   {client.industry}
                 </p>
-                <p className="font-display italic leading-tight transition-all duration-300 group-hover:gradient-text"
+                <p className={`font-display italic leading-tight transition-all duration-300 ${isTouch ? 'gradient-text' : 'group-hover:gradient-text'}`}
                   style={{
                     fontSize: 'clamp(0.85rem,1.5vw,1.05rem)',
                     letterSpacing: '-0.01em',
-                    color: 'rgba(237,232,220,0.7)',
+                    color: isTouch ? undefined : 'rgba(237,232,220,0.7)',
                     lineHeight: 1.2,
                   }}>
                   {client.name}
                 </p>
               </div>
 
-              <p className="font-body text-[9px] mt-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+              <p className={`font-body text-[9px] mt-3 transition-opacity duration-300 ${isTouch ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 style={{ color: 'rgba(196,30,30,0.6)', letterSpacing: '0.06em' }}>
                 {client.location}
               </p>

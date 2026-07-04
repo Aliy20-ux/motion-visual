@@ -2,6 +2,7 @@
 import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { useIsTouch } from '../../hooks/useIsTouch';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -143,6 +144,8 @@ export default function SelectedWork() {
 }
 
 function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
+  const isTouch = useIsTouch();
+
   return (
     <motion.a
       href={project.url}
@@ -233,7 +236,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             </div>
           </div>
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
+            className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ml-4 transition-all duration-300 ${isTouch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'}`}
             style={{ border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
             <ArrowUpRight size={14} style={{ color: '#C41E1E' }} />
           </div>

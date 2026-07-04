@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'motion/react';
 import { PenTool, Code2, Film, TrendingUp, Target, Shield } from 'lucide-react';
+import { useIsTouch } from '../../hooks/useIsTouch';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -44,6 +45,8 @@ const services = [
 ];
 
 export default function WhyUs() {
+  const isTouch = useIsTouch();
+
   return (
     <section
       id="why-us"
@@ -110,15 +113,17 @@ export default function WhyUs() {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                   style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(196,30,30,0.1) 0%, transparent 65%)' }} />
 
-                {/* Animated left border */}
-                <div className="absolute left-0 top-0 w-px h-0 group-hover:h-full transition-all duration-500 pointer-events-none"
+                {/* Left border — permanent accent on touch, animated reveal on desktop */}
+                <div className={`absolute left-0 top-0 w-px transition-all duration-500 pointer-events-none ${isTouch ? 'h-full' : 'h-0 group-hover:h-full'}`}
                   style={{ background: '#C41E1E' }} />
 
                 {/* Icon + number row */}
                 <div className="relative flex items-start justify-between mb-6">
                   <motion.div
                     className="w-9 h-9 rounded-lg flex items-center justify-center"
-                    style={{ background: 'rgba(196,30,30,0.1)', border: '1px solid rgba(196,30,30,0.18)' }}
+                    style={isTouch
+                      ? { background: 'rgba(196,30,30,0.18)', border: '1px solid rgba(196,30,30,0.4)' }
+                      : { background: 'rgba(196,30,30,0.1)', border: '1px solid rgba(196,30,30,0.18)' }}
                     whileHover={{ scale: 1.12, rotate: -6, background: 'rgba(196,30,30,0.18)', borderColor: 'rgba(196,30,30,0.4)' }}
                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
                     <svc.Icon size={16} style={{ color: 'rgba(196,30,30,0.8)' }} />
