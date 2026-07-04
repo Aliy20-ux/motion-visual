@@ -1,8 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import NumberFlow from '@number-flow/react';
-import confetti from 'canvas-confetti';
 import { Check } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -12,7 +9,6 @@ const tiers = [
     name: 'Essential',
     priceMin: 1499,
     priceMax: 3499,
-    retainerPrice: 895,
     tagline: 'A serious site for a serious business.',
     description: 'Perfect for local businesses and new brands ready to compete online.',
     features: [
@@ -30,7 +26,6 @@ const tiers = [
     name: 'Signature',
     priceMin: 3999,
     priceMax: 6999,
-    retainerPrice: 1795,
     tagline: 'The full Motion Visual experience.',
     description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
     features: [
@@ -65,23 +60,6 @@ const tiers = [
 ];
 
 export default function Pricing() {
-  const [isRetainer, setIsRetainer] = useState(false);
-  const toggleRef = useRef<HTMLDivElement | null>(null);
-
-  const handleToggle = (retainer: boolean) => {
-    setIsRetainer(retainer);
-    if (retainer && toggleRef.current) {
-      const r = toggleRef.current.getBoundingClientRect();
-      confetti({
-        particleCount: 55,
-        spread: 60,
-        origin: { x: (r.left + r.width / 2) / window.innerWidth, y: (r.top + r.height / 2) / window.innerHeight },
-        colors: ['#C41E1E', '#E83838', '#C8C8C8', '#EDE8DC'],
-        ticks: 200, gravity: 1.1, decay: 0.92, startVelocity: 26,
-      });
-    }
-  };
-
   return (
     <section
       id="pricing"
@@ -123,46 +101,9 @@ export default function Pricing() {
 
           <p className="font-body font-light text-sm leading-relaxed mx-auto mb-10"
             style={{ color: 'rgba(237,232,220,0.38)', maxWidth: '44ch' }}>
-            One-off project or monthly retainer — toggle to compare.
+            One-off project pricing, no ongoing retainer.
             Book a free call and we'll give you an exact number within 24 hours.
           </p>
-
-          {/* ── Pill segmented toggle ── */}
-          <div
-            ref={toggleRef}
-            className="inline-flex items-center p-1 rounded-full"
-            style={{
-              background: 'rgba(237,232,220,0.05)',
-              border: '1px solid rgba(237,232,220,0.1)',
-            }}>
-            <button
-              type="button"
-              onClick={() => handleToggle(false)}
-              className="rounded-full font-body text-xs font-medium cursor-pointer transition-all duration-250"
-              style={{
-                padding: '9px 22px',
-                background: !isRetainer ? 'linear-gradient(135deg, #8B1010, #C41E1E)' : 'transparent',
-                color: !isRetainer ? '#F0EDED' : 'rgba(237,232,220,0.45)',
-                boxShadow: !isRetainer ? '0 2px 12px rgba(196,30,30,0.3)' : 'none',
-              }}>
-              One-off
-            </button>
-            <button
-              type="button"
-              onClick={() => handleToggle(true)}
-              className="rounded-full font-body text-xs cursor-pointer transition-all duration-250"
-              style={{
-                padding: '9px 22px',
-                background: isRetainer ? 'linear-gradient(135deg, #8B1010, #C41E1E)' : 'transparent',
-                color: isRetainer ? '#F0EDED' : 'rgba(237,232,220,0.45)',
-                boxShadow: isRetainer ? '0 2px 12px rgba(196,30,30,0.3)' : 'none',
-              }}>
-              Monthly{' '}
-              <span style={{ color: isRetainer ? 'rgba(240,237,237,0.75)' : 'rgba(196,30,30,0.7)' }}>
-                (Save 30%)
-              </span>
-            </button>
-          </div>
         </motion.div>
 
         {/* ── Cards ── */}
@@ -237,7 +178,7 @@ export default function Pricing() {
                       >
                         Custom
                       </span>
-                    ) : !isRetainer ? (
+                    ) : (
                       <span
                         className="font-display italic"
                         style={{
@@ -251,31 +192,10 @@ export default function Pricing() {
                           £{tier.priceMin!.toLocaleString('en-GB')}–£{tier.priceMax!.toLocaleString('en-GB')}
                         </span>
                       </span>
-                    ) : (
-                      <span
-                        className="font-display italic"
-                        style={{
-                          fontSize: 'clamp(2.6rem,4.5vw,4.2rem)',
-                          letterSpacing: '-0.03em',
-                          lineHeight: 1,
-                          // NumberFlow renders its digits inside a shadow root, which a
-                          // background-clip:text gradient (gradient-text) can't paint through —
-                          // it inherits transparent fill but no background crosses the shadow
-                          // boundary, so the digits go invisible. Solid crimson instead.
-                          color: tier.isPopular ? '#E83838' : '#EDE8DC',
-                        }}
-                      >
-                        £<NumberFlow
-                          value={tier.retainerPrice!}
-                          format={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
-                          transformTiming={{ duration: 500, easing: 'ease-out' }}
-                          willChange
-                        />
-                      </span>
                     )}
                   </div>
                   <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.25)' }}>
-                    {tier.customPrice ? 'scoped together, on a call' : isRetainer ? 'billed monthly' : 'one-off'}
+                    {tier.customPrice ? 'scoped together, on a call' : 'one-off'}
                   </p>
                 </div>
 
