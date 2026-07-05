@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, MotionConfig } from 'motion/react';
 import SmoothScroll from './components/layout/SmoothScroll';
 import CustomCursor from './components/layout/CustomCursor';
 import Home from './pages/Home';
@@ -11,6 +11,11 @@ const ease = [0.16, 1, 0.3, 1] as const;
 export default function App() {
   return (
     <BrowserRouter>
+      {/* reducedMotion="user": the CSS kill-switch in index.css only reaches CSS
+          animations — Motion drives inline styles from JS and ignores it. This makes
+          every transform animation snap to its end state for reduced-motion users
+          while opacity fades (which aid comprehension) still play. */}
+      <MotionConfig reducedMotion="user">
       <SmoothScroll>
         <CustomCursor />
         <Routes>
@@ -29,6 +34,7 @@ export default function App() {
           transition={{ duration: 0.7, ease, delay: 0.05 }}
         />
       </SmoothScroll>
+      </MotionConfig>
     </BrowserRouter>
   );
 }

@@ -113,8 +113,9 @@ export default function WhyUs() {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                   style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(196,30,30,0.1) 0%, transparent 65%)' }} />
 
-                {/* Left border — permanent accent on touch, animated reveal on desktop */}
-                <div className={`absolute left-0 top-0 w-px transition-all duration-500 pointer-events-none ${isTouch ? 'h-full' : 'h-0 group-hover:h-full'}`}
+                {/* Left border — permanent accent on touch, animated reveal on desktop.
+                    Scales rather than growing height: compositor-only, no layout work. */}
+                <div className={`absolute left-0 top-0 w-px h-full origin-top transition-[scale] duration-500 pointer-events-none ${isTouch ? '' : 'scale-y-0 group-hover:scale-y-100'}`}
                   style={{ background: '#C41E1E' }} />
 
                 {/* Icon + number row */}

@@ -45,8 +45,11 @@ body::after {
   transform: translateZ(0);
 }
 
-/* ── Crimson/chrome gradient system ── */
-.gradient-text {
+/* ── Crimson/chrome gradient system ──
+   Registered as a Tailwind @utility (not a plain class) so variant usage like
+   group-hover:gradient-text actually compiles — a plain CSS class silently
+   produces nothing when combined with a variant prefix in v4. */
+@utility gradient-text {
   background: linear-gradient(135deg, #C41E1E 0%, #E83838 52%, #D0D0D0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -92,6 +95,21 @@ body::before {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
 :focus-visible { outline: 2px solid #C41E1E; outline-offset: 3px; }
+
+::selection {
+  background: rgba(196, 30, 30, 0.85);
+  color: #EDE8DC;
+}
+
+/* Press feedback on primary CTAs. Standalone `scale` property (not transform)
+   so it composes with Motion's inline x/y transforms on the magnetic buttons
+   instead of fighting them. */
+a.gradient-bg, button.gradient-bg {
+  transition: scale 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+a.gradient-bg:active, button.gradient-bg:active {
+  scale: 0.97;
+}
 
 /* Form input placeholders */
 #quote input::placeholder,

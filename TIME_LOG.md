@@ -7,3 +7,4 @@ Format: `START <timestamp> — END <timestamp> — <what was done>`
 Logging starts 2026-07-03. Prior work (initial build through this date) is not backfilled — see `git log --reverse --format='%ai %s' | head -1` for the earliest commit as a rough reference point instead.
 
 ---
+START 2026-07-05 02:20 BST — END 2026-07-05 03:35 BST — Fable-5 polish pass: SEO domain fix (canonical/OG/schema/robots/sitemap → motion-visual.com), Emil-standard animation fixes (no transition-all, scaleY borders, fixed broken group-hover:gradient-text via @utility), MotionConfig reduced-motion, ::selection, CTA press feedback, Manifesto scroll-scrubbed word reveal, work-track progress rail. Full Playwright verification (desktop/mobile/reduced-motion/keyboard).

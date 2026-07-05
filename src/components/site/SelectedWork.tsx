@@ -1,6 +1,6 @@
 'use client';
 import { useRef } from 'react';
-import { motion } from 'motion/react';
+import { motion, useMotionValue, useTransform } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useIsTouch } from '../../hooks/useIsTouch';
 
@@ -66,6 +66,18 @@ const projects = [
 export default function SelectedWork() {
   const trackRef = useRef<HTMLDivElement>(null);
 
+  // Horizontal position indicator for the track. A motion value so scroll updates
+  // write straight to the compositor without re-rendering React. Seeded slightly
+  // above zero so the crimson bar reads as an affordance before the first drag.
+  const trackProgress = useMotionValue(0);
+  const railScaleX = useTransform(trackProgress, [0, 1], [0.04, 1]);
+  const onTrackScroll = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    trackProgress.set(max > 0 ? el.scrollLeft / max : 0);
+  };
+
   return (
     <section id="work" className="relative" style={{ padding: 'clamp(80px,10vw,140px) 0' }}>
       {/* Header */}
@@ -104,6 +116,7 @@ export default function SelectedWork() {
         ref={trackRef}
         data-cursor="drag"
         className="flex gap-5 overflow-x-auto no-scrollbar"
+        onScroll={onTrackScroll}
         style={{
           padding: '40px 0',
           scrollSnapType: 'x mandatory',
@@ -138,6 +151,13 @@ export default function SelectedWork() {
           <ProjectCard key={i} project={project} index={i} />
         ))}
         <div aria-hidden className="flex-shrink-0" style={{ width: 'clamp(20px,5vw,80px)', scrollSnapAlign: 'end' }} />
+      </div>
+
+      {/* Track position indicator — scrubbed by the user's own drag/scroll */}
+      <div aria-hidden className="mx-[clamp(20px,5vw,80px)] h-px overflow-hidden"
+        style={{ background: 'rgba(244,241,236,0.07)' }}>
+        <motion.div className="h-full origin-left"
+          style={{ scaleX: railScaleX, background: 'linear-gradient(to right, #8B1010, #C41E1E)' }} />
       </div>
     </section>
   );
@@ -236,7 +256,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             </div>
           </div>
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ml-4 transition-all duration-300 ${isTouch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'}`}
+            className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ml-4 transition-[opacity,translate] duration-300 ${isTouch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'}`}
             style={{ border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
             <ArrowUpRight size={14} style={{ color: '#C41E1E' }} />
           </div>

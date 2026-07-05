@@ -63,7 +63,7 @@ export default function Clients() {
 
               {/* Left border — a permanent accent on touch (no hover to reveal it otherwise),
                   still an animated reveal on desktop */}
-              <div className={`absolute left-0 top-0 w-px transition-all duration-400 pointer-events-none ${isTouch ? 'h-full' : 'h-0 group-hover:h-full'}`}
+              <div className={`absolute left-0 top-0 w-px h-full origin-top transition-[scale] duration-400 pointer-events-none ${isTouch ? '' : 'scale-y-0 group-hover:scale-y-100'}`}
                 style={{ background: 'linear-gradient(to bottom, #C41E1E, #E83838)' }} />
 
               <div>
@@ -71,7 +71,7 @@ export default function Clients() {
                   style={{ color: 'rgba(237,232,220,0.2)' }}>
                   {client.industry}
                 </p>
-                <p className={`font-display italic leading-tight transition-all duration-300 ${isTouch ? 'gradient-text' : 'group-hover:gradient-text'}`}
+                <p className={`font-display italic leading-tight transition-colors duration-300 ${isTouch ? 'gradient-text' : 'group-hover:gradient-text'}`}
                   style={{
                     fontSize: 'clamp(0.85rem,1.5vw,1.05rem)',
                     letterSpacing: '-0.01em',

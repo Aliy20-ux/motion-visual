@@ -1,11 +1,66 @@
 'use client';
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from 'motion/react';
 import ManifestoBackground from './ManifestoBackground';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const bigLines = ['We build the websites', "that make your", 'competitors nervous.'];
+
+// Zone 1 copy, split per line so the deliberate line break survives the word split.
+const denialLines = [
+  ["We", "don't", "do", "generic.", "We", "don't", "do", "templates."],
+  ["We", "don't", "do", '"good enough."'],
+];
+const denialTotal = denialLines.flat().length;
+
+function ScrubWord({ children, progress, range }: {
+  children: string; progress: MotionValue<number>; range: [number, number];
+}) {
+  const opacity = useTransform(progress, range, [0.14, 1]);
+  return <motion.span style={{ opacity }}>{children}</motion.span>;
+}
+
+/* Scroll-scrubbed word reveal — each word brightens as the scroll passes it, so
+   reading pace and scroll pace lock together. Scrubbed (not time-based): the user
+   keeps full control and the effect is interruptible by construction. Opacity-only,
+   so it stays on the compositor. */
+function DenialParagraph() {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'start 0.4'] });
+
+  let wordIndex = 0;
+  return (
+    <p
+      ref={ref}
+      className="font-display italic"
+      style={{
+        fontSize: 'clamp(1.05rem,1.9vw,2.1rem)',
+        color: 'rgba(237,232,220,0.72)',
+        letterSpacing: '-0.018em',
+        lineHeight: 1.4,
+        maxWidth: '55ch',
+      }}>
+      {denialLines.map((line, li) => (
+        <span key={li} className="block">
+          {line.map((word) => {
+            const i = wordIndex++;
+            return reduce ? (
+              <span key={i}>{word}{' '}</span>
+            ) : (
+              <span key={i}>
+                <ScrubWord progress={scrollYProgress} range={[i / denialTotal, Math.min(1, (i + 1.6) / denialTotal)]}>
+                  {word}
+                </ScrubWord>{' '}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </p>
+  );
+}
 
 export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -67,26 +122,10 @@ export default function Manifesto() {
         </motion.span>
       </div>
 
-      {/* ── Zone 1: Denial — small, muted editorial ── */}
-      <motion.div
-        className="relative z-10 mb-16"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.9, ease }}>
-        <p
-          className="font-display italic"
-          style={{
-            fontSize: 'clamp(1.05rem,1.9vw,2.1rem)',
-            color: 'rgba(237,232,220,0.28)',
-            letterSpacing: '-0.018em',
-            lineHeight: 1.4,
-            maxWidth: '55ch',
-          }}>
-          We don't do generic. We don't do templates.<br />
-          We don't do "good&nbsp;enough."
-        </p>
-      </motion.div>
+      {/* ── Zone 1: Denial — small, muted editorial, scrubbed word by word ── */}
+      <div className="relative z-10 mb-16">
+        <DenialParagraph />
+      </div>
 
       {/* Thin rule pivot */}
       <motion.div

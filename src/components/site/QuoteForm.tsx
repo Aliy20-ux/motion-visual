@@ -115,7 +115,7 @@ function ChipGroup({ label, options, value, onChange, error, optional }: {
             key={opt}
             type="button"
             onClick={() => onChange(value === opt ? '' : opt)}
-            className="font-body text-xs rounded-full cursor-pointer transition-all duration-180"
+            className="font-body text-xs rounded-full cursor-pointer transition-[background-color,border-color,color] duration-180 active:scale-[0.97]"
             style={{
               padding: '8px 16px',
               background: value === opt ? 'rgba(196,30,30,0.12)' : 'transparent',
