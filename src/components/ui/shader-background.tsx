@@ -149,9 +149,14 @@ export default function ShaderBackground({ className }: { className?: string }) 
     const uResolution = gl.getUniformLocation(program, 'iResolution');
     const uTime = gl.getUniformLocation(program, 'iTime');
 
-    // Soft effect: sub-native resolution is invisible but the fill-rate saving
-    // isn't, especially on phones.
-    const resScale = window.matchMedia('(pointer: coarse)').matches ? 0.5 : 0.75;
+    // Backing store must be scaled by devicePixelRatio, or the browser upscales
+    // a CSS-pixel-sized frame to the physical screen and the lines alias badly
+    // (a DPR-3 phone otherwise upscales ~6x — visibly pixelated). DPR is capped
+    // at 2 and nudged just under native by `quality`: the effect is soft, so a
+    // touch below physical is invisible while it saves real fill-rate on phones.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const quality = window.matchMedia('(pointer: coarse)').matches ? 0.9 : 0.75;
+    const resScale = dpr * quality;
     const resize = () => {
       canvas.width = Math.max(1, Math.round(canvas.clientWidth * resScale));
       canvas.height = Math.max(1, Math.round(canvas.clientHeight * resScale));
