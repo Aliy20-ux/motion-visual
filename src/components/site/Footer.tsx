@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
+import ShaderBackground from '../ui/shader-background';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -25,6 +26,15 @@ export default function Footer() {
       {/* ── CTA Section ── */}
       <section className="relative overflow-hidden" style={{ background: '#0A0A0B' }}>
         <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
+
+        {/* WebGL plasma lines (crimson-mapped ShaderBackground) — the page's
+            closing move. Dimmed and vignetted so the display type stays the
+            subject; the canvas is just atmosphere behind it. */}
+        <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.45 }}>
+          <ShaderBackground />
+        </div>
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 20%, #0A0A0B 96%)' }} />
 
         {/* Subtle glow — top left only */}
         <div className="absolute top-0 left-0 w-[600px] h-[500px] pointer-events-none"
