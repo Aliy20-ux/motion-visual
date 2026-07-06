@@ -166,6 +166,12 @@ try {
   const kbPage = await kbCtx.newPage();
   try {
     await kbPage.goto(BASE + routes[0], { waitUntil: "load", timeout: 30000 });
+    // Lazy-routed pages render their focusables AFTER the load event — wait
+    // for one to exist before tabbing, or the whole loop reads as body.
+    await kbPage
+      .waitForSelector("a, button, input, select, textarea, [tabindex]", { timeout: 5000 })
+      .catch(() => {});
+    await kbPage.waitForTimeout(300);
     const focused = [];
     for (let i = 0; i < 12; i++) {
       await kbPage.keyboard.press("Tab");
