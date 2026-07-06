@@ -128,6 +128,16 @@ try {
     try {
       await page.goto(BASE + route, { waitUntil: "load", timeout: 30000 });
       await page.waitForTimeout(800);
+      // Scroll through first — whileInView content must get its chance to enter,
+      // exactly as a real reduced-motion user scrolling the page would see it.
+      await page.evaluate(async () => {
+        const step = window.innerHeight * 0.8;
+        for (let y = 0; y <= document.body.scrollHeight; y += step) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 120));
+        }
+      });
+      await page.waitForTimeout(500);
       // Text that stays invisible under reduced motion = content held hostage.
       const hidden = await page.evaluate(() => {
         const bad = [];

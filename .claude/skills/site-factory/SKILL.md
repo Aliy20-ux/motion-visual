@@ -56,12 +56,19 @@ skip.
 structural DNA as empty semantic sections with real nav. Build must pass
 before phase 3.
 
-**3. Sections — delegated, serialized.** For each section in the brief's
-structure list, delegate to the **web-builder** agent with: the brief section
-verbatim, the palette/type tokens, the mode (REAL CLIENT vs SHOWCASE), and
-"no motion yet." **One builder at a time — never two agents editing the tree
-concurrently** (parallel agents are for read-only work: research, review).
-After each section: production build passes, design-lint clean.
+**3. Sections — assembly first, delegated, serialized.** Before generating
+ANY section from scratch, read `src/library/LIBRARY.md` (template-derived
+projects have a pre-verified parts bin: heroes, navs, sections, motion
+primitives). The rule: **adapt a library part when one fits; generate from
+scratch only when none does** — adaptation preserves baked-in quality across
+model downgrades. The signature moment is the exception: always bespoke.
+For each section in the brief's structure list, delegate to the
+**web-builder** agent with: the brief section verbatim, the palette/type
+tokens, the mode (REAL CLIENT vs SHOWCASE), which library part to adapt (or
+explicit permission to generate fresh), and "no motion yet." **One builder at
+a time — never two agents editing the tree concurrently** (parallel agents
+are for read-only work: research, review). After each section: production
+build passes, design-lint clean.
 
 **4. Motion pass.** One web-builder delegation for the whole site's motion,
 per the brief's choreography section and emil-design-eng standards, including
