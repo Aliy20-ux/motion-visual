@@ -56,6 +56,7 @@ function MagneticNavCTA({ children, href, className, style, onClick }: {
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -70,6 +71,23 @@ export default function Nav() {
     window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
   }, []);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    menuButtonRef.current?.focus();
+  };
+
+  // Full-screen mobile menu behaves like a modal: Escape closes it and focus
+  // returns to the trigger that opened it.
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuOpen]);
 
   return (
     <>
@@ -159,9 +177,12 @@ export default function Nav() {
             </a>
 
             <button
+              ref={menuButtonRef}
               className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
               <motion.span className="block w-5 h-px" style={{ background: 'rgba(244,241,236,0.7)' }} animate={menuOpen ? { rotate: 45, y: 5 } : {}} />
               <motion.span className="block w-3.5 h-px" style={{ background: 'rgba(244,241,236,0.7)' }} animate={menuOpen ? { opacity: 0 } : {}} />
@@ -175,6 +196,10 @@ export default function Nav() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
             className="fixed inset-0 z-40 flex flex-col items-center justify-center"
             style={{ background: 'rgba(10,10,11,0.97)', backdropFilter: 'blur(20px)' }}
             initial={{ opacity: 0 }}

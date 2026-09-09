@@ -31,8 +31,8 @@ const initForm: FormData = { name: '', email: '', phone: '', project_type: '', b
 
 /* ── Underline input ── */
 function UnderlineInput({
-  type = 'text', value, onChange, placeholder, id,
-}: { type?: string; value: string; onChange: (v: string) => void; placeholder?: string; id?: string }) {
+  type = 'text', value, onChange, placeholder, id, autoComplete, error,
+}: { type?: string; value: string; onChange: (v: string) => void; placeholder?: string; id?: string; autoComplete?: string; error?: string }) {
   const [focused, setFocused] = useState(false);
   return (
     <input
@@ -43,6 +43,9 @@ function UnderlineInput({
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       placeholder={placeholder}
+      autoComplete={autoComplete}
+      aria-invalid={error ? true : undefined}
+      aria-describedby={error && id ? `${id}-error` : undefined}
       className="w-full bg-transparent font-body text-sm outline-none"
       style={{
         color: '#EDE8DC',
@@ -87,15 +90,15 @@ function FieldLabel({ htmlFor, label, optional, error }: {
   return (
     <div className="flex items-center gap-2 mb-1">
       <label htmlFor={htmlFor} className="font-body text-[9px] tracking-[0.28em] uppercase"
-        style={{ color: error ? '#F87171' : 'rgba(237,232,220,0.38)' }}>
+        style={{ color: error ? '#F87171' : 'rgba(237,232,220,0.5)' }}>
         {label}
       </label>
       {optional && (
         <span className="font-body text-[9px] tracking-[0.15em] uppercase"
-          style={{ color: 'rgba(237,232,220,0.18)' }}>Optional</span>
+          style={{ color: 'rgba(237,232,220,0.5)' }}>Optional</span>
       )}
       {error && (
-        <span className="font-body text-[9px]" style={{ color: '#F87171' }}>{error}</span>
+        <span id={htmlFor ? `${htmlFor}-error` : undefined} role="alert" className="font-body text-[9px]" style={{ color: '#F87171' }}>{error}</span>
       )}
     </div>
   );
@@ -120,7 +123,7 @@ function ChipGroup({ label, options, value, onChange, error, optional }: {
               padding: '8px 16px',
               background: value === opt ? 'rgba(196,30,30,0.12)' : 'transparent',
               border: value === opt ? '1px solid rgba(196,30,30,0.48)' : '1px solid rgba(237,232,220,0.1)',
-              color: value === opt ? '#EDE8DC' : 'rgba(237,232,220,0.4)',
+              color: value === opt ? '#EDE8DC' : 'rgba(237,232,220,0.5)',
             }}>
             {opt}
           </button>
@@ -138,6 +141,7 @@ export default function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [formError, setFormError] = useState('');
 
   const set = (k: keyof FormData, v: string) => {
     setForm(f => ({ ...f, [k]: v }));
@@ -156,6 +160,7 @@ export default function QuoteForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError('');
     if (!validate()) return;
 
     // Bot-shaped submission: honeypot filled, or the whole form completed faster than a human
@@ -211,7 +216,7 @@ export default function QuoteForm() {
     if (dbResult.status === 'fulfilled' || emailResult.status === 'fulfilled') {
       setSubmitted(true);
     } else {
-      setErrors({ email: 'Something went wrong. Email us at hello@motionvisual.co.uk' });
+      setFormError('Something went wrong. Email us at hello@motionvisual.co.uk');
     }
   };
 
@@ -227,7 +232,7 @@ export default function QuoteForm() {
       <div className="absolute bottom-0 right-0 w-[700px] h-[600px] pointer-events-none"
         style={{ background: 'radial-gradient(circle at 100% 100%, rgba(196,30,30,0.07) 0%, transparent 65%)' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto" aria-live="polite">
         <AnimatePresence mode="wait">
 
           {/* ── Success ── */}
@@ -239,7 +244,7 @@ export default function QuoteForm() {
 
               <motion.div
                 className="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-10"
-                initial={{ scale: 0 }} animate={{ scale: 1 }}
+                initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: 'spring', stiffness: 320, damping: 22, delay: 0.2 }}>
                 <Check size={26} style={{ color: '#F0EDED' }} />
               </motion.div>
@@ -249,7 +254,7 @@ export default function QuoteForm() {
                 We'll be in touch.
               </h2>
               <p className="font-body font-light text-sm mt-4"
-                style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '38ch', lineHeight: 1.7 }}>
+                style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '38ch', lineHeight: 1.7 }}>
                 Thanks {form.name.split(' ')[0] || 'there'}. One of our founders will reach out at{' '}
                 <span style={{ color: '#EDE8DC' }}>{form.email}</span> within 24 hours.
               </p>
@@ -269,7 +274,7 @@ export default function QuoteForm() {
                   viewport={{ once: true }} transition={{ duration: 0.6 }}>
                   <div className="w-8 h-px gradient-bg" />
                   <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-                    style={{ color: 'rgba(237,232,220,0.35)' }}>
+                    style={{ color: 'rgba(237,232,220,0.5)' }}>
                     Free Enquiry
                   </span>
                 </motion.div>
@@ -293,7 +298,7 @@ export default function QuoteForm() {
 
                 <motion.p
                   className="font-body font-light text-sm leading-relaxed mb-12"
-                  style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '38ch' }}
+                  style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '38ch' }}
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                   viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
                   Fill in your details and we'll come back with a personalised proposal
@@ -315,7 +320,7 @@ export default function QuoteForm() {
                         style={{ fontSize: 'clamp(1.6rem,2.8vw,2.6rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
                         {item.stat}
                       </span>
-                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.3)' }}>
+                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
                         {item.label}
                       </span>
                     </div>
@@ -348,18 +353,18 @@ export default function QuoteForm() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div>
                       <FieldLabel htmlFor="name" label="Your name" error={errors.name} />
-                      <UnderlineInput id="name" value={form.name} onChange={v => set('name', v)} placeholder="John Smith" />
+                      <UnderlineInput id="name" value={form.name} onChange={v => set('name', v)} placeholder="John Smith" autoComplete="name" error={errors.name} />
                     </div>
                     <div>
                       <FieldLabel htmlFor="phone" label="Phone number" optional />
-                      <UnderlineInput id="phone" type="tel" value={form.phone} onChange={v => set('phone', v)} placeholder="+44 7XXX XXXXXX" />
+                      <UnderlineInput id="phone" type="tel" value={form.phone} onChange={v => set('phone', v)} placeholder="+44 7XXX XXXXXX" autoComplete="tel" />
                     </div>
                   </div>
 
                   {/* Email */}
                   <div>
                     <FieldLabel htmlFor="email" label="Email address" error={errors.email} />
-                    <UnderlineInput id="email" type="email" value={form.email} onChange={v => set('email', v)} placeholder="john@company.com" />
+                    <UnderlineInput id="email" type="email" value={form.email} onChange={v => set('email', v)} placeholder="john@company.com" autoComplete="email" error={errors.email} />
                   </div>
 
                   {/* What do you need */}
@@ -386,6 +391,12 @@ export default function QuoteForm() {
                     <UnderlineTextarea id="notes" value={form.notes} onChange={v => set('notes', v)} />
                   </div>
 
+                  {formError && (
+                    <p role="alert" className="text-center font-body text-xs" style={{ color: '#F87171' }}>
+                      {formError}
+                    </p>
+                  )}
+
                   {/* Submit */}
                   <motion.button
                     type="submit"
@@ -406,7 +417,7 @@ export default function QuoteForm() {
                   </motion.button>
 
                   <p className="text-center font-body text-[10px] tracking-[0.15em] uppercase -mt-4"
-                    style={{ color: 'rgba(237,232,220,0.18)' }}>
+                    style={{ color: 'rgba(237,232,220,0.5)' }}>
                     Free consultation · No obligation · Reply within 24h
                   </p>
                 </form>

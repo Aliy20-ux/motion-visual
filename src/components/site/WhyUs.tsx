@@ -70,7 +70,7 @@ export default function WhyUs() {
               viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <div className="w-8 h-px gradient-bg" />
               <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-                style={{ color: 'rgba(237,232,220,0.35)' }}>Services</span>
+                style={{ color: 'rgba(237,232,220,0.5)' }}>Services</span>
             </motion.div>
 
             <motion.h2
@@ -87,7 +87,7 @@ export default function WhyUs() {
 
             <motion.p
               className="font-body font-light text-sm leading-relaxed"
-              style={{ color: 'rgba(237,232,220,0.4)', maxWidth: '36ch' }}
+              style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '36ch' }}
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
               viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}>
               We don't compete on price. We compete on outcomes. Every project is a bespoke engineering
@@ -130,18 +130,18 @@ export default function WhyUs() {
                     <svc.Icon size={16} style={{ color: 'rgba(196,30,30,0.8)' }} />
                   </motion.div>
                   <span className="font-body text-[11px] tracking-[0.2em] transition-colors duration-500"
-                    style={{ color: 'rgba(237,232,220,0.12)' }}>{svc.num}</span>
+                    style={{ color: 'rgba(237,232,220,0.5)' }}>{svc.num}</span>
                 </div>
 
                 {/* Title */}
-                <h3 className="relative font-display italic mb-3 transition-transform duration-400 group-hover:translate-x-[3px]"
+                <h3 className="relative font-display italic mb-3 transition-transform duration-200 group-hover:translate-x-[3px]"
                   style={{ fontSize: 'clamp(1.1rem,1.8vw,1.5rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                   {svc.title}
                 </h3>
 
                 {/* Body */}
                 <p className="relative font-body font-light text-xs leading-relaxed"
-                  style={{ color: 'rgba(237,232,220,0.38)' }}>
+                  style={{ color: 'rgba(237,232,220,0.5)' }}>
                   {svc.body}
                 </p>
               </motion.div>

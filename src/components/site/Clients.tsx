@@ -34,12 +34,12 @@ export default function Clients() {
           <div className="flex items-center gap-4">
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.3em] uppercase"
-              style={{ color: 'rgba(237,232,220,0.3)' }}>
+              style={{ color: 'rgba(237,232,220,0.5)' }}>
               Trusted by Edinburgh's finest
             </span>
           </div>
           <span className="font-body text-[10px] tracking-[0.18em] uppercase hidden md:block"
-            style={{ color: 'rgba(237,232,220,0.15)' }}>
+            style={{ color: 'rgba(237,232,220,0.5)' }}>
             6 live projects
           </span>
         </motion.div>
@@ -63,12 +63,12 @@ export default function Clients() {
 
               {/* Left border — a permanent accent on touch (no hover to reveal it otherwise),
                   still an animated reveal on desktop */}
-              <div className={`absolute left-0 top-0 w-px h-full origin-top transition-[scale] duration-400 pointer-events-none ${isTouch ? '' : 'scale-y-0 group-hover:scale-y-100'}`}
+              <div className={`absolute left-0 top-0 w-px h-full origin-top transition-[scale] duration-200 pointer-events-none ${isTouch ? '' : 'scale-y-0 group-hover:scale-y-100'}`}
                 style={{ background: 'linear-gradient(to bottom, #C41E1E, #E83838)' }} />
 
               <div>
                 <p className="font-body text-[9px] tracking-[0.26em] uppercase mb-3 transition-colors duration-300"
-                  style={{ color: 'rgba(237,232,220,0.2)' }}>
+                  style={{ color: 'rgba(237,232,220,0.5)' }}>
                   {client.industry}
                 </p>
                 <p className={`font-display italic leading-tight transition-colors duration-300 ${isTouch ? 'gradient-text' : 'group-hover:gradient-text'}`}

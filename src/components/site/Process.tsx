@@ -93,7 +93,7 @@ export default function Process() {
             viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-              style={{ color: 'rgba(237,232,220,0.35)' }}>How We Work</span>
+              style={{ color: 'rgba(237,232,220,0.5)' }}>How We Work</span>
           </motion.div>
 
           <motion.h2
@@ -109,7 +109,7 @@ export default function Process() {
 
           <motion.p
             className="font-body font-light text-sm leading-relaxed mb-8"
-            style={{ color: 'rgba(237,232,220,0.4)', maxWidth: '52ch' }}
+            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '52ch' }}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.25 }}>
             A clear four-step process. No scope creep, no missed deadlines.
@@ -183,15 +183,15 @@ export default function Process() {
                   never drifts out of alignment when a card is hovered. */}
               <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.3, ease }}>
                 <p className="font-body text-[10px] tracking-[0.28em] uppercase mb-2"
-                  style={{ color: 'rgba(237,232,220,0.3)' }}>
+                  style={{ color: 'rgba(237,232,220,0.5)' }}>
                   {step.duration}
                 </p>
-                <h3 className="font-display italic mb-3 transition-transform duration-400 group-hover:translate-x-[3px]"
+                <h3 className="font-display italic mb-3 transition-transform duration-200 group-hover:translate-x-[3px]"
                   style={{ fontSize: 'clamp(1.2rem,1.8vw,1.6rem)', color: '#EDE8DC', letterSpacing: '-0.022em', lineHeight: 1.1 }}>
                   {step.title}
                 </h3>
                 <p className="font-body font-light text-sm leading-relaxed"
-                  style={{ color: 'rgba(237,232,220,0.38)' }}>
+                  style={{ color: 'rgba(237,232,220,0.5)' }}>
                   {step.body}
                 </p>
               </motion.div>

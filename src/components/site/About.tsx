@@ -56,7 +56,7 @@ export default function About() {
             transition={{ duration: 0.6, ease }}>
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-              style={{ color: 'rgba(237,232,220,0.35)' }}>The Team</span>
+              style={{ color: 'rgba(237,232,220,0.5)' }}>The Team</span>
             <div className="w-8 h-px gradient-bg" />
           </motion.div>
 
@@ -73,7 +73,7 @@ export default function About() {
 
           <motion.p
             className="font-body font-light text-sm leading-relaxed mx-auto"
-            style={{ color: 'rgba(237,232,220,0.4)', maxWidth: '52ch' }}
+            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '52ch' }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease, delay: 0.22 }}>
@@ -117,7 +117,7 @@ export default function About() {
               </p>
 
               <p className="font-body font-light text-xs leading-relaxed"
-                style={{ color: 'rgba(237,232,220,0.42)', maxWidth: '22ch' }}>
+                style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '22ch' }}>
                 {member.bio}
               </p>
             </motion.div>
@@ -139,7 +139,7 @@ export default function About() {
                 padding: '10px 22px',
                 background: 'transparent',
                 border: '1px solid rgba(237,232,220,0.14)',
-                color: 'rgba(237,232,220,0.45)',
+                color: 'rgba(237,232,220,0.5)',
               }}>
               {badge}
             </span>

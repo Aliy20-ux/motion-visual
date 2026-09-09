@@ -180,7 +180,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         border: '1px solid rgba(244,241,236,0.08)',
         scrollSnapAlign: 'start',
       }}
-      whileHover={{ scale: 1.02, y: -6 }}
+      whileHover={isTouch ? undefined : { scale: 1.02, y: -6 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Real screenshot — 1440×1920 portrait, brightness-boosted */}
@@ -198,8 +198,8 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
           userSelect: 'none',
           filter: 'brightness(1.35) contrast(1.05) saturate(1.15)',
         }}
-        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1) translateY(-8%)')}
-        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1) translateY(0%)')}
+        onMouseEnter={isTouch ? undefined : e => (e.currentTarget.style.transform = 'scale(1) translateY(-8%)')}
+        onMouseLeave={isTouch ? undefined : e => (e.currentTarget.style.transform = 'scale(1) translateY(0%)')}
       />
 
       {/* Scrim — a light overall vignette only; the real legibility work happens on the

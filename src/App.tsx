@@ -5,6 +5,7 @@ import CustomCursor from './components/layout/CustomCursor';
 import Home from './pages/Home';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import NotFound from './pages/NotFound';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -15,6 +16,7 @@ export default function App() {
           animations — Motion drives inline styles from JS and ignores it. This makes
           every transform animation snap to its end state for reduced-motion users
           while opacity fades (which aid comprehension) still play. */}
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <MotionConfig reducedMotion="user">
       <SmoothScroll>
         <CustomCursor />
@@ -22,6 +24,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         {/* Global fade-in on first load — sits above everything (including Nav) so the

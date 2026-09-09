@@ -96,6 +96,29 @@ body::before {
 
 :focus-visible { outline: 2px solid #C41E1E; outline-offset: 3px; }
 
+/* Skip link — visually hidden off-screen until keyboard focus reveals it above the nav. */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 100000;
+  background: #EDE8DC;
+  color: #09090A;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: top 200ms ease-out;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Defensive fallback for direct URL-fragment navigation (bookmarks, back/forward), which
+   bypasses the JS smooth-scroll offset in lib/smoothScroll.ts. */
+section[id] { scroll-margin-top: 96px; }
+
 ::selection {
   background: rgba(196, 30, 30, 0.85);
   color: #EDE8DC;
@@ -114,7 +137,7 @@ a.gradient-bg:active, button.gradient-bg:active {
 /* Form input placeholders */
 #quote input::placeholder,
 #quote textarea::placeholder {
-  color: rgba(237,232,220,0.2);
+  color: rgba(237,232,220,0.5);
   font-style: italic;
 }
 

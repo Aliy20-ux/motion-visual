@@ -90,7 +90,16 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <!-- Loaded as a non-blocking preload (swapped to a real stylesheet once fetched) instead of
+         a synchronous <link rel="stylesheet"> — that was a render-blocking request costing ~1.4s
+         under throttled mobile, delaying first paint of every text node on the page for a font
+         that (with display=swap) doesn't need to block anyway. The <noscript> covers JS-disabled. -->
+    <link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" />
+    </noscript>
     <link rel="preload" href="/hero-poster.jpg" as="image" fetchpriority="high" />
     <!-- Discovered/fetched by the browser's preload scanner immediately on HTML parse, well
          before the JS bundle downloads/parses/mounts React and renders the <video> tag —

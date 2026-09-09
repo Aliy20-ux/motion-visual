@@ -99,7 +99,7 @@ export default function Pricing() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-              style={{ color: 'rgba(237,232,220,0.35)' }}>Investment</span>
+              style={{ color: 'rgba(237,232,220,0.5)' }}>Investment</span>
             <div className="w-8 h-px gradient-bg" />
           </div>
 
@@ -111,7 +111,7 @@ export default function Pricing() {
           </h2>
 
           <p className="font-body font-light text-sm leading-relaxed mx-auto mb-10"
-            style={{ color: 'rgba(237,232,220,0.38)', maxWidth: '44ch' }}>
+            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '44ch' }}>
             One-off project pricing, no ongoing retainer.
             Book a free call and we'll give you an exact number within 24 hours.
           </p>
@@ -202,7 +202,7 @@ export default function Pricing() {
                     ) : (
                       <div className="flex items-baseline gap-2 flex-wrap">
                         {promoActive && (
-                          <span className="font-body text-sm" style={{ color: 'rgba(237,232,220,0.25)', textDecoration: 'line-through' }}>
+                          <span className="font-body text-sm" style={{ color: 'rgba(237,232,220,0.5)', textDecoration: 'line-through' }}>
                             £{tier.priceMin!.toLocaleString('en-GB')}–£{tier.priceMax!.toLocaleString('en-GB')}
                           </span>
                         )}
@@ -222,11 +222,11 @@ export default function Pricing() {
                       </div>
                     )}
                   </div>
-                  <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.25)' }}>
+                  <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.5)' }}>
                     {tier.customPrice ? 'scoped together, on a call' : 'one-off'}
                   </p>
                   {!tier.customPrice && (
-                    <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.35)' }}>
+                    <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.5)' }}>
                       £100 deposit to secure your start date
                     </p>
                   )}
@@ -243,7 +243,7 @@ export default function Pricing() {
 
                 {/* Description */}
                 <p className="font-body font-light text-xs leading-relaxed mb-6"
-                  style={{ color: 'rgba(237,232,220,0.3)' }}>
+                  style={{ color: 'rgba(237,232,220,0.5)' }}>
                   {tier.description}
                 </p>
 
@@ -286,7 +286,7 @@ export default function Pricing() {
         {/* Footer note */}
         <motion.p
           className="text-center font-body font-light text-xs mt-14"
-          style={{ color: 'rgba(237,232,220,0.16)' }}
+          style={{ color: 'rgba(237,232,220,0.5)' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}>
           All projects include hosting setup, domain configuration, and 30 days post-launch support.

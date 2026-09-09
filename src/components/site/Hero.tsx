@@ -15,7 +15,7 @@ function ClientTicker() {
   }, []);
   return (
     <span className="inline-flex items-center gap-2">
-      <span className="font-body text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(237,232,220,0.38)' }}>Built for</span>
+      <span className="font-body text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>Built for</span>
       <AnimatePresence mode="wait">
         <motion.span key={clients[idx]} className="font-body text-xs tracking-[0.2em] uppercase gradient-text"
           initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -154,7 +154,7 @@ export default function Hero() {
         <motion.div className="flex items-center justify-between mb-6 flex-wrap gap-3"
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.05, ease }}>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.42)' }}>
+            <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
               Edinburgh, Scotland
             </span>
             <div className="hidden sm:block w-px h-3" style={{ background: 'rgba(237,232,220,0.15)' }} />
@@ -201,22 +201,26 @@ export default function Hero() {
           ))}
         </h1>
 
-        {/* CTA sub-row */}
-        <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10 lg:mt-14"
-          initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.55 }}>
+        {/* CTA sub-row — the paragraph renders unanimated (no opacity/delay) because it's the
+            largest text node Chrome measures for LCP; a video can't be the LCP candidate (Chrome
+            doesn't score <video> frames), so this line — despite being visually minor — was the
+            actual element the metric was waiting on. The divider + buttons keep their original
+            fade-in untouched. */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10 lg:mt-14">
           <p className="font-body font-light text-sm leading-relaxed max-w-[260px]"
             style={{ color: 'rgba(237,232,220,0.52)' }}>
             Bespoke websites, live in 14 days.<br />Brands that refuse to be forgettable.
           </p>
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
-          <div className="flex items-center gap-5 flex-wrap">
+          <motion.div className="flex items-center gap-5 flex-wrap"
+            initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.55 }}>
             <MagneticCTA href="#quote">Get a Quote <ArrowUpRight size={14} /></MagneticCTA>
             <a href="#work" onClick={scrollToHash('#work')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
-              style={{ color: 'rgba(237,232,220,0.48)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+              style={{ color: 'rgba(237,232,220,0.5)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
               See our work →
             </a>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* ── Scroll indicator ── */}
@@ -227,7 +231,7 @@ export default function Hero() {
           animate={{ y: [0, 14, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
           className="w-px h-14" style={{ background: 'linear-gradient(to bottom, rgba(196,30,30,0.7), transparent)' }} />
         <span className="font-body text-[9px] tracking-[0.3em] uppercase"
-          style={{ color: 'rgba(237,232,220,0.22)', writingMode: 'vertical-lr' }}>scroll</span>
+          style={{ color: 'rgba(237,232,220,0.5)', writingMode: 'vertical-lr' }}>scroll</span>
       </motion.div>
     </section>
   );
