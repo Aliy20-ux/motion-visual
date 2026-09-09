@@ -28,12 +28,6 @@ const team = [
     bio: 'Builds the small moments that make people stop scrolling.',
     letter: 'R',
   },
-  {
-    name: 'Mia',
-    role: 'Web Designer & Developer',
-    bio: 'Catches the details everyone else would ship without.',
-    letter: 'M',
-  },
 ];
 
 const badges = ['No Contractors', 'No Outsourcing', 'Every Project Built In-House'];
@@ -73,7 +67,7 @@ export default function About() {
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease, delay: 0.1 }}>
-            <span style={{ color: '#EDE8DC' }}>Five minds. </span>
+            <span style={{ color: '#EDE8DC' }}>Four minds. </span>
             <span className="gradient-text">One standard.</span>
           </motion.h2>
 
@@ -83,13 +77,13 @@ export default function About() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease, delay: 0.22 }}>
-            A tight-knit team of five specialists — no hand-offs, no outsourcing.
+            A tight-knit team of four specialists — no hand-offs, no outsourcing.
             Every project is owned start to finish.
           </motion.p>
         </div>
 
         {/* ── Team cards — 5 columns ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-6 md:gap-10 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 md:gap-10 mb-14">
           {team.map((member, i) => (
             <motion.div
               key={i}
