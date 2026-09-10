@@ -2,7 +2,10 @@ import LegalLayout from '../components/site/LegalLayout';
 
 export default function Privacy() {
   return (
-    <LegalLayout title="Privacy Policy" updated="July 2026">
+    <LegalLayout
+      title="Privacy Policy"
+      description="How Motion Visual collects, uses, and protects the personal data you share when you enquire about a website project."
+      updated="July 2026">
       <h2>Who we are</h2>
       <p>
         Motion Visual Agency Ltd ("Motion Visual", "we", "us") is a web design agency based in

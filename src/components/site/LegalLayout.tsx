@@ -1,12 +1,38 @@
 'use client';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 
 // Deliberately not reusing the marketing Nav/Footer here — those link to in-page anchors
 // (#work, #pricing, etc.) that don't exist on a standalone route, so they'd silently do
 // nothing if clicked from here. This is a lightweight, on-brand header/footer built for
 // pages that aren't the scrolling homepage.
-export default function LegalLayout({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) {
+export default function LegalLayout({ title, description, updated, children }: { title: string; description: string; updated: string; children: React.ReactNode }) {
+  const location = useLocation();
+
+  // index.html's title/description/canonical are baked in at build time for a single SPA
+  // shell, so every route ships the homepage's values unless overridden here — including a
+  // canonical tag that wrongly pointed /privacy and /terms at the homepage, telling Google
+  // this page's canonical version IS "/". Google renders JS before indexing, so it sees these.
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = `${title} — Motion Visual`;
+
+    const descMeta = document.querySelector('meta[name="description"]');
+    const prevDesc = descMeta?.getAttribute('content') ?? null;
+    descMeta?.setAttribute('content', description);
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    const prevCanonical = canonical?.getAttribute('href') ?? null;
+    canonical?.setAttribute('href', `https://motion-visual.com${location.pathname}`);
+
+    return () => {
+      document.title = prevTitle;
+      if (prevDesc !== null) descMeta?.setAttribute('content', prevDesc);
+      if (prevCanonical !== null) canonical?.setAttribute('href', prevCanonical);
+    };
+  }, [title, description, location.pathname]);
+
   return (
     <div style={{ background: '#0A0A0B', minHeight: '100svh' }}>
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>

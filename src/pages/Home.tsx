@@ -9,6 +9,7 @@ import SelectedWork from '../components/site/SelectedWork';
 import About from '../components/site/About';
 import Process from '../components/site/Process';
 import Pricing from '../components/site/Pricing';
+import FAQ from '../components/site/FAQ';
 import Footer from '../components/site/Footer';
 
 // Lazy-loaded: QuoteForm pulls in the Supabase client, which the Hero doesn't need at all.
@@ -30,6 +31,7 @@ export default function Home() {
         <About />
         <Process />
         <Pricing />
+        <FAQ />
         <Suspense fallback={<div style={{ minHeight: 600 }} />}>
           <QuoteForm />
         </Suspense>

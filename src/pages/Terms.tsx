@@ -2,7 +2,10 @@ import LegalLayout from '../components/site/LegalLayout';
 
 export default function Terms() {
   return (
-    <LegalLayout title="Terms of Service" updated="July 2026">
+    <LegalLayout
+      title="Terms of Service"
+      description="The terms governing Motion Visual's website design and development projects, including payment, delivery, and ownership."
+      updated="July 2026">
       <h2>About these terms</h2>
       <p>
         These terms apply to any website design and development project undertaken by Motion
