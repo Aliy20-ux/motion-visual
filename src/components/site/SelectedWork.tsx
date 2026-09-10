@@ -8,6 +8,24 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const projects = [
   {
+    name: 'Trim2Fresh',
+    type: 'Barbershop · Edinburgh',
+    url: 'https://trim2fresh.co.uk',
+    screenshot: '/work/trim2fresh.jpg',
+    bg: '#1A1400',
+    year: '2025',
+    tags: ['Booking System', 'Branding', 'Reviews'],
+  },
+  {
+    name: 'Texture Lounge',
+    type: 'Beauty & Hair · Edinburgh',
+    url: 'https://texturelounge.co.uk',
+    screenshot: '/work/texture-lounge.jpg',
+    bg: '#1A0F14',
+    year: '2025',
+    tags: ['Booking System', 'CMS', 'SEO'],
+  },
+  {
     name: 'Thomas J Walls',
     type: 'Coffee House · Edinburgh',
     url: 'https://thomas-j-walls.pages.dev',
@@ -15,15 +33,6 @@ const projects = [
     bg: '#2D1B0E',
     year: '2025',
     tags: ['E-commerce', 'Branding', 'Animation'],
-  },
-  {
-    name: 'Texture Lounge',
-    type: 'Beauty & Hair · Edinburgh',
-    url: 'https://texture-lounge-website.pages.dev',
-    screenshot: '/work/texture-lounge.jpg',
-    bg: '#1A0F14',
-    year: '2025',
-    tags: ['Booking System', 'CMS', 'SEO'],
   },
   {
     name: 'CHE Edinburgh',
@@ -51,15 +60,6 @@ const projects = [
     bg: '#1A0A00',
     year: '2025',
     tags: ['Menu System', 'Ordering', 'SEO'],
-  },
-  {
-    name: 'Trim2Fresh',
-    type: 'Barbershop · Edinburgh',
-    url: 'https://trim2fresh-website.aliy20.workers.dev',
-    screenshot: '/work/trim2fresh.jpg',
-    bg: '#1A1400',
-    year: '2025',
-    tags: ['Booking System', 'Branding', 'Reviews'],
   },
 ];
 
