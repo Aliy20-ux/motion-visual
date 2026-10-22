@@ -22,7 +22,7 @@ export function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-/** Web quotes use their own series (MV-W-…) so they never collide with hand-made MV-Q-NNN quotes. */
+/** Fallback only, for when the database can't be reached. Normal references come from the database sequence. Web quotes use their own series (MV-W-…) so they never collide with hand-made MV-Q-NNN quotes. */
 export function newQuoteRef(now = new Date()): string {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const bytes = crypto.getRandomValues(new Uint8Array(4));
@@ -30,9 +30,14 @@ export function newQuoteRef(now = new Date()): string {
   return `MV-W-${londonDate(now).replace(/-/g, '')}-${suffix}`;
 }
 
-export function issueQuote(customer: QuoteCustomer, quote: Quote, now = new Date()): IssuedQuote {
-  const valid = new Date(now.getTime() + QUOTE_VALID_DAYS * 86_400_000);
-  return { ref: newQuoteRef(now), issuedOn: londonDate(now), validUntil: londonDate(valid), customer, quote };
+export const quoteDates = (now = new Date()) => ({
+  issuedOn: londonDate(now),
+  validUntil: londonDate(new Date(now.getTime() + QUOTE_VALID_DAYS * 86_400_000)),
+});
+
+/** `ref` is the database sequence number (MV-W-0001); without one a random fallback reference is used. */
+export function issueQuote(customer: QuoteCustomer, quote: Quote, ref?: string, now = new Date()): IssuedQuote {
+  return { ref: ref ?? newQuoteRef(now), ...quoteDates(now), customer, quote };
 }
 
 const oneLine = (value: string) => value.replace(/[\r\n]+/g, ' ').trim();
@@ -62,7 +67,7 @@ function shell(inner: string): string {
   </td></tr></table></body></html>`;
 }
 
-export function customerQuoteEmail(q: IssuedQuote): { subject: string; html: string } {
+export function customerQuoteEmail(q: IssuedQuote, briefUrl?: string): { subject: string; html: string } {
   const first = escapeHtml(q.customer.name.trim().split(/\s+/)[0] || 'there');
   const html = shell(`
     <tr><td style="color:${C.muted};font-size:11px;letter-spacing:0.28em;text-transform:uppercase;padding-bottom:8px;">Quote ${escapeHtml(q.ref)}</td></tr>
@@ -72,7 +77,7 @@ export function customerQuoteEmail(q: IssuedQuote): { subject: string; html: str
     <tr><td style="color:${C.text};font-size:15px;padding:28px 0 10px;font-family:Georgia,serif;font-style:italic;">What happens next</td></tr>
     <tr><td style="color:${C.muted};font-size:14px;line-height:1.7;">
       1. <strong style="color:${C.text};">Reply to this email</strong> to say you'd like to go ahead. We'll send your Project Agreement to sign, and your deposit is paid when you sign it.<br>
-      2. <strong style="color:${C.text};">Send us your content</strong> — your logo, text, photos and anything else about your business.<br>
+      2. <strong style="color:${C.text};">Tell us about your business</strong> — ${briefUrl ? `fill in our <a href="${briefUrl}" style="color:${C.text};">short brief form</a> (it takes about 10 minutes), then email us your logo and photos quoting ${escapeHtml(q.ref)}.` : 'send us your logo, text, photos and anything else about your business.'}<br>
       3. <strong style="color:${C.text};">Your first design:</strong> we aim to share it within 2 working days (our 48-hour target) of the day we have your signed agreement and your content, and your site is ready to share by day 14.
     </td></tr>
     <tr><td style="color:${C.muted};font-size:12px;line-height:1.7;padding-top:24px;">
@@ -112,7 +117,7 @@ export function briefText(q: IssuedQuote): string {
 }
 
 /** Machine-readable record, attached to the internal email and filed with scripts/file-record.mjs. */
-export function quoteRecord(q: IssuedQuote) {
+export function quoteRecord(q: IssuedQuote, recordedInDatabase: boolean) {
   return {
     type: 'quote',
     ref: q.ref,
@@ -130,18 +135,21 @@ export function quoteRecord(q: IssuedQuote) {
     balancePounds: q.quote.balancePounds,
     notes: q.customer.notes.trim() || null,
     statusAtIssue: 'Quote emailed to customer; awaiting reply',
+    recordedInDatabase,
     currentStatus: 'NOT RECORDED — update when the customer replies or signs',
     issuedUnderTerms: `${COMPANY.legalName}; deposit about 25% rounded up to £5 (policy 2026-10-22)`,
     files: [`${q.ref}.json`, `${q.ref}-quote-email.html`],
   };
 }
 
-export function teamQuoteEmail(q: IssuedQuote, customerEmailSent: boolean): { subject: string; html: string } {
+export function teamQuoteEmail(q: IssuedQuote, status: { customerEmailSent: boolean; recorded: boolean; briefUrl?: string }): { subject: string; html: string } {
+  const { customerEmailSent, recorded, briefUrl } = status;
   const html = `<div style="font-family:-apple-system,sans-serif;max-width:640px;margin:0 auto;">
     <h2 style="margin-bottom:4px;">New web quote ${escapeHtml(q.ref)}</h2>
     <p style="color:#666;margin-top:0;">${escapeHtml(q.customer.name)} — ${escapeHtml(q.quote.plan)} ${escapeHtml(gbp(q.quote.totalPounds))}. Customer quote email: <strong>${customerEmailSent ? 'sent' : 'NOT SENT — send it manually'}</strong>.</p>
     <p style="color:#666;">Attached: <code>${escapeHtml(q.ref)}.json</code> (record) and <code>${escapeHtml(q.ref)}-quote-email.html</code> (what the customer received). File them with <code>node scripts/file-record.mjs quote &lt;json&gt; &lt;html&gt;</code>.</p>
     <p style="color:#666;">The 48-hour first-design target starts once the signed agreement and content are in (deposit is paid on signing) — not from this email.</p>
+    <p style="color:#666;">${recorded ? 'Saved to the quotes database (visible in /studio/quotes).' : '<strong>NOT saved to the database</strong> (it was unreachable): this email and its attachments are the only record, and the reference is a fallback one.'}${briefUrl ? ` Customer brief form: <code>${escapeHtml(briefUrl)}</code>` : ''}</p>
     <pre style="white-space:pre-wrap;background:#f5f5f5;padding:14px;border-radius:8px;font-size:13px;line-height:1.5;">${escapeHtml(briefText(q))}</pre>
   </div>`;
   return { subject: `New web quote ${q.ref}: ${oneLine(q.customer.name)} (${q.quote.plan} ${gbp(q.quote.totalPounds)})`, html };

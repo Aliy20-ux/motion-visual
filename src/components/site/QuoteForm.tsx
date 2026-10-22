@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type Lead } from '../../lib/supabase';
 import { Check } from 'lucide-react';
+import Turnstile from './Turnstile';
+import { TURNSTILE_SITE_KEY } from '../../lib/turnstile';
 
 // Bots that auto-fill every field on a page will fill this too; real visitors never see it
 // (visually hidden, not display:none — some scrapers skip display:none fields specifically).
@@ -148,6 +150,7 @@ export default function QuoteForm() {
   const [mountedAt] = useState(() => Date.now());
   const [config, setConfig] = useState<PackageConfig | null>(null);
   const [result, setResult] = useState<QuoteResult | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   // The add-ons builder sends its chosen package here so visitors don't retype it.
   useEffect(() => {
@@ -190,6 +193,10 @@ export default function QuoteForm() {
     e.preventDefault();
     setFormError('');
     if (!validate()) return;
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      setFormError('Please complete the check above so we know you’re not a bot.');
+      return;
+    }
 
     // Bot-shaped submission: honeypot filled, or the whole form completed faster than a human
     // could. Show the normal success state without touching Supabase or sending an email —
@@ -236,9 +243,10 @@ export default function QuoteForm() {
           notes: form.notes,
           ...(config ?? configFromBudget(form.budget)),
           elapsedMs: Date.now() - mountedAt,
+          turnstileToken,
         }),
       }).then(async (res) => {
-        if (!res.ok) throw new Error('Quote request failed');
+        if (!res.ok) throw Object.assign(new Error('Quote request failed'), { status: res.status });
         return (await res.json()) as QuoteResult;
       }),
     ]);
@@ -249,7 +257,10 @@ export default function QuoteForm() {
     if (dbResult.status === 'fulfilled' || emailResult.status === 'fulfilled') {
       setSubmitted(true);
     } else {
-      setFormError('Something went wrong. Email us at admin.team@motion-visual.com');
+      const status = (emailResult.reason as { status?: number } | undefined)?.status;
+      setFormError(status === 429
+        ? 'You’ve requested a few quotes already. Please email us at admin.team@motion-visual.com and we’ll help directly.'
+        : 'Something went wrong. Email us at admin.team@motion-visual.com');
     }
   };
 
@@ -432,6 +443,8 @@ export default function QuoteForm() {
                     <FieldLabel htmlFor="notes" label="Anything to add" optional />
                     <UnderlineTextarea id="notes" value={form.notes} onChange={v => set('notes', v)} />
                   </div>
+
+                  <Turnstile onToken={setTurnstileToken} />
 
                   {formError && (
                     <p role="alert" className="text-center font-body text-xs" style={{ color: '#F87171' }}>

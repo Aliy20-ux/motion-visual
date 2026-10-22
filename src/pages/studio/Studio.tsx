@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabase';
 import AgreementList from './AgreementList';
 import AgreementEditor from './AgreementEditor';
 import AgreementDetail from './AgreementDetail';
+import QuoteList from './QuoteList';
 import { Button, ErrorText, Label, muted, PageTitle, TextInput } from './ui';
 
 // Team-only area. Sign-in uses the same Supabase accounts as the CRM at
@@ -48,6 +49,12 @@ export default function Studio() {
           <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual · Studio</span>
         </Link>
         {session && (
+          <nav aria-label="Studio" className="flex items-center gap-5 font-body text-xs" style={{ color: muted }}>
+            <Link to="/studio/agreements" className="hover:text-[#EDE8DC] transition-colors">Agreements</Link>
+            <Link to="/studio/quotes" className="hover:text-[#EDE8DC] transition-colors">Quotes</Link>
+          </nav>
+        )}
+        {session && (
           <div className="flex items-center gap-4">
             {memberName && <span className="font-body text-xs" style={{ color: muted }}>{memberName}</span>}
             <Button onClick={() => supabase.auth.signOut()}>Sign out</Button>
@@ -74,6 +81,7 @@ export default function Studio() {
             <Route path="agreements/new" element={<AgreementEditor />} />
             <Route path="agreements/:id" element={<AgreementDetail session={session} />} />
             <Route path="agreements/:id/edit" element={<AgreementEditor />} />
+            <Route path="quotes" element={<QuoteList />} />
             <Route path="*" element={<Navigate to="agreements" replace />} />
           </Routes>
         )}

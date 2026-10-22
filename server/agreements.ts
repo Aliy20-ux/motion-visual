@@ -14,6 +14,12 @@ export interface AgreementEnv {
   AGREEMENTS_SERVER_KEY?: string;
   /** Test-only override for the Resend endpoint (point it at a local mock). Unset in production. */
   RESEND_API_URL?: string;
+  /** Test-only override for the Supabase project URL. Unset in production. */
+  SUPABASE_URL_OVERRIDE?: string;
+  /** Cloudflare Turnstile secret. When set, quote requests must carry a valid Turnstile token. */
+  TURNSTILE_SECRET_KEY?: string;
+  /** Test-only override for the Turnstile siteverify endpoint. Unset in production. */
+  TURNSTILE_VERIFY_URL?: string;
 }
 
 export type Ctx = { request: Request; env: AgreementEnv };
@@ -49,7 +55,7 @@ export class RpcError extends Error {
 /** Calls an agreement_* RPC as anon, with the server key proving the call came from here. */
 export async function rpc<T>(env: AgreementEnv, fn: string, args: Record<string, unknown>): Promise<T> {
   if (!env.AGREEMENTS_SERVER_KEY) throw new RpcError('not_configured', 503);
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+  const res = await fetch(`${env.SUPABASE_URL_OVERRIDE ?? SUPABASE_URL}/rest/v1/rpc/${fn}`, {
     method: 'POST',
     headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
     body: JSON.stringify({ p_key: env.AGREEMENTS_SERVER_KEY, ...args }),
