@@ -103,7 +103,7 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
       blocks: [
         { type: 'p', text: ready
           ? 'For a ready-made site, we finish your changes within 5 working days of receiving your content and launch within 3 working days of your balance clearing, as set out in the Cancellation & Refund Policy, together with what happens if we miss a deadline. If the project details set a different timeline, that timeline applies instead.'
-          : 'Our standard schedule — your site shared with you by day 14, where day 0 is the day we have your signed agreement and your content — is set out in the Cancellation & Refund Policy, together with what happens if we can’t deliver. If the project details set a different timeline, that timeline applies instead.' },
+          : 'Our standard schedule — your first design within 2 working days and your site shared with you by day 14, where day 0 is the day we have your signed agreement and your content — is set out in the Cancellation & Refund Policy, together with what happens if we can’t deliver. If the project details set a different timeline, that timeline applies instead.' },
         { type: 'p', text: 'Our deadlines depend on you providing content, feedback and approvals on time, and delays on your side move them back by the same amount. We’re not responsible for delays caused by things outside our reasonable control, such as third-party outages, illness or extreme events, but we’ll keep you updated and do our best to limit the impact.' },
       ],
     },

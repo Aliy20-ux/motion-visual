@@ -49,7 +49,7 @@ const DEFAULT_EXCLUDED = [
 ].join('\n');
 
 const DEFAULT_REVISIONS = 'Two rounds of changes: one combined round on your first design, and one more during the build.';
-const DEFAULT_TIMELINE = 'Site shared with you by day 14, counted from the day we have your signed agreement and your content; balance due within 7 days of us sharing the finished site.';
+const DEFAULT_TIMELINE = 'First design within 2 working days and site shared with you by day 14, counted from the day we have your signed agreement and your content; balance due within 7 days of us sharing the finished site.';
 const READY_REVISIONS = 'One round of changes to fit the site to your business.';
 const READY_TIMELINE = 'Your changes made within 5 working days of receiving your content; live within 3 working days of your balance clearing.';
 

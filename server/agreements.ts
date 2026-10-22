@@ -12,6 +12,8 @@ export const FROM = 'Motion Visual <admin.team@motion-visual.com>';
 export interface AgreementEnv {
   RESEND_API_KEY: string;
   AGREEMENTS_SERVER_KEY?: string;
+  /** Test-only override for the Resend endpoint (point it at a local mock). Unset in production. */
+  RESEND_API_URL?: string;
 }
 
 export type Ctx = { request: Request; env: AgreementEnv };
@@ -96,8 +98,9 @@ export async function sendEmail(env: AgreementEnv, email: {
   html: string;
   replyTo?: string;
   bcc?: string[];
+  attachments?: { filename: string; content: string }[];
 }): Promise<boolean> {
-  const res = await fetch('https://api.resend.com/emails', {
+  const res = await fetch(env.RESEND_API_URL ?? 'https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -107,6 +110,7 @@ export async function sendEmail(env: AgreementEnv, email: {
       reply_to: email.replyTo ?? TEAM_INBOX,
       subject: email.subject,
       html: email.html,
+      attachments: email.attachments,
     }),
   });
   return res.ok;

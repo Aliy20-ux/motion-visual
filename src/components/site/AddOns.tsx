@@ -3,46 +3,14 @@ import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Plus, Minus, Sparkles } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
+import { ADD_ONS as addOns, PLANS, PLAN_PAGES, PLAN_PRICE, EXTRA_PAGE_PRICE, depositFor, gbp, priceFor, type PlanKey } from '../../pricing';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-type PlanKey = 'Essential' | 'Signature';
-const PLANS: PlanKey[] = ['Essential', 'Signature'];
-
-// ─── PRICES — edit here, everything below recalculates ───────────────────────
-const PLAN_PRICE: Record<PlanKey, number> = { Essential: 800, Signature: 1600 };
-const PLAN_PAGES: Record<PlanKey, number> = { Essential: 1, Signature: 5 };
-const EXTRA_PAGE_PRICE = 80;
 // Suggest Signature once an Essential build (plan + pages + add-ons) comes within this much of the Signature price.
 const SUGGEST_SIGNATURE_WITHIN = 300;
 // Suggest a Flagship scoping call once a Signature build reaches this total.
 const SUGGEST_FLAGSHIP_TOTAL = 2600;
-// Deposit rule: about 25% of the total, rounded up to the nearest £5.
-const depositFor = (total: number) => Math.ceil((total * 0.25) / 5) * 5;
-
-type AddOn = {
-  id: string;
-  name: string;
-  blurb: string;
-  price?: number;          // undefined = quote on a call (Flagship territory)
-  plans: PlanKey[];        // plans that can buy it — hidden on any other plan
-  includedIn?: PlanKey[];  // already part of that plan, so shown as included
-  flagship?: boolean;      // selecting it nudges towards a Flagship scoping call
-};
-
-const addOns: AddOn[] = [
-  { id: 'order-lite', name: 'Interactive order builder (Lite)', blurb: 'Customers build their order or package on your site and send it to you as an enquiry or summary email. No card payment.', price: 250, plans: ['Essential', 'Signature'], includedIn: ['Signature'] },
-  { id: 'order-full', name: 'Interactive order builder (full)', blurb: 'A fuller version of the builder, still ending in an enquiry or summary email. No card payment.', price: 400, plans: ['Signature'] },
-  { id: 'local-seo', name: 'Local SEO Boost', blurb: 'Local keywords, schema markup and Google Business Profile optimisation, to help nearby customers find you.', price: 250, plans: ['Essential', 'Signature'] },
-  { id: 'gallery', name: 'Gallery with filters', blurb: 'A photo gallery your visitors can filter by category.', price: 75, plans: ['Essential', 'Signature'] },
-  { id: 'reviews', name: 'Reviews wall', blurb: 'Your best customer reviews displayed on the site.', price: 75, plans: ['Essential', 'Signature'] },
-  { id: 'confirmations', name: 'Email / WhatsApp confirmations', blurb: 'Automatic confirmation messages when someone enquires or books.', price: 100, plans: ['Signature'] },
-  { id: 'booking', name: 'Booking', blurb: 'Let customers book appointments or tables straight from your site.', price: 200, plans: ['Signature'] },
-  { id: 'editor', name: 'Content editor', blurb: 'A simple dashboard to change text, prices and photos yourself.', price: 150, plans: ['Signature'] },
-  { id: 'shop', name: 'Online shop / ordering', blurb: 'Take payments and orders online, with stock and delivery options. Scoped and quoted on a call.', plans: ['Essential', 'Signature'], flagship: true },
-];
-
-const gbp = (n: number) => `£${n.toLocaleString('en-GB')}`;
 
 export default function AddOns() {
   const [plan, setPlan] = useState<PlanKey>('Essential');
@@ -60,16 +28,9 @@ export default function AddOns() {
   };
 
   const calc = useMemo(() => {
-    const priceFor = (p: PlanKey, pagesTotal: number) => {
-      const extra = Math.max(0, pagesTotal - PLAN_PAGES[p]);
-      const addonSum = addOns
-        .filter(a => picked.includes(a.id) && a.price !== undefined && a.plans.includes(p) && !a.includedIn?.includes(p))
-        .reduce((s, a) => s + a.price!, 0);
-      return PLAN_PRICE[p] + extra * EXTRA_PAGE_PRICE + addonSum;
-    };
     const pagesTotal = PLAN_PAGES[plan] + extraPages;
-    const total = priceFor(plan, pagesTotal);
-    const sigTotal = priceFor('Signature', pagesTotal);
+    const total = priceFor(plan, pagesTotal, picked);
+    const sigTotal = priceFor('Signature', pagesTotal, picked);
     const wantsFlagship = addOns.some(a => a.flagship && picked.includes(a.id));
 
     let suggestion: null | { to: 'Signature' | 'Flagship'; text: string } = null;
@@ -109,7 +70,8 @@ export default function AddOns() {
       `Estimated total: ${isFlagshipEstimate ? 'Custom — to be scoped on a call' : gbp(calc.total)}`,
     ];
     const budget = isFlagshipEstimate ? 'Flagship — Custom' : plan === 'Essential' ? 'Essential — £800' : 'Signature — £1,600';
-    const detail = { budget, notes: lines.join('\n') };
+    const config = { plan, extraPages, addOnIds: picked.filter(id => visible.some(a => a.id === id)) };
+    const detail = { budget, notes: lines.join('\n'), config };
     (window as unknown as { __mvPrefill?: typeof detail }).__mvPrefill = detail; // in case the form hasn't lazy-loaded yet
     window.dispatchEvent(new CustomEvent('mv:prefill', { detail }));
     scrollToHash('#quote')(e);
