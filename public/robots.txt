@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /studio
+Disallow: /agreement/
 
 Sitemap: https://motion-visual.com/sitemap.xml

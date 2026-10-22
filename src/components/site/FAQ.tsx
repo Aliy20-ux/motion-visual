@@ -10,7 +10,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 const faqs = [
   {
     q: 'How long does it take to build a website with Motion Visual?',
-    a: "Most projects are delivered in 14 days from the first call. Our fastest delivery has been 11 days for a fully bespoke, animated website.",
+    a: "Most projects are delivered in 14 days from receiving your deposit and content, with your first draft within 48 hours. Our fastest delivery has been 11 days for a fully bespoke, animated website.",
   },
   {
     q: 'How much does a website cost at Motion Visual?',

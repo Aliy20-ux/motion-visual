@@ -1,20 +1,22 @@
 import LegalLayout from '../components/site/LegalLayout';
+import { COMPANY_DISCLOSURE, COMPANY } from '../legal/company';
 
 export default function Privacy() {
   return (
     <LegalLayout
       title="Privacy Policy"
       description="How Motion Visual collects, uses, and protects the personal data you share when you enquire about a website project."
-      updated="July 2026">
+      updated="October 2026">
       <h2>Who we are</h2>
       <p>
-        Motion Visual Agency Ltd ("Motion Visual", "we", "us") is a web design agency based in
+        {COMPANY.legalName} ("Motion Visual", "we", "us") is a web design agency based in
         Edinburgh, Scotland. This policy explains what personal data we collect when you use this
         website or get in touch with us, why we collect it, and what your rights are.
       </p>
       <p>
         Contact: <a href="mailto:admin.team@motion-visual.com">admin.team@motion-visual.com</a>
       </p>
+      <p>{COMPANY_DISCLOSURE}</p>
 
       <h2>What we collect</h2>
       <p>When you submit an enquiry through our quote form, we collect:</p>
@@ -26,6 +28,18 @@ export default function Privacy() {
         <li>Your selected budget or package range</li>
         <li>Any additional notes you choose to share about your project</li>
       </ul>
+      <p>When you review or sign a client agreement we send you, we also record:</p>
+      <ul>
+        <li>The name you type to sign, and the confirmations you tick</li>
+        <li>The date and time you open and sign the agreement</li>
+        <li>Your IP address and browser/device details at those moments</li>
+        <li>Any question you send us from the agreement page</li>
+      </ul>
+      <p>
+        This is the evidence that the agreement was signed, by whom, and exactly what was signed.
+        We keep it, with the signed agreement, for six years after the project ends, so either of
+        us can rely on it if there's ever a dispute.
+      </p>
       <p>
         We do not use cookies, analytics, or any third-party tracking scripts on this website.
       </p>

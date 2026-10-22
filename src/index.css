@@ -192,3 +192,52 @@ a.gradient-bg:active, button.gradient-bg:active {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.legal-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.25rem 0 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.legal-prose th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(237,232,220,0.5);
+  padding: 0 1rem 0.6rem 0;
+  border-bottom: 1px solid rgba(237,232,220,0.14);
+}
+.legal-prose td {
+  font-weight: 300;
+  color: rgba(237,232,220,0.7);
+  padding: 0.7rem 1rem 0.7rem 0;
+  border-bottom: 1px solid rgba(237,232,220,0.07);
+  vertical-align: top;
+}
+.legal-prose td:first-child { color: #EDE8DC; width: 52%; }
+
+/* Agreement/studio form controls: the site hides the native cursor for its
+   custom one, but text inputs need the I-beam to show where you're typing. */
+.agreement-ui input[type="text"], .agreement-ui input[type="email"],
+.agreement-ui input[type="password"], .agreement-ui input:not([type]), .agreement-ui textarea {
+  cursor: text;
+}
+
+/* Print / "Save as PDF" of an agreement: paper-white, no site chrome. */
+@media print {
+  body, .agreement-ui { background: #fff !important; color: #111 !important; }
+  body::before, body::after { display: none !important; }
+  .no-print { display: none !important; }
+  .print-doc, .print-doc * {
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+    background: transparent !important;
+    border-color: #ccc !important;
+    box-shadow: none !important;
+  }
+  .print-doc { padding: 0 !important; }
+  .clause { break-inside: avoid; }
+}

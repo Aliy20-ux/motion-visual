@@ -2,12 +2,13 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { COMPANY } from '../../legal/company';
 
 // Deliberately not reusing the marketing Nav/Footer here — those link to in-page anchors
 // (#work, #pricing, etc.) that don't exist on a standalone route, so they'd silently do
 // nothing if clicked from here. This is a lightweight, on-brand header/footer built for
 // pages that aren't the scrolling homepage.
-export default function LegalLayout({ title, description, updated, children }: { title: string; description: string; updated: string; children: React.ReactNode }) {
+export default function LegalLayout({ title, description, updated, prose = true, children }: { title: string; description: string; updated: string; prose?: boolean; children: React.ReactNode }) {
   const location = useLocation();
 
   // index.html's title/description/canonical are baked in at build time for a single SPA
@@ -51,7 +52,8 @@ export default function LegalLayout({ title, description, updated, children }: {
       <motion.main
         id="main-content"
         className="mx-auto"
-        style={{ maxWidth: 720, padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px) clamp(80px,10vw,140px)' }}
+        // Clause pages (prose=false) carry a plain-English margin column, so they need the extra width.
+        style={{ maxWidth: prose ? 720 : 1080, padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px) clamp(80px,10vw,140px)' }}
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
       >
         <h1 className="font-display italic" style={{ fontSize: 'clamp(2.2rem,5vw,3.5rem)', letterSpacing: '-0.02em', color: '#EDE8DC' }}>
@@ -61,20 +63,23 @@ export default function LegalLayout({ title, description, updated, children }: {
           Last updated {updated}
         </p>
 
-        <div className="legal-prose">{children}</div>
+        {prose ? <div className="legal-prose">{children}</div> : children}
       </motion.main>
 
       <footer style={{ borderTop: '1px solid rgba(237,232,220,0.07)', padding: 'clamp(24px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
-            © 2026 Motion Visual Agency Ltd
+            © 2026 {COMPANY.legalName}
           </span>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/privacy" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
               Privacy
             </Link>
             <Link to="/terms" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
               Terms
+            </Link>
+            <Link to="/cancellation" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
+              Cancellation
             </Link>
             <a href="mailto:admin.team@motion-visual.com" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
               admin.team@motion-visual.com

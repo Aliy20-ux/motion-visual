@@ -227,7 +227,7 @@ export default function Pricing() {
                   </p>
                   {!tier.customPrice && (
                     <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.5)' }}>
-                      £100 deposit to secure your start date
+                      £100 deposit — refundable until day 7
                     </p>
                   )}
                   <p className="font-body text-[11px] mt-2" style={{ color: 'rgba(196,30,30,0.55)' }}>
@@ -290,7 +290,7 @@ export default function Pricing() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}>
           All projects include hosting setup, domain configuration, and 30 days post-launch support.
-          Payment split across milestones — never 100% upfront.
+          Balance due when your site is ready — never 100% upfront.
         </motion.p>
 
       </div>
