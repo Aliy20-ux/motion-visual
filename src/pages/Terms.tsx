@@ -30,11 +30,12 @@ export default function Terms() {
       <p>
         A £100 deposit secures your project's start date, paid when you approve the quote we give
         you by signing your Project Agreement. It's part of the price, and it's refunded in
-        full if you cancel by the end of day 7. The balance is split across the milestones agreed in
-        your Project Agreement, with everything due by the time your site is ready to launch, and
-        no later than day 14, so we never take 100% of a project fee upfront. Flagship payment
-        terms are agreed individually. We launch your site once the balance
-        has cleared, and we never charge interest.
+        full if you cancel by the end of day 7. We start work once your deposit has cleared and we
+        have the content we need. The balance is due when your site is ready to launch, or by day
+        14 (or the date in your project details), whichever comes first. The price and payment
+        schedule are shown in your project details, and Flagship payment terms are agreed
+        individually there. We launch your site or hand over files once the balance has cleared,
+        and we never charge interest.
       </p>
 
       <h2>Delivery</h2>
@@ -74,9 +75,23 @@ export default function Terms() {
 
       <h2>Care plans</h2>
       <p>
-        Hosting, updates and ongoing support after launch sit under an optional care plan, paid
-        monthly by direct debit, with a 3-month minimum term. After that, you can cancel at any
-        time by giving us at least 5 working days' notice before your next payment.
+        For 30 days after launch, we'll fix bugs — things that don't work as agreed — free of
+        charge. New features, content changes and changes to approved designs are extra work.
+        After 30 days, support is available through a care plan or at a quoted price.
+      </p>
+      <p>
+        Care plans (hosting, updates and support) are optional, paid monthly by direct debit, and
+        have a minimum term of 3 months from the start date. After the minimum term, you can
+        cancel at any time by emailing{' '}
+        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> at least 5 working days before
+        your next payment date. If you tell us later than that, the next payment is still taken
+        and your plan ends at the end of that month. We don't refund part-months.
+      </p>
+      <p>
+        Cancelling your direct debit with your bank doesn't cancel your plan — you still need to
+        give us notice, and payments due under the plan remain due. Your bank can always stop a
+        direct debit under the Direct Debit Guarantee. If you're a consumer, your 14-day right to
+        cancel also applies when you start a new care plan, whatever the minimum term.
       </p>
 
       <h2>Liability</h2>

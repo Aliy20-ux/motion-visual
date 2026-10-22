@@ -261,9 +261,10 @@ export default function Pricing() {
           style={{ color: 'rgba(237,232,220,0.5)' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}>
-          A £100 deposit secures your start date on Essential and Signature. The balance is split across
-          agreed milestones, and Flagship payment terms are agreed individually. Hosting, updates and
-          ongoing support are covered by an optional care plan.
+          A £100 deposit secures your start date. The balance is due when your site is ready to launch,
+          or by day 14 at the latest, and we launch once it has cleared. For 30 days after launch we fix
+          bugs free of charge; after that, support is available through an optional care plan or at a
+          quoted price. Flagship payment terms are agreed individually.
         </motion.p>
 
       </div>

@@ -87,7 +87,7 @@ export default function AddOns() {
         to: 'Signature',
         text: diff <= 0
           ? `Signature costs ${gbp(sigTotal)} for the same build, which is ${gbp(-diff)} less. It also includes cinematic animations and advanced Edinburgh SEO.`
-          : `For just ${gbp(diff)} more, Signature gives you up to 5 pages, cinematic animations and advanced Edinburgh SEO. That's much better value for this build.`,
+          : `For ${diff < 500 ? 'just ' : ''}${gbp(diff)} more, Signature gives you up to 5 pages, cinematic animations and advanced Edinburgh SEO. That's much better value for this build.`,
       };
     }
     return { pagesTotal, total, suggestion };
