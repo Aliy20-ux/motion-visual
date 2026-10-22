@@ -3,14 +3,9 @@ import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Plus, Minus, Sparkles } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
-import { ADD_ONS as addOns, PLANS, PLAN_PAGES, PLAN_PRICE, EXTRA_PAGE_PRICE, depositFor, gbp, priceFor, type PlanKey } from '../../pricing';
+import { ADD_ONS as addOns, PLANS, PLAN_PAGES, PLAN_PRICE, EXTRA_PAGE_PRICE, depositFor, gbp, priceFor, suggestFor, type PlanKey } from '../../pricing';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-
-// Suggest Signature once an Essential build (plan + pages + add-ons) comes within this much of the Signature price.
-const SUGGEST_SIGNATURE_WITHIN = 300;
-// Suggest a Flagship scoping call once a Signature build reaches this total.
-const SUGGEST_FLAGSHIP_TOTAL = 2600;
 
 export default function AddOns() {
   const [plan, setPlan] = useState<PlanKey>('Essential');
@@ -30,28 +25,24 @@ export default function AddOns() {
   const calc = useMemo(() => {
     const pagesTotal = PLAN_PAGES[plan] + extraPages;
     const total = priceFor(plan, pagesTotal, picked);
-    const sigTotal = priceFor('Signature', pagesTotal, picked);
-    const wantsFlagship = addOns.some(a => a.flagship && picked.includes(a.id));
+    const rule = suggestFor(plan, pagesTotal, picked);
 
     let suggestion: null | { to: 'Signature' | 'Flagship'; text: string } = null;
-    if (wantsFlagship) {
+    if (rule?.to === 'Flagship') {
       suggestion = {
         to: 'Flagship',
-        text: 'Online shops and ordering are built under our Flagship plan. We scope it together on a quick call, so you only pay for what you need.',
+        text: rule.reason === 'shop'
+          ? 'Online shops and ordering are built under our Flagship plan. We scope it together on a quick call, so you only pay for what you need.'
+          : `A build this size is usually better value as a Flagship project, with a dedicated project lead and unlimited pages. Book a call and we'll scope it with you.`,
       };
-    } else if (plan === 'Signature' && total >= SUGGEST_FLAGSHIP_TOTAL) {
-      suggestion = {
-        to: 'Flagship',
-        text: `A build this size is usually better value as a Flagship project, with a dedicated project lead and unlimited pages. Book a call and we'll scope it with you.`,
-      };
-    } else if (plan === 'Essential' && total >= PLAN_PRICE.Signature - SUGGEST_SIGNATURE_WITHIN) {
+    } else if (rule?.to === 'Signature') {
       // Compare like for like: what the same pages and add-ons cost on Signature.
-      const diff = sigTotal - total;
+      const diff = rule.signatureTotal - rule.total;
       const includes = 'up to 5 pages, cinematic animations, advanced + local SEO and the Lite order builder';
       suggestion = {
         to: 'Signature',
         text: diff <= 0
-          ? `Signature costs ${gbp(sigTotal)} for the same build, which is ${gbp(-diff)} less. It also includes ${includes}.`
+          ? `Signature costs ${gbp(rule.signatureTotal)} for the same build, which is ${gbp(-diff)} less. It also includes ${includes}.`
           : `For ${diff < 500 ? 'just ' : ''}${gbp(diff)} more, Signature gives you ${includes}.${diff < 500 ? " That's better value for this build." : ' Worth comparing before you decide.'}`,
       };
     }
@@ -70,7 +61,9 @@ export default function AddOns() {
       `Estimated total: ${isFlagshipEstimate ? 'Custom — to be scoped on a call' : gbp(calc.total)}`,
     ];
     const budget = isFlagshipEstimate ? 'Flagship — Custom' : plan === 'Essential' ? 'Essential — £800' : 'Signature — £1,600';
-    const config = { plan, extraPages, addOnIds: picked.filter(id => visible.some(a => a.id === id)) };
+    // When the panel says "scoping call", the request must say so too (a Signature build over the Flagship threshold
+    // would otherwise be priced and emailed as an automatic quote).
+    const config = { plan: isFlagshipEstimate ? 'Flagship' : plan, extraPages, addOnIds: picked.filter(id => visible.some(a => a.id === id)) };
     const detail = { budget, notes: lines.join('\n'), config };
     (window as unknown as { __mvPrefill?: typeof detail }).__mvPrefill = detail; // in case the form hasn't lazy-loaded yet
     window.dispatchEvent(new CustomEvent('mv:prefill', { detail }));
@@ -117,7 +110,7 @@ export default function AddOns() {
                     aria-pressed={plan === p}
                     className="font-body text-xs font-semibold cursor-pointer transition-colors"
                     style={{
-                      padding: '12px 22px', borderRadius: 999,
+                      padding: '12px 22px', minHeight: 44, borderRadius: 999,
                       background: plan === p ? 'linear-gradient(135deg,#8B1010,#C41E1E)' : 'transparent',
                       color: plan === p ? '#F0EDED' : 'rgba(237,232,220,0.6)',
                       border: plan === p ? '1px solid transparent' : '1px solid rgba(237,232,220,0.12)',
@@ -139,13 +132,13 @@ export default function AddOns() {
                   <button type="button" aria-label="Remove a page" disabled={extraPages === 0}
                     onClick={() => setExtraPages(n => Math.max(0, n - 1))}
                     className="flex items-center justify-center cursor-pointer disabled:opacity-30"
-                    style={{ width: 36, height: 36, borderRadius: 999, border: '1px solid rgba(237,232,220,0.15)', color: '#EDE8DC' }}>
+                    style={{ width: 44, height: 44, borderRadius: 999, border: '1px solid rgba(237,232,220,0.15)', color: '#EDE8DC' }}>
                     <Minus size={14} />
                   </button>
                   <span className="font-display italic text-xl w-6 text-center" style={{ color: '#EDE8DC' }}>{extraPages}</span>
                   <button type="button" aria-label="Add a page" onClick={() => setExtraPages(n => Math.min(15, n + 1))}
                     className="flex items-center justify-center cursor-pointer"
-                    style={{ width: 36, height: 36, borderRadius: 999, border: '1px solid rgba(237,232,220,0.15)', color: '#EDE8DC' }}>
+                    style={{ width: 44, height: 44, borderRadius: 999, border: '1px solid rgba(237,232,220,0.15)', color: '#EDE8DC' }}>
                     <Plus size={14} />
                   </button>
                 </div>

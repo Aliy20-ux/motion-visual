@@ -3,9 +3,9 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import AgreementDocumentView from '../../components/agreement/AgreementDocumentView';
 import { buildDocument, splitLines, TERMS_VERSION } from '../../legal/buildDocument';
-import { depositPence, formatGBP, KIND_LABEL, parsePounds } from '../../legal/format';
+import { depositPence, formatDate, formatGBP, KIND_LABEL, parsePounds } from '../../legal/format';
 import type { AgreementDocument, AgreementKind, ClientType, Delivery } from '../../legal/types';
-import type { AgreementRow, CrmClient } from './data';
+import type { AgreementRow, CrmClient, QuoteSeed } from './data';
 import { Button, Label, muted, PageTitle, Select, TextArea, TextInput } from './ui';
 
 type PaymentDraft = { label: string; amount: string; due: string };
@@ -81,6 +81,42 @@ function emptyDraft(kind: AgreementKind = 'project'): Draft {
 
 const poundsText = (pence: number) => (pence / 100).toFixed(pence % 100 === 0 ? 0 : 2);
 
+/** Standard terms: deposit of about 25% (rounded up to £5) on signing, balance within 7 days of sharing the finished site. */
+function standardPaymentRows(totalPence: number, ready: boolean): PaymentDraft[] {
+  const deposit = depositPence(totalPence);
+  return [
+    { label: 'Deposit', amount: poundsText(deposit), due: ready
+      ? 'When you sign — refunded in full if you cancel before we start your changes'
+      : 'When you sign — refunded in full if you cancel before we begin work' },
+    { label: 'Balance', amount: poundsText(totalPence - deposit), due: 'Within 7 days of us sharing your finished site, before launch' },
+  ];
+}
+
+// The same inclusions the pricing section promises on every build.
+const QUOTE_STANDARD_INCLUDED = [
+  'Fully custom design — no templates',
+  'Two rounds of changes',
+  'Your domain registered in your name, first year included',
+];
+
+/** A website quote becomes a Project Agreement draft. The team still sets the client type and can edit everything. */
+function draftFromQuote(q: QuoteSeed): Draft {
+  const base = emptyDraft('project');
+  return {
+    ...base,
+    clientName: q.customerName,
+    clientEmail: q.customerEmail,
+    title: `${q.plan} website — quote ${q.reference}`,
+    summary: `Website project from quote ${q.reference}, issued ${formatDate(q.issuedOn)}.`,
+    included: [
+      ...q.lines.map(l => (l.pounds === 0 ? `${l.label} (included in your plan)` : `${l.label}${l.note ? ` — ${l.note}` : ''}`)),
+      ...QUOTE_STANDARD_INCLUDED,
+    ].join('\n'),
+    total: poundsText(q.totalPence),
+    payments: standardPaymentRows(q.totalPence, false),
+  };
+}
+
 function draftFromDocument(doc: AgreementDocument, row?: Pick<AgreementRow, 'client_id' | 'parent_id'>): Draft {
   return {
     kind: doc.kind,
@@ -114,8 +150,9 @@ export default function AgreementEditor() {
   const navigate = useNavigate();
   const location = useLocation();
   const duplicateFrom = (location.state as { from?: { doc: AgreementDocument; client_id: string | null; parent_id: string | null } } | null)?.from;
+  const fromQuote = id ? undefined : (location.state as { fromQuote?: QuoteSeed } | null)?.fromQuote;
 
-  const [draft, setDraft] = useState<Draft>(() => duplicateFrom ? draftFromDocument(duplicateFrom.doc, duplicateFrom) : emptyDraft());
+  const [draft, setDraft] = useState<Draft>(() => duplicateFrom ? draftFromDocument(duplicateFrom.doc, duplicateFrom) : fromQuote ? draftFromQuote(fromQuote) : emptyDraft());
   const [loaded, setLoaded] = useState(!id);
   const [clients, setClients] = useState<CrmClient[]>([]);
   const [parents, setParents] = useState<ParentOption[]>([]);
@@ -221,10 +258,15 @@ export default function AgreementEditor() {
       terms_version: TERMS_VERSION,
     };
     const result = id
-      ? await supabase.from('agreements').update(record).eq('id', id).select('id').single()
-      : await supabase.from('agreements').insert(record).select('id').single();
+      ? await supabase.from('agreements').update(record).eq('id', id).select('id,reference').single()
+      : await supabase.from('agreements').insert(record).select('id,reference').single();
     setSaving(false);
     if (result.error) { setErrors([result.error.message]); return; }
+    // The customer said yes: move the quote on, and note which agreement it became. Only the quote's
+    // status fields are writable by the team, and a failure here must not lose the saved draft.
+    if (fromQuote && !id && fromQuote.status === 'issued') {
+      await supabase.from('web_quotes').update({ status: 'accepted', status_note: `Agreement ${result.data.reference} drafted` }).eq('id', fromQuote.id).eq('status', 'issued');
+    }
     navigate(`/studio/agreements/${result.data.id}`);
   };
 
@@ -283,15 +325,7 @@ export default function AgreementEditor() {
     if (totalPence === null) { setErrors(['Add the total price first.']); return; }
     const deposit = depositPence(totalPence);
     if (totalPence <= deposit) { setErrors([`The total must be more than the ${formatGBP(deposit)} deposit.`]); return; }
-    setDraft(d => ({
-      ...d,
-      payments: [
-        { label: 'Deposit', amount: poundsText(deposit), due: ready
-          ? 'When you sign — refunded in full if you cancel before we start your changes'
-          : 'When you sign — refunded in full if you cancel before we begin work' },
-        { label: 'Balance', amount: poundsText(totalPence - deposit), due: 'Within 7 days of us sharing your finished site, before launch' },
-      ],
-    }));
+    setDraft(d => ({ ...d, payments: standardPaymentRows(totalPence, ready) }));
   };
 
   const setPayment = (i: number, patch: Partial<PaymentDraft>) =>
@@ -306,6 +340,13 @@ export default function AgreementEditor() {
       {/* ── Form ── */}
       <div className="flex flex-col gap-7">
         <PageTitle eyebrow={id ? 'Edit draft' : 'New agreement'}>{KIND_LABEL[draft.kind]}</PageTitle>
+
+        {fromQuote && !id && (
+          <p role="note" className="-mt-4 font-body font-light text-xs leading-relaxed rounded-lg"
+            style={{ color: 'rgba(237,232,220,0.8)', border: '1px solid rgba(252,211,77,0.35)', background: 'rgba(252,211,77,0.06)', padding: '10px 12px' }}>
+            Prefilled from quote {fromQuote.reference}. <strong>Check the client type</strong> below — the website doesn’t ask whether the customer is a consumer or a business, and it changes their cancellation rights. Review the included list and payments, then save.
+          </p>
+        )}
 
         <div className="-mt-4">
           <Label htmlFor="kind">Type</Label>

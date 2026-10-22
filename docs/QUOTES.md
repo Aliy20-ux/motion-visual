@@ -28,10 +28,29 @@ The team email says: do not start the first design until the agreement is signed
 - **Local records:** `scripts/file-record.mjs` files the two email attachments into `~/Documents/motion-visual-records/quotes/` (outside the repo, because it holds customer data).
 - Keep the status up to date: the table is the history.
 
+## From quote to agreement
+In `/studio/quotes`, open a quote and press **Create agreement from this quote**. The agreement editor opens with the client, title, the included items from the quote, the total and the standard payments (about 25% deposit rounded up to £5, balance within 7 days of the finished site) already filled in. **Check the client type** (consumer or business): the website doesn't ask, and it changes the customer's cancellation rights. Saving the draft moves the quote to *accepted* and notes the agreement reference. (A quote honoured on old terms, such as MV-Q-001, needs its payments set by hand: don't use the 25% button.)
+
+## Retention
+Quotes and briefs are kept from when they're issued to the end of the financial year, then deleted **if they never became a client** (status issued / declined / lapsed). Quotes that were accepted, had an agreement sent, or were signed are kept (contract records). Invoices are separate accounting records, kept six years.
+- Migration `20261022130000_web_quotes_retention.sql` adds `web_quotes_purge(month, day, dry_run)`. It is a **dry run by default** and returns how many rows it would delete. Run for real with `select public.web_quotes_purge(4, 5, false);`. Each real run writes one count-only row to `web_quote_retention_log`.
+- `4, 5` (5 April) is a placeholder: use your company's accounting reference date.
+- Nothing is scheduled automatically. To run it monthly with pg_cron (enable the extension in Supabase first): `select cron.schedule('web-quotes-retention', '0 3 1 * *', $$select public.web_quotes_purge(4, 5, false)$$);` Replace 4, 5 with the real year end.
+- The CRM `leads` table is **not** covered.
+
+## Rolling back
+`supabase/rollbacks/*.down.sql` undo each migration (retention first, then the quotes table). The quotes rollback deletes all quote history: export it first.
+
+## Checking a deploy
+`node scripts/check-deploy.mjs https://motion-visual.com` checks the routes, the real 404s, the JSON error responses and the security headers. It sends no email.
+
+## Tests
+`npm test` runs the pricing tests and the quote-request tests (fake Resend, Supabase and Turnstile). The database tests need `npm install --no-save @electric-sql/pglite` and are skipped without it. See `tests/README.md`. The advisory-lock fix for the rate limits is checked for presence, not exercised under real concurrency.
+
 ## Setting it up (nothing here is deployed or applied yet)
 Do these **in this order**:
 
-1. **Apply the migration** `supabase/migrations/20261022120000_add_web_quotes.sql` to the motionvisual-admin project (after the agreements migration, which it depends on). No new secret: it reuses `AGREEMENTS_SERVER_KEY` and its vault hash. Check with `select count(*) from public.web_quotes;`. Until it's applied the form still works (fallback reference, no history, no rate limits, no brief link).
+1. **Apply the migrations** `20261022120000_add_web_quotes.sql` then `20261022130000_web_quotes_retention.sql` to the motionvisual-admin project (after the agreements migration, which they depend on). Try them on a Supabase branch first. No new secret: it reuses `AGREEMENTS_SERVER_KEY` and its vault hash. Check with `select count(*) from public.web_quotes;`. Until it's applied the form still works (fallback reference, no history, no rate limits, no brief link).
 2. **Turnstile (the bot check):** Cloudflare dashboard → Turnstile → add a widget for `motion-visual.com` (Managed). Then:
    - set `VITE_TURNSTILE_SITE_KEY` in `.env` (and in the Pages build variables if you build there), rebuild and **deploy the new build first**;
    - **then** set the secret: `printf %s "$SECRET" | npx wrangler pages secret put TURNSTILE_SECRET_KEY --project-name motion-visual`.
@@ -47,6 +66,11 @@ Edit `src/pricing.ts` only; the add-ons builder and the server both read it. Quo
 - The migration in PGlite (24 checks: key check, sequence, both rate limits, one brief per quote, RLS, column-level grants).
 - The real Pages Functions under `wrangler pages dev` against a PGlite-backed RPC shim, a mock Resend and a mock Turnstile verifier.
 - Cloudflare's published always-pass Turnstile test keys against the real widget and the real verification endpoint.
+
+## Abuse protection
+- Turnstile (bot check) and the per-email / per-IP limits in the database protect the quote path.
+- The **scoping-call path** (Flagship, shop, e-commerce) has no database limit. Add a Cloudflare rate-limiting rule on `/api/quote-request` and `/api/brief/*` (see docs/LAUNCH-CHECKLIST.md).
+- Turnstile **fails open** when `TURNSTILE_SECRET_KEY` is unset (so the form works before it's set up). A mistyped secret name silently turns the check off: confirm with a test request after setting it.
 
 ## Known limits
 - No file upload on the brief form.

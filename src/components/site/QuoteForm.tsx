@@ -151,6 +151,9 @@ export default function QuoteForm() {
   const [config, setConfig] = useState<PackageConfig | null>(null);
   const [result, setResult] = useState<QuoteResult | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  // A Turnstile token works once. Bumping this remounts the widget after every attempt so a retry gets a fresh one.
+  const [turnstileRun, setTurnstileRun] = useState(0);
+  const [turnstileBlocked, setTurnstileBlocked] = useState(false);
 
   // The add-ons builder sends its chosen package here so visitors don't retype it.
   useEffect(() => {
@@ -182,7 +185,7 @@ export default function QuoteForm() {
   const validate = (): boolean => {
     const e: Partial<Record<keyof FormData, string>> = {};
     if (!form.name.trim()) e.name = 'Required';
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Invalid email';
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = 'Invalid email';
     if (!form.project_type) e.project_type = 'Select one';
     if (!form.budget) e.budget = 'Select one';
     setErrors(e);
@@ -193,7 +196,7 @@ export default function QuoteForm() {
     e.preventDefault();
     setFormError('');
     if (!validate()) return;
-    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+    if (TURNSTILE_SITE_KEY && !turnstileToken && !turnstileBlocked) {
       setFormError('Please complete the check above so we know you’re not a bot.');
       return;
     }
@@ -252,6 +255,8 @@ export default function QuoteForm() {
     ]);
 
     setLoading(false);
+    setTurnstileToken(null);
+    setTurnstileRun(n => n + 1);
 
     if (emailResult.status === 'fulfilled') setResult(emailResult.value);
     if (dbResult.status === 'fulfilled' || emailResult.status === 'fulfilled') {
@@ -444,7 +449,7 @@ export default function QuoteForm() {
                     <UnderlineTextarea id="notes" value={form.notes} onChange={v => set('notes', v)} />
                   </div>
 
-                  <Turnstile onToken={setTurnstileToken} />
+                  <Turnstile key={turnstileRun} onToken={setTurnstileToken} onUnavailable={() => setTurnstileBlocked(true)} />
 
                   {formError && (
                     <p role="alert" className="text-center font-body text-xs" style={{ color: '#F87171' }}>

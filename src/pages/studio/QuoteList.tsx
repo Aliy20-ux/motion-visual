@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { formatDate, formatGBP } from '../../legal/format';
-import { ErrorText, muted, PageTitle, Select } from './ui';
+import type { QuoteSeed } from './data';
+import { Button, ErrorText, muted, PageTitle, Select } from './ui';
 
 type QuoteRow = {
   id: string;
@@ -40,6 +42,7 @@ const STATUSES: { value: string; label: string }[] = [
 export default function QuoteList() {
   const [rows, setRows] = useState<QuoteRow[] | null>(null);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     supabase.from('web_quotes').select('*').order('created_at', { ascending: false })
@@ -54,6 +57,22 @@ export default function QuoteList() {
     const { error: err } = await supabase.from('web_quotes').update({ status }).eq('id', row.id);
     if (err) { setError(err.message); return; }
     setRows(cur => cur?.map(r => (r.id === row.id ? { ...r, status } : r)) ?? null);
+  };
+
+  // Opens a Project Agreement draft prefilled from the quote, so nothing is retyped.
+  const createAgreement = (r: QuoteRow) => {
+    const seed: QuoteSeed = {
+      id: r.id,
+      reference: r.reference,
+      issuedOn: r.created_at.slice(0, 10),
+      customerName: r.customer_name,
+      customerEmail: r.customer_email,
+      plan: r.plan,
+      lines: r.lines,
+      totalPence: r.total_pence,
+      status: r.status,
+    };
+    navigate('/studio/agreements/new', { state: { fromQuote: seed } });
   };
 
   return (
@@ -101,6 +120,11 @@ export default function QuoteList() {
                     <p className="mt-2">Total {formatGBP(r.total_pence)} · deposit {formatGBP(r.deposit_pence)} · valid until {formatDate(r.valid_until)}</p>
                     <p className="mt-2">{r.customer_email}{r.customer_phone ? ` · ${r.customer_phone}` : ''}{r.project_type ? ` · ${r.project_type}` : ''}</p>
                     {r.notes && <p className="mt-2 whitespace-pre-wrap">{r.notes}</p>}
+                    {r.status !== 'signed' && r.status !== 'declined' && (
+                      <Button variant="primary" className="mt-4" onClick={() => createAgreement(r)} style={{ padding: '10px 20px' }}>
+                        {r.status === 'issued' ? 'Create agreement from this quote' : 'Create another agreement'}
+                      </Button>
+                    )}
                   </div>
                   <div>
                     <p style={{ color: muted }} className="tracking-[0.2em] uppercase text-[9px] mb-1.5">Brief</p>

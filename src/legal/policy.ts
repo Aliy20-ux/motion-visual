@@ -34,8 +34,8 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
       blocks: [
         { type: 'table', head: ['When', 'What happens'], rows: [
           ['Day 0', 'We have your signed Project Agreement and the content we need — your brief, plus anything else we’ve asked for. The 14-day clock starts today. You pay your deposit when you sign.'],
-          ['Within 2 working days', 'We share your first design with you on a preview link — our 48-hour target.'],
-          ['Then', 'You send us one combined set of changes, and we share our design direction.'],
+          ['Within 2 working days', 'We share your first design — the design direction for your site — with you on a preview link. This is our 48-hour target.'],
+          ['Then', 'You send us one combined set of changes on it.'],
           ['During the build', 'We build your site. One more round of changes is included.'],
           ['By day 14', 'We share your finished site with you.'],
           ['Within 7 days of that', 'You pay the balance. We launch your site once it has cleared.'],
@@ -108,12 +108,12 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
         { type: 'table', head: ['When you cancel', 'What you owe'], rows: [
           ['Before we begin work', 'Nothing. Your deposit is refunded in full.'],
           ['Work has started, but we haven’t shared your first design', `Your deposit is kept (${DEPOSIT_RULE}), unless we’ve missed our first-design target — see “If we can’t deliver”. You owe nothing more.`],
-          ['We’ve shared the design direction', '40% of the build price, less your deposit.'],
+          ['We’ve shared your first design (the design direction)', '40% of the build price, less your deposit.'],
           ['The build is underway', '70% of the build price, less what you’ve paid.'],
           ['We’ve shared your finished site', '100% — the full price is due.'],
           ['We cancel, or we can’t deliver', 'Nothing. Everything you’ve paid is refunded in full.'],
         ] },
-        { type: 'p', text: '“Design direction” means the look and layout we propose for your site, shared on a preview link. “The build is underway” means we’ve started building your pages from that direction.' },
+        { type: 'p', text: 'Your first design is the design direction: the look and layout we propose for your site, shared on a preview link. “The build is underway” means we’ve started building your pages from it.' },
         { type: 'p', text: 'In every case, you also pay for any third-party costs we’ve committed to on your behalf with your agreement — for example a domain name, paid fonts, booking tools, SMS or stock photos — at cost.' },
         { type: 'p', text: 'We share drafts and designs on preview links only. They stay ours until the price is paid in full, so if you cancel we don’t hand over design files, and you may not use or copy our drafts or designs.' },
         { type: 'p', text: 'These amounts reflect the time we reserve for your project — often turning down other work to do so — and the work completed by each stage. They are a fair share of the price for work done and time reserved, not a penalty.' },

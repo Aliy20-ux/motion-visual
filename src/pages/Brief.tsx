@@ -117,7 +117,7 @@ export default function Brief() {
     <form onSubmit={submit} className="flex flex-col gap-6 mt-10">
       {/* Honeypot: real visitors never see or fill this. */}
       <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
-        <label>Website<input tabIndex={-1} autoComplete="off" value={honeypot} onChange={e => setHoneypot(e.target.value)} /></label>
+        <label>Leave this empty<input name="mv_hp_field" tabIndex={-1} autoComplete="off" value={honeypot} onChange={e => setHoneypot(e.target.value)} /></label>
       </div>
       {FIELDS.map(f => (
         <div key={f.key}>

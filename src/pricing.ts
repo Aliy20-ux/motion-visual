@@ -47,6 +47,30 @@ export function priceFor(plan: PlanKey, pagesTotal: number, pickedIds: string[])
   return PLAN_PRICE[plan] + extra * EXTRA_PAGE_PRICE + addOnSum;
 }
 
+// Suggest Signature once an Essential build (plan + pages + add-ons) comes within this much of the Signature price.
+export const SUGGEST_SIGNATURE_WITHIN = 300;
+// Suggest a Flagship scoping call once a Signature build reaches this total.
+export const SUGGEST_FLAGSHIP_TOTAL = 2600;
+
+export type Suggestion =
+  | { to: 'Flagship'; reason: 'shop' | 'large' }
+  | { to: 'Signature'; total: number; signatureTotal: number };
+
+/**
+ * The one rule for "this build would be better on another plan". The add-ons panel shows it, and when it says
+ * Flagship the request is sent as a scoping-call request — so what the visitor is told and what the server does
+ * can't disagree.
+ */
+export function suggestFor(plan: PlanKey, pagesTotal: number, pickedIds: string[]): Suggestion | null {
+  const total = priceFor(plan, pagesTotal, pickedIds);
+  if (ADD_ONS.some(a => a.flagship && pickedIds.includes(a.id))) return { to: 'Flagship', reason: 'shop' };
+  if (plan === 'Signature' && total >= SUGGEST_FLAGSHIP_TOTAL) return { to: 'Flagship', reason: 'large' };
+  if (plan === 'Essential' && total >= PLAN_PRICE.Signature - SUGGEST_SIGNATURE_WITHIN) {
+    return { to: 'Signature', total, signatureTotal: priceFor('Signature', pagesTotal, pickedIds) };
+  }
+  return null;
+}
+
 export type QuoteInput = { plan: PlanKey; extraPages: number; addOnIds: string[] };
 
 export type QuoteLine = { label: string; pounds: number | null; note?: string };

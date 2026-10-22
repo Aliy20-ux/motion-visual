@@ -1,6 +1,7 @@
 // Builders for the automatic quote flow: the quote reference, the customer's quote email and the
 // internal brief. Pure functions (no I/O) so they can be exercised without sending anything.
 import { COMPANY, COMPANY_DISCLOSURE, VAT_NOTE } from '../src/legal/company';
+import { escapeHtml } from '../src/legal/renderHtml';
 import { gbp, type Quote } from '../src/pricing';
 
 export const QUOTE_VALID_DAYS = 14;
@@ -17,10 +18,6 @@ export type IssuedQuote = {
 
 const londonDate = (d: Date) => d.toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 const longDate = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
-
-export function escapeHtml(value: string): string {
-  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-}
 
 /** Fallback only, for when the database can't be reached. Normal references come from the database sequence. Web quotes use their own series (MV-W-…) so they never collide with hand-made MV-Q-NNN quotes. */
 export function newQuoteRef(now = new Date()): string {
@@ -40,7 +37,7 @@ export function issueQuote(customer: QuoteCustomer, quote: Quote, ref?: string, 
   return { ref: ref ?? newQuoteRef(now), ...quoteDates(now), customer, quote };
 }
 
-const oneLine = (value: string) => value.replace(/[\r\n]+/g, ' ').trim();
+export const oneLine = (value: string) => value.replace(/[\r\n]+/g, ' ').trim();
 
 const C = { bg: '#0A0A0B', panel: '#111113', text: '#EDE8DC', muted: '#9A968C', red: '#C41E1E', line: '#26262A' };
 

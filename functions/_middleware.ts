@@ -11,9 +11,11 @@ export const onRequest = async ({ request, next }: { request: Request; next: () 
   if (request.method !== 'GET' && request.method !== 'HEAD') return response;
 
   const { pathname } = new URL(request.url);
-  const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+  // React Router matches case-insensitively, so /Terms is a real page and must not be turned into a 404.
+  const path = (pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname).toLowerCase();
   if (EXACT_ROUTES.has(path) || ROUTE_PREFIXES.some(prefix => path.startsWith(prefix))) return response;
   if (/\.[a-z0-9]+$/i.test(path)) return response; // real files: assets, images, robots.txt, sitemap.xml
+  if (response.status !== 200) return response; // never re-wrap a 304, redirect or error from the platform
   if (!(response.headers.get('content-type') ?? '').includes('text/html')) return response;
 
   return new Response(response.body, { status: 404, statusText: 'Not Found', headers: response.headers });

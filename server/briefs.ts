@@ -3,7 +3,9 @@
 // so a person always reviews it first.
 import { COMPANY } from '../src/legal/company';
 import { ADD_ONS, gbp } from '../src/pricing';
-import { escapeHtml } from './quotes';
+import { escapeHtml } from '../src/legal/renderHtml';
+import { hasControlChars } from './input';
+import { oneLine } from './quotes';
 
 export const BRIEF_FIELDS = [
   { key: 'businessName', label: 'Business name', max: 120, required: true },
@@ -31,6 +33,7 @@ export function validateBrief(input: unknown): { ok: true; brief: Brief } | { ok
   for (const f of BRIEF_FIELDS) {
     const value = raw[f.key] ?? '';
     if (typeof value !== 'string' || value.length > f.max) return { ok: false, error: `${f.label} is too long` };
+    if (hasControlChars(value)) return { ok: false, error: `${f.label} contains characters we can't accept` };
     const trimmed = value.trim();
     if ('required' in f && f.required && !trimmed) return { ok: false, error: `${f.label} is required` };
     brief[f.key] = trimmed;
@@ -89,7 +92,7 @@ export function teamBriefEmail(q: BriefQuote, brief: Brief): { subject: string; 
     <p style="color:#666;">Paste this into Claude to get the first-draft build prompt (review it before use):</p>
     <pre style="white-space:pre-wrap;background:#f5f5f5;padding:14px;border-radius:8px;font-size:13px;line-height:1.5;">${escapeHtml(prompt)}</pre>
   </div>`;
-  return { subject: `Brief received ${q.reference}: ${brief.businessName}`, html };
+  return { subject: `Brief received ${q.reference}: ${oneLine(brief.businessName)}`, html };
 }
 
 export function customerBriefReceipt(q: BriefQuote, brief: Brief): { subject: string; html: string } {

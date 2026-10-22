@@ -6,7 +6,7 @@ import { COMPANY, COMPANY_DISCLOSURE } from '../legal/company';
 const atAGlance = [
   'Your 14 days start once we have your signed agreement and your content.',
   'First design within 2 working days of that — our 48-hour target.',
-  'Consumers can cancel within 14 days of signing for a full refund.',
+  'Consumers can cancel within 14 days of signing. If you asked us to start in that time, you pay only for the work done.',
   'Business clients: what you owe depends on how far the project has got.',
   'Balance due within 7 days of us sharing your finished site.',
   'We never charge interest or late fees.',

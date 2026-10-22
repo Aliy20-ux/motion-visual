@@ -9,6 +9,7 @@ import { buildQuote, ADD_ONS } from '../../src/pricing';
 import { COMPANY } from '../../src/legal/company';
 import { customerQuoteEmail, issueQuote, quoteDates, quoteRecord, teamCallEmail, teamQuoteEmail, type QuoteCustomer } from '../../server/quotes';
 import { clientIp, json, readJson, rpc, RpcError, sendEmail, TEAM_INBOX, type Ctx } from '../../server/agreements';
+import { hasControlChars } from '../../server/input';
 import { verifyTurnstile } from '../../server/turnstile';
 
 type Payload = {
@@ -19,8 +20,9 @@ type Payload = {
 // Matches the browser's MIN_HUMAN_FILL_MS check in QuoteForm — a second line of defence for scripted posts.
 const MIN_HUMAN_FILL_MS = 2500;
 
+// Control characters (NUL especially) are never valid in a form field. Line breaks are fine in notes.
 const text = (value: unknown, max: number): string | null =>
-  typeof value === 'string' && value.length <= max ? value.trim() : null;
+  typeof value === 'string' && value.length <= max && !hasControlChars(value) ? value.trim() : null;
 
 const toBase64 = (value: string): string => {
   const bytes = new TextEncoder().encode(value);
@@ -97,7 +99,10 @@ export const onRequestPost = async ({ request, env }: Ctx): Promise<Response> =>
     briefToken = saved.briefToken;
   } catch (err) {
     if (err instanceof RpcError && err.code === 'rate_limited') return json({ error: 'rate_limited' }, 429);
-    // Any other failure (migration not applied, server key missing, Supabase down): carry on without a record.
+    // The database rejected the INPUT (SQLSTATE class 22 / 23). That must never fall through to "send anyway":
+    // a request that always fails to save would also always skip the rate limits.
+    if (err instanceof RpcError && /^(22|23)/.test(err.sqlState ?? '')) return json({ error: 'Missing or invalid fields' }, 400);
+    // Anything else (migration not applied, server key missing, Supabase down): carry on without a record.
   }
   const recorded = ref !== undefined;
 

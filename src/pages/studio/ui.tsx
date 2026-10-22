@@ -7,7 +7,7 @@ export function Label({ htmlFor, children, hint }: { htmlFor?: string; children:
   return (
     <label htmlFor={htmlFor} className="block mb-1.5">
       <span className="font-body text-[9px] tracking-[0.28em] uppercase" style={{ color: muted }}>{children}</span>
-      {hint && <span className="block font-body font-light text-[11px] mt-0.5 normal-case tracking-normal" style={{ color: 'rgba(237,232,220,0.4)' }}>{hint}</span>}
+      {hint && <span className="block font-body font-light text-[11px] mt-0.5 normal-case tracking-normal" style={{ color: 'rgba(237,232,220,0.62)' }}>{hint}</span>}
     </label>
   );
 }

@@ -23,7 +23,9 @@ function loadScript(): Promise<void> {
   });
 }
 
-export default function Turnstile({ onToken }: { onToken: (token: string | null) => void }) {
+// `onUnavailable` fires when the widget can't load at all (ad blocker, offline): the form then lets the enquiry
+// through to the CRM without a quote, instead of blocking the visitor on a check that never appeared.
+export default function Turnstile({ onToken, onUnavailable }: { onToken: (token: string | null) => void; onUnavailable?: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,12 +41,12 @@ export default function Turnstile({ onToken }: { onToken: (token: string | null)
         'expired-callback': () => onToken(null),
         'error-callback': () => onToken(null),
       });
-    }).catch(() => onToken(null));
+    }).catch(() => { onToken(null); onUnavailable?.(); });
     return () => {
       cancelled = true;
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId);
     };
-  }, [onToken]);
+  }, [onToken, onUnavailable]);
 
   if (!TURNSTILE_SITE_KEY) return null;
   return <div ref={ref} className="flex justify-center" style={{ minHeight: 65 }} />;

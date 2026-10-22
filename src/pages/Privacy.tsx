@@ -83,10 +83,10 @@ export default function Privacy() {
 
       <h2>How long we keep it</h2>
       <p>
-        We keep enquiry data for as long as necessary to respond to you and, if you become a
-        client, for the duration of our working relationship and for as long afterwards as
-        required for our accounting and legal obligations. If your enquiry doesn't lead to a
-        project, we'll delete your details after a reasonable period.
+        Quotes and briefs that don't lead to a project are kept from the day they are issued until
+        the end of our financial year, and then deleted. If you become a client, we keep your
+        quote, brief and agreement for as long as our working relationship lasts and for as long
+        afterwards as the law requires — for example, accounting records are kept for six years.
       </p>
 
       <h2>Your rights</h2>

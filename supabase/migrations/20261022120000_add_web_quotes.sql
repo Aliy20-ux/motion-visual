@@ -103,6 +103,11 @@ begin
     raise exception 'not_authorised' using errcode = '42501';
   end if;
 
+  -- Serialise concurrent requests for the same IP / address. Without these locks, N parallel requests would
+  -- all count zero existing rows and all insert, defeating the limits below. Always taken in this order.
+  perform pg_advisory_xact_lock(hashtext('wq-ip:' || coalesce(p_ip_hash, '')));
+  perform pg_advisory_xact_lock(hashtext('wq-email:' || lower(coalesce(p_email, ''))));
+
   -- Stops the form being used to mail quotes to someone else's address, or to flood us.
   if p_ip_hash is not null and (
     select count(*) from public.web_quotes

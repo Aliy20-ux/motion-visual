@@ -42,6 +42,20 @@ export type AgreementEvent = {
   created_at: string;
 };
 
+/** What the quotes list hands to the agreement editor to prefill a Project Agreement from a website quote. */
+export type QuoteSeed = {
+  id: string;
+  reference: string;
+  /** ISO date the quote was issued. */
+  issuedOn: string;
+  customerName: string;
+  customerEmail: string;
+  plan: string;
+  lines: { label: string; pounds: number | null; note?: string }[];
+  totalPence: number;
+  status: string;
+};
+
 export type CrmClient = { id: string; business_name: string; contact_name: string | null; email: string | null };
 
 export const agreementLink = (token: string) => `${window.location.origin}/agreement/${token}`;

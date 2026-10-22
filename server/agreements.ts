@@ -47,8 +47,15 @@ export function userAgent(request: Request): string {
 }
 
 export class RpcError extends Error {
-  constructor(public code: string, public status: number) {
+  code: string;
+  status: number;
+  /** Postgres SQLSTATE when the database rejected the call (class 22 = bad input data, 23 = constraint). */
+  sqlState?: string;
+  constructor(code: string, status: number, sqlState?: string) {
     super(code);
+    this.code = code;
+    this.status = status;
+    this.sqlState = sqlState;
   }
 }
 
@@ -61,9 +68,9 @@ export async function rpc<T>(env: AgreementEnv, fn: string, args: Record<string,
     body: JSON.stringify({ p_key: env.AGREEMENTS_SERVER_KEY, ...args }),
   });
   if (!res.ok) {
-    const detail = (await res.json().catch(() => null)) as { message?: string } | null;
+    const detail = (await res.json().catch(() => null)) as { message?: string; code?: string } | null;
     const code = detail?.message ?? 'rpc_failed';
-    throw new RpcError(code, res.status === 401 || res.status === 403 ? 503 : 400);
+    throw new RpcError(code, res.status === 401 || res.status === 403 ? 503 : 400, detail?.code);
   }
   return (await res.json()) as T;
 }
@@ -106,20 +113,26 @@ export async function sendEmail(env: AgreementEnv, email: {
   bcc?: string[];
   attachments?: { filename: string; content: string }[];
 }): Promise<boolean> {
-  const res = await fetch(env.RESEND_API_URL ?? 'https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: FROM,
-      to: email.to,
-      bcc: email.bcc,
-      reply_to: email.replyTo ?? TEAM_INBOX,
-      subject: email.subject,
-      html: email.html,
-      attachments: email.attachments,
-    }),
-  });
-  return res.ok;
+  // A network failure is "not sent", never an exception: callers have usually saved something already
+  // and must still tell the team about it rather than return a 500 that invites a duplicate retry.
+  try {
+    const res = await fetch(env.RESEND_API_URL ?? 'https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: FROM,
+        to: email.to,
+        bcc: email.bcc,
+        reply_to: email.replyTo ?? TEAM_INBOX,
+        subject: email.subject,
+        html: email.html,
+        attachments: email.attachments,
+      }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 /** Client-facing wording for the RPC error codes raised in the migration. */
