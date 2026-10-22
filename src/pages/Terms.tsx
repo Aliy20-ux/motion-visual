@@ -44,7 +44,7 @@ export default function Terms() {
       <p>
         We aim to have every site — Essential, Signature and Flagship — ready to share by day 14.
         The 14-day clock starts once we have your signed agreement and your content, such as your
-        logo, text and photos. We aim to share your first design within 2 working days (our
+        your brief and links to your social pages. We aim to share your first design within 2 working days (our
         48-hour target) of that day; if we haven't by then for a reason within our control, you can
         cancel before we share it and we'll refund your deposit in full. Two rounds of changes are included. If you don't reply to something
         we've shared within 7 days, it counts as approved, and if we've heard nothing from you for

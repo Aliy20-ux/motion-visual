@@ -33,7 +33,7 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
       plain: 'Your 14 days start once we have your signed agreement and your content. Your first design follows within 2 working days, and the balance is due within 7 days of us sharing your finished site.',
       blocks: [
         { type: 'table', head: ['When', 'What happens'], rows: [
-          ['Day 0', 'We have your signed Project Agreement and the content on our checklist — logo, text, photos and anything else we’ve asked for. The 14-day clock starts today. You pay your deposit when you sign.'],
+          ['Day 0', 'We have your signed Project Agreement and the content we need — your brief and links to your social pages, plus anything else we’ve asked for. The 14-day clock starts today. You pay your deposit when you sign.'],
           ['Within 2 working days', 'We share your first design with you on a preview link — our 48-hour target.'],
           ['Then', 'You send us one combined set of changes, and we share our design direction.'],
           ['During the build', 'We build your site. One more round of changes is included.'],
@@ -229,7 +229,7 @@ const READY_SCHEDULE: LegalSection = {
   plain: 'You’ve already seen the site. Sign the agreement, we tailor it to your business, and it goes live within 3 working days of your balance clearing.',
   blocks: [
     { type: 'table', head: ['When', 'What happens'], rows: [
-      ['You sign your agreement', 'You pay your deposit and send us your content — logo, text, photos and anything else on our checklist.'],
+      ['You sign your agreement', 'You pay your deposit and send us your content — your brief, links to your social pages and anything else on our checklist.'],
       ['Within 5 working days', 'We make one combined round of changes to fit the site to your business, and share the finished site with you.'],
       ['Within 7 days of that', 'You pay the balance.'],
       ['Within 3 working days of payment', 'Your site goes live.'],

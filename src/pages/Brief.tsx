@@ -10,10 +10,10 @@ const FIELDS: { key: string; label: string; hint?: string; max: number; required
   { key: 'whatYouDo', label: 'What does your business do?', hint: 'A few sentences in your own words.', max: 1500, required: true, rows: 4 },
   { key: 'location', label: 'Location and opening hours', max: 600, rows: 3 },
   { key: 'contactDetails', label: 'Contact details to show on the site', hint: 'Phone, email, address, social links.', max: 600, rows: 3 },
-  { key: 'logoAndColours', label: 'Logo, brand colours and fonts', hint: 'Tell us if you have them. You can email the logo itself afterwards.', max: 800, rows: 3 },
+  { key: 'logoAndColours', label: 'Brand colours and fonts', hint: 'Only if you have specific ones. We’ll take your logo from your social pages.', max: 800, rows: 3 },
   { key: 'pages', label: 'What should each page say or show?', hint: 'List your pages and what goes on each one.', max: 4000, rows: 6 },
   { key: 'servicesAndPrices', label: 'Services, products and prices', max: 3000, rows: 5 },
-  { key: 'links', label: 'Links to use', hint: 'Booking, ordering, social, Google Business Profile.', max: 1000, rows: 3 },
+  { key: 'links', label: 'Your social media and other links', hint: 'Instagram, Facebook, TikTok, Google Business Profile, booking or ordering links. We’ll take your logo and photos from your social pages.', max: 1000, rows: 3 },
   { key: 'likedSites', label: 'Websites you like', hint: 'Two or three, and what you like about them.', max: 1000, rows: 3 },
   { key: 'dislikes', label: 'Anything you dislike or want to avoid', max: 1000, rows: 3 },
   { key: 'tone', label: 'The feel or tone you want', hint: 'For example: warm and friendly, sleek and premium, playful.', max: 600, rows: 2 },
@@ -106,7 +106,7 @@ export default function Brief() {
   if (phase === 'done') {
     return shell(<>
       {title('Thanks — we’ve got your brief')}
-      {body(<>We’ve emailed you a confirmation. Please email your <strong>logo and photos</strong> to <a href={`mailto:${COMPANY.email}`} className="underline">{COMPANY.email}</a>, quoting {quote?.reference}. We’ll start your first design once your Project Agreement is signed and we have your content, and we aim to share it within 2 working days of that.</>)}
+      {body(<>We’ve emailed you a confirmation. We’ll start your first design once your Project Agreement is signed and we have your content, and we aim to share it within 2 working days of that. If you have any questions, email <a href={`mailto:${COMPANY.email}`} className="underline">{COMPANY.email}</a> and quote {quote?.reference}.</>)}
     </>);
   }
 
@@ -128,7 +128,7 @@ export default function Brief() {
         </div>
       ))}
       <p className="font-body font-light text-xs leading-relaxed" style={{ color: muted }}>
-        We’ll use what you tell us to prepare your first design. We may use an AI assistant to help us draft it, and a person at Motion Visual reviews everything. See our <Link to="/privacy" className="underline">Privacy Policy</Link>.
+        By sending this brief you’re happy for us to use your logo and photos from the social pages you link to on your new website. See our <Link to="/privacy" className="underline">Privacy Policy</Link>.
       </p>
       {error && <ErrorText>{error}</ErrorText>}
       <Button type="submit" variant="primary" disabled={busy} className="self-start" style={{ padding: '13px 28px' }}>

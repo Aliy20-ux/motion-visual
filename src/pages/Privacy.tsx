@@ -32,7 +32,8 @@ export default function Privacy() {
         If you build a package on our website, we also record the package you chose, the quote we
         generated for you, and when it was issued. If you then complete our brief form, we collect
         what you tell us about your business — such as its name, what it does, its opening hours,
-        your branding, page content and the websites you like.
+        your branding, page content and the websites you like. We also use the logo and photos
+        from the social media pages you point us to, on your website, with your agreement.
       </p>
       <p>When you review or sign a client agreement we send you, we also record:</p>
       <ul>
@@ -78,11 +79,7 @@ export default function Privacy() {
         quote form, it is provided by Cloudflare (Turnstile). To limit abuse we store a one-way
         hash of your IP address, not the address itself, alongside the quote request.
       </p>
-      <p>
-        To prepare your first design, we may use an AI assistant (Claude, provided by Anthropic).
-        We give it the business information from your brief — not your email address or phone
-        number — and a member of our team reviews what it produces before anything is used.
-      </p>
+
 
       <h2>How long we keep it</h2>
       <p>
