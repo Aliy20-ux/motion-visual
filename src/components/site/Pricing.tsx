@@ -5,25 +5,17 @@ import { scrollToHash } from '../../lib/smoothScroll';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Launch offer — 50% off one-off build prices for the first 30 days.
-// Self-expiring: once PROMO_ENDS passes, this block goes inert on its own — no manual removal needed.
-const PROMO_ENDS = new Date('2026-08-03T23:59:59');
-const isPromoActive = () => Date.now() < PROMO_ENDS.getTime();
-const promoDateLabel = PROMO_ENDS.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-
 const tiers = [
   {
     name: 'Essential',
-    priceMin: 1499,
-    priceMax: 3499,
-    carePlanPrice: 59.99,
+    price: 800,
+    carePlanPrice: 49.99,
     tagline: 'A serious site for a serious business.',
     description: 'Perfect for local businesses and new brands ready to compete online.',
     features: [
-      'Up to 5 pages — fully custom',
+      'Single landing page — fully custom',
       'No templates. No shortcuts.',
       'Mobile-first & fully responsive',
-      'On-page SEO + Google Analytics',
       'Contact form & lead capture',
       '14-day delivery guarantee',
     ],
@@ -32,17 +24,14 @@ const tiers = [
   },
   {
     name: 'Signature',
-    priceMin: 3999,
-    priceMax: 6999,
+    price: 1600,
     carePlanPrice: 124.99,
     tagline: 'The full Motion Visual experience.',
     description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
     features: [
-      'Up to 12 pages — fully bespoke',
+      'Up to 5 pages — fully bespoke',
       'Cinematic animations & scroll reveals',
       'Advanced SEO + Edinburgh local SEO',
-      'CMS — edit your own content',
-      'Booking or reservation system',
       'Google Analytics + Tag Manager',
       '14-day delivery guarantee',
     ],
@@ -61,7 +50,7 @@ const tiers = [
       'Built to Core Web Vitals standards',
       'Cloudflare-backed global delivery',
       'Dedicated project lead — direct access',
-      '21–28 day delivery / phased if needed',
+      '14-day delivery guarantee',
     ],
     cta: 'Start Flagship',
     isPopular: false,
@@ -69,8 +58,6 @@ const tiers = [
 ];
 
 export default function Pricing() {
-  const promoActive = isPromoActive();
-
   return (
     <section
       id="pricing"
@@ -115,16 +102,6 @@ export default function Pricing() {
             One-off project pricing, no ongoing retainer.
             Book a free call and we'll give you an exact number within 24 hours.
           </p>
-
-          {promoActive && (
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5"
-              style={{ border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
-              <span className="font-body font-semibold text-[10px] tracking-[0.2em] uppercase"
-                style={{ color: '#C41E1E' }}>
-                Launch offer — 50% off, ends {promoDateLabel}
-              </span>
-            </div>
-          )}
         </motion.div>
 
         {/* ── Cards ── */}
@@ -201,11 +178,6 @@ export default function Pricing() {
                       </span>
                     ) : (
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        {promoActive && (
-                          <span className="font-body text-sm" style={{ color: 'rgba(237,232,220,0.5)', textDecoration: 'line-through' }}>
-                            £{tier.priceMin!.toLocaleString('en-GB')}–£{tier.priceMax!.toLocaleString('en-GB')}
-                          </span>
-                        )}
                         <span
                           className="font-display italic"
                           style={{
@@ -216,7 +188,7 @@ export default function Pricing() {
                           }}
                         >
                           <span className={tier.isPopular ? 'gradient-text' : undefined}>
-                            £{Math.round(promoActive ? tier.priceMin! / 2 : tier.priceMin!).toLocaleString('en-GB')}–£{Math.round(promoActive ? tier.priceMax! / 2 : tier.priceMax!).toLocaleString('en-GB')}
+                            £{tier.price!.toLocaleString('en-GB')}
                           </span>
                         </span>
                       </div>
@@ -231,7 +203,7 @@ export default function Pricing() {
                     </p>
                   )}
                   <p className="font-body text-[11px] mt-2" style={{ color: 'rgba(196,30,30,0.55)' }}>
-                    + Care plan {tier.customPrice ? '— custom, scoped with you' : `from £${tier.carePlanPrice}/mo`}
+                    {tier.customPrice ? '+ Care plan — custom, scoped with you' : `+ £${tier.carePlanPrice} care plan`}
                   </p>
                 </div>
 
@@ -289,8 +261,9 @@ export default function Pricing() {
           style={{ color: 'rgba(237,232,220,0.5)' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}>
-          All projects include hosting setup, domain configuration, and 30 days post-launch support.
-          Balance due when your site is ready — never 100% upfront.
+          A £100 deposit secures your start date on Essential and Signature. The balance is split across
+          agreed milestones, and Flagship payment terms are agreed individually. Hosting, updates and
+          ongoing support are covered by an optional care plan.
         </motion.p>
 
       </div>

@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: 'How much does a website cost at Motion Visual?',
-    a: "Our Essential package ranges from £1,499 to £3,499, Signature from £3,999 to £6,999, and Flagship is scoped individually and quoted on a call. Book a free call and we'll give you an exact number within 24 hours.",
+    a: "Our Essential package is £800, Signature is £1,600, and Flagship is scoped individually and quoted on a call. Book a free call and we'll give you an exact number within 24 hours.",
   },
   {
     q: 'Does Motion Visual work with businesses outside Edinburgh?',

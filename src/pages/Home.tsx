@@ -9,6 +9,7 @@ import SelectedWork from '../components/site/SelectedWork';
 import About from '../components/site/About';
 import Process from '../components/site/Process';
 import Pricing from '../components/site/Pricing';
+import AddOns from '../components/site/AddOns';
 import FAQ from '../components/site/FAQ';
 import Footer from '../components/site/Footer';
 
@@ -31,6 +32,7 @@ export default function Home() {
         <About />
         <Process />
         <Pricing />
+        <AddOns />
         <FAQ />
         <Suspense fallback={<div style={{ minHeight: 600 }} />}>
           <QuoteForm />

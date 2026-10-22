@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type Lead } from '../../lib/supabase';
 import { Check } from 'lucide-react';
@@ -16,7 +16,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else'] as const;
 // Kept in sync with the tiers in Pricing.tsx — same names, same prices, so a visitor
 // picks the same package here that they saw on the pricing section.
-const budgets = ['Essential — £1,499–£3,499', 'Signature — £3,999–£6,999', 'Flagship — Custom'] as const;
+const budgets = ['Essential — £800', 'Signature — £1,600', 'Flagship — Custom'] as const;
 
 type FormData = {
   name: string;
@@ -138,6 +138,18 @@ export default function QuoteForm() {
   const [form, setForm] = useState<FormData>(initForm);
   const [honeypot, setHoneypot] = useState('');
   const [mountedAt] = useState(() => Date.now());
+
+  // The add-ons builder sends its chosen package here so visitors don't retype it.
+  useEffect(() => {
+    const onPrefill = (e: Event) => {
+      const { budget, notes } = (e as CustomEvent<{ budget: string; notes: string }>).detail;
+      setForm(f => ({ ...f, budget, notes: f.notes ? `${f.notes}\n\n${notes}` : notes }));
+    };
+    const pending = (window as unknown as { __mvPrefill?: { budget: string; notes: string } }).__mvPrefill;
+    if (pending) { setForm(f => ({ ...f, ...pending })); delete (window as unknown as { __mvPrefill?: unknown }).__mvPrefill; }
+    window.addEventListener('mv:prefill', onPrefill);
+    return () => window.removeEventListener('mv:prefill', onPrefill);
+  }, []);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});

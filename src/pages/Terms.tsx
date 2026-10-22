@@ -20,8 +20,8 @@ export default function Terms() {
       <h2>Our services</h2>
       <p>We design and build bespoke websites. Our current packages are:</p>
       <ul>
-        <li>Essential — £1,499–£3,499, one-off</li>
-        <li>Signature — £3,999–£6,999, one-off</li>
+        <li>Essential — £800, one-off</li>
+        <li>Signature — £1,600, one-off</li>
         <li>Flagship — scoped and quoted individually on a call</li>
       </ul>
       <p>Exact pricing for your project is confirmed in writing before work begins.</p>
@@ -30,17 +30,17 @@ export default function Terms() {
       <p>
         A £100 deposit secures your project's start date, paid when you approve the quote we give
         you by signing your Project Agreement. It's part of the price, and it's refunded in
-        full if you cancel by the end of day 7. The balance is due when your site is ready to
-        launch, and no later than day 14, so we never take 100% of a project fee upfront. Flagship
-        projects can have payment stages agreed individually. We launch your site once the balance
+        full if you cancel by the end of day 7. The balance is split across the milestones agreed in
+        your Project Agreement, with everything due by the time your site is ready to launch, and
+        no later than day 14, so we never take 100% of a project fee upfront. Flagship payment
+        terms are agreed individually. We launch your site once the balance
         has cleared, and we never charge interest.
       </p>
 
       <h2>Delivery</h2>
       <p>
         Your first draft arrives within 2 working days of receiving your deposit and content, and
-        Essential and Signature sites are ready to launch by day 14. Flagship projects follow the
-        timeframe agreed with you individually. Two rounds of changes are included. If you buy a
+        every site — Essential, Signature and Flagship — is ready to launch by day 14. Two rounds of changes are included. If you buy a
         ready-made site we've already built for you, we make one round of changes and it goes
         live within 3 working days of your balance clearing. Timelines depend on you providing
         content, feedback, and approvals promptly — delays on your side move the dates back.
@@ -74,7 +74,7 @@ export default function Terms() {
 
       <h2>Care plans</h2>
       <p>
-        Ongoing care plans (hosting, updates, and support after launch) are optional and paid
+        Hosting, updates and ongoing support after launch sit under an optional care plan, paid
         monthly by direct debit, with a 3-month minimum term. After that, you can cancel at any
         time by giving us at least 5 working days' notice before your next payment.
       </p>
