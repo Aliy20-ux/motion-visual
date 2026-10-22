@@ -8,40 +8,31 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const projects = [
   {
-    name: 'Trim2Fresh',
-    type: 'Barbershop · Edinburgh',
-    url: 'https://trim2fresh.co.uk',
-    screenshot: '/work/trim2fresh.jpg',
-    bg: '#1A1400',
-    year: '2025',
-    tags: ['Booking System', 'Branding', 'Reviews'],
-  },
-  {
     name: 'Texture Lounge',
     type: 'Beauty & Hair · Edinburgh',
     url: 'https://texturelounge.co.uk',
     screenshot: '/work/texture-lounge.jpg',
     bg: '#1A0F14',
-    year: '2025',
+    year: '2026',
     tags: ['Booking System', 'CMS', 'SEO'],
   },
   {
-    name: 'Thomas J Walls',
-    type: 'Coffee House · Edinburgh',
-    url: 'https://thomas-j-walls.pages.dev',
-    screenshot: '/work/thomas-j-walls.jpg',
-    bg: '#2D1B0E',
-    year: '2025',
-    tags: ['E-commerce', 'Branding', 'Animation'],
+    name: 'Trim2Fresh',
+    type: 'Barbershop · Edinburgh',
+    url: 'https://trim2fresh.co.uk',
+    screenshot: '/work/trim2fresh.jpg',
+    bg: '#1A1400',
+    year: '2026',
+    tags: ['Booking System', 'Branding', 'Reviews'],
   },
   {
-    name: 'CHE Edinburgh',
-    type: 'Hospitality · Edinburgh',
-    url: 'https://che-website-best.pages.dev',
-    screenshot: '/work/che-edinburgh.jpg',
-    bg: '#0D1A0D',
-    year: '2025',
-    tags: ['Restaurant', 'Online Ordering', 'Branding'],
+    name: 'Kell Executive',
+    type: 'Executive Chauffeur · Edinburgh',
+    url: 'https://kellexecutive.com',
+    screenshot: '/work/kell-executive.jpg',
+    bg: '#0B0F14',
+    year: '2026',
+    tags: ['Branding', 'Tour Pages', 'Gallery'],
   },
   {
     name: 'S2 Studio Cuts',
@@ -49,17 +40,8 @@ const projects = [
     url: 'https://s2-studio-cuts.aliy20.workers.dev',
     screenshot: '/work/s2-studio-cuts.jpg',
     bg: '#0A0A14',
-    year: '2025',
+    year: '2026',
     tags: ['Booking', 'Gallery', 'Branding'],
-  },
-  {
-    name: 'Lucky Chen',
-    type: 'Restaurant · Edinburgh',
-    url: 'https://lucky-chen-edinburgh.aliy20.workers.dev',
-    screenshot: '/work/lucky-chen.jpg',
-    bg: '#1A0A00',
-    year: '2025',
-    tags: ['Menu System', 'Ordering', 'SEO'],
   },
 ];
 
@@ -196,7 +178,6 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
           objectPosition: 'top center',
           transition: 'transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           userSelect: 'none',
-          filter: 'brightness(1.35) contrast(1.05) saturate(1.15)',
         }}
         onMouseEnter={isTouch ? undefined : e => (e.currentTarget.style.transform = 'scale(1) translateY(-8%)')}
         onMouseLeave={isTouch ? undefined : e => (e.currentTarget.style.transform = 'scale(1) translateY(0%)')}
@@ -229,11 +210,9 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
           read as a hard box. */}
       <div className="absolute bottom-0 left-0 right-0 z-20 px-7 pb-7 pt-10"
         style={{
-          background: 'rgba(8,8,9,0.72)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          maskImage: 'linear-gradient(to top, black 65%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to top, black 65%, transparent 100%)',
+          // Solid gradient scrim instead of backdrop-filter blur + mask: six blurred, masked
+          // cards over large images were re-composited on every scroll frame.
+          background: 'linear-gradient(to top, rgba(8,8,9,0.94) 0%, rgba(8,8,9,0.88) 62%, rgba(8,8,9,0) 100%)',
         }}>
         <div className="flex items-end justify-between">
           <div>

@@ -1,11 +1,11 @@
 'use client';
 import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const clients = ['Thomas J Walls', 'Texture Lounge', 'CHE Edinburgh', 'S2 Studio', 'Lucky Chen', 'Trim2Fresh'];
+const clients = ['Texture Lounge', 'Trim2Fresh', 'Kell Executive', 'S2 Studio'];
 
 function ClientTicker() {
   const [idx, setIdx] = useState(0);
@@ -29,18 +29,23 @@ function ClientTicker() {
 
 function MagneticCTA({ children, href }: { children: React.ReactNode; href: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  // Motion values + springs instead of React state: the magnetic pull updates on the
+  // compositor-friendly transform path without re-rendering the Hero on every mousemove.
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const x = useSpring(mx, { stiffness: 300, damping: 22 });
+  const y = useSpring(my, { stiffness: 300, damping: 22 });
   const handleMove = (e: React.MouseEvent) => {
     const rect = ref.current!.getBoundingClientRect();
-    setPos({ x: (e.clientX - rect.left - rect.width / 2) * 0.35, y: (e.clientY - rect.top - rect.height / 2) * 0.35 });
+    mx.set((e.clientX - rect.left - rect.width / 2) * 0.35);
+    my.set((e.clientY - rect.top - rect.height / 2) * 0.35);
   };
   return (
     <motion.a ref={ref} href={href} onClick={scrollToHash(href)}
-      animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-      onMouseMove={handleMove} onMouseLeave={() => setPos({ x: 0, y: 0 })}
+      onMouseMove={handleMove} onMouseLeave={() => { mx.set(0); my.set(0); }}
+      whileTap={{ scale: 0.96 }}
       className="gradient-bg inline-flex items-center gap-2 rounded-full font-body font-medium text-sm text-white cursor-pointer"
-      style={{ padding: '15px 30px' }}>
+      style={{ padding: '15px 30px', x, y }}>
       {children}
     </motion.a>
   );
@@ -80,6 +85,21 @@ export default function Hero() {
     }
   };
   useEffect(() => { tryPlay(); }, []);
+
+  // Pause the hero video once it has scrolled out of view (and resume when it returns) —
+  // a full-viewport 1080p loop decoding behind everything else was a constant tax on the
+  // GPU/main thread for the entire rest of the page.
+  useEffect(() => {
+    const v = videoRef.current;
+    const section = sectionRef.current;
+    if (!v || !section) return undefined;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) tryPlay();
+      else if (!v.paused) v.pause();
+    }, { threshold: 0.05 });
+    io.observe(section);
+    return () => io.disconnect();
+  }, []);
 
   // Belt-and-suspenders: on some real devices even an explicit programmatic .play() call
   // gets rejected (Low Power Mode, or a per-site "Never Auto-Play" Safari setting), and the
