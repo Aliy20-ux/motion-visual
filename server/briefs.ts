@@ -1,5 +1,5 @@
 // The customer's first-design brief: validation, the paste-ready Claude prompt and the emails.
-// Pure functions (no I/O). The prompt is a template — nothing is sent to an AI service automatically,
+// Pure functions (no I/O). The prompt is a template — nothing is sent to any outside service automatically,
 // so a person always reviews it first.
 import { COMPANY } from '../src/legal/company';
 import { ADD_ONS, gbp } from '../src/pricing';
@@ -13,7 +13,7 @@ export const BRIEF_FIELDS = [
   { key: 'logoAndColours', label: 'Brand colours and fonts', max: 800 },
   { key: 'pages', label: 'What each page should say or show', max: 4000 },
   { key: 'servicesAndPrices', label: 'Services, products and prices', max: 3000 },
-  { key: 'links', label: 'Social media and other links (logo and photos come from these)', max: 1000 },
+  { key: 'links', label: 'Social media and other links', max: 1000 },
   { key: 'likedSites', label: 'Websites you like', max: 1000 },
   { key: 'dislikes', label: 'Anything you dislike or want to avoid', max: 1000 },
   { key: 'tone', label: 'The feel or tone you want', max: 600 },
@@ -64,7 +64,7 @@ export function claudePrompt(q: BriefQuote, brief: Brief): string {
     '- Never invent business facts, prices, reviews, awards, staff names or client names. Anything missing must appear as a visibly labelled placeholder.',
     '- Mobile-first, accessible, fast. Respect prefers-reduced-motion. Distinctive typography (no generic template look).',
     '- Do not promise search rankings or business results.',
-    '- The logo and photos will be taken from the client\'s social pages listed under the links below. Use clearly labelled image placeholders in the draft.',
+    '- The logo and photos are sourced separately, from the client\'s social pages or Google listing. Use clearly labelled image placeholders in the draft.',
     `- Stack: React + Vite, Tailwind CSS v4, Framer Motion / motion. Scope it to ${pages} page${pages > 1 ? 's' : ''}, nothing more.`,
     '',
     `## Package (${q.reference})`,
@@ -85,7 +85,7 @@ export function teamBriefEmail(q: BriefQuote, brief: Brief): { subject: string; 
     <p style="color:#b00020;"><strong>Don't start the first design until the Project Agreement is signed and the deposit has cleared</strong> (check /studio). The 48-hour target runs from the signed agreement and content.</p>
     ${brief.links
       ? `<p style="color:#666;">Logo and photos: take them from the customer's social links in the brief (they agreed to this on the form).</p>`
-      : `<p style="color:#b00020;"><strong>No social links given</strong> — ask ${escapeHtml(q.customerName)} for their Instagram / Facebook / other pages: the logo and photos come from there.</p>`}
+      : `<p style="color:#666;"><strong>No social links given</strong> — find their socials / Google Business Profile yourself for the logo and photos. Only ask ${escapeHtml(q.customerName)} to send photos if there's nothing usable online.</p>`}
     <p style="color:#666;">Paste this into Claude to get the first-draft build prompt (review it before use):</p>
     <pre style="white-space:pre-wrap;background:#f5f5f5;padding:14px;border-radius:8px;font-size:13px;line-height:1.5;">${escapeHtml(prompt)}</pre>
   </div>`;
@@ -97,9 +97,7 @@ export function customerBriefReceipt(q: BriefQuote, brief: Brief): { subject: st
   const html = `<div style="font-family:-apple-system,sans-serif;max-width:560px;margin:0 auto;line-height:1.6;">
     <p>Hi ${first},</p>
     <p>Thanks — we've received your brief for <strong>${escapeHtml(brief.businessName)}</strong> (quote ${escapeHtml(q.reference)}).</p>
-    ${brief.links
-      ? '<p>We\'ll take your logo and photos from the social pages you shared.</p>'
-      : `<p>We couldn't see any social media links in your brief. Please reply with links to your Instagram, Facebook or other pages so we can pick up your logo and photos, quoting ${escapeHtml(q.reference)}.</p>`}
+    ${brief.links ? '<p>We\'ll take your logo and photos from the social pages you shared.</p>' : ''}
     <p>We'll start your first design once your Project Agreement is signed and we have your content, and we aim to share it within 2 working days of that. If you haven't got your agreement yet, just reply to this email.</p>
     <p style="color:#666;font-size:12px;">${escapeHtml(COMPANY.legalName)} · ${escapeHtml(COMPANY.registeredOffice)}</p>
   </div>`;

@@ -33,7 +33,7 @@ export default function Privacy() {
         generated for you, and when it was issued. If you then complete our brief form, we collect
         what you tell us about your business — such as its name, what it does, its opening hours,
         your branding, page content and the websites you like. We also use the logo and photos
-        from the social media pages you point us to, on your website, with your agreement.
+        from your social media pages and Google listing on your website, with your agreement.
       </p>
       <p>When you review or sign a client agreement we send you, we also record:</p>
       <ul>

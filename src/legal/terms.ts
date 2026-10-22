@@ -126,7 +126,7 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
       blocks: [
         { type: 'p', text: 'Once the price has been paid in full, you own the final designs, content and site code we created specifically for you, and we’ll transfer them to you on request. Until then, they remain ours: we share drafts and designs on preview links only, and you may use them only to review the work.' },
         { type: 'p', text: 'We keep ownership of our own pre-existing tools, code libraries, templates and know-how, and give you a permanent, non-exclusive licence to use them as part of your site. Third-party items, such as fonts, stock imagery, plugins and platforms, are licensed under their own terms.' },
-        { type: 'p', text: 'If we use AI-generated or stock imagery in your project, we’ll tell you, so it’s never presented as your own photography.' },
+        { type: 'p', text: 'If we use stock imagery in your project, we’ll tell you, so it’s never presented as your own photography.' },
         { type: 'p', text: 'We may show the finished work in our portfolio and marketing, unless you ask us in writing not to.' },
       ],
     },

@@ -77,7 +77,7 @@ export function customerQuoteEmail(q: IssuedQuote, briefUrl?: string): { subject
     <tr><td style="color:${C.text};font-size:15px;padding:28px 0 10px;font-family:Georgia,serif;font-style:italic;">What happens next</td></tr>
     <tr><td style="color:${C.muted};font-size:14px;line-height:1.7;">
       1. <strong style="color:${C.text};">Reply to this email</strong> to say you'd like to go ahead. We'll send your Project Agreement to sign, and your deposit is paid when you sign it.<br>
-      2. <strong style="color:${C.text};">Tell us about your business</strong> — ${briefUrl ? `fill in our <a href="${briefUrl}" style="color:${C.text};">short brief form</a> (it takes about 10 minutes) and share your social media pages — we'll take your logo and photos from there.` : 'send us links to your social media pages and tell us about your business — we\'ll take your logo and photos from there.'}<br>
+      2. <strong style="color:${C.text};">Tell us about your business</strong> — ${briefUrl ? `fill in our <a href="${briefUrl}" style="color:${C.text};">short brief form</a> (it takes about 10 minutes) and share your social media pages if you have them — we'll take your logo and photos from there.` : 'tell us about your business and send us links to your social media pages if you have them — we\'ll take your logo and photos from there.'}<br>
       3. <strong style="color:${C.text};">Your first design:</strong> we aim to share it within 2 working days (our 48-hour target) of the day we have your signed agreement and your content, and your site is ready to share by day 14.
     </td></tr>
     <tr><td style="color:${C.muted};font-size:12px;line-height:1.7;padding-top:24px;">
@@ -109,7 +109,7 @@ export function briefText(q: IssuedQuote): string {
     '',
     'Still to collect before the first design can be made (ask the customer):',
     '- Business name, what it does, location and opening hours',
-    '- Social media links (the logo and photos are taken from there) and any brand colours / fonts',
+    '- Social media links, if they have any (otherwise find their socials / Google photos yourself) and any brand colours / fonts',
     '- Text, services and prices for each page',
     '- Two or three websites they like, and anything they dislike',
     '- Any links needed (booking, Deliveroo, social, Google Business Profile)',

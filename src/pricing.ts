@@ -27,6 +27,7 @@ export const ADD_ONS: AddOn[] = [
   { id: 'order-lite', name: 'Interactive order builder (Lite)', blurb: 'Customers build their order or package on your site and send it to you as an enquiry or summary email. No card payment.', price: 250, plans: ['Essential', 'Signature'], includedIn: ['Signature'] },
   { id: 'order-full', name: 'Interactive order builder (full)', blurb: 'A fuller version of the builder, still ending in an enquiry or summary email. No card payment.', price: 400, plans: ['Signature'] },
   { id: 'local-seo', name: 'Local SEO Boost', blurb: 'Local keywords, schema markup and Google Business Profile optimisation, to help nearby customers find you.', price: 250, plans: ['Essential', 'Signature'] },
+  { id: 'ai-chatbox', name: 'AI chatbox', blurb: 'A chat box on your site that answers visitors’ questions about your business — hours, services, prices and FAQs — using the details you give us.', price: 249, plans: ['Essential', 'Signature'] },
   { id: 'gallery', name: 'Gallery with filters', blurb: 'A photo gallery your visitors can filter by category.', price: 75, plans: ['Essential', 'Signature'] },
   { id: 'reviews', name: 'Reviews wall', blurb: 'Your best customer reviews displayed on the site.', price: 75, plans: ['Essential', 'Signature'] },
   { id: 'confirmations', name: 'Email / WhatsApp confirmations', blurb: 'Automatic confirmation messages when someone enquires or books.', price: 100, plans: ['Signature'] },

@@ -19,7 +19,7 @@ The quote is **not a contract**. The customer replies to go ahead, you send a Pr
 The customer's quote email links to `/brief/<private token>`. They describe the business (12 questions, 2 required). On submit (`/api/brief/submit`, one submission per quote):
 - the brief is saved on the quote row,
 - the team gets an email with a **paste-ready prompt** for Claude (`server/briefs.ts`). It contains the business details only, never the customer's email, phone or name, and it tells Claude to use labelled placeholders instead of inventing facts. **Nothing is sent to an AI service automatically**; a person pastes it and reviews the result,
-- the customer gets a receipt. There is no file upload: the logo and photos are taken from the social media links the customer gives in the brief (the form says they agree to this). If they leave the links blank, both emails say so and the team chases them.
+- the customer gets a receipt. There is no file upload: the logo and photos are taken from the social media links the customer gives in the brief, or found by the team from their socials / Google listing if they leave it blank (the form says they agree to this). Only if there is nothing usable online does the team ask the customer for photos, by hand. The customer is never asked for socials or photos automatically.
 
 The team email says: do not start the first design until the agreement is signed and the deposit has cleared.
 
