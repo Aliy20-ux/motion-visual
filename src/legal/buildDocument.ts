@@ -95,7 +95,7 @@ export function buildDocument(input: DocumentInput): AgreementDocument {
     startChoiceRequired,
     startChoices: startChoiceRequired
       ? {
-          now: 'Please start work within my 14-day cancellation period. I understand that if I cancel within those 14 days, I’ll pay for the work done up to that point, and that I’ll lose my right to cancel once the work is fully completed.',
+          now: 'Please start work within my 14-day cancellation period. I understand that if I cancel within those 14 days, I’ll pay only an amount in proportion to the work done up to that point (never more than the price), and that I’ll lose my right to cancel once the work is fully completed.',
           wait: 'Please don’t start work until my 14-day cancellation period has ended.',
         }
       : null,

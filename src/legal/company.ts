@@ -1,9 +1,9 @@
 // Legal identity used on every legal page, agreement and email. Trading
 // disclosures (name, number, place of registration, registered office) are
-// required on a Ltd's website, order forms and emails — keep this the single
+// required on a limited company's website, order forms and emails — keep this the single
 // source so they can't drift apart.
 export const COMPANY = {
-  legalName: 'Motion Visual Studios Ltd',
+  legalName: 'Motion Visual Studios Limited',
   tradingName: 'Motion Visual',
   companyNumber: 'SC895834',
   registeredIn: 'Scotland',

@@ -1,7 +1,7 @@
 export type ClientType = 'business' | 'consumer';
 export type AgreementKind = 'project' | 'change' | 'completion';
 export type AgreementStatus = 'draft' | 'sent' | 'signed' | 'void' | 'expired';
-/** standard: built after the deposit (48h draft / day 7 / day 14). ready-made: already built and shown on a preview link. */
+/** standard: built after signing, ready to share by day 14. ready-made: already built and shown on a preview link. */
 export type Delivery = 'standard' | 'ready-made';
 
 export type Block =

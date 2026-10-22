@@ -192,8 +192,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid rgba(237,232,220,0.05)', padding: '20px clamp(24px,5vw,88px)' }}>
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
               © 2026 {COMPANY.legalName}
+              <span className="block">
+                Registered in {COMPANY.registeredIn}, company no. {COMPANY.companyNumber}. Registered office: {COMPANY.registeredOffice}.
+              </span>
             </span>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
               {legalLinks.map(link => (

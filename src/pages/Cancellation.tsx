@@ -4,17 +4,18 @@ import { cancellationSections, POLICY_UPDATED } from '../legal/policy';
 import { COMPANY, COMPANY_DISCLOSURE } from '../legal/company';
 
 const atAGlance = [
-  'First draft in 48 hours, and a week to decide.',
-  'Cancel by day 7 and your deposit is refunded in full.',
-  'Balance due when your site is ready — by day 14.',
-  'We never charge interest.',
+  'Your 14 days start once we have your signed agreement and your content.',
+  'Consumers can cancel within 14 days of signing for a full refund.',
+  'Business clients: what you owe depends on how far the project has got.',
+  'Balance due within 7 days of us sharing your finished site.',
+  'We never charge interest or late fees.',
 ];
 
 export default function Cancellation() {
   return (
     <LegalLayout
       title="Cancellation & Refund Policy"
-      description="How a Motion Visual project runs and what happens if it’s cancelled — the 7-day decision window, deposit refunds, missed deadlines, late payment and care plans."
+      description="How a Motion Visual project runs and what happens if it’s cancelled — the 14-day consumer right to cancel, cancellation stages, late payment and care plans."
       updated={POLICY_UPDATED}
       prose={false}>
       <section aria-label="At a glance" className="mb-10 p-6 sm:p-8" style={{ border: '1px solid rgba(237,232,220,0.1)', background: 'rgba(237,232,220,0.03)' }}>

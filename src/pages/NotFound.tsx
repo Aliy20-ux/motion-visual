@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { COMPANY } from '../legal/company';
 
-// SPA routing means the CDN always returns the app shell with HTTP 200, even
-// for a dead link — noindex is the only way to tell crawlers this isn't a
-// real page, since we can't change the response status from here.
+// functions/_middleware.ts makes unknown URLs return this app shell with a real
+// HTTP 404. noindex stays as a second signal for crawlers (and covers client-side
+// navigation to a dead link, where no new response is fetched).
 export default function NotFound() {
   useEffect(() => {
     const prevTitle = document.title;

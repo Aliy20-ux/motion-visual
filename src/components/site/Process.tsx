@@ -103,8 +103,7 @@ export default function Process() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0 }}
             transition={{ duration: 0.85, ease }}>
-            Live in 14 days.{' '}
-            <span className="gradient-text">No exceptions.</span>
+            Live in 14 days.
           </motion.h2>
 
           <motion.p
@@ -112,8 +111,9 @@ export default function Process() {
             style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '52ch' }}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.25 }}>
-            A clear four-step process. No scope creep, no missed deadlines.
-            You always know exactly where your project stands.
+            A clear four-step process. No scope creep, and you always know exactly
+            where your project stands. The 14 days start once we have your content
+            and a signed agreement.
           </motion.p>
 
           {/* Average delivery badge */}
@@ -129,7 +129,7 @@ export default function Process() {
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.4 }}>
             <span className="w-2 h-2 rounded-full shrink-0"
               style={{ background: '#C41E1E', boxShadow: '0 0 6px rgba(196,30,30,0.7)' }} />
-            Delivery guarantee:{' '}
+            Delivery:{' '}
             <span className="font-semibold" style={{ color: '#EDE8DC' }}>14 days</span>
           </motion.div>
         </div>

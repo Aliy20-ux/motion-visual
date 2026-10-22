@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import AgreementDocumentView from '../../components/agreement/AgreementDocumentView';
 import { buildDocument, splitLines, TERMS_VERSION } from '../../legal/buildDocument';
-import { formatGBP, KIND_LABEL, parsePounds } from '../../legal/format';
+import { depositPence, formatGBP, KIND_LABEL, parsePounds } from '../../legal/format';
 import type { AgreementDocument, AgreementKind, ClientType, Delivery } from '../../legal/types';
 import type { AgreementRow, CrmClient } from './data';
 import { Button, Label, muted, PageTitle, Select, TextArea, TextInput } from './ui';
@@ -48,8 +48,8 @@ const DEFAULT_EXCLUDED = [
   'Hosting, maintenance and support after the 30-day bug-fix period (available as a care plan)',
 ].join('\n');
 
-const DEFAULT_REVISIONS = 'Two rounds of changes: one combined round on your first draft (which becomes your second draft), and one more during the build.';
-const DEFAULT_TIMELINE = 'First draft within 2 working days of receiving your deposit and content; your decision by the end of day 7; site ready to launch by day 14.';
+const DEFAULT_REVISIONS = 'Two rounds of changes: one combined round on your first design, and one more during the build.';
+const DEFAULT_TIMELINE = 'Site shared with you by day 14, counted from the day we have your signed agreement and your content; balance due within 7 days of us sharing the finished site.';
 const READY_REVISIONS = 'One round of changes to fit the site to your business.';
 const READY_TIMELINE = 'Your changes made within 5 working days of receiving your content; live within 3 working days of your balance clearing.';
 
@@ -106,8 +106,6 @@ function draftFromDocument(doc: AgreementDocument, row?: Pick<AgreementRow, 'cli
     revisions: doc.revisions,
   };
 }
-
-const DEPOSIT_PENCE = 10000;
 
 const todayISO = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 
@@ -263,7 +261,7 @@ export default function AgreementEditor() {
     });
   };
 
-  // Standard terms: £100 deposit on approving the quote (refundable to day 7), balance when ready / day 14.
+  // Standard terms: deposit of about 25% (rounded up to £5) on signing, balance within 7 days of sharing the finished site.
   const ready = draft.kind === 'project' && draft.delivery === 'ready-made';
 
   // Swaps the schedule-dependent defaults, but only where they're still untouched defaults.
@@ -283,16 +281,15 @@ export default function AgreementEditor() {
 
   const standardPayments = () => {
     if (totalPence === null) { setErrors(['Add the total price first.']); return; }
-    if (totalPence <= DEPOSIT_PENCE) { setErrors(['The total must be more than the £100 deposit.']); return; }
+    const deposit = depositPence(totalPence);
+    if (totalPence <= deposit) { setErrors([`The total must be more than the ${formatGBP(deposit)} deposit.`]); return; }
     setDraft(d => ({
       ...d,
       payments: [
-        ready
-          ? { label: 'Deposit', amount: poundsText(DEPOSIT_PENCE), due: 'When you approve your quote — refunded in full if you cancel before we start your changes' }
-          : { label: 'Deposit', amount: poundsText(DEPOSIT_PENCE), due: 'When you approve your quote — refunded in full if you cancel by the end of day 7' },
-        ready
-          ? { label: 'Balance', amount: poundsText(totalPence - DEPOSIT_PENCE), due: 'Within 7 days of us sharing your finished site, before launch' }
-          : { label: 'Balance', amount: poundsText(totalPence - DEPOSIT_PENCE), due: 'When your site is ready to launch, and no later than day 14' },
+        { label: 'Deposit', amount: poundsText(deposit), due: ready
+          ? 'When you sign — refunded in full if you cancel before we start your changes'
+          : 'When you sign — refunded in full if you cancel before we begin work' },
+        { label: 'Balance', amount: poundsText(totalPence - deposit), due: 'Within 7 days of us sharing your finished site, before launch' },
       ],
     }));
   };
@@ -332,7 +329,7 @@ export default function AgreementEditor() {
                     background: draft.delivery === dv ? 'rgba(196,30,30,0.1)' : 'transparent',
                     color: '#EDE8DC',
                   }}>
-                  {dv === 'standard' ? 'Standard build (48h / day 7 / day 14)' : 'Ready-made site'}
+                  {dv === 'standard' ? 'Standard build (14 days)' : 'Ready-made site'}
                 </button>
               ))}
             </div>
@@ -470,7 +467,7 @@ export default function AgreementEditor() {
                 ))}
               </div>
               <div className="flex flex-wrap gap-2">
-                <Button type="button" onClick={standardPayments}>£100 deposit + balance</Button>
+                <Button type="button" onClick={standardPayments}>25% deposit + balance</Button>
                 <Button type="button" onClick={() => setDraft(d => ({ ...d, payments: [...d.payments, { label: '', amount: '', due: '' }] }))}>Add payment</Button>
                 {totalPence !== null && draft.payments.length > 0 && (
                   <span className="font-body text-xs self-center" style={{ color: paymentsSum === totalPence ? '#86EFAC' : '#F87171' }}>

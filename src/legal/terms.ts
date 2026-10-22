@@ -72,11 +72,11 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
       heading: 'Revisions',
       plain: ready
         ? 'One round of changes to fit the site to your business is included. Extra rounds are quoted first.'
-        : 'Two rounds of changes are included: one on your first draft and one during the build. Extra rounds are quoted first.',
+        : 'Two rounds of changes are included: one on your first design and one during the build. Extra rounds are quoted first.',
       blocks: [
         { type: 'p', text: ready
           ? 'Unless the project details say otherwise, your price includes one round of changes to fit the site to your business. A round is one combined set of feedback. Further rounds, or changes to something you’ve already approved, are extra work and handled by Change Request.'
-          : 'Unless the project details say otherwise, your price includes two rounds of changes: one on your first draft, which becomes your second draft, and one more during the build. A round is one combined set of feedback on the work we’ve shared. Further rounds, or changes to something you’ve already approved, are extra work and handled by Change Request.' },
+          : 'Unless the project details say otherwise, your price includes two rounds of changes: one on your first design and one more during the build. A round is one combined set of feedback on the work we’ve shared. Further rounds, or changes to something you’ve already approved, are extra work and handled by Change Request.' },
       ],
     },
     {
@@ -84,13 +84,14 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
       heading: 'Price and payment',
       plain: ready
         ? 'We start your changes once your deposit clears. The balance is due within 7 days of us sharing the finished site, and we go live once it’s paid. We never charge interest.'
-        : 'We start once your deposit clears. The balance is due when your site is ready, by day 14 at the latest, and we go live once it’s paid. We never charge interest.',
+        : 'We start once your deposit clears. The balance is due within 7 days of us sharing your finished site, and we go live once it’s paid. We never charge interest.',
       blocks: [
-        { type: 'p', text: 'The price and payment schedule are shown in the project details. Prices are in pounds sterling.' },
+        { type: 'p', text: 'The price and payment schedule are shown in the project details. Prices are in pounds sterling. The deposit is about 25% of the build price, rounded up to the nearest £5, and it’s part of the price.' },
         { type: 'p', text: ready
           ? 'We start your changes once your deposit has cleared and we have the content we need. The balance is due within 7 days of us sharing the finished site with your changes (or by the date in the project details), and we launch your site within 3 working days of it clearing.'
-          : 'We start work once your deposit has cleared and we have the content we need. The balance is due when your site is ready to launch, or by day 14 (or the date in the project details), whichever comes first. We launch your site or hand over files once the balance has cleared.' },
-        { type: 'p', text: 'We never charge interest. Late payment is covered in the Cancellation & Refund Policy.' },
+          : 'We start work once your deposit has cleared and we have the content we need. The balance is due within 7 days of us sharing your finished site with you (or by the date in the project details). We launch your site or hand over files once the balance has cleared.' },
+        { type: 'p', text: 'Third-party costs — such as booking tools, SMS, stock photos and fonts — are paid by you.' },
+        { type: 'p', text: 'We never charge interest or late fees. If a payment is late, we may pause work, and ownership of the work stays with us until the price has been paid in full. Late payment is covered in the Cancellation & Refund Policy.' },
       ],
     },
     {
@@ -98,11 +99,11 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
       heading: 'Timeline',
       plain: ready
         ? 'Your changes within 5 working days of receiving your content, and live within 3 working days of payment. Our deadlines move back if we’re waiting on you.'
-        : 'First draft in 48 hours, a week to decide, site ready by day 14 — unless the project details set different dates. Our deadlines move back if we’re waiting on you.',
+        : 'Your site is ready to share by day 14, counted from when we have your signed agreement and your content — unless the project details set different dates. Our deadlines move back if we’re waiting on you.',
       blocks: [
         { type: 'p', text: ready
           ? 'For a ready-made site, we finish your changes within 5 working days of receiving your content and launch within 3 working days of your balance clearing, as set out in the Cancellation & Refund Policy, together with what happens if we miss a deadline. If the project details set a different timeline, that timeline applies instead.'
-          : 'Our standard schedule — first draft within 2 working days, your decision by the end of day 7, and your site ready to launch by day 14 — is set out in the Cancellation & Refund Policy, together with what happens if we miss a deadline. If the project details set a different timeline, that timeline applies instead.' },
+          : 'Our standard schedule — your site shared with you by day 14, where day 0 is the day we have your signed agreement and your content — is set out in the Cancellation & Refund Policy, together with what happens if we can’t deliver. If the project details set a different timeline, that timeline applies instead.' },
         { type: 'p', text: 'Our deadlines depend on you providing content, feedback and approvals on time, and delays on your side move them back by the same amount. We’re not responsible for delays caused by things outside our reasonable control, such as third-party outages, illness or extreme events, but we’ll keep you updated and do our best to limit the impact.' },
       ],
     },
@@ -137,7 +138,7 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
         { type: 'p', text: 'Unless the project details say otherwise, we register your domain name through our Cloudflare account with you named as the registrant — the legal holder of the domain — and we manage it for you. The first year, and any fee for transferring an existing domain to us, is included in the price.' },
         { type: 'p', text: 'After the first year, domain renewals are included in your care plan. If you don’t have a care plan, we’ll invoice the renewal at cost before the renewal date. If that invoice isn’t paid, we may let the domain lapse after giving you at least 14 days’ written notice.' },
         { type: 'p', text: 'If you already have a domain with another provider, you’ll give us the access or transfer code we need to move it to our Cloudflare account. Transfers depend on the previous provider, and we’re not responsible for delays they cause. Please tell us about any email or other services that use the domain, so we can keep them working during the move — we can’t be responsible for services we weren’t told about.' },
-        { type: 'p', text: 'If you’d like to manage the domain yourself, or you stop working with us, we’ll transfer it to you within 5 working days of your request, once all invoices are paid.' },
+        { type: 'p', text: 'If you’d like to manage the domain yourself, or you stop working with us, we’ll transfer it to you within 5 working days of your request, once all invoices are paid. If you’d also like us to move your hosting elsewhere, there is a £150 handover fee.' },
         { type: 'p', text: 'You’re responsible for any other third-party subscriptions in your name. Hosting and support after launch are included only if they’re listed in the project details or covered by a care plan.' },
       ],
     },

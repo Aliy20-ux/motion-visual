@@ -10,6 +10,11 @@ export function formatGBP(pence: number): string {
   }).format(pounds);
 }
 
+/** Deposit rule: about 25% of the build price, rounded up to the nearest £5. */
+export function depositPence(totalPence: number): number {
+  return Math.ceil((totalPence * 0.25) / 500) * 500;
+}
+
 /** "£1,200" / "1200.50" / "1,200" → pence, or null if it isn't a positive amount. */
 export function parsePounds(input: string): number | null {
   const cleaned = input.replace(/[£,\s]/g, '');

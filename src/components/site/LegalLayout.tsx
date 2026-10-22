@@ -68,8 +68,11 @@ export default function LegalLayout({ title, description, updated, prose = true,
 
       <footer style={{ borderTop: '1px solid rgba(237,232,220,0.07)', padding: 'clamp(24px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
+          <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
             © 2026 {COMPANY.legalName}
+            <span className="block">
+              Registered in {COMPANY.registeredIn}, company no. {COMPANY.companyNumber}. Registered office: {COMPANY.registeredOffice}.
+            </span>
           </span>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/privacy" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
