@@ -25,10 +25,19 @@ npm run lint      # oxlint
 
 ## Deploy — Cloudflare Pages (not Workers)
 
-`npx wrangler pages deploy dist` (there is no wrangler.jsonc; `functions/`
-holds Pages Functions). Confirm the project name with `npx wrangler pages
-project list` before the first deploy of a session. After deploy, curl the
-live URL and state URL + deployment ID plainly.
+**Two Pages projects exist (checked 2026-10-23).** The live domains
+(motion-visual.com, www) are on **`motion-visual-git`**, which is
+**Git-connected: merging to `main` deploys to production automatically, and
+every pushed branch/PR gets a preview build.** The older direct-upload project
+**`motion-visual`** (motion-visual.pages.dev only, no custom domain) is NOT the
+live site: `npx wrangler pages deploy dist --project-name motion-visual` updates
+only that one. Secrets and build variables (`VITE_*`) for the live site must be
+set on `motion-visual-git` (Settings → Variables and Secrets). `functions/`
+holds Pages Functions; there is no wrangler.jsonc. Confirm with
+`curl https://motion-visual.com/` (compare the `assets/index-*.js` name with the
+project you think is live) before saying anything is deployed. After deploy run
+`node scripts/check-deploy.mjs https://motion-visual.com` and state URL +
+deployment ID plainly.
 
 ## Verification — before any deploy
 

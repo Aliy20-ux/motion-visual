@@ -51,13 +51,14 @@ Quotes and briefs are kept from when they're issued to the end of the financial 
 Do these **in this order**:
 
 1. **Apply the migrations** `20261022120000_add_web_quotes.sql` then `20261022130000_web_quotes_retention.sql` to the motionvisual-admin project (after the agreements migration, which they depend on). Try them on a Supabase branch first. No new secret: it reuses `AGREEMENTS_SERVER_KEY` and its vault hash. Check with `select count(*) from public.web_quotes;`. Until it's applied the form still works (fallback reference, no history, no rate limits, no brief link).
-2. **Turnstile (the bot check):** Cloudflare dashboard → Turnstile → add a widget for `motion-visual.com` (Managed). Then:
-   - set `VITE_TURNSTILE_SITE_KEY` in `.env` (and in the Pages build variables if you build there), rebuild and **deploy the new build first**;
-   - **then** set the secret: `printf %s "$SECRET" | npx wrangler pages secret put TURNSTILE_SECRET_KEY --project-name motion-visual`.
-   Setting the secret before the new build is live makes every form submission fail, because the old site sends no token. With no secret the server skips the check, so the order above is safe.
+2. **Turnstile (the bot check).** The widget exists (hostnames motion-visual.com and www.motion-visual.com; site key `0x4AAAAAAFiWrcBZ3jw6Y6IF`, which is public). The live site is built by Cloudflare from GitHub (project **`motion-visual-git`**), so:
+   - set `VITE_TURNSTILE_SITE_KEY` as a **Production build variable** on `motion-visual-git` *before* the build that contains the quote-automation code runs (the key is baked in at build time);
+   - merge so the new build deploys (merging to `main` deploys automatically);
+   - **then** set the `TURNSTILE_SECRET_KEY` **secret** on `motion-visual-git` (Production).
+   Setting the secret before the new build is live makes every form submission fail, because the old site sends no token. With no secret the server skips the check, so the order above is safe. If the widget can't run (script blocked, a hostname not allowed on the widget such as preview sites, an old browser) the form still records the enquiry in the CRM and just doesn't send an automatic quote.
 3. `RESEND_API_KEY` and `AGREEMENTS_SERVER_KEY` already exist as Pages secrets.
 4. These are test-only and must stay **unset** in production: `RESEND_API_URL`, `SUPABASE_URL_OVERRIDE`, `TURNSTILE_VERIFY_URL`.
-5. Deploy: `npm run build` (needs `.env`), then `npx wrangler pages deploy dist`. The deploy now also ships `functions/_middleware.ts` and `public/_routes.json` (real 404s).
+5. Deploy: **merging to `main` deploys to motion-visual.com automatically** (project `motion-visual-git`, Git-connected); every pushed branch gets a preview build that has no secrets. `npx wrangler pages deploy` only updates the separate `motion-visual` project (pages.dev), not the live domain. The deploy also ships `functions/_middleware.ts` and `public/_routes.json` (real 404s).
 
 ## Prices
 Edit `src/pricing.ts` only; the add-ons builder and the server both read it. Quote email wording is in `server/quotes.ts`.

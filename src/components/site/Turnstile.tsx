@@ -23,8 +23,10 @@ function loadScript(): Promise<void> {
   });
 }
 
-// `onUnavailable` fires when the widget can't load at all (ad blocker, offline): the form then lets the enquiry
-// through to the CRM without a quote, instead of blocking the visitor on a check that never appeared.
+// `onUnavailable` fires when the widget can't run at all — script blocked (ad blocker, offline), a widget error
+// (for example a hostname not allowed on the Turnstile widget, as on preview sites) or an unsupported browser.
+// The form then lets the enquiry through to the CRM without a quote, instead of blocking the visitor on a check
+// that never appeared. A visitor who simply fails the challenge doesn't trigger this.
 export default function Turnstile({ onToken, onUnavailable }: { onToken: (token: string | null) => void; onUnavailable?: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,7 +41,8 @@ export default function Turnstile({ onToken, onUnavailable }: { onToken: (token:
         theme: 'dark',
         callback: (token: string) => onToken(token),
         'expired-callback': () => onToken(null),
-        'error-callback': () => onToken(null),
+        'error-callback': () => { onToken(null); onUnavailable?.(); },
+        'unsupported-callback': () => { onToken(null); onUnavailable?.(); },
       });
     }).catch(() => { onToken(null); onUnavailable?.(); });
     return () => {
