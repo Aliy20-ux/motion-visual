@@ -56,7 +56,7 @@ Do these **in this order**:
    - merge so the new build deploys (merging to `main` deploys automatically);
    - **then** set the `TURNSTILE_SECRET_KEY` **secret** on `motion-visual-git` (Production).
    Setting the secret before the new build is live makes every form submission fail, because the old site sends no token. With no secret the server skips the check, so the order above is safe. If the widget can't run (script blocked, a hostname not allowed on the widget such as preview sites, an old browser) the form still records the enquiry in the CRM and just doesn't send an automatic quote.
-3. `RESEND_API_KEY` and `AGREEMENTS_SERVER_KEY` already exist as Pages secrets.
+3. `RESEND_API_KEY` and `AGREEMENTS_SERVER_KEY` must be Production secrets on **`motion-visual-git`** (the live project). `RESEND_API_KEY` is there; **`AGREEMENTS_SERVER_KEY` is not yet** (it is only on the old `motion-visual` project). The quotes database uses the same key as the agreements system, so until it is added the quote still goes out but with a fallback reference, no history, no rate limits and no brief link.
 4. These are test-only and must stay **unset** in production: `RESEND_API_URL`, `SUPABASE_URL_OVERRIDE`, `TURNSTILE_VERIFY_URL`.
 5. Deploy: **merging to `main` deploys to motion-visual.com automatically** (project `motion-visual-git`, Git-connected); every pushed branch gets a preview build that has no secrets. `npx wrangler pages deploy` only updates the separate `motion-visual` project (pages.dev), not the live domain. The deploy also ships `functions/_middleware.ts` and `public/_routes.json` (real 404s).
 
