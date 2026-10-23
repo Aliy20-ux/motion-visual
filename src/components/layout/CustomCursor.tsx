@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'motion/react';
 
 type Variant = 'default' | 'hover' | 'view' | 'drag' | 'invert';
@@ -33,6 +33,11 @@ export default function CustomCursor() {
   const [variant, setVariant] = useState<Variant>('default');
   const [visible, setVisible] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  // The mousemove handler is registered once, so it can't read `variant`/`visible` from
+  // closure — they'd be frozen at their first values and the ring would stay offset (and
+  // setVisible would fire on every move). Refs keep the live values readable.
+  const variantRef = useRef<Variant>('default');
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     setEnabled(window.matchMedia('(pointer: fine)').matches);
@@ -64,17 +69,26 @@ export default function CustomCursor() {
     };
 
     const move = (e: MouseEvent) => {
-      const r = RING_SIZE[variant] / 2;
+      const r = RING_SIZE[variantRef.current] / 2;
       cursorX.set(e.clientX - r);
       cursorY.set(e.clientY - r);
       dotX.set(e.clientX - 4);
       dotY.set(e.clientY - 4);
-      if (!visible) setVisible(true);
+      if (!visibleRef.current) { visibleRef.current = true; setVisible(true); }
     };
 
-    const onOver = (e: MouseEvent) => setVariant(variantFor(e.target));
-    const onDocLeave = () => setVisible(false);
-    const onDocEnter = () => setVisible(true);
+    const onOver = (e: MouseEvent) => {
+      const next = variantFor(e.target);
+      if (next === variantRef.current) return;
+      variantRef.current = next;
+      setVariant(next);
+      // Re-centre the ring on the pointer straight away when its size changes.
+      const r = RING_SIZE[next] / 2;
+      cursorX.set(e.clientX - r);
+      cursorY.set(e.clientY - r);
+    };
+    const onDocLeave = () => { visibleRef.current = false; setVisible(false); };
+    const onDocEnter = () => { visibleRef.current = true; setVisible(true); };
 
     window.addEventListener('mousemove', move);
     window.addEventListener('mouseover', onOver);
@@ -107,10 +121,9 @@ export default function CustomCursor() {
           border: isLabel
             ? '1.5px solid rgba(196,30,30,0.85)'
             : variant === 'invert'
-            ? '1.5px solid #0A0505'
+            ? '1.5px solid rgba(244,241,236,0.85)'
             : '1.5px solid rgba(244,241,236,0.5)',
           background: isLabel ? 'rgba(196,30,30,0.08)' : 'transparent',
-          mixBlendMode: variant === 'invert' ? 'difference' : 'normal',
         }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -139,8 +152,7 @@ export default function CustomCursor() {
           y: dotY,
           width: 8,
           height: 8,
-          background: variant === 'invert' ? '#0A0505' : '#F4F1EC',
-          mixBlendMode: variant === 'invert' ? 'difference' : 'normal',
+          background: '#F4F1EC',
           opacity: visible ? 1 : 0,
         }}
         animate={{ scale: (isLabel || variant === 'hover') ? 0 : 1 }}

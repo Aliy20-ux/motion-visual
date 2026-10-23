@@ -36,7 +36,10 @@
       {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
+        "@id": "https://motion-visual.com/#organization",
         "name": "Motion Visual",
+        "logo": "https://motion-visual.com/apple-touch-icon.png",
+        "image": "https://motion-visual.com/og-pro.jpg",
         "description": "Edinburgh's premium web design agency. Cinematic, bespoke websites delivered in 14 days.",
         "url": "https://motion-visual.com",
         "email": "admin.team@motion-visual.com",
@@ -48,13 +51,49 @@
         },
         "areaServed": ["Edinburgh", "Scotland", "United Kingdom"],
         "serviceType": ["Web Design", "Web Development", "Branding", "Local SEO"],
-        "priceRange": "£££"
+        "priceRange": "££–£££",
+        "currenciesAccepted": "GBP",
+        "sameAs": [
+          "https://www.instagram.com/motionvisualuk/",
+          "https://www.facebook.com/profile.php?id=61595820924972",
+          "https://www.tiktok.com/@motionvisualuk",
+          "https://www.threads.com/@motionvisualuk"
+        ],
+        "knowsAbout": ["Web design", "Web development", "Website animation", "Local SEO", "E-commerce websites", "Booking systems"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Website design packages",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Essential",
+              "description": "A single fully custom landing page, mobile-first, contact form, 14-day delivery.",
+              "priceCurrency": "GBP",
+              "price": 800
+            },
+            {
+              "@type": "Offer",
+              "name": "Signature",
+              "description": "Up to 5 bespoke pages, cinematic animation, advanced and local SEO, Lite order builder, 14-day delivery.",
+              "priceCurrency": "GBP",
+              "price": 1600
+            },
+            {
+              "@type": "Offer",
+              "name": "Flagship",
+              "description": "Unlimited pages, custom 3D / WebGL experiences and full e-commerce, 14-day delivery or phased if needed, scoped on a call."
+            }
+          ]
+        }
       },
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": "https://motion-visual.com/#website",
         "name": "Motion Visual",
-        "url": "https://motion-visual.com"
+        "url": "https://motion-visual.com",
+        "inLanguage": "en-GB",
+        "publisher": { "@id": "https://motion-visual.com/#organization" }
       },
       {
         "@context": "https://schema.org",
@@ -88,6 +127,7 @@
       }
     ]
     </script>
+    <link rel="dns-prefetch" href="https://ndnapekhhnrbqddfqpdh.supabase.co" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Loaded as a non-blocking preload (swapped to a real stylesheet once fetched) instead of

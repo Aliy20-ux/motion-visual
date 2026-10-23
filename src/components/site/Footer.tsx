@@ -15,6 +15,14 @@ const navLinks = [
   { label: 'Contact', href: '#quote' },
 ];
 
+// Verified live profiles.
+const socialLinks = [
+  { label: 'Instagram', href: 'https://www.instagram.com/motionvisualuk/' },
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61595820924972' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@motionvisualuk' },
+  { label: 'Threads', href: 'https://www.threads.com/@motionvisualuk' },
+];
+
 const legalLinks = [
   { label: 'Privacy', href: '/privacy' },
   { label: 'Terms', href: '/terms' },
@@ -129,7 +137,7 @@ export default function Footer() {
 
         {/* Main footer grid */}
         <div style={{ padding: 'clamp(56px,7vw,96px) clamp(24px,5vw,88px)' }}>
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 md:gap-20">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-12 md:gap-20">
 
             {/* Brand column */}
             <div className="flex flex-col gap-6 max-w-xs">
@@ -162,6 +170,25 @@ export default function Footer() {
                     className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
                     style={{ color: 'rgba(237,232,220,0.5)' }}>
                     {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Social */}
+            <div className="flex flex-col gap-5">
+              <span className="font-body text-[9px] tracking-[0.32em] uppercase"
+                style={{ color: 'rgba(237,232,220,0.5)' }}>
+                Follow
+              </span>
+              <nav aria-label="Social media" className="flex flex-col gap-3">
+                {socialLinks.map(link => (
+                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
+                    aria-label={`Motion Visual on ${link.label} (opens in a new tab)`}
+                    className="group font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit inline-flex items-center gap-1.5"
+                    style={{ color: 'rgba(237,232,220,0.5)' }}>
+                    {link.label}
+                    <ArrowUpRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 ))}
               </nav>

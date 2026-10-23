@@ -5,6 +5,8 @@ import { setLenisInstance } from '../../lib/smoothScroll';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    const bar = document.getElementById('scroll-progress');
+    const setProgress = (p: number) => { if (bar) bar.style.transform = `scaleX(${p})`; };
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
@@ -18,7 +20,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       const updateProgress = () => {
         const doc = document.documentElement;
         const max = doc.scrollHeight - doc.clientHeight;
-        doc.style.setProperty('--scroll-progress', String(max > 0 ? doc.scrollTop / max : 0));
+        setProgress(max > 0 ? doc.scrollTop / max : 0);
         ticking = false;
       };
       const onScroll = () => {
@@ -39,7 +41,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     // Drive the CSS scroll progress bar
     lenis.on('scroll', ({ progress }: { progress: number }) => {
-      document.documentElement.style.setProperty('--scroll-progress', String(progress));
+      setProgress(progress);
     });
 
     let raf: number;
@@ -56,5 +58,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      <div id="scroll-progress" aria-hidden="true" />
+      {children}
+    </>
+  );
 }
