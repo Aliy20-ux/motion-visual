@@ -44,6 +44,8 @@ Quotes and briefs are kept from when they're issued to the end of the financial 
 ## Checking a deploy
 `node scripts/check-deploy.mjs https://motion-visual.com` checks the routes, the real 404s, the JSON error responses and the security headers. It sends no email.
 
+`node scripts/check-widget-stable.mjs https://motion-visual.com` (needs a temporary `npm install --no-save playwright`) types into the quote form like a person and checks the Turnstile widget is created once and keeps its token. It exists because the widget was once rebuilt on every keystroke (a fresh callback function on each render), which automated `fill()`-style tests cannot see. It sends no email.
+
 ## Tests
 `npm test` runs the pricing tests and the quote-request tests (fake Resend, Supabase and Turnstile). The database tests need `npm install --no-save @electric-sql/pglite` and are skipped without it. See `tests/README.md`. The advisory-lock fix for the rate limits is checked for presence, not exercised under real concurrency.
 
