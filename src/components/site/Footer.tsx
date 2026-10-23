@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
 import ShaderBackground from '../ui/shader-background';
+import { COMPANY } from '../../legal/company';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -25,6 +26,7 @@ const socialLinks = [
 const legalLinks = [
   { label: 'Privacy', href: '/privacy' },
   { label: 'Terms', href: '/terms' },
+  { label: 'Cancellation', href: '/cancellation' },
 ];
 
 
@@ -217,10 +219,13 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid rgba(237,232,220,0.05)', padding: '20px clamp(24px,5vw,88px)' }}>
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
-              © 2026 Motion Visual Agency Ltd
+            <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
+              © 2026 {COMPANY.legalName}
+              <span className="block">
+                Registered in {COMPANY.registeredIn}, company no. {COMPANY.companyNumber}. Registered office: {COMPANY.registeredOffice}.
+              </span>
             </span>
-            <div className="flex items-center gap-5">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
               {legalLinks.map(link => (
                 <Link key={link.label} to={link.href}
                   className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"

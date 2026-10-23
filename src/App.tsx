@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion, MotionConfig } from 'motion/react';
 import SmoothScroll from './components/layout/SmoothScroll';
@@ -5,7 +6,13 @@ import CustomCursor from './components/layout/CustomCursor';
 import Home from './pages/Home';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import Cancellation from './pages/Cancellation';
 import NotFound from './pages/NotFound';
+
+// Client signing page and team studio are visited by a handful of people —
+// keep them (and the agreement builder) out of the marketing bundle.
+const AgreementView = lazy(() => import('./pages/AgreementView'));
+const Studio = lazy(() => import('./pages/studio/Studio'));
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -24,6 +31,9 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/cancellation" element={<Cancellation />} />
+          <Route path="/agreement/:token" element={<Suspense fallback={null}><AgreementView /></Suspense>} />
+          <Route path="/studio/*" element={<Suspense fallback={null}><Studio /></Suspense>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

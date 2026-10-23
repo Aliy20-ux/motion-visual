@@ -142,13 +142,6 @@ export default function Nav() {
           {/* CTA + hamburger */}
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-3">
-              {/* Availability indicator */}
-              <span className="font-body text-[9px] tracking-[0.16em] uppercase"
-                style={{ color: 'rgba(196,30,30,0.7)' }}>
-                <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5 align-middle"
-                  style={{ background: '#C41E1E', boxShadow: '0 0 5px rgba(196,30,30,0.6)' }} />
-                2 spots · July
-              </span>
               <MagneticNavCTA
                 href="#quote"
                 onClick={scrollToHash('#quote')}

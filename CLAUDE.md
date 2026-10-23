@@ -39,6 +39,14 @@ test those with `npx wrangler pages dev dist` manually. Playwright is a
 TEMPORARY devDependency per the global rule: install before, remove before
 commit.
 
+## Client agreements (/studio, /agreement/:token, /cancellation)
+
+E-signature flow backed by the CRM's Supabase project — read
+`docs/AGREEMENTS.md` before touching it. Legal wording lives only in
+`src/legal/` (also bundled into `functions/`, so keep it browser-free). The
+client-facing functions need the `AGREEMENTS_SERVER_KEY` Pages secret, and its
+SHA-256 in Supabase Vault — without both, signing returns "not available".
+
 ## TIME_LOG convention
 
 `TIME_LOG.md` gets a real wall-clock entry per work session, logged at session
