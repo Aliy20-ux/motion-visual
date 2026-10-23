@@ -47,7 +47,9 @@ Quotes and briefs are kept from when they're issued to the end of the financial 
 ## Tests
 `npm test` runs the pricing tests and the quote-request tests (fake Resend, Supabase and Turnstile). The database tests need `npm install --no-save @electric-sql/pglite` and are skipped without it. See `tests/README.md`. The advisory-lock fix for the rate limits is checked for presence, not exercised under real concurrency.
 
-## Setting it up (nothing here is deployed or applied yet)
+## Setting it up
+
+Status 2026-10-23: **both migrations are applied to production, and this code is live on motion-visual.com** (PRs #1 and #2 merged). Still to do: the Turnstile secret (step 2 below) and a real test quote. Nothing is scheduled for the retention purge yet.
 Do these **in this order**:
 
 1. **Apply the migrations** `20261022120000_add_web_quotes.sql` then `20261022130000_web_quotes_retention.sql` to the motionvisual-admin project (after the agreements migration, which they depend on). Try them on a Supabase branch first. No new secret: it reuses `AGREEMENTS_SERVER_KEY` and its vault hash. Check with `select count(*) from public.web_quotes;`. Until it's applied the form still works (fallback reference, no history, no rate limits, no brief link).
