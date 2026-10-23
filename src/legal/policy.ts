@@ -30,11 +30,12 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
     ready ? READY_SCHEDULE : {
       id: 'cp-schedule',
       heading: 'How a project runs',
-      plain: 'Your 14 days start once we have your signed agreement and your content. The balance is due within 7 days of us sharing your finished site.',
+      plain: 'Your 14 days start once we have your signed agreement and your content. Your first design follows within 2 working days, and the balance is due within 7 days of us sharing your finished site.',
       blocks: [
         { type: 'table', head: ['When', 'What happens'], rows: [
-          ['Day 0', 'We have your signed Project Agreement and the content on our checklist — logo, text, photos and anything else we’ve asked for. The 14-day clock starts today. You pay your deposit when you sign.'],
-          ['Early in the project', 'We share your first design and then our design direction on a preview link, and you send us one combined set of changes.'],
+          ['Day 0', 'We have your signed Project Agreement and the content we need — your brief, plus anything else we’ve asked for. The 14-day clock starts today. You pay your deposit when you sign.'],
+          ['Within 2 working days', 'We share your first design — the design direction for your site — with you on a preview link. This is our 48-hour target.'],
+          ['Then', 'You send us one combined set of changes on it.'],
           ['During the build', 'We build your site. One more round of changes is included.'],
           ['By day 14', 'We share your finished site with you.'],
           ['Within 7 days of that', 'You pay the balance. We launch your site once it has cleared.'],
@@ -106,13 +107,13 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
         { type: 'p', text: 'What you owe depends on the stage your project has reached, as a percentage of the total build price. Your deposit counts towards the amount, so you only pay the difference.' },
         { type: 'table', head: ['When you cancel', 'What you owe'], rows: [
           ['Before we begin work', 'Nothing. Your deposit is refunded in full.'],
-          ['Work has started, but we haven’t shared your first design', `Your deposit is kept (${DEPOSIT_RULE}). You owe nothing more.`],
-          ['We’ve shared the design direction', '40% of the build price, less your deposit.'],
+          ['Work has started, but we haven’t shared your first design', `Your deposit is kept (${DEPOSIT_RULE}), unless we’ve missed our first-design target — see “If we can’t deliver”. You owe nothing more.`],
+          ['We’ve shared your first design (the design direction)', '40% of the build price, less your deposit.'],
           ['The build is underway', '70% of the build price, less what you’ve paid.'],
           ['We’ve shared your finished site', '100% — the full price is due.'],
           ['We cancel, or we can’t deliver', 'Nothing. Everything you’ve paid is refunded in full.'],
         ] },
-        { type: 'p', text: '“Design direction” means the look and layout we propose for your site, shared on a preview link. “The build is underway” means we’ve started building your pages from that direction.' },
+        { type: 'p', text: 'Your first design is the design direction: the look and layout we propose for your site, shared on a preview link. “The build is underway” means we’ve started building your pages from it.' },
         { type: 'p', text: 'In every case, you also pay for any third-party costs we’ve committed to on your behalf with your agreement — for example a domain name, paid fonts, booking tools, SMS or stock photos — at cost.' },
         { type: 'p', text: 'We share drafts and designs on preview links only. They stay ours until the price is paid in full, so if you cancel we don’t hand over design files, and you may not use or copy our drafts or designs.' },
         { type: 'p', text: 'These amounts reflect the time we reserve for your project — often turning down other work to do so — and the work completed by each stage. They are a fair share of the price for work done and time reserved, not a penalty.' },
@@ -127,6 +128,7 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
       plain: 'If we cancel, or we can’t deliver your site, you get back everything you’ve paid.',
       blocks: [
         { type: 'p', text: 'If we cancel your project for a reason other than those listed under “If we cancel”, or we’re unable to deliver your site, we’ll refund everything you’ve paid us in full, within 14 days.' },
+        { type: 'p', text: 'We aim to share your first design within 2 working days of day 0. If we haven’t shared it by then for a reason within our control, you can cancel before we share it and we’ll refund your deposit in full.' },
         { type: 'p', text: 'Our dates move back when the delay is caused by you — such as late content, feedback or approvals — or by events outside our reasonable control.' },
         ...(consumer ? [{ type: 'p' as const, text: `${audience === 'public' ? 'If you’re a consumer, your' : 'Your'} legal rights apply if we’re late or if our work isn’t carried out with reasonable care and skill, including the right to ask us to put things right or to reduce the price.` }] : []),
       ],
@@ -227,7 +229,7 @@ const READY_SCHEDULE: LegalSection = {
   plain: 'You’ve already seen the site. Sign the agreement, we tailor it to your business, and it goes live within 3 working days of your balance clearing.',
   blocks: [
     { type: 'table', head: ['When', 'What happens'], rows: [
-      ['You sign your agreement', 'You pay your deposit and send us your content — logo, text, photos and anything else on our checklist.'],
+      ['You sign your agreement', 'You pay your deposit and send us your content — your brief and anything else on our checklist.'],
       ['Within 5 working days', 'We make one combined round of changes to fit the site to your business, and share the finished site with you.'],
       ['Within 7 days of that', 'You pay the balance.'],
       ['Within 3 working days of payment', 'Your site goes live.'],

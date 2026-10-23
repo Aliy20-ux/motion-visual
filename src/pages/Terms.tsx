@@ -44,7 +44,9 @@ export default function Terms() {
       <p>
         We aim to have every site — Essential, Signature and Flagship — ready to share by day 14.
         The 14-day clock starts once we have your signed agreement and your content, such as your
-        logo, text and photos. Two rounds of changes are included. If you don't reply to something
+        brief. We aim to share your first design within 2 working days (our
+        48-hour target) of that day; if we haven't by then for a reason within our control, you can
+        cancel before we share it and we'll refund your deposit in full. Two rounds of changes are included. If you don't reply to something
         we've shared within 7 days, it counts as approved, and if we've heard nothing from you for
         14 days while we're waiting on you, the project pauses. Our dates move back when the delay
         is on your side. If you buy a ready-made site we've already built for you, we make one
@@ -61,12 +63,13 @@ export default function Terms() {
 
       <h2>Cancellation</h2>
       <p>
-        If you're a consumer, you have 14 days from signing to cancel for a full refund, and you
-        choose whether we start straight away or wait. If you ask us to start and then cancel
-        within the 14 days, you pay only a fair share for the work done, never more than the price.
+        If you're a consumer, you have 14 days from signing to cancel, and you choose whether we
+        start straight away or wait. If you cancel within the 14 days and haven't asked us to
+        start, you get a full refund. If you did ask us to start, you pay only a fair share for
+        the work done, never more than the price.
         If you're a business, including a sole trader buying for your business, what you owe
         depends on how far the project has got: nothing before we begin, your deposit if work has
-        started, 40% once we've shared the design direction, 70% once the build is underway, and
+        started, 40% once we've shared your first design, 70% once the build is underway, and
         100% once we've shared your finished site, with your deposit counting towards each amount.
         If we cancel or can't deliver, you get a full refund. The full rules are in our{' '}
         <Link to="/cancellation">Cancellation &amp; Refund Policy</Link>, which forms part of every

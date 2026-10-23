@@ -12,6 +12,14 @@ export const FROM = 'Motion Visual <admin.team@motion-visual.com>';
 export interface AgreementEnv {
   RESEND_API_KEY: string;
   AGREEMENTS_SERVER_KEY?: string;
+  /** Test-only override for the Resend endpoint (point it at a local mock). Unset in production. */
+  RESEND_API_URL?: string;
+  /** Test-only override for the Supabase project URL. Unset in production. */
+  SUPABASE_URL_OVERRIDE?: string;
+  /** Cloudflare Turnstile secret. When set, quote requests must carry a valid Turnstile token. */
+  TURNSTILE_SECRET_KEY?: string;
+  /** Test-only override for the Turnstile siteverify endpoint. Unset in production. */
+  TURNSTILE_VERIFY_URL?: string;
 }
 
 export type Ctx = { request: Request; env: AgreementEnv };
@@ -39,23 +47,30 @@ export function userAgent(request: Request): string {
 }
 
 export class RpcError extends Error {
-  constructor(public code: string, public status: number) {
+  code: string;
+  status: number;
+  /** Postgres SQLSTATE when the database rejected the call (class 22 = bad input data, 23 = constraint). */
+  sqlState?: string;
+  constructor(code: string, status: number, sqlState?: string) {
     super(code);
+    this.code = code;
+    this.status = status;
+    this.sqlState = sqlState;
   }
 }
 
 /** Calls an agreement_* RPC as anon, with the server key proving the call came from here. */
 export async function rpc<T>(env: AgreementEnv, fn: string, args: Record<string, unknown>): Promise<T> {
   if (!env.AGREEMENTS_SERVER_KEY) throw new RpcError('not_configured', 503);
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+  const res = await fetch(`${env.SUPABASE_URL_OVERRIDE ?? SUPABASE_URL}/rest/v1/rpc/${fn}`, {
     method: 'POST',
     headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
     body: JSON.stringify({ p_key: env.AGREEMENTS_SERVER_KEY, ...args }),
   });
   if (!res.ok) {
-    const detail = (await res.json().catch(() => null)) as { message?: string } | null;
+    const detail = (await res.json().catch(() => null)) as { message?: string; code?: string } | null;
     const code = detail?.message ?? 'rpc_failed';
-    throw new RpcError(code, res.status === 401 || res.status === 403 ? 503 : 400);
+    throw new RpcError(code, res.status === 401 || res.status === 403 ? 503 : 400, detail?.code);
   }
   return (await res.json()) as T;
 }
@@ -96,20 +111,28 @@ export async function sendEmail(env: AgreementEnv, email: {
   html: string;
   replyTo?: string;
   bcc?: string[];
+  attachments?: { filename: string; content: string }[];
 }): Promise<boolean> {
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: FROM,
-      to: email.to,
-      bcc: email.bcc,
-      reply_to: email.replyTo ?? TEAM_INBOX,
-      subject: email.subject,
-      html: email.html,
-    }),
-  });
-  return res.ok;
+  // A network failure is "not sent", never an exception: callers have usually saved something already
+  // and must still tell the team about it rather than return a 500 that invites a duplicate retry.
+  try {
+    const res = await fetch(env.RESEND_API_URL ?? 'https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: FROM,
+        to: email.to,
+        bcc: email.bcc,
+        reply_to: email.replyTo ?? TEAM_INBOX,
+        subject: email.subject,
+        html: email.html,
+        attachments: email.attachments,
+      }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 /** Client-facing wording for the RPC error codes raised in the migration. */

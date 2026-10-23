@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type Lead } from '../../lib/supabase';
 import { Check } from 'lucide-react';
+import Turnstile from './Turnstile';
+import { TURNSTILE_SITE_KEY } from '../../lib/turnstile';
 
 // Bots that auto-fill every field on a page will fill this too; real visitors never see it
 // (visually hidden, not display:none — some scrapers skip display:none fields specifically).
@@ -17,6 +19,14 @@ const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else']
 // Kept in sync with the tiers in Pricing.tsx — same names, same prices, so a visitor
 // picks the same package here that they saw on the pricing section.
 const budgets = ['Essential — £800', 'Signature — £1,600', 'Flagship — Custom'] as const;
+
+// The package the visitor built in the add-ons section. The server re-prices it from src/pricing.ts.
+type PackageConfig = { plan: string; extraPages: number; addOnIds: string[] };
+
+// Packages picked straight from the dropdown (no builder) are the plain plan, no extras.
+const configFromBudget = (budget: string): PackageConfig => ({ plan: budget.split(' ')[0], extraPages: 0, addOnIds: [] });
+
+type QuoteResult = { mode: 'quote' | 'call'; ref?: string; customerEmailSent?: boolean };
 
 type FormData = {
   name: string;
@@ -138,15 +148,27 @@ export default function QuoteForm() {
   const [form, setForm] = useState<FormData>(initForm);
   const [honeypot, setHoneypot] = useState('');
   const [mountedAt] = useState(() => Date.now());
+  const [config, setConfig] = useState<PackageConfig | null>(null);
+  const [result, setResult] = useState<QuoteResult | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  // A Turnstile token works once. Bumping this remounts the widget after every attempt so a retry gets a fresh one.
+  const [turnstileRun, setTurnstileRun] = useState(0);
+  const [turnstileBlocked, setTurnstileBlocked] = useState(false);
 
   // The add-ons builder sends its chosen package here so visitors don't retype it.
   useEffect(() => {
+    type Prefill = { budget: string; notes: string; config?: PackageConfig };
     const onPrefill = (e: Event) => {
-      const { budget, notes } = (e as CustomEvent<{ budget: string; notes: string }>).detail;
+      const { budget, notes, config: cfg } = (e as CustomEvent<Prefill>).detail;
       setForm(f => ({ ...f, budget, notes: f.notes ? `${f.notes}\n\n${notes}` : notes }));
+      setConfig(cfg ?? null);
     };
-    const pending = (window as unknown as { __mvPrefill?: { budget: string; notes: string } }).__mvPrefill;
-    if (pending) { setForm(f => ({ ...f, ...pending })); delete (window as unknown as { __mvPrefill?: unknown }).__mvPrefill; }
+    const pending = (window as unknown as { __mvPrefill?: Prefill }).__mvPrefill;
+    if (pending) {
+      setForm(f => ({ ...f, budget: pending.budget, notes: pending.notes }));
+      setConfig(pending.config ?? null);
+      delete (window as unknown as { __mvPrefill?: unknown }).__mvPrefill;
+    }
     window.addEventListener('mv:prefill', onPrefill);
     return () => window.removeEventListener('mv:prefill', onPrefill);
   }, []);
@@ -163,7 +185,7 @@ export default function QuoteForm() {
   const validate = (): boolean => {
     const e: Partial<Record<keyof FormData, string>> = {};
     if (!form.name.trim()) e.name = 'Required';
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Invalid email';
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = 'Invalid email';
     if (!form.project_type) e.project_type = 'Select one';
     if (!form.budget) e.budget = 'Select one';
     setErrors(e);
@@ -174,6 +196,10 @@ export default function QuoteForm() {
     e.preventDefault();
     setFormError('');
     if (!validate()) return;
+    if (TURNSTILE_SITE_KEY && !turnstileToken && !turnstileBlocked) {
+      setFormError('Please complete the check above so we know you’re not a bot.');
+      return;
+    }
 
     // Bot-shaped submission: honeypot filled, or the whole form completed faster than a human
     // could. Show the normal success state without touching Supabase or sending an email —
@@ -207,7 +233,8 @@ export default function QuoteForm() {
       supabase.from('leads').insert([payload]).then(({ error: err }) => {
         if (err) throw err;
       }),
-      fetch('/api/send-quote-email', {
+      // Prices the package on the server, emails the visitor their quote and sends us the brief.
+      fetch('/api/quote-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -217,18 +244,28 @@ export default function QuoteForm() {
           project_type: form.project_type,
           budget: form.budget,
           notes: form.notes,
+          ...(config ?? configFromBudget(form.budget)),
+          elapsedMs: Date.now() - mountedAt,
+          turnstileToken,
         }),
-      }).then((res) => {
-        if (!res.ok) throw new Error('Email send failed');
+      }).then(async (res) => {
+        if (!res.ok) throw Object.assign(new Error('Quote request failed'), { status: res.status });
+        return (await res.json()) as QuoteResult;
       }),
     ]);
 
     setLoading(false);
+    setTurnstileToken(null);
+    setTurnstileRun(n => n + 1);
 
+    if (emailResult.status === 'fulfilled') setResult(emailResult.value);
     if (dbResult.status === 'fulfilled' || emailResult.status === 'fulfilled') {
       setSubmitted(true);
     } else {
-      setFormError('Something went wrong. Email us at hello@motionvisual.co.uk');
+      const status = (emailResult.reason as { status?: number } | undefined)?.status;
+      setFormError(status === 429
+        ? 'You’ve requested a few quotes already. Please email us at admin.team@motion-visual.com and we’ll help directly.'
+        : 'Something went wrong. Email us at admin.team@motion-visual.com');
     }
   };
 
@@ -267,8 +304,17 @@ export default function QuoteForm() {
               </h2>
               <p className="font-body font-light text-sm mt-4"
                 style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '38ch', lineHeight: 1.7 }}>
-                Thanks {form.name.split(' ')[0] || 'there'}. One of our founders will reach out at{' '}
-                <span style={{ color: '#EDE8DC' }}>{form.email}</span> within 24 hours.
+                {result?.mode === 'quote' && result.customerEmailSent ? (
+                  <>
+                    Thanks {form.name.split(' ')[0] || 'there'}. Your quote{result.ref ? ` ${result.ref}` : ''} is on its
+                    way to <span style={{ color: '#EDE8DC' }}>{form.email}</span>. If you can't see it, check your junk folder.
+                  </>
+                ) : (
+                  <>
+                    Thanks {form.name.split(' ')[0] || 'there'}. One of our founders will reach out at{' '}
+                    <span style={{ color: '#EDE8DC' }}>{form.email}</span> within 24 hours.
+                  </>
+                )}
               </p>
             </motion.div>
           ) : (
@@ -393,7 +439,7 @@ export default function QuoteForm() {
                     label="Which package?"
                     options={budgets}
                     value={form.budget}
-                    onChange={v => set('budget', v)}
+                    onChange={v => { set('budget', v); setConfig(null); }}
                     error={errors.budget}
                   />
 
@@ -402,6 +448,8 @@ export default function QuoteForm() {
                     <FieldLabel htmlFor="notes" label="Anything to add" optional />
                     <UnderlineTextarea id="notes" value={form.notes} onChange={v => set('notes', v)} />
                   </div>
+
+                  <Turnstile key={turnstileRun} onToken={setTurnstileToken} onUnavailable={() => setTurnstileBlocked(true)} />
 
                   {formError && (
                     <p role="alert" className="text-center font-body text-xs" style={{ color: '#F87171' }}>

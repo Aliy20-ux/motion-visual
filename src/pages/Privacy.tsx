@@ -28,6 +28,13 @@ export default function Privacy() {
         <li>Your selected budget or package range</li>
         <li>Any additional notes you choose to share about your project</li>
       </ul>
+      <p>
+        If you build a package on our website, we also record the package you chose, the quote we
+        generated for you, and when it was issued. If you then complete our brief form, we collect
+        what you tell us about your business — such as its name, what it does, its opening hours,
+        your branding, page content and the websites you like. We also use the logo and photos
+        from your social media pages and Google listing on your website, with your agreement.
+      </p>
       <p>When you review or sign a client agreement we send you, we also record:</p>
       <ul>
         <li>The name you type to sign, and the confirmations you tick</li>
@@ -63,15 +70,23 @@ export default function Privacy() {
       <p>
         Your enquiry is stored securely in our client management system, and a copy is sent by
         email to our team via our email delivery provider, Resend, so we can respond promptly.
-        Access is limited to our team.
+        Quotes and briefs are stored in our database (Supabase), and we email your quote to you
+        through Resend. Access is limited to our team.
       </p>
+      <p>
+        Our website runs on Cloudflare, which may also process technical data such as your IP
+        address to deliver the site and protect it from abuse. If a bot check is shown on our
+        quote form, it is provided by Cloudflare (Turnstile). To limit abuse we store a one-way
+        hash of your IP address, not the address itself, alongside the quote request.
+      </p>
+
 
       <h2>How long we keep it</h2>
       <p>
-        We keep enquiry data for as long as necessary to respond to you and, if you become a
-        client, for the duration of our working relationship and for as long afterwards as
-        required for our accounting and legal obligations. If your enquiry doesn't lead to a
-        project, we'll delete your details after a reasonable period.
+        Quotes and briefs that don't lead to a project are kept from the day they are issued until
+        the end of our financial year, and then deleted. If you become a client, we keep your
+        quote, brief and agreement for as long as our working relationship lasts and for as long
+        afterwards as the law requires — for example, accounting records are kept for six years.
       </p>
 
       <h2>Your rights</h2>

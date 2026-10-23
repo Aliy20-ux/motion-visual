@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound';
 // keep them (and the agreement builder) out of the marketing bundle.
 const AgreementView = lazy(() => import('./pages/AgreementView'));
 const Studio = lazy(() => import('./pages/studio/Studio'));
+const Brief = lazy(() => import('./pages/Brief'));
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/cancellation" element={<Cancellation />} />
           <Route path="/agreement/:token" element={<Suspense fallback={null}><AgreementView /></Suspense>} />
+          <Route path="/brief/:token" element={<Suspense fallback={null}><Brief /></Suspense>} />
           <Route path="/studio/*" element={<Suspense fallback={null}><Studio /></Suspense>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
