@@ -7,11 +7,16 @@
  *
  *   npm install --no-save playwright        (temporary; don't commit it)
  *   node scripts/check-widget-stable.mjs https://motion-visual.com
- *   node scripts/check-widget-stable.mjs http://127.0.0.1:4173     (a build made with VITE_TURNSTILE_SITE_KEY set;
- *                                                                    Cloudflare's test key 1x00000000000000000000AA
- *                                                                    works on any hostname)
+ *   node scripts/check-widget-stable.mjs http://127.0.0.1:4173 --require-token
+ *       (a local build made with VITE_TURNSTILE_SITE_KEY=1x00000000000000000000AA, Cloudflare's test key, which works
+ *        on any hostname and passes by itself)
+ *
+ * PASS means the widget was created once, never lost a token and caused no extra Cloudflare requests. Whether a token
+ * is present at the end is reported but only enforced with --require-token: the live widget is in "managed" mode and
+ * shows a "Verify you are human" checkbox to an automated browser, which this script never clicks.
  */
 const url = process.argv[2];
+const requireToken = process.argv.includes('--require-token');
 if (!/^https?:\/\//.test(url ?? '')) { console.error('usage: node scripts/check-widget-stable.mjs <url>'); process.exit(1); }
 let chromium;
 try { ({ chromium } = await import('playwright')); } catch { console.error('playwright is not installed: npm install --no-save playwright'); process.exit(1); }
@@ -48,6 +53,8 @@ await browser.close();
 
 const extra = challengeRequests - before;
 console.log(`widget instances while typing: ${ids.size} | token lost: ${tokenDrops} times | extra Cloudflare challenge requests: ${extra} | token at the end: ${last.hasToken}`);
-const ok = ids.size === 1 && tokenDrops === 0 && extra === 0 && last.hasToken;
-console.log(ok ? 'PASS: the widget is stable' : 'FAIL: the widget is being rebuilt while typing (see src/components/site/Turnstile.tsx)');
-process.exit(ok ? 0 : 1);
+const stable = ids.size === 1 && tokenDrops === 0 && extra === 0;
+if (!stable) console.log('FAIL: the widget is being rebuilt while typing (see src/components/site/Turnstile.tsx)');
+else if (!last.hasToken && requireToken) console.log('FAIL: the widget is stable but never produced a token (expected one with Cloudflare\'s test key)');
+else console.log(`PASS: the widget is stable${last.hasToken ? '' : ' (no token yet: normal for the live managed widget, which waits for a click on "Verify you are human")'}`);
+process.exit(stable && (last.hasToken || !requireToken) ? 0 : 1);
