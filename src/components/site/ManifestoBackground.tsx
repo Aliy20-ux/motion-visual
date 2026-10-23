@@ -122,12 +122,15 @@ export default function ManifestoBackground() {
         const [x, y] = bezierPoint(pts, i / steps);
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = `rgba(${c.glow},${opacity * 0.35})`;
-      ctx.lineWidth = curve.width + curve.glow;
+      // Layered translucent strokes fake the soft bloom that shadowBlur used to draw —
+      // visually near-identical, but no per-frame Gaussian blur pass.
       if (!isMobile) {
-        ctx.shadowColor = `rgba(${c.glow},${opacity * 0.6})`;
-        ctx.shadowBlur = curve.glow * 2;
+        ctx.strokeStyle = `rgba(${c.glow},${opacity * 0.12})`;
+        ctx.lineWidth = curve.width + curve.glow * 2.2;
+        ctx.stroke();
       }
+      ctx.strokeStyle = `rgba(${c.glow},${opacity * 0.3})`;
+      ctx.lineWidth = curve.width + curve.glow;
       ctx.stroke();
 
       // Bright core pass
@@ -136,7 +139,6 @@ export default function ManifestoBackground() {
         const [x, y] = bezierPoint(pts, i / steps);
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
-      ctx.shadowBlur = 0;
       ctx.strokeStyle = `rgba(${c.core},${opacity * 0.85})`;
       ctx.lineWidth = curve.width;
       ctx.stroke();
@@ -155,13 +157,29 @@ export default function ManifestoBackground() {
       }
     }
 
-    let raf: number;
+    // Draw only while the section is on screen and the tab is visible, at a capped frame
+    // rate — thin glowing lines don't need 120Hz, and an always-running canvas competes with
+    // Lenis and the hero video for the main thread the whole way down the page.
+    let raf = 0;
+    let onScreen = false;
+    let lastFrame = 0;
+    const FRAME_MS = 1000 / (isMobile ? 30 : 48);
     function render(time: number) {
-      ctx!.clearRect(0, 0, width, height);
+      raf = 0;
+      if (!onScreen || document.hidden) return;
+      raf = requestAnimationFrame(render);
+      if (time - lastFrame < FRAME_MS) return;
+      lastFrame = time;
+      ctx.clearRect(0, 0, width, height);
       drawParticles(ctx, time);
       for (const curve of activeCurves) drawCurve(ctx, curve, time, isMobile);
-      raf = requestAnimationFrame(render);
     }
+    const kick = () => { if (!raf && onScreen && !document.hidden) raf = requestAnimationFrame(render); };
+    const observer = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen) kick();
+    }, { rootMargin: '120px' });
+    document.addEventListener('visibilitychange', kick);
 
     if (prefersReducedMotion) {
       // Single still frame — every curve fully drawn, no motion, particles at rest.
@@ -169,11 +187,13 @@ export default function ManifestoBackground() {
       drawParticles(ctx, 0);
       for (const curve of activeCurves) drawCurve(ctx, { ...curve, offset: 0.3 }, 4000, isMobile);
     } else {
-      raf = requestAnimationFrame(render);
+      observer.observe(canvas);
     }
 
     return () => {
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', kick);
+      observer.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);

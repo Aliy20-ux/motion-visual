@@ -5,12 +5,10 @@ import { useIsTouch } from '../../hooks/useIsTouch';
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const clients = [
-  { name: 'Thomas J Walls', industry: 'Coffee House', location: 'Edinburgh Old Town' },
   { name: 'Texture Lounge', industry: 'Beauty & Hair', location: 'Edinburgh West End' },
-  { name: 'CHE Edinburgh', industry: 'Hospitality', location: 'Edinburgh City Centre' },
-  { name: 'S2 Studio Cuts', industry: 'Barbershop', location: 'Edinburgh North' },
-  { name: 'Lucky Chen', industry: 'Restaurant', location: 'Edinburgh South Side' },
   { name: 'Trim2Fresh', industry: 'Barbershop', location: 'Edinburgh Leith' },
+  { name: 'Kell Executive', industry: 'Executive Chauffeur', location: 'Edinburgh' },
+  { name: 'S2 Studio Cuts', industry: 'Barbershop', location: 'Edinburgh North' },
 ];
 
 export default function Clients() {
@@ -40,12 +38,12 @@ export default function Clients() {
           </div>
           <span className="font-body text-[10px] tracking-[0.18em] uppercase hidden md:block"
             style={{ color: 'rgba(237,232,220,0.5)' }}>
-            6 live projects
+            4 live projects
           </span>
         </motion.div>
 
         {/* Client grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px"
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px"
           style={{ background: 'rgba(237,232,220,0.06)' }}>
           {clients.map((client, i) => (
             <motion.div

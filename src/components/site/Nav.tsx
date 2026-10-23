@@ -97,16 +97,13 @@ export default function Nav() {
           className="flex items-center justify-between px-5 md:px-6 rounded-2xl"
           style={{
             height: 58,
-            backdropFilter: 'blur(14px)',
-            WebkitBackdropFilter: 'blur(14px)',
-            willChange: 'backdrop-filter',
           }}
           initial={{
-            background: 'rgba(10,10,11,0.74)',
+            background: 'rgba(10,10,11,0.86)',
             border: '1px solid rgba(244,241,236,0.06)',
           }}
           animate={{
-            background: scrolled ? 'rgba(10,10,11,0.92)' : 'rgba(10,10,11,0.74)',
+            background: scrolled ? 'rgba(10,10,11,0.94)' : 'rgba(10,10,11,0.86)',
             border: scrolled
               ? '1px solid rgba(244,241,236,0.12)'
               : '1px solid rgba(244,241,236,0.06)',
