@@ -27,29 +27,39 @@ function loadScript(): Promise<void> {
 // (for example a hostname not allowed on the Turnstile widget, as on preview sites) or an unsupported browser.
 // The form then lets the enquiry through to the CRM without a quote, instead of blocking the visitor on a check
 // that never appeared. A visitor who simply fails the challenge doesn't trigger this.
+//
+// The widget is created ONCE per mount. The callbacks are read through refs, so a parent that passes a fresh
+// function on every render (every keystroke in the form) does not tear the widget down and rebuild it — which
+// would restart the challenge each time, flood Cloudflare, and drop the token the visitor already earned.
+// To get a fresh widget (a token works once), the parent remounts this component with a new `key`.
 export default function Turnstile({ onToken, onUnavailable }: { onToken: (token: string | null) => void; onUnavailable?: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
+  const onTokenRef = useRef(onToken);
+  const onUnavailableRef = useRef(onUnavailable);
+  onTokenRef.current = onToken;
+  onUnavailableRef.current = onUnavailable;
 
   useEffect(() => {
     if (!TURNSTILE_SITE_KEY) return;
     let widgetId: string | null = null;
     let cancelled = false;
+    const unavailable = () => { onTokenRef.current(null); onUnavailableRef.current?.(); };
     loadScript().then(() => {
       if (cancelled || !ref.current || !window.turnstile) return;
       widgetId = window.turnstile.render(ref.current, {
         sitekey: TURNSTILE_SITE_KEY,
         theme: 'dark',
-        callback: (token: string) => onToken(token),
-        'expired-callback': () => onToken(null),
-        'error-callback': () => { onToken(null); onUnavailable?.(); },
-        'unsupported-callback': () => { onToken(null); onUnavailable?.(); },
+        callback: (token: string) => onTokenRef.current(token),
+        'expired-callback': () => onTokenRef.current(null),
+        'error-callback': unavailable,
+        'unsupported-callback': unavailable,
       });
-    }).catch(() => { onToken(null); onUnavailable?.(); });
+    }).catch(unavailable);
     return () => {
       cancelled = true;
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId);
     };
-  }, [onToken, onUnavailable]);
+  }, []);
 
   if (!TURNSTILE_SITE_KEY) return null;
   return <div ref={ref} className="flex justify-center" style={{ minHeight: 65 }} />;
