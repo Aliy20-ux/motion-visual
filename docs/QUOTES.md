@@ -33,9 +33,9 @@ In `/studio/quotes`, open a quote and press **Create agreement from this quote**
 
 ## Retention
 Quotes and briefs are kept from when they're issued to the end of the financial year, then deleted **if they never became a client** (status issued / declined / lapsed). Quotes that were accepted, had an agreement sent, or were signed are kept (contract records). Invoices are separate accounting records, kept six years.
-- Migration `20261022130000_web_quotes_retention.sql` adds `web_quotes_purge(month, day, dry_run)`. It is a **dry run by default** and returns how many rows it would delete. Run for real with `select public.web_quotes_purge(4, 5, false);`. Each real run writes one count-only row to `web_quote_retention_log`.
-- `4, 5` (5 April) is a placeholder: use your company's accounting reference date.
-- Nothing is scheduled automatically. To run it monthly with pg_cron (enable the extension in Supabase first): `select cron.schedule('web-quotes-retention', '0 3 1 * *', $$select public.web_quotes_purge(4, 5, false)$$);` Replace 4, 5 with the real year end.
+- Migration `20261022130000_web_quotes_retention.sql` adds `web_quotes_purge(month, day, dry_run)`. It is a **dry run by default** and returns how many rows it would delete. Run for real with `select public.web_quotes_purge(7, 31, false);` (the defaults are already 7 and 31). Each real run writes one count-only row to `web_quote_retention_log`.
+- The year-end is **31 July** (7, 31): Companies House shows MOTION VISUAL STUDIOS LTD (SC895834) incorporated 13 July 2026 with first accounts made up to 31 July 2027. So a quote issued any time up to 31 July 2027 is kept until then; one issued from 1 August 2027 is kept until 31 July 2028. If the accounting reference date ever changes, pass the new month and day.
+- Nothing is scheduled automatically. To run it monthly with pg_cron (enable the extension in Supabase first): `select cron.schedule('web-quotes-retention', '0 3 1 * *', $$select public.web_quotes_purge(7, 31, false)$$);`
 - The CRM `leads` table is **not** covered.
 
 ## Rolling back
@@ -69,7 +69,7 @@ Edit `src/pricing.ts` only; the add-ons builder and the server both read it. Quo
 
 ## Abuse protection
 - Turnstile (bot check) and the per-email / per-IP limits in the database protect the quote path.
-- The **scoping-call path** (Flagship, shop, e-commerce) has no database limit. Add a Cloudflare rate-limiting rule on `/api/quote-request` and `/api/brief/*` (see docs/LAUNCH-CHECKLIST.md).
+- The **scoping-call path** (Flagship, shop, e-commerce) has no database limit. Add a Cloudflare rate-limiting rule (exact values in docs/LAUNCH-CHECKLIST.md). It only covers traffic through motion-visual.com: requests sent straight to the `*.pages.dev` address skip your zone's rules, so Turnstile and the database limits are the real protection and the rule is a second layer.
 - Turnstile **fails open** when `TURNSTILE_SECRET_KEY` is unset (so the form works before it's set up). A mistyped secret name silently turns the check off: confirm with a test request after setting it.
 
 ## Known limits

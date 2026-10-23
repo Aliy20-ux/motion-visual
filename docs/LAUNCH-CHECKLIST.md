@@ -6,14 +6,14 @@ blank in it. Tick items off here when they're done. (Last updated 2026-10-22.)
 
 ## 1. Before merging
 - [ ] **Merge order.** Production already runs the agreements system (live since 18 Oct), but its commit (`64f42fc`) is not in `main`: it is only on the PR #1 branch. Until PR #1 merges, **do not deploy from `main`** (it would remove the agreements system). Order: merge `origin/main` into the branch (currently clean) → PR #1 → `quote-automation`.
-- [ ] PR #1's description still describes the old £100-deposit version: update it.
+- [x] PR #1's description was out of date (old £100-deposit version): updated 2026-10-23.
 - [ ] Solicitor review of `src/legal/*`, `Terms.tsx`, `Cancellation.tsx`, `Privacy.tsx`: deposit forfeiture and the staged fees for consumers after their 14 days (Consumer Rights Act fairness), the "no interest" position for business clients (Late Payment of Commercial Debts (Interest) Act 1998), the 48-hour-target refund remedy, and the Privacy Policy (it no longer mentions that brief details may be processed by an outside AI tool — your decision, but UK data protection normally expects processors to be named).
 - [ ] Day-0 wording: the 14-day clock starts at signed agreement + brief; the Terms and team email also say work starts once the deposit has cleared. With a bank transfer the clock can run before the deposit lands. Decide if that matters.
 
 ## 2. Setting it up (in this order — see docs/QUOTES.md)
 - [ ] Apply `20261022120000_add_web_quotes.sql` then `20261022130000_web_quotes_retention.sql` to **a Supabase branch first**, check the security advisor, then to motionvisual-admin. Rollbacks: `supabase/rollbacks/`.
 - [ ] Turnstile: create the widget, build with `VITE_TURNSTILE_SITE_KEY`, deploy, **then** set the `TURNSTILE_SECRET_KEY` secret.
-- [ ] Cloudflare **rate-limiting rule** on `/api/quote-request` and `/api/brief/*` (e.g. 10 requests per 10 seconds per IP). The scoping-call path (Flagship / shop / e-commerce) has no database limit, so this rule and Turnstile are its only protection.
+- [ ] Cloudflare **rate-limiting rule** (needs your Cloudflare login; free plan limits vary, so check them). Security → WAF → Rate limiting rules → Create rule. **If:** `http.request.method eq "POST" and starts_with(http.request.uri.path, "/api/")` (one rule covering the quote, brief and agreement endpoints). **Same IP**, **5 requests per 10 seconds**, action **Block**. Also turn on Bot Fight Mode (Security → Bots). Test: `for i in $(seq 1 12); do curl -s -o /dev/null -w '%{http_code} ' -X POST https://motion-visual.com/api/quote-request -d '{}'; done` should show 400s then 429s (these test requests are invalid, so no email is sent). **Caveat:** it protects motion-visual.com only; the `*.pages.dev` address bypasses zone rules. The scoping-call path (Flagship / shop / e-commerce) has no database limit, so Turnstile is its real protection and this rule is a second layer.
 - [ ] Send one **real** quote to your own inbox. Check it isn't in spam, the logo loads (it is served from motion-visual.com), and the brief link works. Make sure SPF, DKIM and DMARC are set for motion-visual.com in Resend. Nothing has been tested against the real Resend or Supabase: only fakes.
 - [ ] After every deploy: `node scripts/check-deploy.mjs https://motion-visual.com` (sends no email).
 - [ ] Add a Resend dashboard check or alert: if sending fails the customer sees an error and nobody is told.
@@ -24,7 +24,7 @@ blank in it. Tick items off here when they're done. (Last updated 2026-10-22.)
 - [ ] ICO data protection fee, and professional indemnity / liability insurance.
 
 ## 4. Data and records
-- [ ] **Retention rule** (owner decision 2026-10-22): quotes and briefs are kept from issue to the end of the financial year, then deleted if they never became a client. Confirm the **accounting reference date** — the default in `web_quotes_purge` is 5 April (UK tax year end), a placeholder. Then schedule it (docs/QUOTES.md).
+- [x] **Retention rule** (owner decision 2026-10-22): quotes and briefs are kept from issue to the end of the financial year, then deleted if they never became a client. **Year-end confirmed from Companies House: 31 July** (incorporated 13 July 2026; first accounts to 31 July 2027); it is the default in `web_quotes_purge`. Still to do: apply the migration, then schedule the purge (docs/QUOTES.md).
 - [ ] **CRM leads are not covered.** The quote form also writes a lead into the CRM `leads` table; the purge doesn't touch it. Apply the same rule there, or the Privacy Policy's retention wording won't be true for those copies.
 - [ ] Invoices are accounting records: keep them six years (they live in `~/Documents/motion-visual-records/invoices`, outside the retention rule).
 - [ ] MV-1008 (Texture Lounge): its printed date (15 July 2026) is earlier than the deposit (11 Aug) and care plan (Sept) it mentions. Confirm the real issue date.

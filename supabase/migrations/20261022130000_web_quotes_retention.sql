@@ -5,9 +5,10 @@
 -- the law require (accounting records: six years). Only issued / declined / lapsed quotes are purged.
 --
 -- web_quotes_purge() defaults to a DRY RUN and returns how many rows it WOULD delete. Delete for real with
---   select public.web_quotes_purge(4, 5, false);
--- The financial year end is passed as month + day. 4 / 5 (5 April, the UK tax year end) is a placeholder:
--- use your company's accounting reference date. Nothing is scheduled by this migration; see docs/QUOTES.md.
+--   select public.web_quotes_purge(7, 31, false);
+-- The financial year end is passed as month + day and defaults to 7 / 31 (31 July): the company's accounting
+-- reference date (Companies House, MOTION VISUAL STUDIOS LTD SC895834: incorporated 13 July 2026, first accounts
+-- made up to 31 July 2027). Nothing is scheduled by this migration; see docs/QUOTES.md.
 
 create table public.web_quote_retention_log (
   id uuid primary key default gen_random_uuid(),
@@ -37,7 +38,7 @@ as $$
   end;
 $$;
 
-create or replace function public.web_quotes_purge(p_month integer default 4, p_day integer default 5, p_dry_run boolean default true)
+create or replace function public.web_quotes_purge(p_month integer default 7, p_day integer default 31, p_dry_run boolean default true)
 returns integer
 language plpgsql
 security definer

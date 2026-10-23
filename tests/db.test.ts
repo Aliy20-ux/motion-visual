@@ -119,13 +119,17 @@ describe('retention', { skip }, () => {
   let db: any;
   before(async () => { db = await freshDb(); await db.exec(file('migrations', UP_QUOTES)); await db.exec(file('migrations', UP_RETENTION)); });
 
-  const fy = async (issued: string, m = 4, d = 5) => (await db.query(`select to_char(public.web_quote_financial_year_end($1::date,$2,$3), 'YYYY-MM-DD') as d`, [issued, m, d])).rows[0].d;
+  const fy = async (issued: string, m = 7, d = 31) => (await db.query(`select to_char(public.web_quote_financial_year_end($1::date,$2,$3), 'YYYY-MM-DD') as d`, [issued, m, d])).rows[0].d;
 
   test('the financial year end is the first year-end on or after the day the quote was issued', async () => {
-    assert.equal(await fy('2026-04-05'), '2026-04-05', 'issued on the last day of the year');
-    assert.equal(await fy('2026-04-06'), '2027-04-05', 'issued the day after');
-    assert.equal(await fy('2026-01-01'), '2026-04-05');
-    assert.equal(await fy('2026-12-31'), '2027-04-05');
+    // The company's real year-end: 31 July (incorporated 13 July 2026; first accounts to 31 July 2027).
+    assert.equal(await fy('2026-07-13'), '2026-07-31', 'issued on incorporation day');
+    assert.equal(await fy('2026-07-31'), '2026-07-31', 'issued on the last day of the year');
+    assert.equal(await fy('2026-08-01'), '2027-07-31', 'issued the day after');
+    assert.equal(await fy('2027-01-15'), '2027-07-31');
+    assert.equal(await fy('2027-08-01'), '2028-07-31', 'second financial year');
+    // The function works for any year-end.
+    assert.equal(await fy('2026-04-06', 4, 5), '2027-04-05');
     assert.equal(await fy('2026-12-31', 12, 31), '2026-12-31');
   });
 
@@ -155,19 +159,19 @@ describe('retention', { skip }, () => {
     const [m, d] = (await db.query(`select extract(month from current_date)::int as m, extract(day from current_date)::int as d`)).rows.map((r: { m: number; d: number }) => [r.m, r.d])[0];
     assert.equal((await db.query(`select public.web_quotes_purge($1,$2,true) as n`, [m, d])).rows[0].n, 3);
 
-    assert.equal((await db.query(`select public.web_quotes_purge(4,5,false) as n`)).rows[0].n, 3, 'real run reports what it deleted');
+    assert.equal((await db.query(`select public.web_quotes_purge(7,31,false) as n`)).rows[0].n, 3, 'real run reports what it deleted');
     const left = (await db.query('select reference from public.web_quotes order by reference')).rows.map((r: { reference: string }) => r.reference);
     assert.deepEqual(left.sort(), [refs.oldAccepted, refs.oldAgreementSent, refs.oldSigned, refs.currentYear].sort(), 'converted and current quotes are kept');
 
     const log = (await db.query('select fy_end_month, fy_end_day, deleted from public.web_quote_retention_log')).rows;
-    assert.deepEqual(log, [{ fy_end_month: 4, fy_end_day: 5, deleted: 3 }], 'one log row with counts only');
-    assert.equal((await db.query(`select public.web_quotes_purge(4,5,false) as n`)).rows[0].n, 0, 'idempotent');
+    assert.deepEqual(log, [{ fy_end_month: 7, fy_end_day: 31, deleted: 3 }], 'one log row with counts only');
+    assert.equal((await db.query(`select public.web_quotes_purge(7,31,false) as n`)).rows[0].n, 0, 'idempotent');
   });
 
   test('the purge and the log are not reachable from the API roles', async () => {
     for (const role of ['anon', 'authenticated']) {
       await db.exec(`reset role; set role ${role}`);
-      assert.match((await fails(() => db.query('select public.web_quotes_purge(4,5,false)')))?.message ?? '', /permission denied/, role);
+      assert.match((await fails(() => db.query('select public.web_quotes_purge(7,31,false)')))?.message ?? '', /permission denied/, role);
     }
     await db.exec('reset role; set role anon');
     assert.match((await fails(() => db.query('select * from public.web_quote_retention_log')))?.message ?? '', /permission denied/);
