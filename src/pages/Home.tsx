@@ -6,6 +6,7 @@ import Clients from '../components/site/Clients';
 import Manifesto from '../components/site/Manifesto';
 import WhyUs from '../components/site/WhyUs';
 import SelectedWork from '../components/site/SelectedWork';
+import Testimonials from '../components/site/Testimonials';
 import About from '../components/site/About';
 import Process from '../components/site/Process';
 import Pricing from '../components/site/Pricing';
@@ -29,6 +30,7 @@ export default function Home() {
         <Manifesto />
         <WhyUs />
         <SelectedWork />
+        <Testimonials />
         <About />
         <Process />
         <Pricing />

@@ -14,6 +14,7 @@ import NotFound from './pages/NotFound';
 const AgreementView = lazy(() => import('./pages/AgreementView'));
 const Studio = lazy(() => import('./pages/studio/Studio'));
 const Brief = lazy(() => import('./pages/Brief'));
+const Review = lazy(() => import('./pages/Review'));
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/cancellation" element={<Cancellation />} />
           <Route path="/agreement/:token" element={<Suspense fallback={null}><AgreementView /></Suspense>} />
           <Route path="/brief/:token" element={<Suspense fallback={null}><Brief /></Suspense>} />
+          <Route path="/review/:token" element={<Suspense fallback={null}><Review /></Suspense>} />
           <Route path="/studio/*" element={<Suspense fallback={null}><Studio /></Suspense>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
