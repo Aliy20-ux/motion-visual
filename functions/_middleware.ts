@@ -4,7 +4,7 @@
 // Keep the route list below in sync with <Routes> in src/App.tsx. API functions answer with JSON,
 // so only an HTML response (no function matched, SPA shell served instead) is turned into a 404.
 const EXACT_ROUTES = new Set(['/', '/privacy', '/terms', '/cancellation', '/studio']);
-const ROUTE_PREFIXES = ['/studio/', '/agreement/', '/brief/', '/review/'];
+const ROUTE_PREFIXES = ['/studio/', '/agreement/', '/brief/', '/review/', '/project/'];
 
 export const onRequest = async ({ request, next }: { request: Request; next: () => Promise<Response> }): Promise<Response> => {
   const response = await next();

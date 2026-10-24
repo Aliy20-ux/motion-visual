@@ -4,5 +4,6 @@ Disallow: /studio
 Disallow: /agreement/
 Disallow: /brief/
 Disallow: /review/
+Disallow: /project/
 
 Sitemap: https://motion-visual.com/sitemap.xml
