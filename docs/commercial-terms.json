@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "2026-10-24.3",
+  "version": "2026-10-25.1",
   "updated": "October 2026",
   "company": {
     "legalName": "Motion Visual Studios Limited",
@@ -69,7 +69,7 @@
       "id": "ai-chatbox",
       "name": "AI chatbox",
       "blurb": "A chat box on your site that answers visitors’ questions about your business — hours, services, prices and FAQs — using the details you give us.",
-      "price": 249,
+      "price": 250,
       "plans": [
         "Essential",
         "Signature"
@@ -116,7 +116,7 @@
       "id": "booking",
       "name": "Booking",
       "blurb": "Let customers book appointments or tables straight from your site.",
-      "price": 200,
+      "price": 500,
       "plans": [
         "Signature"
       ],

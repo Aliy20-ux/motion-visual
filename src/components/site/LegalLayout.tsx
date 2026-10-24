@@ -84,8 +84,8 @@ export default function LegalLayout({ title, description, updated, prose = true,
             <Link to="/cancellation" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
               Cancellation
             </Link>
-            <a href="mailto:admin.team@motion-visual.com" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
-              admin.team@motion-visual.com
+            <a href="mailto:aliy20@hotmail.co.uk" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
+              aliy20@hotmail.co.uk
             </a>
           </div>
         </div>

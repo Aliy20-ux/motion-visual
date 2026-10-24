@@ -145,6 +145,16 @@ export default function AddOns() {
                     <span style={{ opacity: 0.85, fontWeight: 300 }}> · {PLAN_PAGES[p] === 1 ? '1 landing page' : `up to ${PLAN_PAGES[p]} pages`}</span>
                   </button>
                 ))}
+                {/* Flagship is scoped on a call, so it has no price to build here: it leads to its own enquiry box. */}
+                <a href="#flagship" onClick={scrollToHash('#flagship')}
+                  className="font-body text-xs font-semibold cursor-pointer transition-colors inline-flex items-center"
+                  style={{
+                    padding: '12px 22px', minHeight: 44, borderRadius: 999,
+                    background: 'transparent', color: 'rgba(237,232,220,0.6)', border: '1px solid rgba(237,232,220,0.12)',
+                  }}>
+                  Flagship · Custom
+                  <span style={{ opacity: 0.85, fontWeight: 300 }}> · scoped with you · send an enquiry →</span>
+                </a>
               </div>
 
               <div className="flex items-center justify-between gap-4 mt-6 flex-wrap">

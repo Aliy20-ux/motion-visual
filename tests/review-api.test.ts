@@ -69,7 +69,7 @@ test('submitting saves the review, returns the Google link, and tells the team',
   assert.deepEqual(r.json, { ok: true, googleReviewUrl: 'https://g.page/r/abc/review' });
   assert.deepEqual(calls[0], { fn: 'review_submit', args: { p_key: KEY, p_token: TOKEN, p_rating: 5, p_body: 'Brilliant.', p_name: 'Amira', p_business: 'Mon Ami', p_consent: true } });
   assert.equal(emails.length, 1);
-  assert.deepEqual(emails[0].to, ['admin.team@motion-visual.com']);
+  assert.deepEqual(emails[0].to, ['aliy20@hotmail.co.uk']);
   assert.match(emails[0].subject, /5-star review from Amira/);
   assert.ok(emails[0].html.includes('Brilliant.') && emails[0].html.includes('admin.motion-visual.com/reviews'));
 });

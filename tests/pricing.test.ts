@@ -50,9 +50,9 @@ test('worked examples match what the customer is emailed', () => {
   const a = buildQuote({ plan: 'Essential', extraPages: 2, addOnIds: ['order-lite', 'local-seo'] });
   assert.ok(a.ok && a.quote.totalPounds === 1460 && a.quote.depositPounds === 365 && a.quote.balancePounds === 1095);
   const b = buildQuote({ plan: 'Signature', extraPages: 0, addOnIds: ['booking', 'order-full'] });
-  assert.ok(b.ok && b.quote.totalPounds === 2200 && b.quote.depositPounds === 550);
+  assert.ok(b.ok && b.quote.totalPounds === 2500 && b.quote.depositPounds === 625);
   const c = buildQuote({ plan: 'Essential', extraPages: 0, addOnIds: ['ai-chatbox'] });
-  assert.ok(c.ok && c.quote.totalPounds === 1049 && c.quote.depositPounds === 262.25 && c.quote.balancePounds === 786.75);
+  assert.ok(c.ok && c.quote.totalPounds === 1050 && c.quote.depositPounds === 262.5 && c.quote.balancePounds === 787.5);
 });
 
 test('add-ons a plan already includes cost nothing and are labelled included', () => {
@@ -103,7 +103,8 @@ test('the catalogue is internally consistent', () => {
     assert.ok(a.plans.length > 0, `${a.id} is buyable somewhere`);
     for (const p of a.includedIn ?? []) assert.ok(a.plans.includes(p), `${a.id} included in a plan that can see it`);
   }
-  assert.equal(ADD_ONS.find(a => a.id === 'ai-chatbox')?.price, 249, 'AI chatbox price confirmed by the owner');
+  assert.equal(ADD_ONS.find(a => a.id === 'ai-chatbox')?.price, 250, 'AI chatbox price confirmed by the owner');
+  assert.equal(ADD_ONS.find(a => a.id === 'booking')?.price, 500, 'Booking price confirmed by the owner');
 });
 
 test('browser pricing (priceFor), server pricing (buildQuote) and the quote lines always agree', () => {

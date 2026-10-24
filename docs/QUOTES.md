@@ -5,8 +5,8 @@
 
 | Request | Result |
 |---|---|
-| Essential or Signature, with or without add-ons | Prices it from `src/pricing.ts` (the client's numbers are never trusted), saves it to `web_quotes` (sequential reference `MV-W-NNNN`), emails the customer a quote valid 14 days with a link to their brief form, and emails `admin.team@` the brief plus two attachments (`<ref>.json`, `<ref>-quote-email.html`) |
-| Flagship, an online shop / ordering add-on, or project type "E-commerce" | No quote. `admin.team@` gets a "Scoping call request" |
+| Essential or Signature, with or without add-ons | Prices it from `src/pricing.ts` (the client's numbers are never trusted), saves it to `web_quotes` (sequential reference `MV-W-NNNN`), emails the customer a quote valid 14 days with a link to their brief form, and emails `aliy20@hotmail.co.uk` the brief plus two attachments (`<ref>.json`, `<ref>-quote-email.html`) |
+| Flagship, an online shop / ordering add-on, or project type "E-commerce" | No quote. `aliy20@hotmail.co.uk` gets a "Scoping call request" |
 | Invalid, ineligible or unknown add-ons, bad page counts | 400, nothing sent |
 | Form completed in under 2.5s | 200, nothing sent |
 | No / invalid Turnstile token (only once `TURNSTILE_SECRET_KEY` is set) | 400 `verification_failed` |

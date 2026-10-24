@@ -25,7 +25,7 @@ test('an Essential quote is priced on the server, saved, and emailed to the cust
   assert.equal(customer.subject, 'Your Motion Visual quote MV-W-0001');
   for (const text of ['£1,460', '£365', '£1,095', 'Interactive order builder (Lite)', 'Local SEO Boost']) assert.ok(customer.html.includes(text), `customer email has ${text}`);
   assert.match(customer.html, /\/brief\/[0-9a-f]{48}/, 'brief link');
-  assert.deepEqual(team.to, ['admin.team@motion-visual.com']);
+  assert.deepEqual(team.to, ['aliy20@hotmail.co.uk']);
   assert.equal(team.reply_to, 'aisha@example.com');
   assert.deepEqual(team.attachments?.map(a => a.filename), ['MV-W-0001.json', 'MV-W-0001-quote-email.html']);
   assert.equal(decode(team.attachments![1].content), customer.html, 'the attached HTML is exactly what the customer received');
@@ -68,7 +68,7 @@ test('Flagship, shop and e-commerce requests become a scoping-call email only', 
     const r = await post(body);
     assert.deepEqual(r.json, { mode: 'call' });
     assert.equal(backend.state.emails.length, 1);
-    assert.deepEqual(backend.state.emails[0].to, ['admin.team@motion-visual.com']);
+    assert.deepEqual(backend.state.emails[0].to, ['aliy20@hotmail.co.uk']);
     assert.match(backend.state.emails[0].subject, /^Scoping call request/);
   }
   assert.equal(backend.state.quotes.length, 0, 'no quote row for a call request');
@@ -155,7 +155,7 @@ test('customer email failing does not lose the quote: the team is told it was no
 
 test('if every email fails the request fails loudly', async () => {
   backend.state.failEmailTo.add('aisha@example.com');
-  backend.state.failEmailTo.add('admin.team@motion-visual.com');
+  backend.state.failEmailTo.add('aliy20@hotmail.co.uk');
   assert.equal((await post(valid())).status, 502);
 });
 
@@ -211,6 +211,6 @@ test('a network failure sending the customer email is "not sent", not a crash: t
   assert.equal(r.status, 200);
   assert.equal(r.json.customerEmailSent, false);
   assert.equal(backend.state.emails.length, 1);
-  assert.deepEqual(backend.state.emails[0].to, ['admin.team@motion-visual.com']);
+  assert.deepEqual(backend.state.emails[0].to, ['aliy20@hotmail.co.uk']);
   assert.match(backend.state.emails[0].html, /NOT SENT — send it manually/);
 });

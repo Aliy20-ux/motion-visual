@@ -82,8 +82,8 @@ export default function Flagship() {
     else {
       const status = (emailResult.reason as { status?: number } | undefined)?.status;
       setFormError(status === 429
-        ? 'You’ve sent a few enquiries already. Please email us at admin.team@motion-visual.com and we’ll help directly.'
-        : 'Something went wrong. Email us at admin.team@motion-visual.com');
+        ? 'You’ve sent a few enquiries already. Please email us at aliy20@hotmail.co.uk and we’ll help directly.'
+        : 'Something went wrong. Email us at aliy20@hotmail.co.uk');
     }
   };
 

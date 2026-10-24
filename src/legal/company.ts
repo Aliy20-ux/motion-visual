@@ -8,7 +8,7 @@ export const COMPANY = {
   companyNumber: 'SC895834',
   registeredIn: 'Scotland',
   registeredOffice: '5 South Charlotte Street, Edinburgh, EH2 4AN',
-  email: 'admin.team@motion-visual.com',
+  email: 'aliy20@hotmail.co.uk',
   website: 'https://motion-visual.com',
   vatRegistered: false,
 } as const;

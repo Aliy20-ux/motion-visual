@@ -36,6 +36,6 @@ export const onRequestPost = async ({ request, env }: Ctx): Promise<Response> =>
     ),
   }).catch(() => false);
 
-  if (!sent) return json({ error: 'We saved your question but couldn’t notify the team just now. Please also email admin.team@motion-visual.com so it isn’t missed.' }, 502);
+  if (!sent) return json({ error: 'We saved your question but couldn’t notify the team just now. Please also email aliy20@hotmail.co.uk so it isn’t missed.' }, 502);
   return json({ ok: true });
 };

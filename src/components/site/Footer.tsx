@@ -102,10 +102,10 @@ export default function Footer() {
                   style={{ color: 'rgba(237,232,220,0.5)' }}>
                   Get in touch
                 </span>
-                <a href="mailto:admin.team@motion-visual.com"
+                <a href="mailto:aliy20@hotmail.co.uk"
                   className="font-body text-sm transition-opacity hover:opacity-70"
                   style={{ color: 'rgba(237,232,220,0.55)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-                  admin.team@motion-visual.com
+                  aliy20@hotmail.co.uk
                 </a>
                 <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
                   Edinburgh, Scotland
@@ -118,7 +118,7 @@ export default function Footer() {
                   style={{ padding: '16px 36px', color: '#F0EDED' }}>
                   Start Your Project <ArrowUpRight size={14} />
                 </a>
-                <a href="mailto:admin.team@motion-visual.com"
+                <a href="mailto:aliy20@hotmail.co.uk"
                   className="font-body text-xs text-center transition-opacity hover:opacity-70"
                   style={{ color: 'rgba(237,232,220,0.5)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
                   or email us directly
@@ -201,10 +201,10 @@ export default function Footer() {
                 Contact
               </span>
               <div className="flex flex-col gap-3">
-                <a href="mailto:admin.team@motion-visual.com"
+                <a href="mailto:aliy20@hotmail.co.uk"
                   className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
                   style={{ color: 'rgba(237,232,220,0.5)' }}>
-                  admin.team@motion-visual.com
+                  aliy20@hotmail.co.uk
                 </a>
                 <span className="font-body text-sm"
                   style={{ color: 'rgba(237,232,220,0.5)' }}>

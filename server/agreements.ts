@@ -6,7 +6,7 @@
 export const SUPABASE_URL = 'https://ndnapekhhnrbqddfqpdh.supabase.co';
 export const SUPABASE_ANON_KEY = 'sb_publishable_wuWoDrizGoSBBl-6K7NnVw_vQNeABNP';
 
-export const TEAM_INBOX = 'admin.team@motion-visual.com';
+export const TEAM_INBOX = 'aliy20@hotmail.co.uk';
 export const FROM = 'Motion Visual <admin.team@motion-visual.com>';
 
 export interface AgreementEnv {
@@ -154,7 +154,7 @@ export const SIGN_ERRORS: Record<string, string> = {
   consent_required: 'Please tick each confirmation box before signing.',
   start_choice_required: 'Please choose when you’d like us to start work.',
   message_required: 'Please write your question before sending.',
-  too_many_questions: 'You’ve sent a lot of questions on this agreement — please email admin.team@motion-visual.com instead.',
+  too_many_questions: 'You’ve sent a lot of questions on this agreement — please email aliy20@hotmail.co.uk instead.',
   not_configured: 'Online signing isn’t available right now. Please email us and we’ll sort it out.',
   not_authorised: 'Online signing isn’t available right now. Please email us and we’ll sort it out.',
 };

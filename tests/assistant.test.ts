@@ -207,7 +207,7 @@ const talk = (body: unknown, e: object = env) => handoff({ request: new Request(
 test('talk to a founder: the team gets the visitor\'s details and the conversation, with reply-to set to the visitor', async () => {
   const r = await talk(person);
   assert.equal(r.status, 200);
-  assert.deepEqual(emails[0].to, ['admin.team@motion-visual.com']);
+  assert.deepEqual(emails[0].to, ['aliy20@hotmail.co.uk']);
   assert.equal(emails[0].reply_to, 'dana@example.com');
   for (const s of ['Dana Reid', 'dana@example.com', '07000 000000', 'Three restaurants.', 'Can you build ordering?', 'Ordering is a Flagship project.']) assert.ok(emails[0].html.includes(s), s);
   assert.equal(rpcCalls[0].args.p_kind, 'handoff');
