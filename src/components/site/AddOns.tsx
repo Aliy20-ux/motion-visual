@@ -142,7 +142,7 @@ export default function AddOns() {
                       border: plan === p ? '1px solid transparent' : '1px solid rgba(237,232,220,0.12)',
                     }}>
                     {p} · {gbp(PLAN_PRICE[p])}
-                    <span style={{ opacity: 0.7, fontWeight: 300 }}> · {PLAN_PAGES[p] === 1 ? '1 landing page' : `up to ${PLAN_PAGES[p]} pages`}</span>
+                    <span style={{ opacity: 0.85, fontWeight: 300 }}> · {PLAN_PAGES[p] === 1 ? '1 landing page' : `up to ${PLAN_PAGES[p]} pages`}</span>
                   </button>
                 ))}
               </div>
@@ -208,7 +208,7 @@ export default function AddOns() {
                       <span className="flex items-start justify-between gap-3">
                         <span className="font-body text-[13px]" style={{ color: '#EDE8DC' }}>{a.name}</span>
                         <span className="font-body text-[12px] font-semibold flex items-center gap-1 shrink-0"
-                          style={{ color: included ? 'rgba(237,232,220,0.6)' : '#C41E1E' }}>
+                          style={{ color: included ? 'rgba(237,232,220,0.6)' : '#E5534B' }}>
                           {on && <Check size={12} />}
                           {needsBigger && <span className="text-[9px] tracking-[0.12em] uppercase font-semibold" style={{ padding: '2px 7px', borderRadius: 999, border: '1px solid rgba(237,232,220,0.25)', color: 'rgba(237,232,220,0.7)' }}>Signature</span>}
                           {included ? 'Included' : `+${gbp(a.price!)}`}
@@ -263,7 +263,7 @@ export default function AddOns() {
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.25, ease: EASE }}>
                   <div className="mt-5" style={{ padding: 14, borderRadius: 12, border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
-                    <p className="font-body text-[10px] tracking-[0.18em] uppercase flex items-center gap-1.5 mb-2" style={{ color: '#C41E1E' }}>
+                    <p className="font-body text-[10px] tracking-[0.18em] uppercase flex items-center gap-1.5 mb-2" style={{ color: '#E5534B' }}>
                       <Sparkles size={11} /> Better value: {calc.suggestion.to}
                     </p>
                     <p className="font-body font-light text-[12px] leading-relaxed" style={{ color: 'rgba(237,232,220,0.75)' }}>{calc.suggestion.text}</p>

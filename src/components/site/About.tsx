@@ -112,7 +112,7 @@ export default function About() {
               </p>
 
               <p className="font-body text-[9px] tracking-[0.22em] uppercase mb-3"
-                style={{ color: 'rgba(196,30,30,0.85)' }}>
+                style={{ color: '#E5534B' }}>
                 {member.role}
               </p>
 

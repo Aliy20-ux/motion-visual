@@ -38,7 +38,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="agreement-ui" style={{ background: '#0A0A0B', minHeight: '100svh' }}>
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
-          <img src="/logo-dark.png" alt="Motion Visual" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
+          <img src="/logo-dark.png" alt="" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
           <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
         </Link>
         <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Client review</span>
@@ -276,7 +276,7 @@ export default function Review() {
             </div>
 
             <div className="mb-8">
-              <label htmlFor="review-body" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Your review <span style={{ opacity: 0.7 }}>(optional)</span></label>
+              <label htmlFor="review-body" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Your review <span>(optional)</span></label>
               <textarea id="review-body" value={body} onChange={e => setBody(e.target.value)} maxLength={2000} rows={5}
                 placeholder="What was it like working with us? What did you like, and what could be better?"
                 className="w-full font-body text-sm resize-y"
@@ -291,7 +291,7 @@ export default function Review() {
                   className="w-full font-body text-sm" style={{ background: 'rgba(237,232,220,0.03)', border: '1px solid rgba(237,232,220,0.14)', borderRadius: 12, color: '#EDE8DC', padding: '0 16px', minHeight: 48 }} />
               </div>
               <div>
-                <label htmlFor="review-business" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Business <span style={{ opacity: 0.7 }}>(optional)</span></label>
+                <label htmlFor="review-business" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Business <span>(optional)</span></label>
                 <input id="review-business" value={business} onChange={e => setBusiness(e.target.value)} maxLength={120} autoComplete="organization"
                   className="w-full font-body text-sm" style={{ background: 'rgba(237,232,220,0.03)', border: '1px solid rgba(237,232,220,0.14)', borderRadius: 12, color: '#EDE8DC', padding: '0 16px', minHeight: 48 }} />
               </div>

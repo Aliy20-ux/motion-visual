@@ -207,7 +207,7 @@ export default function AssistantChat() {
             key="launcher"
             ref={launcher}
             type="button"
-            aria-label="Ask Motion Visual’s assistant"
+            aria-label="Ask us anything"
             aria-haspopup="dialog"
             onClick={() => { setOpen(true); openedAt.current = Date.now(); }}
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2, ease: EASE }}
@@ -239,7 +239,7 @@ export default function AssistantChat() {
               boxShadow: '0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(196,30,30,0.08)',
             }}>
 
-            <header className="flex items-center gap-3 shrink-0" style={{ padding: '14px 14px 14px 18px', borderBottom: '1px solid rgba(237,232,220,0.08)', background: 'linear-gradient(180deg, rgba(196,30,30,0.1), transparent)' }}>
+            <div className="flex items-center gap-3 shrink-0" style={{ padding: '14px 14px 14px 18px', borderBottom: '1px solid rgba(237,232,220,0.08)', background: 'linear-gradient(180deg, rgba(196,30,30,0.1), transparent)' }}>
               {view === 'handoff' && (
                 <button type="button" aria-label="Back to the chat" onClick={() => setView('chat')} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.7)' }}>
                   <ArrowLeft size={18} aria-hidden="true" />
@@ -259,7 +259,7 @@ export default function AssistantChat() {
               <button type="button" aria-label="Close the chat" onClick={close} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.7)' }}>
                 <X size={18} aria-hidden="true" />
               </button>
-            </header>
+            </div>
 
             {view === 'chat' && (
               <>
@@ -313,7 +313,7 @@ export default function AssistantChat() {
                     </button>
                   </form>
                   <div className="flex items-center justify-between gap-3" style={{ marginTop: 8 }}>
-                    <p className="font-body" style={{ fontSize: 10.5, lineHeight: 1.4, color: 'rgba(237,232,220,0.45)', maxWidth: '30ch' }}>
+                    <p className="font-body" style={{ fontSize: 10.5, lineHeight: 1.4, color: 'rgba(237,232,220,0.6)', maxWidth: '30ch' }}>
                       AI can make mistakes. Prices and terms on this site always apply.
                     </p>
                     <button type="button" onClick={() => setView('handoff')} className="font-body font-semibold cursor-pointer shrink-0"
@@ -334,15 +334,15 @@ export default function AssistantChat() {
                 <div style={{ display: 'grid', gap: 14 }}>
                   <div><label htmlFor="as-name" className="font-body" style={label}>Your name</label><input id="as-name" value={hName} onChange={e => setHName(e.target.value)} autoComplete="name" maxLength={120} style={field} /></div>
                   <div><label htmlFor="as-email" className="font-body" style={label}>Email</label><input id="as-email" type="email" value={hEmail} onChange={e => setHEmail(e.target.value)} autoComplete="email" maxLength={254} style={field} /></div>
-                  <div><label htmlFor="as-phone" className="font-body" style={label}>Phone <span style={{ opacity: 0.7 }}>(optional)</span></label><input id="as-phone" type="tel" value={hPhone} onChange={e => setHPhone(e.target.value)} autoComplete="tel" maxLength={40} style={field} /></div>
-                  <div><label htmlFor="as-msg" className="font-body" style={label}>Anything to add <span style={{ opacity: 0.7 }}>(optional)</span></label><textarea id="as-msg" rows={3} value={hMessage} onChange={e => setHMessage(e.target.value)} maxLength={1000} style={{ ...field, padding: '12px 14px', lineHeight: 1.5 }} /></div>
+                  <div><label htmlFor="as-phone" className="font-body" style={label}>Phone <span>(optional)</span></label><input id="as-phone" type="tel" value={hPhone} onChange={e => setHPhone(e.target.value)} autoComplete="tel" maxLength={40} style={field} /></div>
+                  <div><label htmlFor="as-msg" className="font-body" style={label}>Anything to add <span>(optional)</span></label><textarea id="as-msg" rows={3} value={hMessage} onChange={e => setHMessage(e.target.value)} maxLength={1000} style={{ ...field, padding: '12px 14px', lineHeight: 1.5 }} /></div>
                 </div>
                 <div role="alert" aria-live="assertive">{hError && <p className="font-body" style={{ fontSize: 13, color: '#F2A19A', marginTop: 12 }}>{hError}</p>}</div>
                 <button type="submit" disabled={hBusy} className="w-full font-body font-semibold cursor-pointer disabled:opacity-60"
                   style={{ marginTop: 16, minHeight: 50, borderRadius: 999, fontSize: 13, letterSpacing: '0.04em', background: 'linear-gradient(135deg,#8B1010,#C41E1E)', color: '#F0EDED' }}>
                   {hBusy ? 'Sending…' : 'Send to a founder'}
                 </button>
-                <p className="font-body font-light" style={{ fontSize: 11, lineHeight: 1.5, color: 'rgba(237,232,220,0.45)', marginTop: 10 }}>
+                <p className="font-body font-light" style={{ fontSize: 11, lineHeight: 1.5, color: 'rgba(237,232,220,0.6)', marginTop: 10 }}>
                   We use these details only to reply to you. See our <a href="/privacy" style={{ textDecoration: 'underline' }}>Privacy Policy</a>.
                 </p>
               </form>

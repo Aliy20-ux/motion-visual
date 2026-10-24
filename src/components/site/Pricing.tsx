@@ -207,14 +207,14 @@ export default function Pricing() {
                       {gbp(depositFor(tier.price!))} deposit to start (25%)
                     </p>
                   )}
-                  <p className="font-body text-[11px] mt-2" style={{ color: 'rgba(196,30,30,0.55)' }}>
+                  <p className="font-body text-[11px] mt-2" style={{ color: '#E5534B' }}>
                     {tier.customPrice ? `+ Care plan from ${gbp(CARE_PLANS.flagship.price)}, scoped with you` : `+ ${gbp(tier.carePlanPrice!)} care plan`}
                   </p>
                 </div>
 
                 {/* Tagline — red italic */}
                 <p className="font-display italic mb-2"
-                  style={{ fontSize: 'clamp(0.9rem,1.3vw,1.05rem)', color: '#C41E1E', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+                  style={{ fontSize: 'clamp(0.9rem,1.3vw,1.05rem)', color: '#E5534B', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                   {tier.tagline}
                 </p>
 

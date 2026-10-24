@@ -149,7 +149,7 @@ export default function Process() {
                 whileHover={{ scale: 1.15, boxShadow: '0 0 20px rgba(196,30,30,0.5)' }}
                 transition={{ type: 'spring', stiffness: 400, damping: 14 }}>
                 <span className="font-body text-[10px] font-semibold tracking-[0.08em]"
-                  style={{ color: '#C41E1E' }}>
+                  style={{ color: '#E5534B' }}>
                   {step.num}
                 </span>
               </motion.div>

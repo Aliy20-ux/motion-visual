@@ -55,7 +55,7 @@ export default function Testimonials() {
               <span>{average.toFixed(1)} out of 5 from {data.count} client review{data.count === 1 ? '' : 's'}</span>
             </p>
           )}
-          <p className="font-body font-light text-xs leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.45)', maxWidth: '38ch' }}>
+          <p className="font-body font-light text-xs leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.6)', maxWidth: '38ch' }}>
             Left by clients through a private link sent with their final invoice. We approve reviews, we don’t edit them.
           </p>
         </motion.div>

@@ -29,7 +29,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="agreement-ui" style={{ background: '#0A0A0B', minHeight: '100svh' }}>
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
-          <img src="/logo-dark.png" alt="Motion Visual" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
+          <img src="/logo-dark.png" alt="" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
           <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
         </Link>
         <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Project tracker</span>

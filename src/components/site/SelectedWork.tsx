@@ -72,7 +72,7 @@ export default function SelectedWork() {
             initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(244,241,236,0.35)' }}>
+            <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(244,241,236,0.6)' }}>
               Selected Work
             </span>
           </motion.div>
@@ -85,7 +85,7 @@ export default function SelectedWork() {
             </motion.h2>
           </motion.div>
         </div>
-        <span className="font-body text-xs hidden md:block" style={{ color: 'rgba(244,241,236,0.25)' }}>
+        <span className="font-body text-xs hidden md:block" style={{ color: 'rgba(244,241,236,0.55)' }}>
           drag to explore →
         </span>
       </div>
