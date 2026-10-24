@@ -18,6 +18,8 @@ import Footer from '../components/site/Footer';
 // Keeping it off the initial bundle means less JS blocking first paint — it's the last
 // section on the page anyway, so there's no visible cost to fetching it a beat later.
 const QuoteForm = lazy(() => import('../components/site/QuoteForm'));
+// Same reason: the Flagship enquiry shares the quote form's fields and Supabase client.
+const Flagship = lazy(() => import('../components/site/Flagship'));
 
 export default function Home() {
   return (
@@ -35,6 +37,9 @@ export default function Home() {
         <Process />
         <Pricing />
         <AddOns />
+        <Suspense fallback={<div style={{ minHeight: 600 }} />}>
+          <Flagship />
+        </Suspense>
         <FAQ />
         <Suspense fallback={<div style={{ minHeight: 600 }} />}>
           <QuoteForm />

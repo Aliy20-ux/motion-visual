@@ -5,6 +5,7 @@ import { Check } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
 import { depositFor, gbp } from '../../pricing';
 import { CARE_PLANS, carePriceLabel } from '../../commercial';
+import { FLAGSHIP } from '../../flagship';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -45,27 +46,18 @@ const tiers = [
   {
     name: 'Flagship',
     customPrice: true,
-    tagline: 'When you need to own your market.',
-    description: 'For premium brands, multi-location businesses, and high-traffic e-commerce.',
-    features: [
-      'Unlimited pages — no scope ceiling',
-      'Custom 3D / WebGL hero experience',
-      'Full e-commerce or ordering system',
-      'Interactive order builder (full)',
-      'Built to Core Web Vitals standards',
-      'Cloudflare-backed global delivery',
-      'Dedicated project lead — direct access',
-      '14-day delivery, or phased if needed',
-    ],
-    cta: 'Start Flagship',
+    tagline: FLAGSHIP.tagline,
+    description: FLAGSHIP.description,
+    features: FLAGSHIP.features,
+    cta: 'Enquire about Flagship',
     isPopular: false,
   },
 ];
 
 const carePlans = [
-  { name: CARE_PLANS.essential.name, price: carePriceLabel('essential'), detail: '3 updates per payment period · reply within 2 working days' },
-  { name: CARE_PLANS.signature.name, price: carePriceLabel('signature'), detail: '6 updates per payment period · reply within 1 working day · short report each period' },
-  { name: CARE_PLANS.flagship.name, price: carePriceLabel('flagship'), detail: 'Scoped with you · up to 12 updates with fair use · same-day reply · quarterly review call' },
+  { name: CARE_PLANS.essential.name, price: carePriceLabel('essential'), detail: '3 updates per payment period' },
+  { name: CARE_PLANS.signature.name, price: carePriceLabel('signature'), detail: '6 updates per payment period · short report each period' },
+  { name: CARE_PLANS.flagship.name, price: carePriceLabel('flagship'), detail: 'Scoped with you · up to 12 updates with fair use · quarterly review call' },
 ];
 
 const careIncludes = ['Hosting', 'SSL certificate', 'Backups', 'Uptime monitoring', 'Small design tweaks'];
@@ -252,7 +244,7 @@ export default function Pricing() {
                 </ul>
 
                 {/* CTA */}
-                <a href="#quote" onClick={scrollToHash('#quote')}
+                <a href={tier.customPrice ? '#flagship' : '#quote'} onClick={scrollToHash(tier.customPrice ? '#flagship' : '#quote')}
                   className="inline-flex items-center justify-center font-body text-xs font-semibold cursor-pointer transition-opacity duration-200 hover:opacity-85"
                   style={{
                     padding: '14px 24px', borderRadius: 999,

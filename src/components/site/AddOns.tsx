@@ -61,15 +61,9 @@ export default function AddOns() {
     const total = priceFor(plan, pagesTotal, picked);
     const rule = suggestFor(plan, pagesTotal, picked);
 
-    let suggestion: null | { to: 'Signature' | 'Flagship'; text: string } = null;
-    if (rule?.to === 'Flagship') {
-      suggestion = {
-        to: 'Flagship',
-        text: rule.reason === 'shop'
-          ? 'Online shops and ordering are built under our Flagship plan. We scope it together on a quick call, so you only pay for what you need.'
-          : `A build this size is usually better value as a Flagship project, with a dedicated project lead and unlimited pages. Book a call and we'll scope it with you.`,
-      };
-    } else if (rule?.to === 'Signature') {
+    // Only ever suggests Signature to an Essential build. Flagship has its own section further down.
+    let suggestion: null | { to: 'Signature'; text: string } = null;
+    if (rule?.to === 'Signature') {
       // Compare like for like: what the same pages and add-ons cost on Signature.
       const diff = rule.signatureTotal - rule.total;
       const includes = 'up to 5 pages, cinematic animations, advanced + local SEO and the Lite order builder';
@@ -83,20 +77,19 @@ export default function AddOns() {
     return { pagesTotal, total, suggestion };
   }, [plan, extraPages, picked]);
 
-  const eligible = addOns.filter(a => a.plans.includes(plan));
+  // Flagship-only add-ons (the online shop) are scoped through the Flagship section, not priced here.
+  const buildable = addOns.filter(a => !a.flagship);
+  const eligible = buildable.filter(a => a.plans.includes(plan));
   const chosen = eligible.filter(a => picked.includes(a.id));
-  const isFlagshipEstimate = calc.suggestion?.to === 'Flagship';
 
   const sendToQuote = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const lines = [
       `Plan: ${plan}${calc.pagesTotal > PLAN_PAGES[plan] ? ` (${calc.pagesTotal} pages)` : ''}`,
-      ...chosen.map(a => `Add-on: ${a.name}${a.price === undefined ? ' (Flagship, to be quoted)' : a.includedIn?.includes(plan) ? ' (included)' : ` (${gbp(a.price)})`}`),
-      `Estimated total: ${isFlagshipEstimate ? 'Custom — to be scoped on a call' : gbp(calc.total)}`,
+      ...chosen.map(a => `Add-on: ${a.name}${a.includedIn?.includes(plan) ? ' (included)' : ` (${gbp(a.price!)})`}`),
+      `Estimated total: ${gbp(calc.total)}`,
     ];
-    const budget = isFlagshipEstimate ? 'Flagship — Custom' : plan === 'Essential' ? 'Essential — £800' : 'Signature — £1,600';
-    // When the panel says "scoping call", the request must say so too (a Signature build over the Flagship threshold
-    // would otherwise be priced and emailed as an automatic quote).
-    const config = { plan: isFlagshipEstimate ? 'Flagship' : plan, extraPages, addOnIds: picked.filter(id => eligible.some(a => a.id === id)) };
+    const budget = plan === 'Essential' ? 'Essential — £800' : 'Signature — £1,600';
+    const config = { plan, extraPages, addOnIds: picked.filter(id => eligible.some(a => a.id === id)) };
     const detail = { budget, notes: lines.join('\n'), config };
     (window as unknown as { __mvPrefill?: typeof detail }).__mvPrefill = detail; // in case the form hasn't lazy-loaded yet
     window.dispatchEvent(new CustomEvent('mv:prefill', { detail }));
@@ -198,7 +191,7 @@ export default function AddOns() {
                 )}
               </AnimatePresence>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {addOns.map(a => {
+                {buildable.map(a => {
                   const included = a.includedIn?.includes(plan);
                   const needsBigger = !a.plans.includes(plan);
                   const on = picked.includes(a.id) && !included;
@@ -218,7 +211,7 @@ export default function AddOns() {
                           style={{ color: included ? 'rgba(237,232,220,0.6)' : '#C41E1E' }}>
                           {on && <Check size={12} />}
                           {needsBigger && <span className="text-[9px] tracking-[0.12em] uppercase font-semibold" style={{ padding: '2px 7px', borderRadius: 999, border: '1px solid rgba(237,232,220,0.25)', color: 'rgba(237,232,220,0.7)' }}>Signature</span>}
-                          {included ? 'Included' : a.price !== undefined ? `+${gbp(a.price)}` : 'Flagship'}
+                          {included ? 'Included' : `+${gbp(a.price!)}`}
                         </span>
                       </span>
                       <span className="block font-body font-light text-[11px] leading-relaxed mt-1.5" style={{ color: 'rgba(237,232,220,0.5)' }}>
@@ -257,17 +250,11 @@ export default function AddOns() {
             <div className="my-5" style={{ height: 1, background: 'rgba(237,232,220,0.1)' }} />
 
             <div className="flex items-baseline justify-between">
-              <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
-                {isFlagshipEstimate ? 'Estimate' : 'Total, one-off'}
-              </span>
-              <span className="font-display italic gradient-text" style={{ fontSize: '2.2rem', lineHeight: 1 }}>
-                {isFlagshipEstimate ? 'Custom' : gbp(calc.total)}
-              </span>
+              <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>Total, one-off</span>
+              <span className="font-display italic gradient-text" style={{ fontSize: '2.2rem', lineHeight: 1 }}>{gbp(calc.total)}</span>
             </div>
             <p className="font-body font-light text-[11px] mt-2" style={{ color: 'rgba(237,232,220,0.5)' }}>
-              {isFlagshipEstimate
-                ? 'Deposit and payment terms are agreed individually.'
-                : `A deposit of ${gbp(depositFor(calc.total))} (25%) secures your start date.`}
+              {`A deposit of ${gbp(depositFor(calc.total))} (25%) secures your start date.`}
             </p>
 
             <AnimatePresence initial={false}>
@@ -294,7 +281,7 @@ export default function AddOns() {
             <a href="#quote" onClick={sendToQuote}
               className="inline-flex w-full items-center justify-center font-body text-xs font-semibold cursor-pointer transition-opacity hover:opacity-85 mt-5"
               style={{ padding: '14px 24px', borderRadius: 999, background: 'linear-gradient(135deg,#8B1010,#C41E1E)', color: '#F0EDED', letterSpacing: '0.05em' }}>
-              {isFlagshipEstimate ? 'Book a scoping call' : 'Request this package'}
+              Request this package
             </a>
           </div>
         </div>
