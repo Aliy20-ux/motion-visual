@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ADD_ONS, EXTRA_PAGE_PRICE, MAX_EXTRA_PAGES, PLANS, PLAN_PAGES, PLAN_PRICE, buildQuote, depositFor, priceFor, suggestFor } from '../src/pricing';
+import { ADD_ONS, EXTRA_PAGE_PRICE, MAX_EXTRA_PAGES, PLANS, PLAN_PAGES, PLAN_PRICE, buildQuote, depositFor, gbp, priceFor, suggestFor } from '../src/pricing';
 
 test('plan prices and page allowances', () => {
   assert.equal(PLAN_PRICE.Essential, 800);
@@ -10,15 +10,21 @@ test('plan prices and page allowances', () => {
   assert.equal(EXTRA_PAGE_PRICE, 80);
 });
 
-test('deposit is about 25%, rounded up to the nearest £5', () => {
-  const cases: [number, number][] = [[800, 200], [955, 240], [1049, 265], [1460, 365], [1600, 400], [1924, 485], [2200, 550], [1, 5]];
+test('deposit is exactly 25% of the build price, with no rounding', () => {
+  const cases: [number, number][] = [[800, 200], [875, 218.75], [955, 238.75], [1049, 262.25], [1460, 365], [1600, 400], [1924, 481], [2200, 550], [1, 0.25]];
   for (const [total, deposit] of cases) assert.equal(depositFor(total), deposit, `deposit for £${total}`);
   for (let total = 1; total <= 5000; total++) {
     const d = depositFor(total);
-    assert.equal(d % 5, 0, `£${total} deposit ${d} is a multiple of £5`);
-    assert.ok(d >= total * 0.25, `£${total} deposit ${d} is at least 25%`);
-    assert.ok(d < total * 0.25 + 5, `£${total} deposit ${d} is less than 25% + £5`);
+    assert.equal(d, total / 4, `£${total} deposit is exactly a quarter`);
+    assert.equal(Math.round(d * 100) / 100, d, `£${total} deposit ${d} is a whole number of pence`);
   }
+});
+
+test('money prints with pence only when there are pence', () => {
+  assert.equal(gbp(220), '£220');
+  assert.equal(gbp(1049), '£1,049');
+  assert.equal(gbp(218.75), '£218.75');
+  assert.equal(gbp(212.5), '£212.50');
 });
 
 test('base plans', () => {
@@ -39,7 +45,7 @@ test('worked examples match what the customer is emailed', () => {
   const b = buildQuote({ plan: 'Signature', extraPages: 0, addOnIds: ['booking', 'order-full'] });
   assert.ok(b.ok && b.quote.totalPounds === 2200 && b.quote.depositPounds === 550);
   const c = buildQuote({ plan: 'Essential', extraPages: 0, addOnIds: ['ai-chatbox'] });
-  assert.ok(c.ok && c.quote.totalPounds === 1049 && c.quote.depositPounds === 265);
+  assert.ok(c.ok && c.quote.totalPounds === 1049 && c.quote.depositPounds === 262.25 && c.quote.balancePounds === 786.75);
 });
 
 test('add-ons a plan already includes cost nothing and are labelled included', () => {

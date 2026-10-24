@@ -10,9 +10,9 @@ export function formatGBP(pence: number): string {
   }).format(pounds);
 }
 
-/** Deposit rule: about 25% of the build price, rounded up to the nearest £5. */
+/** Deposit rule: exactly 25% of the build price, to the nearest penny (no rounding to whole pounds). */
 export function depositPence(totalPence: number): number {
-  return Math.ceil((totalPence * 0.25) / 500) * 500;
+  return Math.round(totalPence * 0.25);
 }
 
 /** "£1,200" / "1200.50" / "1,200" → pence, or null if it isn't a positive amount. */

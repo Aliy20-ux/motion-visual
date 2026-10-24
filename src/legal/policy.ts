@@ -1,10 +1,10 @@
 import { COMPANY } from './company';
 import type { ClientType, Delivery, LegalSection } from './types';
 
-export const POLICY_VERSION = '2026-10-22';
+export const POLICY_VERSION = '2026-10-24';
 export const POLICY_UPDATED = 'October 2026';
 
-const DEPOSIT_RULE = 'about 25% of the build price, rounded up to the nearest £5';
+const DEPOSIT_RULE = '25% of the build price';
 
 /** Who the wording is for: a business client, a consumer, or the public page (both, labelled). */
 export type Audience = ClientType | 'public';

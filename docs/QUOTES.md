@@ -13,7 +13,7 @@
 | More than 3 quotes to one email in 24h, or 5 from one IP in 1h | 429 `rate_limited` |
 | Database unreachable | The quote **still goes out** with a fallback reference (`MV-W-YYYYMMDD-XXXX`) and no brief link; the team email and the record say it was not saved |
 
-The quote is **not a contract**. The customer replies to go ahead, you send a Project Agreement from `/studio`, and the deposit (about 25%, rounded up to £5) is paid on signing. The 48-hour first-design target runs from the signed agreement + content, not from the quote email.
+The quote is **not a contract**. The customer replies to go ahead, you send a Project Agreement from `/studio`, and the deposit (25% of the build price) is paid on signing. The 48-hour first-design target runs from the signed agreement + content, not from the quote email.
 
 ## The brief form
 The customer's quote email links to `/brief/<private token>`. They describe the business (12 questions, 2 required). On submit (`/api/brief/submit`, one submission per quote):
@@ -29,7 +29,7 @@ The team email says: do not start the first design until the agreement is signed
 - Keep the status up to date: the table is the history.
 
 ## From quote to agreement
-In `/studio/quotes`, open a quote and press **Create agreement from this quote**. The agreement editor opens with the client, title, the included items from the quote, the total and the standard payments (about 25% deposit rounded up to £5, balance within 7 days of the finished site) already filled in. **Check the client type** (consumer or business): the website doesn't ask, and it changes the customer's cancellation rights. Saving the draft moves the quote to *accepted* and notes the agreement reference. (A quote honoured on old terms, such as MV-Q-001, needs its payments set by hand: don't use the 25% button.)
+In `/studio/quotes`, open a quote and press **Create agreement from this quote**. The agreement editor opens with the client, title, the included items from the quote, the total and the standard payments (25% deposit, balance within 7 days of the finished site) already filled in. **Check the client type** (consumer or business): the website doesn't ask, and it changes the customer's cancellation rights. Saving the draft moves the quote to *accepted* and notes the agreement reference. (A quote honoured on old terms, such as MV-Q-001, needs its payments set by hand: don't use the 25% button.)
 
 ## Retention
 Quotes and briefs are kept from when they're issued to the end of the financial year, then deleted **if they never became a client** (status issued / declined / lapsed). Quotes that were accepted, had an agreement sent, or were signed are kept (contract records). Invoices are separate accounting records, kept six years.

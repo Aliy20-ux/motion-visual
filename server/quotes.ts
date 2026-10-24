@@ -49,7 +49,7 @@ function linesTable(q: IssuedQuote): string {
     </tr>`).join('');
   return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">${rows}
     <tr><td style="padding:14px 0 6px;border-top:1px solid ${C.line};color:${C.text};font-size:15px;font-weight:600;">Total, one-off</td><td style="padding:14px 0 6px;border-top:1px solid ${C.line};color:${C.red};font-size:22px;text-align:right;font-family:Georgia,serif;">${gbp(q.quote.totalPounds)}</td></tr>
-    <tr><td style="padding:4px 0;color:${C.muted};font-size:13px;">Deposit when you sign (about 25%, rounded up to £5)</td><td style="padding:4px 0;color:${C.text};font-size:13px;text-align:right;">${gbp(q.quote.depositPounds)}</td></tr>
+    <tr><td style="padding:4px 0;color:${C.muted};font-size:13px;">Deposit when you sign (25% of the build price)</td><td style="padding:4px 0;color:${C.text};font-size:13px;text-align:right;">${gbp(q.quote.depositPounds)}</td></tr>
     <tr><td style="padding:4px 0;color:${C.muted};font-size:13px;">Balance, within 7 days of us sharing your finished site</td><td style="padding:4px 0;color:${C.text};font-size:13px;text-align:right;">${gbp(q.quote.balancePounds)}</td></tr>
   </table>`;
 }
@@ -134,7 +134,7 @@ export function quoteRecord(q: IssuedQuote, recordedInDatabase: boolean) {
     statusAtIssue: 'Quote emailed to customer; awaiting reply',
     recordedInDatabase,
     currentStatus: 'NOT RECORDED — update when the customer replies or signs',
-    issuedUnderTerms: `${COMPANY.legalName}; deposit about 25% rounded up to £5 (policy 2026-10-22)`,
+    issuedUnderTerms: `${COMPANY.legalName}; deposit 25% of the build price (policy 2026-10-24)`,
     files: [`${q.ref}.json`, `${q.ref}-quote-email.html`],
   };
 }

@@ -86,7 +86,7 @@ export function agreementTermsSections(clientType: ClientType, kind: 'project' |
         ? 'We start your changes once your deposit clears. The balance is due within 7 days of us sharing the finished site, and we go live once it’s paid. We never charge interest.'
         : 'We start once your deposit clears. The balance is due within 7 days of us sharing your finished site, and we go live once it’s paid. We never charge interest.',
       blocks: [
-        { type: 'p', text: 'The price and payment schedule are shown in the project details. Prices are in pounds sterling. The deposit is about 25% of the build price, rounded up to the nearest £5, and it’s part of the price.' },
+        { type: 'p', text: 'The price and payment schedule are shown in the project details. Prices are in pounds sterling. The deposit is 25% of the build price, and it’s part of the price.' },
         { type: 'p', text: ready
           ? 'We start your changes once your deposit has cleared and we have the content we need. The balance is due within 7 days of us sharing the finished site with your changes (or by the date in the project details), and we launch your site within 3 working days of it clearing.'
           : 'We start work once your deposit has cleared and we have the content we need. The balance is due within 7 days of us sharing your finished site with you (or by the date in the project details). We launch your site or hand over files once the balance has cleared.' },

@@ -218,7 +218,7 @@ export default function AddOns() {
             <p className="font-body font-light text-[11px] mt-2" style={{ color: 'rgba(237,232,220,0.5)' }}>
               {isFlagshipEstimate
                 ? 'Deposit and payment terms are agreed individually.'
-                : `A deposit of ${gbp(depositFor(calc.total))} (about 25%) secures your start date.`}
+                : `A deposit of ${gbp(depositFor(calc.total))} (25%) secures your start date.`}
             </p>
 
             <AnimatePresence initial={false}>

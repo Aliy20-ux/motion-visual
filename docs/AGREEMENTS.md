@@ -29,7 +29,7 @@ balance within 7 days of sharing the finished site, live within 3 working days
 of payment, and a deposit that's only refundable before you start their changes.
 
 **Standard payments:** the studio's "25% deposit + balance" button sets the
-deposit to about 25% of the total, rounded up to the nearest £5
+deposit to exactly 25% of the total
 (`depositPence` in `src/legal/format.ts`), with the balance due within 7 days of
 sharing the finished site. The 14-day delivery clock starts once you have the
 client's signed agreement and their content.

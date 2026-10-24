@@ -3,11 +3,9 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
+import { depositFor, gbp } from '../../pricing';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-
-// Deposit rule: about 25% of the build price, rounded up to the nearest £5.
-const depositFor = (price: number) => Math.ceil((price * 0.25) / 5) * 5;
 
 const tiers = [
   {
@@ -213,7 +211,7 @@ export default function Pricing() {
                   </p>
                   {!tier.customPrice && (
                     <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.5)' }}>
-                      £{depositFor(tier.price!)} deposit to start (about 25%)
+                      {gbp(depositFor(tier.price!))} deposit to start (25%)
                     </p>
                   )}
                   <p className="font-body text-[11px] mt-2" style={{ color: 'rgba(196,30,30,0.55)' }}>
@@ -368,7 +366,7 @@ export default function Pricing() {
           style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '78ch' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}>
-          A deposit of about 25%, rounded up to the nearest £5, secures your start date. The balance is
+          A deposit of 25% of the build price secures your start date. The balance is
           due within 7 days of us sharing your finished site, and we launch once it has cleared. We never
           charge interest. For 30 days after launch we fix bugs free of charge; after that, support is
           available through an optional care plan or at a quoted price. Flagship payment terms are agreed
