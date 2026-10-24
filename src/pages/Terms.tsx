@@ -32,9 +32,8 @@ export default function Terms() {
 
       <h2>Deposit and payment</h2>
       <p>
-        You pay a deposit when you sign your Project Agreement: about 25% of the build price,
-        rounded up to the nearest £5. Your agreement shows the exact amount, and it's part of the
-        price. We start work once your deposit has cleared and we have the content we need. The
+        You pay a deposit when you sign your Project Agreement: 25% of the build price. Your
+        agreement shows the exact amount, and it's part of the price. We start work once your deposit has cleared and we have the content we need. The
         balance is due within 7 days of us sharing your finished site with you, and we launch your
         site once it has cleared. Flagship payment terms are agreed individually in your project
         details. We never charge interest.

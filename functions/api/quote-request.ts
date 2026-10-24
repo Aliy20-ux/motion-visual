@@ -90,7 +90,7 @@ export const onRequestPost = async ({ request, env }: Ctx): Promise<Response> =>
       p_add_on_ids: addOnIds,
       p_lines: quote.lines,
       p_total_pence: quote.totalPounds * 100,
-      p_deposit_pence: quote.depositPounds * 100,
+      p_deposit_pence: Math.round(quote.depositPounds * 100),
       p_balance_pence: quote.balancePounds * 100,
       p_issued_on: issuedOn,
       p_valid_until: validUntil,

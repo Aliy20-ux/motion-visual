@@ -81,7 +81,7 @@ function emptyDraft(kind: AgreementKind = 'project'): Draft {
 
 const poundsText = (pence: number) => (pence / 100).toFixed(pence % 100 === 0 ? 0 : 2);
 
-/** Standard terms: deposit of about 25% (rounded up to £5) on signing, balance within 7 days of sharing the finished site. */
+/** Standard terms: deposit of 25% of the build price on signing, balance within 7 days of sharing the finished site. */
 function standardPaymentRows(totalPence: number, ready: boolean): PaymentDraft[] {
   const deposit = depositPence(totalPence);
   return [
@@ -303,7 +303,7 @@ export default function AgreementEditor() {
     });
   };
 
-  // Standard terms: deposit of about 25% (rounded up to £5) on signing, balance within 7 days of sharing the finished site.
+  // Standard terms: deposit of 25% of the build price on signing, balance within 7 days of sharing the finished site.
   const ready = draft.kind === 'project' && draft.delivery === 'ready-made';
 
   // Swaps the schedule-dependent defaults, but only where they're still untouched defaults.

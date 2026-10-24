@@ -10,8 +10,9 @@ export const PLAN_PAGES: Record<PlanKey, number> = { Essential: 1, Signature: 5 
 export const EXTRA_PAGE_PRICE = 80;
 export const MAX_EXTRA_PAGES = 15;
 
-// Deposit rule: about 25% of the total, rounded up to the nearest £5.
-export const depositFor = (total: number) => Math.ceil((total * 0.25) / 5) * 5;
+// Deposit rule: exactly 25% of the build price (no rounding). Build totals are whole pounds, so the deposit is a
+// whole number of pence (a multiple of 25p) and is exact in floating point.
+export const depositFor = (total: number) => total * 0.25;
 
 export type AddOn = {
   id: string;
@@ -36,7 +37,8 @@ export const ADD_ONS: AddOn[] = [
   { id: 'shop', name: 'Online shop / ordering', blurb: 'Take payments and orders online, with stock and delivery options. Scoped and quoted on a call.', plans: ['Essential', 'Signature'], flagship: true },
 ];
 
-export const gbp = (n: number) => `£${n.toLocaleString('en-GB')}`;
+export const gbp = (n: number) =>
+  `£${Number.isInteger(n) ? n.toLocaleString('en-GB') : n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 /** What `plan` costs for `pagesTotal` pages and the picked add-ons (included and ineligible add-ons cost nothing). */
 export function priceFor(plan: PlanKey, pagesTotal: number, pickedIds: string[]): number {
