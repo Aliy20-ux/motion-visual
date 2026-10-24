@@ -11,7 +11,8 @@ export const EXTRA_PAGE_PRICE = 80;
 export const MAX_EXTRA_PAGES = 15;
 
 // Deposit rule: exactly 25% of the build price (no rounding). Build totals are whole pounds, so the deposit is a
-// whole number of pence (a multiple of 25p) and is exact in floating point.
+// whole number of pence (a multiple of 25p) and is exact in floating point. Keep in step with depositPence in
+// src/legal/format.ts.
 export const depositFor = (total: number) => total * 0.25;
 
 export type AddOn = {

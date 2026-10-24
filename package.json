@@ -9,7 +9,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "verify": "node scripts/verify.mjs",
-    "test": "node --import ./tests/register.mjs --test \"tests/**/*.test.ts\""
+    "test": "node --import ./tests/register.mjs --test \"tests/**/*.test.ts\"",
+    "sync-terms": "node --import ./tests/register.mjs scripts/sync-terms.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.0",

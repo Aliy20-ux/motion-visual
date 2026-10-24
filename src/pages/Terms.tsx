@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import LegalLayout from '../components/site/LegalLayout';
 import { COMPANY, COMPANY_DISCLOSURE } from '../legal/company';
+import { CARE_PLANS } from '../commercial';
+import { gbp } from '../pricing';
 
 export default function Terms() {
   return (
@@ -100,9 +102,9 @@ export default function Terms() {
       </p>
       <p>
         Care plans (hosting, updates and support) are optional. Every plan includes hosting, an SSL
-        certificate, backups, uptime monitoring and small design tweaks. Essential care is £49.99,
-        with 3 updates and a reply within 2 working days. Signature care is £79, with 6 updates, a
-        reply within 1 working day and a short report. Flagship care is from £129, scoped with you,
+        certificate, backups, uptime monitoring and small design tweaks. Essential care is {gbp(CARE_PLANS.essential.price)},
+        with 3 updates and a reply within 2 working days. Signature care is {gbp(CARE_PLANS.signature.price)}, with 6 updates, a
+        reply within 1 working day and a short report. Flagship care is from {gbp(CARE_PLANS.flagship.price)}, scoped with you,
         with up to 12 updates (fair use), same-day replies and a quarterly review call. Unused
         updates don't roll over.
       </p>
@@ -132,8 +134,8 @@ export default function Terms() {
         You can upgrade from Essential to Signature after 12 months on an active Essential care
         plan, counted from your launch date. The one-off fee is £800, less credit for anything
         you've already bought that Signature includes (extra pages, up to 4 at £80 each, and the
-        Lite Order Builder at £250), with a minimum fee of £400. Your care plan rises from £49.99
-        to £79 from the payment period after the fee is paid.
+        Lite Order Builder at £250), with a minimum fee of £400. Your care plan rises from {gbp(CARE_PLANS.essential.price)}
+        to {gbp(CARE_PLANS.signature.price)} from the payment period after the fee is paid.
       </p>
 
       <h2>Liability</h2>

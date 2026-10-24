@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "version": "2026-10-24.3",
+  "updated": "October 2026",
+  "company": {
+    "legalName": "Motion Visual Studios Limited",
+    "tradingName": "Motion Visual",
+    "companyNumber": "SC895834",
+    "registeredOffice": "5 South Charlotte Street, Edinburgh, EH2 4AN",
+    "website": "https://motion-visual.com",
+    "vatRegistered": false
+  },
+  "packages": [
+    {
+      "name": "Essential",
+      "price": 800,
+      "pages": 1
+    },
+    {
+      "name": "Signature",
+      "price": 1600,
+      "pages": 5
+    }
+  ],
+  "flagship": {
+    "name": "Flagship",
+    "scopedOnACall": true
+  },
+  "extraPagePrice": 80,
+  "addOns": [
+    {
+      "id": "order-lite",
+      "name": "Interactive order builder (Lite)",
+      "blurb": "Customers build their order or package on your site and send it to you as an enquiry or summary email. No card payment.",
+      "price": 250,
+      "plans": [
+        "Essential",
+        "Signature"
+      ],
+      "includedIn": [
+        "Signature"
+      ],
+      "scopedOnACall": false
+    },
+    {
+      "id": "order-full",
+      "name": "Interactive order builder (full)",
+      "blurb": "A fuller version of the builder, still ending in an enquiry or summary email. No card payment.",
+      "price": 400,
+      "plans": [
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "local-seo",
+      "name": "Local SEO Boost",
+      "blurb": "Local keywords, schema markup and Google Business Profile optimisation, to help nearby customers find you.",
+      "price": 250,
+      "plans": [
+        "Essential",
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "ai-chatbox",
+      "name": "AI chatbox",
+      "blurb": "A chat box on your site that answers visitors’ questions about your business — hours, services, prices and FAQs — using the details you give us.",
+      "price": 249,
+      "plans": [
+        "Essential",
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "gallery",
+      "name": "Gallery with filters",
+      "blurb": "A photo gallery your visitors can filter by category.",
+      "price": 75,
+      "plans": [
+        "Essential",
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "reviews",
+      "name": "Reviews wall",
+      "blurb": "Your best customer reviews displayed on the site.",
+      "price": 75,
+      "plans": [
+        "Essential",
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "confirmations",
+      "name": "Email / WhatsApp confirmations",
+      "blurb": "Automatic confirmation messages when someone enquires or books.",
+      "price": 100,
+      "plans": [
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "booking",
+      "name": "Booking",
+      "blurb": "Let customers book appointments or tables straight from your site.",
+      "price": 200,
+      "plans": [
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "editor",
+      "name": "Content editor",
+      "blurb": "A simple dashboard to change text, prices and photos yourself.",
+      "price": 150,
+      "plans": [
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": false
+    },
+    {
+      "id": "shop",
+      "name": "Online shop / ordering",
+      "blurb": "Take payments and orders online, with stock and delivery options. Scoped and quoted on a call.",
+      "price": null,
+      "plans": [
+        "Essential",
+        "Signature"
+      ],
+      "includedIn": [],
+      "scopedOnACall": true
+    }
+  ],
+  "deposit": {
+    "percent": 25,
+    "rule": "25% of the build price",
+    "examples": [
+      {
+        "total": 800,
+        "deposit": 200,
+        "balance": 600
+      },
+      {
+        "total": 1600,
+        "deposit": 400,
+        "balance": 1200
+      },
+      {
+        "total": 2000,
+        "deposit": 500,
+        "balance": 1500
+      }
+    ]
+  },
+  "carePlans": [
+    {
+      "key": "essential",
+      "name": "Essential care",
+      "price": 49.99,
+      "from": false,
+      "updatesPerMonth": 3
+    },
+    {
+      "key": "signature",
+      "name": "Signature care",
+      "price": 79.99,
+      "from": false,
+      "updatesPerMonth": 6
+    },
+    {
+      "key": "flagship",
+      "name": "Flagship care",
+      "price": 129.99,
+      "from": true,
+      "updatesPerMonth": 12
+    }
+  ],
+  "keepAlivePrice": 30,
+  "smallUpdatePrice": 15,
+  "handoverFee": 150,
+  "minimumCareTermMonths": 3,
+  "careNoticeWorkingDays": 5,
+  "quoteValidDays": 14,
+  "balanceDueDays": 7,
+  "deliveryDays": 14,
+  "bugFixDays": 30,
+  "upgrade": {
+    "fee": 800,
+    "minimumFee": 400,
+    "afterMonths": 12
+  },
+  "cancellationStages": [
+    {
+      "when": "Before we begin work",
+      "owesPercent": 0,
+      "note": "Deposit refunded in full"
+    },
+    {
+      "when": "Work started, first design not shared",
+      "owesPercent": null,
+      "note": "Deposit kept"
+    },
+    {
+      "when": "First design shared",
+      "owesPercent": 40,
+      "note": "Less the deposit"
+    },
+    {
+      "when": "Build underway",
+      "owesPercent": 70,
+      "note": "Less what has been paid"
+    },
+    {
+      "when": "Finished site shared",
+      "owesPercent": 100,
+      "note": "The full price"
+    }
+  ],
+  "documents": [
+    {
+      "key": "terms",
+      "title": "Terms of Service",
+      "url": "https://motion-visual.com/terms"
+    },
+    {
+      "key": "privacy",
+      "title": "Privacy Policy",
+      "url": "https://motion-visual.com/privacy"
+    },
+    {
+      "key": "cancellation",
+      "title": "Cancellation & Refund Policy",
+      "url": "https://motion-visual.com/cancellation"
+    }
+  ]
+}
