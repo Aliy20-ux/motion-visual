@@ -36,7 +36,7 @@ blank in it. Tick items off here when they're done. (Last updated 2026-10-22.)
 
 ## 6. Decisions still open
 - [ ] **Perks — kept unpublished** until decided: testimonial discount (£50 off for a review + portfolio permission), referral (one free month of care per referred client), founding-client rate (first 20 clients, rate not defined). Where would they appear, and what exactly is the founding rate?
-- [ ] Prices/terms to confirm (from the brief): 3-month minimum care term, 25% deposit, £400 minimum upgrade fee, cancellation percentages, £129 Flagship care, £15 small update, £150 handover fee, the Flagship £2,600 call threshold, the AI chatbox add-on (£249, confirmed).
+- [ ] Prices/terms to confirm (from the brief): 3-month minimum care term, 25% deposit, £400 minimum upgrade fee, cancellation percentages, £129.99 Flagship care, £15 small update, £150 handover fee, the Flagship £2,600 call threshold, the AI chatbox add-on (£249, confirmed).
 - [ ] Project Agreement draft and the quote/invoice templates are in `~/Documents/motion-visual-quote-template/` (use `render.mjs`).
 
 ## 7. Known gaps (not built)
