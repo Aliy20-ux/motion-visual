@@ -105,7 +105,7 @@ export default function Pricing() {
           <p className="font-body font-light text-sm leading-relaxed mx-auto mb-10"
             style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '44ch' }}>
             One-off project pricing, no ongoing retainer.
-            Book a free call and we'll give you an exact number within 24 hours.
+            Send an enquiry via motion-visual.com and we'll give you an exact number within 24 hours.
           </p>
         </motion.div>
 
