@@ -75,7 +75,7 @@ export default function Pricing() {
     <section
       id="pricing"
       className="relative overflow-hidden"
-      style={{ background: '#0A0A0B', padding: 'clamp(100px,12vw,160px) clamp(24px,5vw,80px)' }}
+      style={{ background: '#0A0A0B', padding: 'clamp(72px,9vw,124px) clamp(24px,5vw,80px)' }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 

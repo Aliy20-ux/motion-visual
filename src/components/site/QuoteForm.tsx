@@ -277,7 +277,7 @@ export default function QuoteForm() {
     <section
       id="quote"
       className="relative overflow-hidden"
-      style={{ background: '#09090A', padding: 'clamp(100px,12vw,160px) clamp(24px,5vw,88px)' }}
+      style={{ background: '#09090A', padding: 'clamp(72px,9vw,124px) clamp(24px,5vw,88px)' }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 

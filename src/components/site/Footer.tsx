@@ -233,11 +233,6 @@ export default function Footer() {
                   {link.label}
                 </Link>
               ))}
-              <a href="https://admin.motion-visual.com" target="_blank" rel="noopener noreferrer"
-                className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
-                style={{ color: 'rgba(237,232,220,0.5)' }}>
-                Admin
-              </a>
             </div>
           </div>
         </div>

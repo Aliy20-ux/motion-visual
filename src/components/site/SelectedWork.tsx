@@ -61,7 +61,7 @@ export default function SelectedWork() {
   };
 
   return (
-    <section id="work" className="relative" style={{ padding: 'clamp(80px,10vw,140px) 0' }}>
+    <section id="work" className="relative" style={{ padding: 'clamp(64px,8vw,112px) 0' }}>
       {/* Header */}
       <div
         className="flex items-end justify-between px-[clamp(20px,5vw,80px)] pb-12"

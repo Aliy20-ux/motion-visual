@@ -15,9 +15,10 @@ function ClientTicker() {
   }, []);
   return (
     <span className="inline-flex items-center gap-2">
-      <span className="font-body text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>Built for</span>
+      <span className="font-body text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(237,232,220,0.8)', textShadow: '0 1px 14px rgba(10,10,11,0.9)' }}>Built for</span>
       <AnimatePresence mode="wait">
-        <motion.span key={clients[idx]} className="font-body text-xs tracking-[0.2em] uppercase gradient-text"
+        <motion.span key={clients[idx]} className="font-body text-xs tracking-[0.2em] uppercase"
+          style={{ color: '#EDE8DC', textShadow: '0 1px 14px rgba(10,10,11,0.9)' }}
           initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.35, ease: 'easeInOut' }}>
           {clients[idx]}

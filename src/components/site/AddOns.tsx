@@ -107,7 +107,7 @@ export default function AddOns() {
 
   return (
     <section id="addons" className="relative overflow-hidden"
-      style={{ background: '#0A0A0B', padding: '0 clamp(24px,5vw,80px) clamp(100px,12vw,160px)' }}>
+      style={{ background: '#0A0A0B', padding: '0 clamp(24px,5vw,80px) clamp(72px,9vw,124px)' }}>
       <div className="relative z-10 max-w-6xl mx-auto">
 
         <motion.div className="text-center mb-12"
