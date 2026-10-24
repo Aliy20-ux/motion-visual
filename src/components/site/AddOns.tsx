@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Plus, Minus, Sparkles } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
-import { ADD_ONS as addOns, PLANS, PLAN_PAGES, PLAN_PRICE, EXTRA_PAGE_PRICE, depositFor, gbp, priceFor, suggestFor, type PlanKey } from '../../pricing';
+import { ADD_ONS as addOns, PLANS, PLAN_PAGES, PLAN_PRICE, EXTRA_PAGE_PRICE, depositFor, gbp, priceFor, smallestPlanFor, suggestFor, type PlanKey } from '../../pricing';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -12,14 +12,48 @@ export default function AddOns() {
   const [extraPages, setExtraPages] = useState(0);
   const [picked, setPicked] = useState<string[]>([]);
 
-  const toggle = (id: string) =>
-    setPicked(p => (p.includes(id) ? p.filter(x => x !== id) : [...p, id]));
+  // Shown when the panel changes the plan or removes add-ons for the visitor, with a way back.
+  const [notice, setNotice] = useState<null | { text: string; undo: () => void }>(null);
+
+  // Total pages stay the same when the plan changes: Signature's 5 included pages absorb any extra pages bought on Essential.
+  const extraFor = (to: PlanKey, pagesTotal: number) => Math.max(0, pagesTotal - PLAN_PAGES[to]);
+
+  const toggle = (id: string) => {
+    const a = addOns.find(x => x.id === id);
+    if (!a) return;
+    if (picked.includes(id)) {
+      setNotice(null);
+      setPicked(p => p.filter(x => x !== id));
+      return;
+    }
+    const to = a.plans.includes(plan) ? plan : smallestPlanFor(a);
+    if (!to || to === plan) {
+      setNotice(null);
+      setPicked(p => [...p, id]);
+      return;
+    }
+    // This add-on only exists on a bigger plan, so move the build there instead of ignoring the click.
+    const before = { plan, extraPages, picked };
+    setPlan(to);
+    setExtraPages(extraFor(to, PLAN_PAGES[plan] + extraPages));
+    setPicked(p => [...p, id]);
+    setNotice({
+      text: `We've moved your build to ${to} (${gbp(PLAN_PRICE[to])}) because ${a.name} is only available on ${to}.`,
+      undo: () => { setPlan(before.plan); setExtraPages(before.extraPages); setPicked(before.picked); setNotice(null); },
+    });
+  };
 
   const choosePlan = (p: PlanKey) => {
+    const before = { plan, extraPages, picked };
+    // Drop anything the new plan can't buy, and say so.
+    const dropped = picked.map(id => addOns.find(a => a.id === id)).filter((a): a is NonNullable<typeof a> => !!a && !a.plans.includes(p));
     setPlan(p);
     setExtraPages(0);
-    // Drop anything the new plan can't buy.
     setPicked(cur => cur.filter(id => addOns.find(a => a.id === id)?.plans.includes(p)));
+    setNotice(dropped.length === 0 ? null : {
+      text: `${dropped.map(a => a.name).join(' and ')} ${dropped.length > 1 ? 'were' : 'was'} removed because ${dropped.length > 1 ? "they're" : "it's"} only available on Signature.`,
+      undo: () => { setPlan(before.plan); setExtraPages(before.extraPages); setPicked(before.picked); setNotice(null); },
+    });
   };
 
   const calc = useMemo(() => {
@@ -49,9 +83,8 @@ export default function AddOns() {
     return { pagesTotal, total, suggestion };
   }, [plan, extraPages, picked]);
 
-  const visible = addOns.filter(a => a.plans.includes(plan));
-  const chosen = visible.filter(a => picked.includes(a.id));
-  const hiddenCount = addOns.length - visible.length;
+  const eligible = addOns.filter(a => a.plans.includes(plan));
+  const chosen = eligible.filter(a => picked.includes(a.id));
   const isFlagshipEstimate = calc.suggestion?.to === 'Flagship';
 
   const sendToQuote = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -63,7 +96,7 @@ export default function AddOns() {
     const budget = isFlagshipEstimate ? 'Flagship — Custom' : plan === 'Essential' ? 'Essential — £800' : 'Signature — £1,600';
     // When the panel says "scoping call", the request must say so too (a Signature build over the Flagship threshold
     // would otherwise be priced and emailed as an automatic quote).
-    const config = { plan: isFlagshipEstimate ? 'Flagship' : plan, extraPages, addOnIds: picked.filter(id => visible.some(a => a.id === id)) };
+    const config = { plan: isFlagshipEstimate ? 'Flagship' : plan, extraPages, addOnIds: picked.filter(id => eligible.some(a => a.id === id)) };
     const detail = { budget, notes: lines.join('\n'), config };
     (window as unknown as { __mvPrefill?: typeof detail }).__mvPrefill = detail; // in case the form hasn't lazy-loaded yet
     window.dispatchEvent(new CustomEvent('mv:prefill', { detail }));
@@ -148,9 +181,26 @@ export default function AddOns() {
             {/* Add-ons */}
             <div style={{ ...card, padding: 'clamp(20px,2.5vw,28px)' }}>
               <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.5)' }}>2 · Optional add-ons</p>
+              <AnimatePresence initial={false}>
+                {notice && (
+                  <motion.div key="notice" role="status"
+                    initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2, ease: EASE }}>
+                    <div className="flex items-start justify-between gap-3 mb-4" style={{ padding: '12px 14px', borderRadius: 12, border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
+                      <p className="font-body font-light text-[12px] leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>{notice.text}</p>
+                      <button type="button" onClick={notice.undo}
+                        className="font-body text-[11px] font-semibold underline underline-offset-4 cursor-pointer shrink-0"
+                        style={{ color: '#EDE8DC', minHeight: 44, padding: '0 4px' }}>
+                        Undo
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {visible.map(a => {
+                {addOns.map(a => {
                   const included = a.includedIn?.includes(plan);
+                  const needsBigger = !a.plans.includes(plan);
                   const on = picked.includes(a.id) && !included;
                   return (
                     <button key={a.id} type="button" disabled={included}
@@ -167,6 +217,7 @@ export default function AddOns() {
                         <span className="font-body text-[12px] font-semibold flex items-center gap-1 shrink-0"
                           style={{ color: included ? 'rgba(237,232,220,0.6)' : '#C41E1E' }}>
                           {on && <Check size={12} />}
+                          {needsBigger && <span className="text-[9px] tracking-[0.12em] uppercase font-semibold" style={{ padding: '2px 7px', borderRadius: 999, border: '1px solid rgba(237,232,220,0.25)', color: 'rgba(237,232,220,0.7)' }}>Signature</span>}
                           {included ? 'Included' : a.price !== undefined ? `+${gbp(a.price)}` : 'Flagship'}
                         </span>
                       </span>
@@ -177,11 +228,9 @@ export default function AddOns() {
                   );
                 })}
               </div>
-              {hiddenCount > 0 && (
-                <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.5)' }}>
-                  More add-ons — the full order builder, booking, confirmations and a content editor — are available on Signature.
-                </p>
-              )}
+              <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                Add-ons marked Signature need the Signature plan: choosing one moves your build there, and you can undo it.
+              </p>
               <p className="font-body font-light text-[11px] leading-relaxed mt-2" style={{ color: 'rgba(237,232,220,0.5)' }}>
                 Add-ons are one-off prices. We never guarantee search rankings or business results.
               </p>
