@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Plus } from 'lucide-react';
+import { CARE_PLANS } from '../../commercial';
+import { gbp } from '../../pricing';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -14,7 +16,7 @@ const faqs = [
   },
   {
     q: 'How much does a website cost at Motion Visual?',
-    a: "Our Essential package is £800, Signature is £1,600, and Flagship is scoped individually and quoted on a call. Extra pages are £80 each, and optional care plans are £49.99 (Essential), £79 (Signature) and from £129 (Flagship). Book a free call and we'll give you an exact number within 24 hours.",
+    a: `Our Essential package is £800, Signature is £1,600, and Flagship is scoped individually and quoted on a call. Extra pages are £80 each, and optional care plans are ${gbp(CARE_PLANS.essential.price)} (Essential), ${gbp(CARE_PLANS.signature.price)} (Signature) and from ${gbp(CARE_PLANS.flagship.price)} (Flagship). Book a free call and we'll give you an exact number within 24 hours.`,
   },
   {
     q: 'Does Motion Visual work with businesses outside Edinburgh?',

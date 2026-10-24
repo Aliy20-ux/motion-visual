@@ -56,6 +56,9 @@ export type QuoteSeed = {
   status: string;
 };
 
+/** Handed from the Projects board to the agreement editor to start a Completion Sign-off for a signed project. */
+export type CompletionSeed = Pick<AgreementRow, 'id' | 'reference' | 'title' | 'client_id' | 'client_name' | 'client_business' | 'client_email' | 'client_type'>;
+
 export type CrmClient = { id: string; business_name: string; contact_name: string | null; email: string | null };
 
 export const agreementLink = (token: string) => `${window.location.origin}/agreement/${token}`;

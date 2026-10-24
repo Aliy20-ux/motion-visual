@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
 import { depositFor, gbp } from '../../pricing';
+import { CARE_PLANS, carePriceLabel } from '../../commercial';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -11,7 +12,7 @@ const tiers = [
   {
     name: 'Essential',
     price: 800,
-    carePlanPrice: 49.99,
+    carePlanPrice: CARE_PLANS.essential.price,
     tagline: 'A serious site for a serious business.',
     description: 'Perfect for local businesses and new brands ready to compete online.',
     features: [
@@ -27,7 +28,7 @@ const tiers = [
   {
     name: 'Signature',
     price: 1600,
-    carePlanPrice: 79,
+    carePlanPrice: CARE_PLANS.signature.price,
     tagline: 'The full Motion Visual experience.',
     description: 'Ideal for hospitality and service brands ready to convert at a higher rate.',
     features: [
@@ -62,9 +63,9 @@ const tiers = [
 ];
 
 const carePlans = [
-  { name: 'Essential care', price: '£49.99', detail: '3 updates per payment period · reply within 2 working days' },
-  { name: 'Signature care', price: '£79', detail: '6 updates per payment period · reply within 1 working day · short report each period' },
-  { name: 'Flagship care', price: 'From £129', detail: 'Scoped with you · up to 12 updates with fair use · same-day reply · quarterly review call' },
+  { name: CARE_PLANS.essential.name, price: carePriceLabel('essential'), detail: '3 updates per payment period · reply within 2 working days' },
+  { name: CARE_PLANS.signature.name, price: carePriceLabel('signature'), detail: '6 updates per payment period · reply within 1 working day · short report each period' },
+  { name: CARE_PLANS.flagship.name, price: carePriceLabel('flagship'), detail: 'Scoped with you · up to 12 updates with fair use · same-day reply · quarterly review call' },
 ];
 
 const careIncludes = ['Hosting', 'SSL certificate', 'Backups', 'Uptime monitoring', 'Small design tweaks'];
@@ -215,7 +216,7 @@ export default function Pricing() {
                     </p>
                   )}
                   <p className="font-body text-[11px] mt-2" style={{ color: 'rgba(196,30,30,0.55)' }}>
-                    {tier.customPrice ? '+ Care plan from £129, scoped with you' : `+ £${tier.carePlanPrice} care plan`}
+                    {tier.customPrice ? `+ Care plan from ${gbp(CARE_PLANS.flagship.price)}, scoped with you` : `+ ${gbp(tier.carePlanPrice!)} care plan`}
                   </p>
                 </div>
 
@@ -356,7 +357,7 @@ export default function Pricing() {
           Started on Essential? After a full year on Essential with an active care plan (counted from
           launch), you can upgrade to Signature for a one-off £800, less credit for anything you've
           already bought that Signature includes — up to 4 extra pages at £80 each and the Lite order
-          builder at £250 — with a minimum of £400. Your care plan moves to £79 from the next payment
+          builder at £250 — with a minimum of £400. Your care plan moves to {gbp(CARE_PLANS.signature.price)} from the next payment
           period after the fee is paid.
         </motion.p>
 

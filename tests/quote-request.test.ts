@@ -173,7 +173,7 @@ test('customer-supplied text cannot inject HTML or email headers', async () => {
 test('the customer quote email makes the promises the policy makes — and no more', async () => {
   await post(valid());
   const html = backend.state.emails[0].html;
-  for (const text of ['valid until', '14 days', 'isn\'t a contract', 'Cancellation', 'Motion Visual Studios Limited', 'SC895834', '48-hour target', '£49.99', '£79']) {
+  for (const text of ['valid until', '14 days', 'isn\'t a contract', 'Cancellation', 'Motion Visual Studios Limited', 'SC895834', '48-hour target', '£49.99', '£79.99']) {
     assert.ok(html.includes(text.replace("'", "'")) || html.includes(text), `mentions ${text}`);
   }
   assert.doesNotMatch(html, /guarantee(d)? (a )?(rank|result)/i);

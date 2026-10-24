@@ -5,7 +5,7 @@ import AgreementDocumentView from '../../components/agreement/AgreementDocumentV
 import { buildDocument, splitLines, TERMS_VERSION } from '../../legal/buildDocument';
 import { depositPence, formatDate, formatGBP, KIND_LABEL, parsePounds } from '../../legal/format';
 import type { AgreementDocument, AgreementKind, ClientType, Delivery } from '../../legal/types';
-import type { AgreementRow, CrmClient, QuoteSeed } from './data';
+import type { AgreementRow, CrmClient, CompletionSeed, QuoteSeed } from './data';
 import { Button, Label, muted, PageTitle, Select, TextArea, TextInput } from './ui';
 
 type PaymentDraft = { label: string; amount: string; due: string };
@@ -143,6 +143,20 @@ function draftFromDocument(doc: AgreementDocument, row?: Pick<AgreementRow, 'cli
   };
 }
 
+/** A Completion Sign-off for a signed project, prefilled from the Projects board. */
+function draftForCompletion(p: CompletionSeed): Draft {
+  return {
+    ...emptyDraft('completion'),
+    parentId: p.id,
+    clientId: p.client_id ?? '',
+    clientType: p.client_type,
+    clientName: p.client_name,
+    clientBusiness: p.client_business ?? '',
+    clientEmail: p.client_email,
+    title: `${p.title} — completion`,
+  };
+}
+
 const todayISO = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 
 export default function AgreementEditor() {
@@ -151,8 +165,9 @@ export default function AgreementEditor() {
   const location = useLocation();
   const duplicateFrom = (location.state as { from?: { doc: AgreementDocument; client_id: string | null; parent_id: string | null } } | null)?.from;
   const fromQuote = id ? undefined : (location.state as { fromQuote?: QuoteSeed } | null)?.fromQuote;
+  const completionFor = id ? undefined : (location.state as { completionFor?: CompletionSeed } | null)?.completionFor;
 
-  const [draft, setDraft] = useState<Draft>(() => duplicateFrom ? draftFromDocument(duplicateFrom.doc, duplicateFrom) : fromQuote ? draftFromQuote(fromQuote) : emptyDraft());
+  const [draft, setDraft] = useState<Draft>(() => duplicateFrom ? draftFromDocument(duplicateFrom.doc, duplicateFrom) : fromQuote ? draftFromQuote(fromQuote) : completionFor ? draftForCompletion(completionFor) : emptyDraft());
   const [loaded, setLoaded] = useState(!id);
   const [clients, setClients] = useState<CrmClient[]>([]);
   const [parents, setParents] = useState<ParentOption[]>([]);

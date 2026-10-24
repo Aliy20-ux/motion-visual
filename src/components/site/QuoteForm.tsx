@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, type Lead } from '../../lib/supabase';
+import { buildQuote } from '../../pricing';
 import { Check } from 'lucide-react';
 import Turnstile from './Turnstile';
 import { TURNSTILE_SITE_KEY } from '../../lib/turnstile';
@@ -215,6 +216,8 @@ export default function QuoteForm() {
     // notification paths for the same enquiry — run both and consider the
     // submission a success if either one lands, so a problem with one
     // channel never causes a lead to silently vanish for the visitor.
+    // The same price the visitor is quoted, so the lead arrives in the pipeline with its value filled in.
+    const priced = buildQuote(config ?? configFromBudget(form.budget));
     const payload: Lead = {
       business_name: form.name,
       contact_name: form.name,
@@ -222,6 +225,7 @@ export default function QuoteForm() {
       phone: form.phone,
       source: 'Website Quote Form',
       stage: 'New Lead',
+      ...(priced.ok ? { estimated_value: priced.quote.totalPounds } : {}),
       notes: [
         `Project type: ${form.project_type}`,
         `Package: ${form.budget}`,

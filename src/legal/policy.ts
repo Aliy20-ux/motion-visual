@@ -1,10 +1,12 @@
 import { COMPANY } from './company';
+import { CARE_PLANS, DEPOSIT, carePriceLabel } from '../commercial';
+import { gbp } from '../pricing';
 import type { ClientType, Delivery, LegalSection } from './types';
 
-export const POLICY_VERSION = '2026-10-24';
+export const POLICY_VERSION = '2026-10-24.3';
 export const POLICY_UPDATED = 'October 2026';
 
-const DEPOSIT_RULE = '25% of the build price';
+const DEPOSIT_RULE = DEPOSIT.rule;
 
 /** Who the wording is for: a business client, a consumer, or the public page (both, labelled). */
 export type Audience = ClientType | 'public';
@@ -186,9 +188,9 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
       blocks: [
         { type: 'p', text: 'A care plan covers your hosting, SSL certificate, backups, uptime monitoring and small design tweaks, plus a set number of content updates. Unused updates don’t roll over. Your Project Agreement or care plan order shows the plan you’ve chosen and its price.' },
         { type: 'table', head: ['Plan', 'Price', 'What you get'], rows: [
-          ['Essential care', '£49.99', '3 updates per payment period; we reply within 2 working days.'],
-          ['Signature care', '£79', '6 updates per payment period; we reply within 1 working day; a short report each period.'],
-          ['Flagship care', 'From £129, scoped with you', 'Up to 12 updates per payment period, with fair use; same-day reply; a quarterly review call.'],
+          [CARE_PLANS.essential.name, carePriceLabel('essential'), '3 updates per payment period; we reply within 2 working days.'],
+          [CARE_PLANS.signature.name, carePriceLabel('signature'), '6 updates per payment period; we reply within 1 working day; a short report each period.'],
+          [CARE_PLANS.flagship.name, `${carePriceLabel('flagship')}, scoped with you`, 'Up to 12 updates per payment period, with fair use; same-day reply; a quarterly review call.'],
         ] },
         { type: 'p', text: 'Care plans are paid monthly by direct debit and have a minimum term of 3 months from the start date. You can prepay a year — you pay for 11 payments and get 12.' },
         { type: 'p', text: `After the minimum term, you can cancel at any time by emailing ${COMPANY.email} at least 5 working days before your next payment date. If you tell us later than that, the next payment is still taken and your plan ends at the end of that month. We don’t refund part-months.` },
@@ -196,7 +198,7 @@ export function cancellationSections(audience: Audience, delivery: Delivery = 's
         { type: 'p', text: 'Stepping down: after the minimum term, you can move to a smaller care plan, or to our Keep-alive plan (£30: hosting, security, backups and monitoring, with no updates), by giving 5 working days’ written notice. The change takes effect from your next payment. Keep-alive is only available as a step down. On Keep-alive, a small update is £15 and an extra page is £80.' },
         { type: 'p', text: 'Pausing: you can pause your care plan for up to 2 months, once a year. Your site stays live, and no updates are made during the pause.' },
         { type: 'p', text: 'Leaving: the finished site belongs to you once you’ve paid for it in full, and your domain is in your name or transferable to you. If you’d like us to move your hosting elsewhere, there is a £150 handover fee. Stepping down, pausing or leaving a care plan doesn’t give any refund or reduction of the original build price.' },
-        { type: 'p', text: 'Upgrading: you can upgrade from Essential to Signature once you’ve had an active Essential care plan for 12 months, counted from your launch date. The one-off upgrade fee is £800, less credit for anything you’ve already bought that Signature includes (extra pages, up to 4 at £80 each, and the Lite Order Builder at £250). The minimum fee is £400. Your care plan rises from £49.99 to £79 from the payment period after the upgrade fee is paid.' },
+        { type: 'p', text: 'Upgrading: you can upgrade from Essential to Signature once you’ve had an active Essential care plan for 12 months, counted from your launch date. The one-off upgrade fee is £800, less credit for anything you’ve already bought that Signature includes (extra pages, up to 4 at £80 each, and the Lite Order Builder at £250). The minimum fee is £400. Your care plan rises from ' + gbp(CARE_PLANS.essential.price) + ' to ' + gbp(CARE_PLANS.signature.price) + ' from the payment period after the upgrade fee is paid.' },
         { type: 'p', text: 'Domain renewals are included in a care plan. If you cancel your plan, we’ll invoice future renewals at cost, or transfer the domain to you if you’d rather manage it yourself.' },
         ...(consumer ? [{ type: 'p' as const, text: `${audience === 'public' ? 'If you’re a consumer, your' : 'Your'} 14-day right to cancel also applies when you start a new care plan, whatever the minimum term.` }] : []),
       ],

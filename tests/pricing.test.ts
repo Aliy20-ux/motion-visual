@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { depositPence } from '../src/legal/format';
 import { ADD_ONS, EXTRA_PAGE_PRICE, MAX_EXTRA_PAGES, PLANS, PLAN_PAGES, PLAN_PRICE, buildQuote, depositFor, gbp, priceFor, suggestFor } from '../src/pricing';
 
 test('plan prices and page allowances', () => {
@@ -11,12 +12,18 @@ test('plan prices and page allowances', () => {
 });
 
 test('deposit is exactly 25% of the build price, with no rounding', () => {
-  const cases: [number, number][] = [[800, 200], [875, 218.75], [955, 238.75], [1049, 262.25], [1460, 365], [1600, 400], [1924, 481], [2200, 550], [1, 0.25]];
+  const cases: [number, number][] = [[800, 200], [875, 218.75], [955, 238.75], [1049, 262.25], [1050, 262.5], [1300, 325], [1460, 365], [1600, 400], [1924, 481], [2000, 500], [2200, 550], [1, 0.25]];
   for (const [total, deposit] of cases) assert.equal(depositFor(total), deposit, `deposit for £${total}`);
   for (let total = 1; total <= 5000; total++) {
     const d = depositFor(total);
     assert.equal(d, total / 4, `£${total} deposit is exactly a quarter`);
-    assert.equal(Math.round(d * 100) / 100, d, `£${total} deposit ${d} is a whole number of pence`);
+    assert.equal(Math.round(d * 100) / 100, d, `£${total} deposit £${d} is a whole number of pence`);
+  }
+});
+
+test('the studio (pence) and the website (pounds) always agree on the deposit', () => {
+  for (let total = 1; total <= 5000; total++) {
+    assert.equal(depositPence(total * 100), Math.round(depositFor(total) * 100), `£${total}`);
   }
 });
 

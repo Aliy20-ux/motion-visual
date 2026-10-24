@@ -1,8 +1,10 @@
 // Builders for the automatic quote flow: the quote reference, the customer's quote email and the
 // internal brief. Pure functions (no I/O) so they can be exercised without sending anything.
 import { COMPANY, COMPANY_DISCLOSURE, VAT_NOTE } from '../src/legal/company';
+import { POLICY_VERSION } from '../src/legal/policy';
 import { escapeHtml } from '../src/legal/renderHtml';
 import { gbp, type Quote } from '../src/pricing';
+import { CARE_PLANS } from '../src/commercial';
 
 export const QUOTE_VALID_DAYS = 14;
 
@@ -78,7 +80,7 @@ export function customerQuoteEmail(q: IssuedQuote, briefUrl?: string): { subject
       3. <strong style="color:${C.text};">Your first design:</strong> we aim to share it within 2 working days (our 48-hour target) of the day we have your signed agreement and your content, and your site is ready to share by day 14.
     </td></tr>
     <tr><td style="color:${C.muted};font-size:12px;line-height:1.7;padding-top:24px;">
-      Optional care plans (hosting, updates and support): Essential ${gbp(49.99)}, Signature ${gbp(79)}, paid by direct debit — full details in our <a href="${COMPANY.website}/terms" style="color:${C.text};">Terms</a>. Third-party costs such as booking tools, SMS, stock photos and fonts are paid by you. We never guarantee search rankings or business results.<br><br>
+      Optional care plans (hosting, updates and support): Essential ${gbp(CARE_PLANS.essential.price)}, Signature ${gbp(CARE_PLANS.signature.price)}, paid by direct debit — full details in our <a href="${COMPANY.website}/terms" style="color:${C.text};">Terms</a>. Third-party costs such as booking tools, SMS, stock photos and fonts are paid by you. We never guarantee search rankings or business results.<br><br>
       This quote isn't a contract. Your signed Project Agreement and our <a href="${COMPANY.website}/cancellation" style="color:${C.text};">Cancellation &amp; Refund Policy</a> apply once you sign. If you're a consumer, you have a 14-day right to cancel from signing.<br><br>
       Questions? Just reply, or email <a href="mailto:${COMPANY.email}" style="color:${C.text};">${COMPANY.email}</a> and quote ${escapeHtml(q.ref)}.
     </td></tr>
@@ -134,7 +136,7 @@ export function quoteRecord(q: IssuedQuote, recordedInDatabase: boolean) {
     statusAtIssue: 'Quote emailed to customer; awaiting reply',
     recordedInDatabase,
     currentStatus: 'NOT RECORDED — update when the customer replies or signs',
-    issuedUnderTerms: `${COMPANY.legalName}; deposit 25% of the build price (policy 2026-10-24)`,
+    issuedUnderTerms: `${COMPANY.legalName}; deposit 25% of the build price (policy ${POLICY_VERSION})`,
     files: [`${q.ref}.json`, `${q.ref}-quote-email.html`],
   };
 }

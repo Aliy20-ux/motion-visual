@@ -6,6 +6,7 @@ import AgreementList from './AgreementList';
 import AgreementEditor from './AgreementEditor';
 import AgreementDetail from './AgreementDetail';
 import QuoteList from './QuoteList';
+import ProjectBoard from './ProjectBoard';
 import { Button, ErrorText, Label, muted, PageTitle, TextInput } from './ui';
 
 // Team-only area. Sign-in uses the same Supabase accounts as the CRM at
@@ -50,6 +51,7 @@ export default function Studio() {
         </Link>
         {session && (
           <nav aria-label="Studio" className="flex items-center gap-5 font-body text-xs" style={{ color: muted }}>
+            <Link to="/studio/projects" className="hover:text-[#EDE8DC] transition-colors">Projects</Link>
             <Link to="/studio/agreements" className="hover:text-[#EDE8DC] transition-colors">Agreements</Link>
             <Link to="/studio/quotes" className="hover:text-[#EDE8DC] transition-colors">Quotes</Link>
           </nav>
@@ -81,6 +83,7 @@ export default function Studio() {
             <Route path="agreements/new" element={<AgreementEditor />} />
             <Route path="agreements/:id" element={<AgreementDetail session={session} />} />
             <Route path="agreements/:id/edit" element={<AgreementEditor />} />
+            <Route path="projects" element={<ProjectBoard />} />
             <Route path="quotes" element={<QuoteList />} />
             <Route path="*" element={<Navigate to="agreements" replace />} />
           </Routes>
