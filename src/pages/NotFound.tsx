@@ -26,7 +26,7 @@ export default function NotFound() {
     <div style={{ background: '#0A0A0B', minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
       <header className="flex items-center" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
-          <img src="/logo-dark.png" alt="Motion Visual" className="h-9 w-9 shrink-0 object-contain" />
+          <img src="/logo-dark.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
           <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
             Motion Visual
           </span>

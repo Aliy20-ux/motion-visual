@@ -74,6 +74,9 @@ export function suggestFor(plan: PlanKey, pagesTotal: number, pickedIds: string[
   return null;
 }
 
+/** The cheapest plan that can buy this add-on, or null if none can. Picking an add-on the current plan can't buy moves the build here. */
+export const smallestPlanFor = (addOn: AddOn): PlanKey | null => PLANS.find(p => addOn.plans.includes(p)) ?? null;
+
 export type QuoteInput = { plan: PlanKey; extraPages: number; addOnIds: string[] };
 
 export type QuoteLine = { label: string; pounds: number | null; note?: string };

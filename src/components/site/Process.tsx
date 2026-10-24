@@ -1,36 +1,12 @@
 'use client';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
+import { PROCESS_STEPS } from '../../process';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const STEP_DELAY = 0.35;
 
-const steps = [
-  {
-    num: '01',
-    title: 'Brief & Strategy',
-    duration: 'Day 1–2',
-    body: 'We start with a focused discovery call — goals, audience, competitors, and brand. No endless questionnaires. By the end of day two, we have a strategy document you can hold us to.',
-  },
-  {
-    num: '02',
-    title: 'Design & Direction',
-    duration: 'Day 3–5',
-    body: "You receive a full design direction — typography, colour palette, layout language, and key page concepts. Not wireframes. Real, polished design work. We refine until it's right.",
-  },
-  {
-    num: '03',
-    title: 'Build & Animate',
-    duration: 'Day 6–12',
-    body: 'Our developers build from the approved designs — every animation, interaction, and transition handcrafted in code. No templates, no page builders. The site performs as well as it looks.',
-  },
-  {
-    num: '04',
-    title: 'Launch & Handover',
-    duration: 'Day 13–14',
-    body: 'Final QA, speed audit, SEO setup, and deployment to your domain. You get full access, a walkthrough, and 30 days of post-launch support.',
-  },
-];
+const steps = PROCESS_STEPS;
 
 export default function Process() {
   const railRef = useRef<HTMLDivElement>(null);
@@ -75,7 +51,7 @@ export default function Process() {
     <section
       id="process"
       className="relative overflow-hidden"
-      style={{ background: '#09090A', padding: 'clamp(80px,11vw,150px) clamp(24px,5vw,88px)' }}
+      style={{ background: '#09090A', padding: 'clamp(64px,8vw,112px) clamp(24px,5vw,88px)' }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
@@ -173,7 +149,7 @@ export default function Process() {
                 whileHover={{ scale: 1.15, boxShadow: '0 0 20px rgba(196,30,30,0.5)' }}
                 transition={{ type: 'spring', stiffness: 400, damping: 14 }}>
                 <span className="font-body text-[10px] font-semibold tracking-[0.08em]"
-                  style={{ color: '#C41E1E' }}>
+                  style={{ color: '#E5534B' }}>
                   {step.num}
                 </span>
               </motion.div>

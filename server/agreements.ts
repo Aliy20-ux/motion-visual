@@ -12,6 +12,14 @@ export const FROM = 'Motion Visual <admin.team@motion-visual.com>';
 export interface AgreementEnv {
   RESEND_API_KEY: string;
   AGREEMENTS_SERVER_KEY?: string;
+  /** The website assistant. Unset = the assistant is switched off and the chat button does not appear. */
+  ANTHROPIC_API_KEY?: string;
+  /** Which Claude model answers (default claude-opus-5-5; claude-haiku-5-5 is far cheaper). */
+  ASSISTANT_MODEL?: string;
+  /** Set to "false" to switch the assistant off without removing the key. */
+  ASSISTANT_ENABLED?: string;
+  /** Test-only override for the Anthropic API address. Unset in production. */
+  ANTHROPIC_BASE_URL_OVERRIDE?: string;
   /** Test-only override for the Resend endpoint (point it at a local mock). Unset in production. */
   RESEND_API_URL?: string;
   /** Test-only override for the Supabase project URL. Unset in production. */

@@ -17,9 +17,8 @@ const MIN_HUMAN_FILL_MS = 2500;
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const projectTypes = ['New Website', 'Redesign', 'E-commerce', 'Something Else'] as const;
-// Kept in sync with the tiers in Pricing.tsx — same names, same prices, so a visitor
-// picks the same package here that they saw on the pricing section.
-const budgets = ['Essential — £800', 'Signature — £1,600', 'Flagship — Custom'] as const;
+// Kept in sync with the Essential and Signature tiers in Pricing.tsx. Flagship has its own enquiry section (#flagship).
+const budgets = ['Essential — £800', 'Signature — £1,600'] as const;
 
 // The package the visitor built in the add-ons section. The server re-prices it from src/pricing.ts.
 type PackageConfig = { plan: string; extraPages: number; addOnIds: string[] };
@@ -41,7 +40,7 @@ type FormData = {
 const initForm: FormData = { name: '', email: '', phone: '', project_type: '', budget: '', notes: '' };
 
 /* ── Underline input ── */
-function UnderlineInput({
+export function UnderlineInput({
   type = 'text', value, onChange, placeholder, id, autoComplete, error,
 }: { type?: string; value: string; onChange: (v: string) => void; placeholder?: string; id?: string; autoComplete?: string; error?: string }) {
   const [focused, setFocused] = useState(false);
@@ -70,7 +69,7 @@ function UnderlineInput({
 }
 
 /* ── Underline textarea ── */
-function UnderlineTextarea({ value, onChange, id }: { value: string; onChange: (v: string) => void; id?: string }) {
+export function UnderlineTextarea({ value, onChange, id, placeholder = 'Tell us about your project...', rows = 3 }: { value: string; onChange: (v: string) => void; id?: string; placeholder?: string; rows?: number }) {
   const [focused, setFocused] = useState(false);
   return (
     <textarea
@@ -79,8 +78,8 @@ function UnderlineTextarea({ value, onChange, id }: { value: string; onChange: (
       onChange={e => onChange(e.target.value)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      placeholder="Tell us about your project..."
-      rows={3}
+      placeholder={placeholder}
+      rows={rows}
       className="w-full bg-transparent font-body text-sm outline-none resize-none"
       style={{
         color: '#EDE8DC',
@@ -95,7 +94,7 @@ function UnderlineTextarea({ value, onChange, id }: { value: string; onChange: (
 }
 
 /* ── Field label ── */
-function FieldLabel({ htmlFor, label, optional, error }: {
+export function FieldLabel({ htmlFor, label, optional, error }: {
   htmlFor?: string; label: string; optional?: boolean; error?: string;
 }) {
   return (
@@ -277,7 +276,7 @@ export default function QuoteForm() {
     <section
       id="quote"
       className="relative overflow-hidden"
-      style={{ background: '#09090A', padding: 'clamp(100px,12vw,160px) clamp(24px,5vw,88px)' }}
+      style={{ background: '#09090A', padding: 'clamp(72px,9vw,124px) clamp(24px,5vw,88px)' }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 

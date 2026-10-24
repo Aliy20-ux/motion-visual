@@ -37,7 +37,7 @@ export default function About() {
     <section
       id="about"
       className="relative overflow-hidden"
-      style={{ background: '#080809', padding: 'clamp(80px,11vw,150px) clamp(24px,5vw,88px)' }}
+      style={{ background: '#080809', padding: 'clamp(64px,8vw,112px) clamp(24px,5vw,88px)' }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
@@ -112,7 +112,7 @@ export default function About() {
               </p>
 
               <p className="font-body text-[9px] tracking-[0.22em] uppercase mb-3"
-                style={{ color: 'rgba(196,30,30,0.85)' }}>
+                style={{ color: '#E5534B' }}>
                 {member.role}
               </p>
 

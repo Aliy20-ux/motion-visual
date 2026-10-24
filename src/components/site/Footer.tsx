@@ -34,7 +34,7 @@ export default function Footer() {
   return (
     <>
       {/* ── CTA Section ── */}
-      <section className="relative overflow-hidden" style={{ background: '#0A0A0B' }}>
+      <section aria-label="Start your project" className="relative overflow-hidden" style={{ background: '#0A0A0B' }}>
         <div style={{ height: 1, background: 'rgba(237,232,220,0.07)' }} />
 
         {/* WebGL plasma lines (crimson-mapped ShaderBackground) — the page's
@@ -142,7 +142,7 @@ export default function Footer() {
             {/* Brand column */}
             <div className="flex flex-col gap-6 max-w-xs">
               <div className="flex items-center gap-2.5">
-                <img src="/logo-dark.png" alt="Motion Visual" className="h-10 w-10 shrink-0 object-contain" />
+                <img src="/logo-dark.png" alt="" className="h-10 w-10 shrink-0 object-contain" />
                 <span className="font-body text-[10px] tracking-[0.22em] uppercase"
                   style={{ color: 'rgba(237,232,220,0.5)' }}>
                   Motion Visual
@@ -164,7 +164,7 @@ export default function Footer() {
                 style={{ color: 'rgba(237,232,220,0.5)' }}>
                 Navigate
               </span>
-              <nav className="flex flex-col gap-3">
+              <nav aria-label="Footer" className="flex flex-col gap-3">
                 {navLinks.map(link => (
                   <a key={link.label} href={link.href} onClick={scrollToHash(link.href)}
                     className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
@@ -233,11 +233,6 @@ export default function Footer() {
                   {link.label}
                 </Link>
               ))}
-              <a href="https://admin.motion-visual.com" target="_blank" rel="noopener noreferrer"
-                className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
-                style={{ color: 'rgba(237,232,220,0.5)' }}>
-                Admin
-              </a>
             </div>
           </div>
         </div>

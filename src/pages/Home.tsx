@@ -6,17 +6,21 @@ import Clients from '../components/site/Clients';
 import Manifesto from '../components/site/Manifesto';
 import WhyUs from '../components/site/WhyUs';
 import SelectedWork from '../components/site/SelectedWork';
+import Testimonials from '../components/site/Testimonials';
 import About from '../components/site/About';
 import Process from '../components/site/Process';
 import Pricing from '../components/site/Pricing';
 import AddOns from '../components/site/AddOns';
 import FAQ from '../components/site/FAQ';
 import Footer from '../components/site/Footer';
+import AssistantGate from '../components/site/AssistantGate';
 
 // Lazy-loaded: QuoteForm pulls in the Supabase client, which the Hero doesn't need at all.
 // Keeping it off the initial bundle means less JS blocking first paint — it's the last
 // section on the page anyway, so there's no visible cost to fetching it a beat later.
 const QuoteForm = lazy(() => import('../components/site/QuoteForm'));
+// Same reason: the Flagship enquiry shares the quote form's fields and Supabase client.
+const Flagship = lazy(() => import('../components/site/Flagship'));
 
 export default function Home() {
   return (
@@ -29,16 +33,21 @@ export default function Home() {
         <Manifesto />
         <WhyUs />
         <SelectedWork />
+        <Testimonials />
         <About />
         <Process />
         <Pricing />
         <AddOns />
+        <Suspense fallback={<div style={{ minHeight: 600 }} />}>
+          <Flagship />
+        </Suspense>
         <FAQ />
         <Suspense fallback={<div style={{ minHeight: 600 }} />}>
           <QuoteForm />
         </Suspense>
       </main>
       <Footer />
+      <AssistantGate />
     </>
   );
 }

@@ -81,7 +81,7 @@ export default function FAQ() {
     <section
       id="faq"
       className="relative"
-      style={{ background: '#09090A', padding: 'clamp(80px,11vw,150px) clamp(24px,5vw,88px)' }}
+      style={{ background: '#09090A', padding: 'clamp(64px,8vw,112px) clamp(24px,5vw,88px)' }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(237,232,220,0.07)' }} />
 

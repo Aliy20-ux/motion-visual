@@ -18,22 +18,23 @@ function BlockView({ block }: { block: Block }) {
  * screens (above the clause on narrow ones) — the note is read first, the
  * binding wording sits beside it.
  */
-export default function LegalSections({ sections, startAt = 1 }: { sections: LegalSection[]; startAt?: number }) {
+export default function LegalSections({ sections, startAt = 1, headingLevel = 3 }: { sections: LegalSection[]; startAt?: number; headingLevel?: 2 | 3 }) {
+  const Heading = `h${headingLevel}` as 'h2' | 'h3';
   return (
     <div>
       {sections.map((s, i) => (
         <section key={s.id} id={s.id} aria-labelledby={`${s.id}-h`}
           className="clause grid gap-x-10 gap-y-3 lg:grid-cols-[minmax(0,1fr)_15rem]"
           style={{ padding: '1.75rem 0', borderTop: '1px solid rgba(237,232,220,0.07)' }}>
-          <h3 id={`${s.id}-h`} className="font-display italic flex items-baseline gap-3 lg:col-start-1"
+          <Heading id={`${s.id}-h`} className="font-display italic flex items-baseline gap-3 lg:col-start-1"
             style={{ fontSize: '1.35rem', letterSpacing: '-0.01em', color: '#EDE8DC' }}>
-            <span className="font-body not-italic text-[11px] tracking-[0.14em] tabular-nums" style={{ color: 'rgba(196,30,30,0.9)' }}>
+            <span className="font-body not-italic text-[11px] tracking-[0.14em] tabular-nums" style={{ color: '#E5534B' }}>
               {String(startAt + i).padStart(2, '0')}
             </span>
             {s.heading}
-          </h3>
+          </Heading>
           {s.plain && (
-            <aside aria-label="In plain English"
+            <aside aria-label={`In plain English: ${s.heading}`}
               className="lg:col-start-2 lg:row-start-1 lg:row-span-2 self-start"
               style={{ borderLeft: '2px solid rgba(196,30,30,0.6)', paddingLeft: '0.9rem' }}>
               <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-1.5" style={{ color: 'rgba(237,232,220,0.5)' }}>

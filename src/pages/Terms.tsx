@@ -103,9 +103,8 @@ export default function Terms() {
       <p>
         Care plans (hosting, updates and support) are optional. Every plan includes hosting, an SSL
         certificate, backups, uptime monitoring and small design tweaks. Essential care is {gbp(CARE_PLANS.essential.price)},
-        with 3 updates and a reply within 2 working days. Signature care is {gbp(CARE_PLANS.signature.price)}, with 6 updates, a
-        reply within 1 working day and a short report. Flagship care is from {gbp(CARE_PLANS.flagship.price)}, scoped with you,
-        with up to 12 updates (fair use), same-day replies and a quarterly review call. Unused
+        with 3 updates. Signature care is {gbp(CARE_PLANS.signature.price)}, with 6 updates and a short report. Flagship care is
+        from {gbp(CARE_PLANS.flagship.price)}, scoped with you, with up to 12 updates (fair use) and a quarterly review call. Unused
         updates don't roll over.
       </p>
       <p>

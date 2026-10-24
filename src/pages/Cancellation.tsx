@@ -34,7 +34,7 @@ export default function Cancellation() {
         </p>
       </section>
 
-      <LegalSections sections={cancellationSections('public')} />
+      <LegalSections sections={cancellationSections('public')} headingLevel={2} />
 
       <div className="legal-prose" style={{ borderTop: '1px solid rgba(237,232,220,0.07)', paddingTop: '1.75rem' }}>
         <h2>Contact</h2>

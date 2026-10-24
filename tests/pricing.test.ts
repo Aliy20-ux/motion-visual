@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { depositPence } from '../src/legal/format';
-import { ADD_ONS, EXTRA_PAGE_PRICE, MAX_EXTRA_PAGES, PLANS, PLAN_PAGES, PLAN_PRICE, buildQuote, depositFor, gbp, priceFor, suggestFor } from '../src/pricing';
+import { ADD_ONS, EXTRA_PAGE_PRICE, MAX_EXTRA_PAGES, PLANS, PLAN_PAGES, PLAN_PRICE, buildQuote, depositFor, gbp, priceFor, smallestPlanFor, suggestFor } from '../src/pricing';
 
 test('plan prices and page allowances', () => {
   assert.equal(PLAN_PRICE.Essential, 800);
@@ -144,4 +144,18 @@ test('a Signature build over the Flagship threshold is a scoping call for the br
   const s = suggestFor('Signature', PLAN_PAGES.Signature + 12, ['gallery']);
   assert.equal(s?.to, 'Flagship');
   assert.equal(priceFor('Signature', PLAN_PAGES.Signature + 12, ['gallery']), 2635);
+});
+
+test('an add-on the current plan cannot buy points at the smallest plan that can', () => {
+  const plan = (id: string) => smallestPlanFor(ADD_ONS.find(a => a.id === id)!);
+  for (const id of ['order-full', 'confirmations', 'booking', 'editor']) assert.equal(plan(id), 'Signature', id);
+  for (const id of ['order-lite', 'local-seo', 'ai-chatbox', 'gallery', 'reviews', 'shop']) assert.equal(plan(id), 'Essential', id);
+  // Every add-on has a plan, and the plan the panel moves to really can buy it (so the server accepts the quote).
+  for (const a of ADD_ONS) {
+    const to = smallestPlanFor(a)!;
+    assert.ok(to, a.id);
+    if (a.flagship) continue; // the shop is a scoping call, never a priced quote
+    const r = buildQuote({ plan: to, extraPages: 0, addOnIds: [a.id] });
+    assert.ok(r.ok, `${a.id} on ${to}`);
+  }
 });

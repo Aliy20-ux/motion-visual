@@ -111,8 +111,8 @@ export default function Nav() {
           transition={{ duration: 0.4 }}
         >
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5 group cursor-pointer">
-            <img src="/logo-dark.png" alt="Motion Visual" className="h-9 w-9 shrink-0 object-contain" />
+          <a href="/" aria-label="Motion Visual home" className="flex items-center gap-2.5 group cursor-pointer">
+            <img src="/logo-dark.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
             {/* Wordmark */}
             <span
               className="hidden sm:inline font-body text-[10px] tracking-[0.22em] uppercase transition-opacity duration-200 group-hover:opacity-100"
@@ -123,7 +123,7 @@ export default function Nav() {
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-7">
+          <nav aria-label="Main" className="hidden md:flex items-center gap-7">
             {links.map(link => (
               <a
                 key={link.href}
@@ -229,7 +229,7 @@ export default function Nav() {
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
               className="mt-6 flex items-center gap-2 font-body text-xs tracking-[0.2em] uppercase cursor-pointer"
-              style={{ color: 'rgba(244,241,236,0.35)' }}
+              style={{ color: 'rgba(244,241,236,0.6)' }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
