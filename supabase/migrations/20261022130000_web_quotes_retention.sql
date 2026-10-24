@@ -30,6 +30,7 @@ create or replace function public.web_quote_financial_year_end(p_issued date, p_
 returns date
 language sql
 immutable
+set search_path = public
 as $$
   select case
     when make_date(extract(year from p_issued)::integer, p_month, p_day) >= p_issued
