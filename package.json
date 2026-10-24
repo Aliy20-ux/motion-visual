@@ -13,6 +13,7 @@
     "sync-terms": "node --import ./tests/register.mjs scripts/sync-terms.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
     "@supabase/supabase-js": "^2.110.0",
     "@tailwindcss/vite": "^4.3.2",
     "@types/react-router-dom": "^5.3.3",

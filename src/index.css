@@ -239,3 +239,7 @@ a.gradient-bg:active, button.gradient-bg:active {
   .print-doc { padding: 0 !important; }
   .clause { break-inside: avoid; }
 }
+
+/* The website assistant: same I-beam rule as the agreement forms. */
+.assistant-ui input, .assistant-ui textarea { cursor: text; }
+.assistant-ui button, .assistant-ui a { cursor: pointer; }

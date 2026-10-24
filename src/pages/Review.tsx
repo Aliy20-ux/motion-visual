@@ -35,7 +35,7 @@ function usePrivatePageMeta(title: string) {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ background: '#0A0A0B', minHeight: '100svh' }}>
+    <div className="agreement-ui" style={{ background: '#0A0A0B', minHeight: '100svh' }}>
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="Motion Visual" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { scrollToHash } from '../../lib/smoothScroll';
 import { depositFor, gbp } from '../../pricing';
-import { CARE_PLANS, carePriceLabel } from '../../commercial';
+import { CARE_INCLUDES, CARE_PLANS, carePriceLabel } from '../../commercial';
 import { FLAGSHIP } from '../../flagship';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -60,7 +60,7 @@ const carePlans = [
   { name: CARE_PLANS.flagship.name, price: carePriceLabel('flagship'), detail: 'Scoped with you · up to 12 updates with fair use · quarterly review call' },
 ];
 
-const careIncludes = ['Hosting', 'SSL certificate', 'Backups', 'Uptime monitoring', 'Small design tweaks'];
+const careIncludes = CARE_INCLUDES;
 
 export default function Pricing() {
   return (

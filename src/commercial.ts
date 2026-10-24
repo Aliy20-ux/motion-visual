@@ -17,6 +17,9 @@ export const CARE_PLANS: Record<CarePlanKey, { name: string; price: number; from
 /** "£49.99", or "From £129.99" for the scoped plan. */
 export const carePriceLabel = (key: CarePlanKey): string => `${CARE_PLANS[key].from ? 'From ' : ''}${gbp(CARE_PLANS[key].price)}`;
 
+/** Included in every care plan. */
+export const CARE_INCLUDES = ['Hosting', 'SSL certificate', 'Backups', 'Uptime monitoring', 'Small design tweaks'] as const;
+
 export const KEEP_ALIVE_PRICE = 30;
 export const SMALL_UPDATE_PRICE = 15;
 export const HANDOVER_FEE = 150;

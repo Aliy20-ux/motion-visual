@@ -13,6 +13,7 @@ import Pricing from '../components/site/Pricing';
 import AddOns from '../components/site/AddOns';
 import FAQ from '../components/site/FAQ';
 import Footer from '../components/site/Footer';
+import AssistantGate from '../components/site/AssistantGate';
 
 // Lazy-loaded: QuoteForm pulls in the Supabase client, which the Hero doesn't need at all.
 // Keeping it off the initial bundle means less JS blocking first paint — it's the last
@@ -46,6 +47,7 @@ export default function Home() {
         </Suspense>
       </main>
       <Footer />
+      <AssistantGate />
     </>
   );
 }
