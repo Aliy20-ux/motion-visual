@@ -56,111 +56,16 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
   const textY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.14]);
-  const scrollOverlay = useTransform(scrollYProgress, [0, 0.5], [0, 0.55]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  // The veil used to clear on a fixed timer regardless of whether the video had actually
-  // decoded a frame yet — on a cold cache/slower connection this let the static poster
-  // image flash through before the video caught up and swapped in. Now it only clears once
-  // the video really is ready (or a safety cap trips, so a slow/failed load never leaves
-  // the hero stuck black).
-  const [videoReady, setVideoReady] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setVideoReady(true), 900);
-    return () => clearTimeout(t);
-  }, []);
-  const markVideoReady = () => setVideoReady(true);
-
-  // Some mobile browsers evaluate autoplay eligibility before React's `muted` JSX attribute
-  // has definitely landed as the live IDL property, so the native `autoPlay` attribute can
-  // get silently blocked with no error — leaving the video paused on frame one until the
-  // visitor taps it. Forcing `.muted = true` and calling `.play()` explicitly (and again on
-  // canplay, in case the first attempt races the video's readiness) makes it actually stick.
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const tryPlay = () => {
-    const v = videoRef.current;
-    if (v && v.paused) {
-      v.muted = true;
-      v.play().catch(() => {});
-    }
-  };
-  useEffect(() => { tryPlay(); }, []);
-
-  // Pause the hero video once it has scrolled out of view (and resume when it returns) —
-  // a full-viewport 1080p loop decoding behind everything else was a constant tax on the
-  // GPU/main thread for the entire rest of the page.
-  useEffect(() => {
-    const v = videoRef.current;
-    const section = sectionRef.current;
-    if (!v || !section) return undefined;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) tryPlay();
-      else if (!v.paused) v.pause();
-    }, { threshold: 0.05 });
-    io.observe(section);
-    return () => io.disconnect();
-  }, []);
-
-  // Belt-and-suspenders: on some real devices even an explicit programmatic .play() call
-  // gets rejected (Low Power Mode, or a per-site "Never Auto-Play" Safari setting), and the
-  // browser falls back to its native tap-to-play affordance. A genuine user gesture always
-  // overrides autoplay restrictions, so retry on the very first touch/scroll/click anywhere
-  // on the page — the video starts the instant the visitor does anything, no direct tap on
-  // the video itself required.
-  useEffect(() => {
-    if (videoRef.current && !videoRef.current.paused) return;
-    const events = ['touchstart', 'scroll', 'click', 'pointerdown'] as const;
-    const handler = () => {
-      tryPlay();
-      events.forEach(e => window.removeEventListener(e, handler));
-    };
-    events.forEach(e => window.addEventListener(e, handler, { passive: true, once: true }));
-    return () => events.forEach(e => window.removeEventListener(e, handler));
-  }, []);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
 
   const headline = ['We build', "the internet's", 'most wanted.'];
 
   return (
-    <section id="home" ref={sectionRef} className="relative overflow-hidden"
+    // No background of its own: the journey canvas (journey/JourneyCanvas) is drawn behind it.
+    // Without WebGL2 the .hero-fallback still image shows instead (see index.css).
+    <section id="home" ref={sectionRef} className="hero-journey relative overflow-hidden"
       style={{ height: '100svh', display: 'flex', flexDirection: 'column' }}>
-
-      {/* ── Video layer with scroll-parallax scale ── */}
-      <motion.div className="absolute inset-0 z-0" style={{ scale: videoScale, transformOrigin: 'center center' }}>
-        <video
-          ref={videoRef}
-          autoPlay muted loop playsInline preload="auto"
-          poster="/hero-poster.jpg"
-          onLoadedData={() => { markVideoReady(); tryPlay(); }}
-          onCanPlay={() => { markVideoReady(); tryPlay(); }}
-          onPlaying={markVideoReady}
-          className="absolute inset-0 w-full h-full"
-          style={{ objectFit: 'cover', objectPosition: 'center center' }}
-        >
-          <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
-          <source src="/hero.mp4" type="video/mp4" />
-        </video>
-      </motion.div>
-
-      {/* ── Cinematic overlay stack ── */}
-      {/* Bottom-heavy gradient — dark crimson base so text sits on black */}
-      <div className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: 'linear-gradient(180deg, rgba(6,4,4,0.32) 0%, rgba(8,4,4,0.04) 30%, rgba(14,6,6,0.62) 72%, #0A0505 100%)' }} />
-      {/* Edge vignette with crimson tint */}
-      <div className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(10,4,4,0.68) 100%)' }} />
-      {/* Subtle crimson atmospheric glow — echoes the video's light source */}
-      <div className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 62% 38%, rgba(196,30,30,0.09) 0%, transparent 58%)' }} />
-      {/* Scroll-driven progressive darkening */}
-      <motion.div className="absolute inset-0 z-[2] pointer-events-none"
-        style={{ background: '#080404', opacity: scrollOverlay }} />
-
-      {/* ── Entrance veil — stays opaque until the video actually has a frame ready, so the
-          poster image is never visible on its own; the 900ms setTimeout above is just a
-          safety cap in case the video is slow or fails to load. ── */}
-      <motion.div className="absolute inset-0 z-[30] pointer-events-none" style={{ background: '#0A0505' }}
-        initial={{ opacity: 1 }} animate={{ opacity: videoReady ? 0 : 1 }} transition={{ duration: 0.5, ease: 'easeOut' }} />
+      <div className="hero-fallback absolute inset-0 z-0 pointer-events-none" aria-hidden="true" />
 
       {/* ── Main content ── */}
       <motion.div
@@ -179,9 +84,8 @@ export default function Hero() {
               Edinburgh, Scotland
             </span>
             <div className="hidden sm:block w-px h-3" style={{ background: 'rgba(237,232,220,0.15)' }} />
-            {/* Pill chip (not plain text) so it stays legible against the video regardless of
-                what's playing behind it at any given frame — plain crimson text on a red/bright
-                video highlight was reading as low-contrast. */}
+            {/* Pill chip (not plain text) so it stays legible against the moving background whatever is
+                behind it at any moment — plain crimson text on the bright red light read as low-contrast. */}
             <span
               className="inline-flex items-center rounded-full font-body text-xs tracking-[0.2em] uppercase"
               style={{
@@ -223,9 +127,8 @@ export default function Hero() {
         </h1>
 
         {/* CTA sub-row — the paragraph renders unanimated (no opacity/delay) because it's the
-            largest text node Chrome measures for LCP; a video can't be the LCP candidate (Chrome
-            doesn't score <video> frames), so this line — despite being visually minor — was the
-            actual element the metric was waiting on. The divider + buttons keep their original
+            largest text node Chrome can paint straight away; the headline animates in, and the canvas
+            behind isn't an LCP candidate, so this line is what the metric measures first. The divider + buttons keep their original
             fade-in untouched. */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10 lg:mt-14">
           <p className="font-body font-light text-sm leading-relaxed max-w-[260px]"

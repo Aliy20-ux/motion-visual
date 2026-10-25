@@ -135,17 +135,11 @@
          under throttled mobile, delaying first paint of every text node on the page for a font
          that (with display=swap) doesn't need to block anyway. The <noscript> covers JS-disabled. -->
     <link rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap"
       onload="this.onload=null;this.rel='stylesheet'" />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" />
     </noscript>
-    <link rel="preload" href="/hero-poster.jpg" as="image" fetchpriority="high" />
-    <!-- Discovered/fetched by the browser's preload scanner immediately on HTML parse, well
-         before the JS bundle downloads/parses/mounts React and renders the <video> tag —
-         without this, the video's first byte doesn't start fetching until after hydration. -->
-    <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 769px)" fetchpriority="high" />
-    <link rel="preload" href="/hero-mobile.mp4" as="video" type="video/mp4" media="(max-width: 768px)" fetchpriority="high" />
   </head>
   <body>
     <div id="root"></div>

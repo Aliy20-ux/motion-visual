@@ -1,6 +1,8 @@
 import { Suspense, lazy, useEffect } from 'react';
 import Nav from '../components/site/Nav';
 import Hero from '../components/site/Hero';
+import Fall from '../components/site/Fall';
+import JourneyCanvas from '../components/site/journey/JourneyCanvas';
 import Marquee from '../components/site/Marquee';
 import Clients from '../components/site/Clients';
 import Manifesto from '../components/site/Manifesto';
@@ -43,11 +45,14 @@ export default function Home() {
     <>
       <Nav />
       <main id="main-content">
+        {/* The journey: hero, the fall through the ring, then the services over the eclipse, all on one canvas */}
+        <JourneyCanvas />
         <Hero />
+        <Fall />
+        <WhyUs />
         <Marquee />
         <Clients />
         <Manifesto />
-        <WhyUs />
         <SelectedWork />
         <Testimonials />
         <About />
