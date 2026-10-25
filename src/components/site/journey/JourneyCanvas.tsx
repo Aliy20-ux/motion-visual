@@ -21,7 +21,14 @@ export default function JourneyCanvas() {
     // first, and the background fades in under the site's own 0.7s entrance fade.
     let cleanup: (() => void) | undefined;
     let cancelled = false;
-    const run = () => { if (!cancelled) cleanup = init(); };
+    const run = () => {
+      if (cancelled) return;
+      try { cleanup = init(); } catch (err) {
+        console.warn('Journey background failed to start; showing the recorded loop.', err);
+        document.documentElement.setAttribute('data-journey', 'off');
+        document.documentElement.setAttribute('data-journey-why', 'error');
+      }
+    };
     const hasIdle = 'requestIdleCallback' in window;
     const handle = hasIdle ? window.requestIdleCallback(run, { timeout: 700 }) : window.setTimeout(run, 250);
     return () => {
@@ -39,15 +46,18 @@ export default function JourneyCanvas() {
     const services = document.getElementById('why-us');
     if (!cv || !hero || !fall || !services) return undefined;
 
-    const off = () => document.documentElement.setAttribute('data-journey', 'off');
+    const off = (why: string) => {
+      document.documentElement.setAttribute('data-journey', 'off');
+      document.documentElement.setAttribute('data-journey-why', why); // for diagnosing a device that shows the loop instead
+    };
     const gl = cv.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' });
-    if (!gl) { off(); return undefined; }
+    if (!gl) { off('no-webgl2'); return undefined; }
     // Software rendering (hardware acceleration off, or no usable GPU) runs this scene far too slowly: use the recorded loop.
     const info = gl.getExtension('WEBGL_debug_renderer_info');
     const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
-    if (/swiftshader|llvmpipe|softpipe|software|microsoft basic render/i.test(renderer)) { off(); return undefined; }
+    if (/swiftshader|llvmpipe|softpipe|software|microsoft basic render/i.test(renderer)) { off('software-renderer'); return undefined; }
     // If the GPU resets mid-visit (it happens on laptops), the canvas goes blank: switch to the loop instead of a dead background.
-    cv.addEventListener('webglcontextlost', (e) => { e.preventDefault(); off(); });
+    cv.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stopDrawing(); off('context-lost'); });
 
     const u: Uniforms = {};
     const program = gl.createProgram()!;
@@ -63,7 +73,7 @@ export default function JourneyCanvas() {
     // Where supported, the GPU compiles in the background: poll instead of blocking the main thread on the result.
     const parallel = gl.getExtension('KHR_parallel_shader_compile') as { COMPLETION_STATUS_KHR: number } | null;
     const ready = () => !parallel || gl.getProgramParameter(program, parallel.COMPLETION_STATUS_KHR);
-    const fail = (why: unknown) => { console.warn('Journey background unavailable; showing the still version.', why); off(); };
+    const fail = (why: unknown, tag = 'gpu-error') => { console.warn('Journey background unavailable; showing the recorded loop.', why); stopDrawing(); off(tag); };
     const finishSetup = (): boolean => {
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
         fail(gl.getShaderInfoLog(fs) || gl.getShaderInfoLog(vs) || gl.getProgramInfoLog(program));
@@ -102,6 +112,8 @@ export default function JourneyCanvas() {
     let raf = 0;
     const frames: number[] = [];
     let lastAdapt = 0;
+    let slowChecks = 0;
+    const stopDrawing = () => { live = false; cancelAnimationFrame(raf); raf = 0; };
 
     const draw = (now: number) => {
       const fdt = Math.min(64, now - (lastFrame || now)) / 1000;
@@ -138,6 +150,9 @@ export default function JourneyCanvas() {
       if (!reduced && frames.length >= 30 && now - lastAdapt > 1200) {
         const avg = frames.reduce((a, b) => a + b, 0) / frames.length;
         lastAdapt = now;
+        // already at the lowest quality and still under ~14 fps, twice running: the recorded loop is smoother than this
+        slowChecks = avg > 70 && scale <= SCALE_LIMITS[0] ? slowChecks + 1 : 0;
+        if (slowChecks >= 2) { fail(`${Math.round(1000 / avg)} fps at lowest quality`, 'too-slow'); return; }
         if (avg > 24 && scale > SCALE_LIMITS[0]) { scale = Math.max(SCALE_LIMITS[0], scale - 0.1); resize(); frames.length = 0; }
         else if (avg < 14 && scale < SCALE_LIMITS[1]) { scale = Math.min(SCALE_LIMITS[1], scale + 0.05); resize(); frames.length = 0; }
       }
@@ -211,10 +226,13 @@ export default function JourneyCanvas() {
       if (reduced) requestAnimationFrame(draw);
       else start();
     };
-    const waitForCompile = () => { poll = 0; if (ready()) begin(); else poll = requestAnimationFrame(waitForCompile); };
+    // A driver that never finishes compiling this shader (some Windows graphics drivers) must not leave the hero empty.
+    const giveUp = window.setTimeout(() => { if (!running) { cancelAnimationFrame(poll); fail('shader still compiling after 6s', 'compile-timeout'); } }, 6000);
+    const waitForCompile = () => { poll = 0; if (ready()) { clearTimeout(giveUp); begin(); } else poll = requestAnimationFrame(waitForCompile); };
     waitForCompile();
 
     return () => {
+      clearTimeout(giveUp);
       cancelAnimationFrame(poll);
       cancelAnimationFrame(raf);
       if (!running) { gl.getExtension('WEBGL_lose_context')?.loseContext(); return; }
