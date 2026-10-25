@@ -108,7 +108,7 @@ export function FieldLabel({ htmlFor, label, optional, error }: {
           style={{ color: 'rgba(237,232,220,0.72)' }}>Optional</span>
       )}
       {error && (
-        <span id={htmlFor ? `${htmlFor}-error` : undefined} role="alert" className="font-body text-[11px]" style={{ color: '#F87171' }}>{error}</span>
+        <span id={htmlFor ? `${htmlFor}-error` : undefined} role="alert" className="font-body text-xs" style={{ color: '#F87171' }}>{error}</span>
       )}
     </div>
   );

@@ -170,7 +170,7 @@ export default function Flagship() {
                   style={{ minHeight: 52, borderRadius: 999, background: 'linear-gradient(135deg,#8B1010,#C41E1E)', color: '#F0EDED', letterSpacing: '0.06em' }}>
                   {loading ? 'Sending…' : 'Send Flagship enquiry'}
                 </button>
-                <p className="font-body font-light text-[11px] mt-3 text-center" style={{ color: 'rgba(237,232,220,0.72)' }}>
+                <p className="font-body font-light text-xs mt-3 text-center" style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Free consultation · No obligation
                 </p>
               </motion.form>

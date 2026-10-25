@@ -89,9 +89,9 @@ export default function Hero() {
             <span
               className="inline-flex items-center rounded-full font-body text-xs tracking-[0.2em] uppercase"
               style={{
-                color: '#F0B8B8',
-                background: 'rgba(196,30,30,0.16)',
-                border: '1px solid rgba(196,30,30,0.35)',
+                color: '#FFE4E0',
+                background: 'rgba(12,4,4,0.62)',
+                border: '1px solid rgba(240,122,124,0.55)',
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
                 padding: '5px 12px',

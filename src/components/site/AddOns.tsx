@@ -142,7 +142,7 @@ export default function AddOns() {
                       border: plan === p ? '1px solid transparent' : '1px solid rgba(237,232,220,0.12)',
                     }}>
                     {p} · {gbp(PLAN_PRICE[p])}
-                    <span style={{ opacity: 0.85, fontWeight: 300 }}> · {PLAN_PAGES[p] === 1 ? '1 landing page' : `up to ${PLAN_PAGES[p]} pages`}</span>
+                    <span style={{ opacity: 0.85, fontWeight: 400 }}> · {PLAN_PAGES[p] === 1 ? '1 landing page' : `up to ${PLAN_PAGES[p]} pages`}</span>
                   </button>
                 ))}
                 {/* Flagship is scoped on a call, so it has no price to build here: it leads to its own enquiry box. */}
@@ -162,7 +162,7 @@ export default function AddOns() {
               <div className="flex items-center justify-between gap-4 mt-6 flex-wrap">
                 <div>
                   <p className="font-body text-sm" style={{ color: '#EDE8DC' }}>Extra pages</p>
-                  <p className="font-body font-light text-[11px]" style={{ color: 'rgba(237,232,220,0.72)' }}>
+                  <p className="font-body font-light text-xs" style={{ color: 'rgba(237,232,220,0.72)' }}>
                     {gbp(EXTRA_PAGE_PRICE)} each · {calc.pagesTotal} page{calc.pagesTotal > 1 ? 's' : ''} in total
                   </p>
                 </div>
@@ -194,7 +194,7 @@ export default function AddOns() {
                     <div className="flex items-start justify-between gap-3 mb-4" style={{ padding: '12px 14px', borderRadius: 12, border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.08)' }}>
                       <p className="font-body font-light text-[12px] leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>{notice.text}</p>
                       <button type="button" onClick={notice.undo}
-                        className="font-body text-[11px] font-semibold underline underline-offset-4 cursor-pointer shrink-0"
+                        className="font-body text-xs font-semibold underline underline-offset-4 cursor-pointer shrink-0"
                         style={{ color: '#EDE8DC', minHeight: 44, padding: '0 4px' }}>
                         Undo
                       </button>
@@ -226,17 +226,17 @@ export default function AddOns() {
                           {included ? 'Included' : `+${gbp(a.price!)}`}
                         </span>
                       </span>
-                      <span className="block font-body font-light text-[11px] leading-relaxed mt-1.5" style={{ color: 'rgba(237,232,220,0.72)' }}>
+                      <span className="block font-body font-light text-xs leading-relaxed mt-1.5" style={{ color: 'rgba(237,232,220,0.72)' }}>
                         {a.blurb}
                       </span>
                     </button>
                   );
                 })}
               </div>
-              <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.72)' }}>
+              <p className="font-body font-light text-xs leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Add-ons marked Signature need the Signature plan: choosing one moves your build there, and you can undo it.
               </p>
-              <p className="font-body font-light text-[11px] leading-relaxed mt-2" style={{ color: 'rgba(237,232,220,0.72)' }}>
+              <p className="font-body font-light text-xs leading-relaxed mt-2" style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Add-ons are one-off prices. We never guarantee search rankings or business results.
               </p>
             </div>
@@ -265,7 +265,7 @@ export default function AddOns() {
               <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.72)' }}>Total, one-off</span>
               <span className="font-display italic gradient-text" style={{ fontSize: '2.2rem', lineHeight: 1 }}>{gbp(calc.total)}</span>
             </div>
-            <p className="font-body font-light text-[11px] mt-2" style={{ color: 'rgba(237,232,220,0.72)' }}>
+            <p className="font-body font-light text-xs mt-2" style={{ color: 'rgba(237,232,220,0.72)' }}>
               {`A deposit of ${gbp(depositFor(calc.total))} (25%) secures your start date.`}
             </p>
 
@@ -281,7 +281,7 @@ export default function AddOns() {
                     <p className="font-body font-light text-[12px] leading-relaxed" style={{ color: 'rgba(237,232,220,0.86)' }}>{calc.suggestion.text}</p>
                     {calc.suggestion.to === 'Signature' && (
                       <button type="button" onClick={() => { setPlan('Signature'); setExtraPages(Math.max(0, calc.pagesTotal - PLAN_PAGES.Signature)); }}
-                        className="font-body text-[11px] font-semibold underline underline-offset-4 mt-3 cursor-pointer" style={{ color: '#EDE8DC' }}>
+                        className="font-body text-xs font-semibold underline underline-offset-4 mt-3 cursor-pointer" style={{ color: '#EDE8DC' }}>
                         Switch to Signature
                       </button>
                     )}
