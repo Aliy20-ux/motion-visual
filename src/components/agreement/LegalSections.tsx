@@ -37,10 +37,10 @@ export default function LegalSections({ sections, startAt = 1, headingLevel = 3 
             <aside aria-label={`In plain English: ${s.heading}`}
               className="lg:col-start-2 lg:row-start-1 lg:row-span-2 self-start"
               style={{ borderLeft: '2px solid rgba(196,30,30,0.6)', paddingLeft: '0.9rem' }}>
-              <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-1.5" style={{ color: 'rgba(237,232,220,0.5)' }}>
+              <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-1.5" style={{ color: 'rgba(237,232,220,0.72)' }}>
                 In plain English
               </p>
-              <p className="font-body font-light text-[0.82rem] leading-relaxed" style={{ color: 'rgba(237,232,220,0.78)' }}>
+              <p className="font-body font-light text-[0.82rem] leading-relaxed" style={{ color: 'rgba(237,232,220,0.86)' }}>
                 {s.plain}
               </p>
             </aside>

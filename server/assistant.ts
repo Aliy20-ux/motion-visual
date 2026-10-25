@@ -51,10 +51,10 @@ export async function checkAllowance(env: AgreementEnv, ipHash: string, kind: 'c
 export const isEnabled = (env: AgreementEnv): boolean => !!env.ANTHROPIC_API_KEY && env.ASSISTANT_ENABLED !== 'false';
 
 export const SAFE_REPLIES = {
-  busy: 'I’m having trouble answering right now. Please press “Talk to a founder” and we’ll get back to you, or email admin.team@motion-visual.com.',
-  limit: 'You’ve sent a lot of messages in a short time. Please press “Talk to a founder” or email admin.team@motion-visual.com and we’ll help directly.',
+  busy: 'I’m having trouble answering right now. Please press “Talk to a founder” and we’ll get back to you, or email aliy20@hotmail.co.uk.',
+  limit: 'You’ve sent a lot of messages in a short time. Please press “Talk to a founder” or email aliy20@hotmail.co.uk and we’ll help directly.',
   declined: 'I can’t help with that one. Please press “Talk to a founder” and a member of the team will.',
-  off: 'The assistant isn’t available right now. Please press “Talk to a founder” or email admin.team@motion-visual.com.',
+  off: 'The assistant isn’t available right now. Please press “Talk to a founder” or email aliy20@hotmail.co.uk.',
 } as const;
 
 const line = (o: object) => JSON.stringify(o) + '\n';

@@ -91,7 +91,7 @@ export default function Pricing() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-              style={{ color: 'rgba(237,232,220,0.5)' }}>Investment</span>
+              style={{ color: 'rgba(237,232,220,0.72)' }}>Investment</span>
             <div className="w-8 h-px gradient-bg" />
           </div>
 
@@ -103,9 +103,9 @@ export default function Pricing() {
           </h2>
 
           <p className="font-body font-light text-sm leading-relaxed mx-auto mb-10"
-            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '44ch' }}>
+            style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '44ch' }}>
             One-off project pricing, no ongoing retainer.
-            Book a free call and we'll give you an exact number within 24 hours.
+            Send an enquiry via motion-visual.com and we'll give you an exact number within 24 hours.
           </p>
         </motion.div>
 
@@ -199,11 +199,11 @@ export default function Pricing() {
                       </div>
                     )}
                   </div>
-                  <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.72)' }}>
                     {tier.customPrice ? 'scoped together, on a call' : 'one-off'}
                   </p>
                   {!tier.customPrice && (
-                    <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                    <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.72)' }}>
                       {gbp(depositFor(tier.price!))} deposit to start (25%)
                     </p>
                   )}
@@ -220,7 +220,7 @@ export default function Pricing() {
 
                 {/* Description */}
                 <p className="font-body font-light text-xs leading-relaxed mb-6"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   {tier.description}
                 </p>
 
@@ -236,7 +236,7 @@ export default function Pricing() {
                         color: tier.isPopular ? '#C41E1E' : 'rgba(196,30,30,0.5)',
                       }} />
                       <span className="font-body font-light text-xs leading-relaxed"
-                        style={{ color: 'rgba(237,232,220,0.5)' }}>
+                        style={{ color: 'rgba(237,232,220,0.72)' }}>
                         {f}
                       </span>
                     </li>
@@ -269,32 +269,32 @@ export default function Pricing() {
             <p className="font-display italic mb-1" style={{ fontSize: 'clamp(1.3rem,2vw,1.8rem)', letterSpacing: '-0.02em', color: '#EDE8DC' }}>
               Care plans
             </p>
-            <p className="font-body font-light text-xs leading-relaxed mb-5" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body font-light text-xs leading-relaxed mb-5" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Optional, paid by direct debit. Unused updates don't roll over.
             </p>
             <ul className="flex flex-col">
               {carePlans.map(c => (
                 <li key={c.name} className="flex items-baseline justify-between gap-4 py-3"
                   style={{ borderTop: '1px solid rgba(237,232,220,0.07)' }}>
-                  <span className="font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.6)' }}>
+                  <span className="font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>
                     <span style={{ color: '#EDE8DC' }}>{c.name}</span> — {c.detail}
                   </span>
                   <span className="font-display italic shrink-0" style={{ fontSize: '1.25rem', color: '#EDE8DC' }}>{c.price}</span>
                 </li>
               ))}
             </ul>
-            <p className="font-body text-[11px] mt-4 mb-2 tracking-[0.18em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body text-[11px] mt-4 mb-2 tracking-[0.18em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Every care plan includes
             </p>
             <ul className="flex flex-wrap gap-2">
               {careIncludes.map(i => (
                 <li key={i} className="font-body text-[11px] rounded-full"
-                  style={{ padding: '5px 12px', border: '1px solid rgba(237,232,220,0.12)', color: 'rgba(237,232,220,0.6)' }}>
+                  style={{ padding: '5px 12px', border: '1px solid rgba(237,232,220,0.12)', color: 'rgba(237,232,220,0.8)' }}>
                   {i}
                 </li>
               ))}
             </ul>
-            <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Prefer to prepay a year? Pay for 11 payments and get 12. Moving to a smaller plan later?
               Keep-alive is £30 for hosting, security, backups and monitoring, with no updates — a small
               update is £15 and an extra page £80. Minimum term and notice rules are in our{' '}
@@ -318,21 +318,21 @@ export default function Pricing() {
               ].map(f => (
                 <li key={f} className="flex items-start gap-2.5">
                   <Check size={11} style={{ marginTop: 3, flexShrink: 0, color: '#C41E1E' }} />
-                  <span className="font-body font-light text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.6)' }}>{f}</span>
+                  <span className="font-body font-light text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>{f}</span>
                 </li>
               ))}
             </ul>
-            <p className="font-body text-[11px] mb-2 tracking-[0.18em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body text-[11px] mb-2 tracking-[0.18em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Not in the build price
             </p>
-            <p className="font-body font-light text-xs leading-relaxed mb-5" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body font-light text-xs leading-relaxed mb-5" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Care plans, add-ons and third-party costs such as booking tools, SMS, stock photos and
               fonts, which you pay directly.
             </p>
-            <p className="font-body text-[11px] mb-2 tracking-[0.18em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body text-[11px] mb-2 tracking-[0.18em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
               When the 14 days start
             </p>
-            <p className="font-body font-light text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body font-light text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.72)' }}>
               The clock starts once we have your content and your signed agreement. If we're waiting
               on you for content, feedback or approvals, our dates move back by the same amount.
             </p>
@@ -342,10 +342,10 @@ export default function Pricing() {
         {/* Upgrade path */}
         <motion.p
           className="font-body font-light text-xs leading-relaxed mx-auto mt-8 text-center"
-          style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '78ch' }}
+          style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '78ch' }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }}>
-          <span style={{ color: 'rgba(237,232,220,0.75)' }}>Upgrade path.</span>{' '}
+          <span style={{ color: 'rgba(237,232,220,0.86)' }}>Upgrade path.</span>{' '}
           Started on Essential? After a full year on Essential with an active care plan (counted from
           launch), you can upgrade to Signature for a one-off £800, less credit for anything you've
           already bought that Signature includes — up to 4 extra pages at £80 each and the Lite order
@@ -356,7 +356,7 @@ export default function Pricing() {
         {/* Payment note */}
         <motion.p
           className="text-center font-body font-light text-xs mt-8 mx-auto"
-          style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '78ch' }}
+          style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '78ch' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}>
           A deposit of 25% of the build price secures your start date. The balance is

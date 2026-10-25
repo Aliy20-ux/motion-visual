@@ -10,7 +10,7 @@ words at `motion-visual.com/review/<link>`, a founder approves it in the admin, 
    "Review links with no review yet".)
 2. **Client leaves a review.** Stars (required), words (optional), their name, and a tick to say we may show it. The link works
    once and expires after 90 days (pressing Create again gives an unused link fresh time).
-3. **Team is emailed** to `admin.team@` with the stars and words.
+3. **Team is emailed** to `aliy20@hotmail.co.uk` with the stars and words.
 4. **Founder approves or hides it** in the admin under Reviews. Only reviews the client agreed to show can be approved. We never
    edit the words. We only hold back anything abusive, spam or about the wrong business.
 5. **Home page** shows approved reviews. The section does not exist on the page until there is at least one, so there are no

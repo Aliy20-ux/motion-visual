@@ -59,7 +59,7 @@ function Notice({ title, children }: { title: string; children: React.ReactNode 
   return (
     <div className="py-16 text-center mx-auto" style={{ maxWidth: '44ch' }}>
       <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2.2rem,5vw,3.5rem)', letterSpacing: '-0.02em', color: '#EDE8DC' }}>{title}</h1>
-      <div className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.65)' }}>{children}</div>
+      <div className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>{children}</div>
     </div>
   );
 }
@@ -229,14 +229,14 @@ export default function Review() {
             <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2.4rem,6vw,4rem)', lineHeight: 1, letterSpacing: '-0.025em', color: '#EDE8DC' }} role="status">
               Thank you{first ? `, ${first}` : ''}.
             </h1>
-            <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.7)', maxWidth: '52ch' }}>
+            <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.84)', maxWidth: '52ch' }}>
               Your review is with our team. We read every one, and it helps the next business find us.
             </p>
 
             {googleUrl && (
               <div className="mt-10" style={{ padding: 'clamp(20px,3vw,28px)', borderRadius: 16, border: '1px solid rgba(237,232,220,0.1)', background: 'rgba(237,232,220,0.02)' }}>
                 <h2 className="font-display italic mb-2" style={{ fontSize: '1.6rem', color: '#EDE8DC' }}>Would you also post it on Google?</h2>
-                <p className="font-body font-light text-sm leading-relaxed mb-5" style={{ color: 'rgba(237,232,220,0.6)', maxWidth: '54ch' }}>
+                <p className="font-body font-light text-sm leading-relaxed mb-5" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '54ch' }}>
                   It takes a minute and means a lot to a small studio. Google only accepts reviews from your own Google account, so nothing is posted for you: copy your words, then paste them in.
                 </p>
                 <div className="flex flex-wrap gap-3">
@@ -264,7 +264,7 @@ export default function Review() {
             <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2.6rem,7vw,4.6rem)', lineHeight: 0.98, letterSpacing: '-0.03em', color: '#EDE8DC' }}>
               How did we <span className="gradient-text">do{first ? `, ${first}` : ''}?</span>
             </h1>
-            <p className="font-body font-light text-sm leading-relaxed mb-10" style={{ color: 'rgba(237,232,220,0.65)', maxWidth: '50ch' }}>
+            <p className="font-body font-light text-sm leading-relaxed mb-10" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '50ch' }}>
               A few honest words help the next business decide, and help us get better. It takes about a minute.
             </p>
 
@@ -300,7 +300,7 @@ export default function Review() {
             <label htmlFor="review-consent" className="flex items-start gap-3 cursor-pointer mb-2" style={{ minHeight: 44 }}>
               <input id="review-consent" type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)}
                 className="mt-1 shrink-0" style={{ width: 20, height: 20, accentColor: '#C41E1E' }} />
-              <span className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.75)' }}>
+              <span className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.86)' }}>
                 You can show my review, with my name{business.trim() ? ' and business' : ''}, on the Motion Visual website.
               </span>
             </label>

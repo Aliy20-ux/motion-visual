@@ -438,7 +438,7 @@ export default function AgreementEditor() {
               </button>
             ))}
           </div>
-          <p className="font-body font-light text-[11px] leading-relaxed -mt-2" style={{ color: 'rgba(237,232,220,0.45)' }}>
+          <p className="font-body font-light text-[11px] leading-relaxed -mt-2" style={{ color: 'rgba(237,232,220,0.62)' }}>
             {draft.clientType === 'consumer'
               ? 'Consumer agreements automatically include the 14-day cancellation right, the model cancellation form, and a “when should we start?” choice — required by law.'
               : 'Business terms include an entire-agreement clause and a liability cap.'}
@@ -555,7 +555,7 @@ export default function AgreementEditor() {
           </Button>
           <Button type="button" onClick={() => navigate(id ? `/studio/agreements/${id}` : '/studio/agreements')}>Cancel</Button>
         </div>
-        <p className="font-body font-light text-[11px] leading-relaxed -mt-3" style={{ color: 'rgba(237,232,220,0.45)' }}>
+        <p className="font-body font-light text-[11px] leading-relaxed -mt-3" style={{ color: 'rgba(237,232,220,0.62)' }}>
           Drafts stay private. You’ll review and send from the next screen. Once sent, an agreement can’t be edited — void it and send a revised copy instead.
         </p>
       </div>

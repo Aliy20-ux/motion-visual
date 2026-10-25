@@ -3,7 +3,7 @@ import { CARE_PLANS, DEPOSIT, carePriceLabel } from '../commercial';
 import { gbp } from '../pricing';
 import type { ClientType, Delivery, LegalSection } from './types';
 
-export const POLICY_VERSION = '2026-10-24.3';
+export const POLICY_VERSION = '2026-10-25.1';
 export const POLICY_UPDATED = 'October 2026';
 
 const DEPOSIT_RULE = DEPOSIT.rule;

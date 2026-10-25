@@ -12,6 +12,6 @@ export const onRequestPost = async ({ request, env }: Ctx): Promise<Response> =>
   } catch (err) {
     if (err instanceof RpcError && err.code === 'not_found') return json({ error: NOT_FOUND }, 404);
     const status = err instanceof RpcError ? err.status : 500;
-    return json({ error: 'This page isn’t available right now. Please email admin.team@motion-visual.com.' }, status === 503 ? 503 : 500);
+    return json({ error: 'This page isn’t available right now. Please email aliy20@hotmail.co.uk.' }, status === 503 ? 503 : 500);
   }
 };

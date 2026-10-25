@@ -60,7 +60,7 @@ export default function Footer() {
                 viewport={{ once: true }} transition={{ duration: 0.7 }}>
                 <div className="w-8 h-px gradient-bg" />
                 <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Ready to begin?
                 </span>
               </motion.div>
@@ -99,15 +99,15 @@ export default function Footer() {
 
               <div className="flex flex-col gap-3">
                 <span className="font-body text-[10px] tracking-[0.28em] uppercase"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Get in touch
                 </span>
-                <a href="mailto:admin.team@motion-visual.com"
+                <a href="mailto:aliy20@hotmail.co.uk"
                   className="font-body text-sm transition-opacity hover:opacity-70"
-                  style={{ color: 'rgba(237,232,220,0.55)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-                  admin.team@motion-visual.com
+                  style={{ color: 'rgba(237,232,220,0.72)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                  aliy20@hotmail.co.uk
                 </a>
-                <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Edinburgh, Scotland
                 </span>
               </div>
@@ -118,9 +118,9 @@ export default function Footer() {
                   style={{ padding: '16px 36px', color: '#F0EDED' }}>
                   Start Your Project <ArrowUpRight size={14} />
                 </a>
-                <a href="mailto:admin.team@motion-visual.com"
+                <a href="mailto:aliy20@hotmail.co.uk"
                   className="font-body text-xs text-center transition-opacity hover:opacity-70"
-                  style={{ color: 'rgba(237,232,220,0.5)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                  style={{ color: 'rgba(237,232,220,0.72)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
                   or email us directly
                 </a>
               </div>
@@ -144,12 +144,12 @@ export default function Footer() {
               <div className="flex items-center gap-2.5">
                 <img src="/logo-dark.png" alt="" className="h-10 w-10 shrink-0 object-contain" />
                 <span className="font-body text-[10px] tracking-[0.22em] uppercase"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Motion Visual
                 </span>
               </div>
               <p className="font-body font-light text-xs leading-relaxed"
-                style={{ color: 'rgba(237,232,220,0.5)' }}>
+                style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Edinburgh's premium web design agency, serving clients across the UK. Award-quality sites delivered in days, not months.
               </p>
               <span className="gradient-text font-display italic"
@@ -161,14 +161,14 @@ export default function Footer() {
             {/* Navigation */}
             <div className="flex flex-col gap-5">
               <span className="font-body text-[9px] tracking-[0.32em] uppercase"
-                style={{ color: 'rgba(237,232,220,0.5)' }}>
+                style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Navigate
               </span>
               <nav aria-label="Footer" className="flex flex-col gap-3">
                 {navLinks.map(link => (
                   <a key={link.label} href={link.href} onClick={scrollToHash(link.href)}
                     className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
-                    style={{ color: 'rgba(237,232,220,0.5)' }}>
+                    style={{ color: 'rgba(237,232,220,0.72)' }}>
                     {link.label}
                   </a>
                 ))}
@@ -178,7 +178,7 @@ export default function Footer() {
             {/* Social */}
             <div className="flex flex-col gap-5">
               <span className="font-body text-[9px] tracking-[0.32em] uppercase"
-                style={{ color: 'rgba(237,232,220,0.5)' }}>
+                style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Follow
               </span>
               <nav aria-label="Social media" className="flex flex-col gap-3">
@@ -186,7 +186,7 @@ export default function Footer() {
                   <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
                     aria-label={`Motion Visual on ${link.label} (opens in a new tab)`}
                     className="group font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit inline-flex items-center gap-1.5"
-                    style={{ color: 'rgba(237,232,220,0.5)' }}>
+                    style={{ color: 'rgba(237,232,220,0.72)' }}>
                     {link.label}
                     <ArrowUpRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
@@ -197,17 +197,17 @@ export default function Footer() {
             {/* Contact */}
             <div className="flex flex-col gap-5">
               <span className="font-body text-[9px] tracking-[0.32em] uppercase"
-                style={{ color: 'rgba(237,232,220,0.5)' }}>
+                style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Contact
               </span>
               <div className="flex flex-col gap-3">
-                <a href="mailto:admin.team@motion-visual.com"
+                <a href="mailto:aliy20@hotmail.co.uk"
                   className="font-body text-sm transition-opacity hover:opacity-80 cursor-pointer w-fit"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
-                  admin.team@motion-visual.com
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
+                  aliy20@hotmail.co.uk
                 </a>
                 <span className="font-body text-sm"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Edinburgh, Scotland
                 </span>
               </div>
@@ -219,7 +219,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid rgba(237,232,220,0.05)', padding: '20px clamp(24px,5vw,88px)' }}>
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.72)' }}>
               © 2026 {COMPANY.legalName}
               <span className="block">
                 Registered in {COMPANY.registeredIn}, company no. {COMPANY.companyNumber}. Registered office: {COMPANY.registeredOffice}.
@@ -229,7 +229,7 @@ export default function Footer() {
               {legalLinks.map(link => (
                 <Link key={link.label} to={link.href}
                   className="font-body text-xs transition-opacity hover:opacity-70 cursor-pointer"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   {link.label}
                 </Link>
               ))}

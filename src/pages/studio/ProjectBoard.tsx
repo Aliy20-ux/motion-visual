@@ -30,7 +30,7 @@ export default function ProjectBoard() {
   return (
     <div>
       <PageTitle eyebrow="Studio">Projects</PageTitle>
-      <p className="font-body font-light text-sm -mt-4 mb-10 max-w-xl" style={{ color: 'rgba(237,232,220,0.7)' }}>
+      <p className="font-body font-light text-sm -mt-4 mb-10 max-w-xl" style={{ color: 'rgba(237,232,220,0.84)' }}>
         Every project sorts itself. It moves to Completed the moment the client signs its Completion Sign-off, so there’s nothing to update by hand.
       </p>
 

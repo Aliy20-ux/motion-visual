@@ -14,7 +14,7 @@ export default function Privacy() {
         website or get in touch with us, why we collect it, and what your rights are.
       </p>
       <p>
-        Contact: <a href="mailto:admin.team@motion-visual.com">admin.team@motion-visual.com</a>
+        Contact: <a href="mailto:aliy20@hotmail.co.uk">aliy20@hotmail.co.uk</a>
       </p>
       <p>{COMPANY_DISCLOSURE}</p>
 
@@ -100,7 +100,7 @@ export default function Privacy() {
       </ul>
       <p>
         To exercise any of these rights, email{' '}
-        <a href="mailto:admin.team@motion-visual.com">admin.team@motion-visual.com</a>.
+        <a href="mailto:aliy20@hotmail.co.uk">aliy20@hotmail.co.uk</a>.
       </p>
 
       <h2>Complaints</h2>

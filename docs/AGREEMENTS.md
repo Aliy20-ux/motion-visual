@@ -18,7 +18,7 @@ signed copy by email.
 3. **Client reads and signs.** Each clause has a plain-English note. They tick
    the confirmations, type their name and sign. Consumers also choose whether
    you start now or after their 14-day cancellation period.
-4. **Signed.** The client and `admin.team@` both get the full signed copy
+4. **Signed.** The client and `aliy20@hotmail.co.uk` both get the full signed copy
    (terms, policy, signature record) by email. The studio shows the audit
    trail: sent, opened (with IP/device), questions, signed.
 

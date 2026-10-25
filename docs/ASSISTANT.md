@@ -14,7 +14,7 @@ and hands anyone who wants a person to the team ("Talk to a founder").
 - **Switch:** no key, or `ASSISTANT_ENABLED=false`, or the usage limiter unreachable = the chat button does not appear and the
   chat code is never downloaded.
 - **Nothing is stored** from the chat itself. If a visitor presses "Talk to a founder", their details and the conversation go to
-  `admin.team@` by email and into the CRM as a "Website Chat" lead.
+  `aliy20@hotmail.co.uk` by email and into the CRM as a "Website Chat" lead.
 
 ## One-time setup
 

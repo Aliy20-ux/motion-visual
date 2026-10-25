@@ -37,7 +37,7 @@ function DenialParagraph() {
       className="font-display italic"
       style={{
         fontSize: 'clamp(1.05rem,1.9vw,2.1rem)',
-        color: 'rgba(237,232,220,0.72)',
+        color: 'rgba(237,232,220,0.84)',
         letterSpacing: '-0.018em',
         lineHeight: 1.4,
         maxWidth: '55ch',
@@ -101,7 +101,7 @@ export default function Manifesto() {
           viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div className="w-8 h-px gradient-bg" />
           <span className="font-body text-[10px] tracking-[0.3em] uppercase"
-            style={{ color: 'rgba(237,232,220,0.5)' }}>
+            style={{ color: 'rgba(237,232,220,0.72)' }}>
             Our Manifesto
           </span>
         </motion.div>
@@ -179,7 +179,7 @@ export default function Manifesto() {
             fontSize: 'clamp(1.35rem,2.4vw,2.8rem)',
             lineHeight: 1.18,
             letterSpacing: '-0.022em',
-            color: 'rgba(237,232,220,0.5)',
+            color: 'rgba(237,232,220,0.72)',
           }}>
           Every pixel, every transition,<br />every word is intentional.
         </p>
@@ -188,7 +188,7 @@ export default function Manifesto() {
         <div className="flex flex-col gap-5">
           <p
             className="font-body font-light text-sm leading-relaxed"
-            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '42ch' }}>
+            style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '42ch' }}>
             The difference between a decent site and a brand statement isn't budget —
             it's the standard held on every single decision, every single day.
           </p>

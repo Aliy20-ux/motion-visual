@@ -156,7 +156,7 @@ export default function Terms() {
       <h2>Contact</h2>
       <p>
         Questions about these terms? Email{' '}
-        <a href="mailto:admin.team@motion-visual.com">admin.team@motion-visual.com</a>.
+        <a href="mailto:aliy20@hotmail.co.uk">aliy20@hotmail.co.uk</a>.
       </p>
       <p>{COMPANY_DISCLOSURE}</p>
     </LegalLayout>

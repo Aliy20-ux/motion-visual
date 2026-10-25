@@ -71,7 +71,7 @@ export default function Studio() {
         ) : memberName === null ? (
           <div className="max-w-md">
             <PageTitle>Not on the team</PageTitle>
-            <p className="font-body font-light text-sm mb-6" style={{ color: 'rgba(237,232,220,0.7)' }}>
+            <p className="font-body font-light text-sm mb-6" style={{ color: 'rgba(237,232,220,0.84)' }}>
               {session.user.email} isn’t a Motion Visual team member, so there’s nothing to show here.
             </p>
             <Button onClick={() => supabase.auth.signOut()}>Sign out</Button>
@@ -111,7 +111,7 @@ function SignIn() {
   return (
     <form onSubmit={submit} className="max-w-sm flex flex-col gap-5">
       <PageTitle eyebrow="Team sign-in">Client agreements</PageTitle>
-      <p className="font-body font-light text-sm -mt-4" style={{ color: 'rgba(237,232,220,0.65)' }}>
+      <p className="font-body font-light text-sm -mt-4" style={{ color: 'rgba(237,232,220,0.8)' }}>
         Use your CRM login.
       </p>
       <div>

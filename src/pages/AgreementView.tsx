@@ -56,7 +56,7 @@ function Notice({ title, children }: { title: string; children: React.ReactNode 
   return (
     <div className="py-24 text-center mx-auto" style={{ maxWidth: '44ch' }}>
       <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2.2rem,5vw,3.5rem)', letterSpacing: '-0.02em', color: '#EDE8DC' }}>{title}</h1>
-      <div className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.65)' }}>{children}</div>
+      <div className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>{children}</div>
     </div>
   );
 }
@@ -148,7 +148,7 @@ export default function AgreementView() {
 
       {!signed && (
         <div className="no-print flex flex-wrap items-center justify-between gap-4 mb-12 pb-6" style={{ borderBottom: '1px solid rgba(237,232,220,0.07)' }}>
-          <p className="font-body font-light text-sm" style={{ color: 'rgba(237,232,220,0.65)', maxWidth: '52ch' }}>
+          <p className="font-body font-light text-sm" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '52ch' }}>
             Please read your {KIND_LABEL[doc.kind].toLowerCase()} below. Nothing is binding until you sign at the end.
           </p>
           <div className="flex items-center gap-4">
@@ -349,12 +349,12 @@ function QuestionBox({ token }: { token: string }) {
     <aside aria-label="Ask a question" className="self-start lg:pt-3" style={{ borderLeft: '2px solid rgba(196,30,30,0.6)', paddingLeft: '0.9rem' }}>
       <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-1.5" style={{ color: muted }}>Not sure about something?</p>
       {state === 'sent' ? (
-        <p role="status" className="font-body font-light text-[0.82rem] leading-relaxed" style={{ color: 'rgba(237,232,220,0.78)' }}>
+        <p role="status" className="font-body font-light text-[0.82rem] leading-relaxed" style={{ color: 'rgba(237,232,220,0.86)' }}>
           Thanks — we’ve got your question and will reply by email. If anything needs changing, we’ll send you a revised agreement.
         </p>
       ) : !open ? (
         <>
-          <p className="font-body font-light text-[0.82rem] leading-relaxed mb-3" style={{ color: 'rgba(237,232,220,0.78)' }}>
+          <p className="font-body font-light text-[0.82rem] leading-relaxed mb-3" style={{ color: 'rgba(237,232,220,0.86)' }}>
             Ask before you sign. If the answer changes anything, we’ll send a revised version.
           </p>
           <button type="button" onClick={() => setOpen(true)} aria-expanded={open}

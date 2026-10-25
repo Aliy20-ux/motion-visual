@@ -82,8 +82,8 @@ export default function Flagship() {
     else {
       const status = (emailResult.reason as { status?: number } | undefined)?.status;
       setFormError(status === 429
-        ? 'You’ve sent a few enquiries already. Please email us at admin.team@motion-visual.com and we’ll help directly.'
-        : 'Something went wrong. Email us at admin.team@motion-visual.com');
+        ? 'You’ve sent a few enquiries already. Please email us at aliy20@hotmail.co.uk and we’ll help directly.'
+        : 'Something went wrong. Email us at aliy20@hotmail.co.uk');
     }
   };
 
@@ -100,22 +100,22 @@ export default function Flagship() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.75, ease: EASE }}>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>Flagship</span>
+            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Flagship</span>
           </div>
           <h2 id="flagship-heading" className="font-display italic mb-6" style={{ fontSize: 'clamp(2.4rem,5.2vw,5.4rem)', lineHeight: 0.95, letterSpacing: '-0.025em' }}>
             <span style={{ color: '#EDE8DC' }}>Built to </span><span className="gradient-text">own your market.</span>
           </h2>
-          <p className="font-body font-light text-sm leading-relaxed mb-8" style={{ color: 'rgba(237,232,220,0.6)', maxWidth: '48ch' }}>
+          <p className="font-body font-light text-sm leading-relaxed mb-8" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '48ch' }}>
             {FLAGSHIP.description} Flagship projects are scoped with you on a call, so you only pay for what you need. Tell us what you’re building and a founder will come back to you.
           </p>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
             {FLAGSHIP.features.map(f => (
-              <li key={f} className="flex items-start gap-2.5 font-body text-[13px] leading-snug" style={{ color: 'rgba(237,232,220,0.75)' }}>
+              <li key={f} className="flex items-start gap-2.5 font-body text-[13px] leading-snug" style={{ color: 'rgba(237,232,220,0.86)' }}>
                 <Check size={14} className="shrink-0 mt-0.5" style={{ color: '#C41E1E' }} aria-hidden="true" /> {f}
               </li>
             ))}
           </ul>
-          <p className="font-body font-light text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
+          <p className="font-body font-light text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.72)' }}>
             Flagship care plan: {carePriceLabel('flagship').replace(/^From/, 'from')} a month, scoped with you, with up to {CARE_PLANS.flagship.updatesPerMonth} updates (fair use) and a quarterly review call.
           </p>
         </motion.div>
@@ -129,7 +129,7 @@ export default function Flagship() {
               <motion.div key="done" className="py-10 text-center" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: EASE }}>
                 <span className="w-14 h-14 rounded-full gradient-bg flex items-center justify-center mx-auto mb-6" aria-hidden="true"><Check size={22} style={{ color: '#F0EDED' }} /></span>
                 <h3 className="font-display italic mb-3" style={{ fontSize: 'clamp(2rem,3.4vw,3rem)', lineHeight: 1, color: '#EDE8DC' }}>Thank you.</h3>
-                <p className="font-body font-light text-sm" style={{ color: 'rgba(237,232,220,0.6)', lineHeight: 1.7, maxWidth: '38ch', margin: '0 auto' }}>
+                <p className="font-body font-light text-sm" style={{ color: 'rgba(237,232,220,0.8)', lineHeight: 1.7, maxWidth: '38ch', margin: '0 auto' }}>
                   Thanks {form.name.split(' ')[0] || 'there'}. One of our founders will reach out at <span style={{ color: '#EDE8DC' }}>{form.email}</span> to arrange a scoping call.
                 </p>
               </motion.div>
@@ -170,7 +170,7 @@ export default function Flagship() {
                   style={{ minHeight: 52, borderRadius: 999, background: 'linear-gradient(135deg,#8B1010,#C41E1E)', color: '#F0EDED', letterSpacing: '0.06em' }}>
                   {loading ? 'Sending…' : 'Send Flagship enquiry'}
                 </button>
-                <p className="font-body font-light text-[11px] mt-3 text-center" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                <p className="font-body font-light text-[11px] mt-3 text-center" style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Free consultation · No obligation
                 </p>
               </motion.form>

@@ -32,12 +32,12 @@ export default function Clients() {
           <div className="flex items-center gap-4">
             <div className="w-8 h-px gradient-bg" />
             <span className="font-body text-[10px] tracking-[0.3em] uppercase"
-              style={{ color: 'rgba(237,232,220,0.5)' }}>
+              style={{ color: 'rgba(237,232,220,0.72)' }}>
               Trusted by Edinburgh's finest
             </span>
           </div>
           <span className="font-body text-[10px] tracking-[0.18em] uppercase hidden md:block"
-            style={{ color: 'rgba(237,232,220,0.5)' }}>
+            style={{ color: 'rgba(237,232,220,0.72)' }}>
             4 live projects
           </span>
         </motion.div>
@@ -66,7 +66,7 @@ export default function Clients() {
 
               <div>
                 <p className="font-body text-[9px] tracking-[0.26em] uppercase mb-3 transition-colors duration-300"
-                  style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  style={{ color: 'rgba(237,232,220,0.72)' }}>
                   {client.industry}
                 </p>
                 <p className={`font-display italic leading-tight transition-colors duration-300 ${isTouch ? 'gradient-text' : 'group-hover:gradient-text'}`}
@@ -80,8 +80,8 @@ export default function Clients() {
                 </p>
               </div>
 
-              <p className={`font-body text-[9px] mt-3 transition-opacity duration-300 ${isTouch ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                style={{ color: 'rgba(196,30,30,0.6)', letterSpacing: '0.06em' }}>
+              <p className={`font-body text-[11px] mt-3 transition-opacity duration-300 ${isTouch ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                style={{ color: '#F07A7C', letterSpacing: '0.06em' }}>
                 {client.location}
               </p>
             </motion.div>
