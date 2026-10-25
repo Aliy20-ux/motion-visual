@@ -279,7 +279,7 @@ export default function Pricing() {
                   <span className="font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>
                     <span style={{ color: '#EDE8DC' }}>{c.name}</span> — {c.detail}
                   </span>
-                  <span className="font-display italic shrink-0" style={{ fontSize: '1.25rem', color: '#EDE8DC' }}>{c.price}</span>
+                  <span className="font-body font-medium shrink-0 whitespace-nowrap" style={{ fontSize: '1.3rem', letterSpacing: '-0.01em', fontVariantNumeric: 'lining-nums tabular-nums', color: '#F6F2EA' }}>{c.price}</span>
                 </li>
               ))}
             </ul>
