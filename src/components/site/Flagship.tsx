@@ -100,7 +100,7 @@ export default function Flagship() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.75, ease: EASE }}>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Flagship</span>
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Flagship</span>
           </div>
           <h2 id="flagship-heading" className="font-display italic mb-6" style={{ fontSize: 'clamp(2.4rem,5.2vw,5.4rem)', lineHeight: 0.95, letterSpacing: '-0.025em' }}>
             <span style={{ color: '#EDE8DC' }}>Built to </span><span className="gradient-text">own your market.</span>

@@ -115,7 +115,7 @@ export default function Nav() {
             <img src="/logo-dark.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
             {/* Wordmark */}
             <span
-              className="hidden sm:inline font-body text-[10px] tracking-[0.22em] uppercase transition-opacity duration-200 group-hover:opacity-100"
+              className="hidden sm:inline font-body text-[11px] tracking-[0.22em] uppercase transition-opacity duration-200 group-hover:opacity-100"
               style={{ color: 'rgba(244,241,236,0.5)' }}
             >
               Motion Visual

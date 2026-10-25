@@ -48,7 +48,8 @@ body::after {
    group-hover:gradient-text actually compiles — a plain CSS class silently
    produces nothing when combined with a variant prefix in v4. */
 @utility gradient-text {
-  background: linear-gradient(135deg, #C41E1E 0%, #E83838 52%, #D0D0D0 100%);
+  /* Brightened from #C41E1E → #E83838: the old reds were hard to read in thin letters on the near-black page. Still red, now 5:1 or better. */
+  background: linear-gradient(135deg, #EE5A5E 0%, #F57F7F 52%, #F4D4CE 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -165,10 +166,10 @@ a.gradient-bg:active, button.gradient-bg:active {
 .legal-prose h2:first-child { margin-top: 0; }
 .legal-prose p {
   font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: rgba(237,232,220,0.72);
+  font-weight: 400;
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: rgba(237,232,220,0.9);
   margin: 0 0 1rem;
 }
 .legal-prose ul {
@@ -256,7 +257,7 @@ html[data-journey="off"] .hero-fallback { display: block; background: center / c
 html[data-journey="off"] #fall { background: #050303; }
 html[data-journey="off"] .journey-services { background: radial-gradient(120% 55% at 50% 46%, rgba(110, 12, 14, 0.55), transparent 62%), #070405; }
 
-.journey-red { background: linear-gradient(100deg, #C93236, #A11D21 55%, #E2A9A9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.journey-red { background: linear-gradient(100deg, #EE5A5E, #E24B4F 55%, #F4C6C1); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 .journey-statement { position: relative; isolation: isolate; font-weight: 400; font-size: clamp(2.6rem, 8vw, 8rem); line-height: 0.95; letter-spacing: -0.02em; text-align: center; color: #EDE8DC; will-change: opacity, transform; }
 .journey-statement::before { content: ""; position: absolute; inset: -35% -18%; z-index: -1; background: radial-gradient(closest-side, rgba(5, 2, 2, 0.72), rgba(5, 2, 2, 0)); }
@@ -291,3 +292,25 @@ html[data-journey="off"] .journey-services { background: radial-gradient(120% 55
   .journey-cards li { opacity: 1; transform: none; transition: none; }
   .journey-cards li::before { transform: scaleX(1); transition: none; }
 }
+
+/* ── Readability of the display face ──
+   Italiana is a hairline face. A faint stroke thickens it so it stays readable: more at small sizes
+   (0.4px minimum), capped so big headlines don't turn heavy. Gradient-filled text gets a coral stroke instead
+   (its fill is transparent, so a cream stroke would show as an outline). */
+.font-display, .legal-prose h2 { -webkit-text-stroke: clamp(0.4px, 0.02em, 0.75px) currentColor; }
+.gradient-text, .journey-red { -webkit-text-stroke: clamp(0.4px, 0.018em, 0.7px) #F26A6C; }   /* a coral stroke in the gradient's own colours; cream would outline it */
+[class*="group-hover:gradient-text"] { -webkit-text-stroke: 0; }
+@media (hover: hover) { .group:hover [class*="group-hover:gradient-text"] { -webkit-text-stroke: clamp(0.4px, 0.018em, 0.7px) #F26A6C; } }
+
+/* Hero: a soft dark pool behind the headline so it never fights the red light, and a shadow on the letters */
+.hero-journey::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse 85% 62% at 24% 66%, rgba(6, 2, 2, 0.62), rgba(6, 2, 2, 0) 72%); }
+.hero-journey h1 { text-shadow: 0 2px 26px rgba(6, 2, 2, 0.7), 0 0 3px rgba(6, 2, 2, 0.55); }
+.hero-last { color: #FFD3CD; }
+
+/* Inter Light (300) is too thin for small text on a dark page, especially on phones: use Regular (400) everywhere.
+   Unlayered, so it wins over the font-light utility. */
+.font-light { font-weight: 400; }
+.legal-prose li, .legal-prose td { font-weight: 400; }
+/* the long reading pages (Terms, Privacy, Cancellation, agreements) and the 404: a touch larger and brighter */
+.legal-prose li { font-size: 0.97rem; line-height: 1.75; color: rgba(237, 232, 220, 0.9); }

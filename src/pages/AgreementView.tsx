@@ -36,9 +36,9 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="no-print flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
+          <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
         </Link>
-        <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Client agreement</span>
+        <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Client agreement</span>
       </header>
       <main id="main-content" className="mx-auto" style={{ maxWidth: 1080, padding: 'clamp(12px,3vw,24px) clamp(20px,5vw,88px) clamp(80px,10vw,140px)' }}>
         {children}
@@ -254,7 +254,7 @@ function SignPanel({ token, agreement, onSigned }: {
           </h2>
 
           <fieldset className="flex flex-col gap-4">
-            <legend className="font-body text-[9px] tracking-[0.28em] uppercase mb-4" style={{ color: muted }}>Please confirm</legend>
+            <legend className="font-body text-[11px] tracking-[0.28em] uppercase mb-4" style={{ color: muted }}>Please confirm</legend>
             {doc.consents.map(c => (
               <label key={c.id} className="flex gap-3 items-start cursor-pointer">
                 <input type="checkbox" checked={!!checks[c.id]}
@@ -267,7 +267,7 @@ function SignPanel({ token, agreement, onSigned }: {
 
           {doc.startChoiceRequired && doc.startChoices && (
             <fieldset className="flex flex-col gap-4">
-              <legend className="font-body text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>When should we start?</legend>
+              <legend className="font-body text-[11px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>When should we start?</legend>
               <p className="font-body font-light text-xs leading-relaxed" style={{ color: muted, maxWidth: '62ch' }}>
                 As a consumer you have 14 days to cancel. We can start now, or wait until those 14 days have passed.
               </p>
@@ -282,7 +282,7 @@ function SignPanel({ token, agreement, onSigned }: {
           )}
 
           <div>
-            <label htmlFor="signer-name" className="font-body text-[9px] tracking-[0.28em] uppercase" style={{ color: muted }}>
+            <label htmlFor="signer-name" className="font-body text-[11px] tracking-[0.28em] uppercase" style={{ color: muted }}>
               Type your full name to sign
             </label>
             <input id="signer-name" type="text" value={name} onChange={e => { setName(e.target.value); clearError(); }} autoComplete="name"
@@ -347,7 +347,7 @@ function QuestionBox({ token }: { token: string }) {
 
   return (
     <aside aria-label="Ask a question" className="self-start lg:pt-3" style={{ borderLeft: '2px solid rgba(196,30,30,0.6)', paddingLeft: '0.9rem' }}>
-      <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-1.5" style={{ color: muted }}>Not sure about something?</p>
+      <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-1.5" style={{ color: muted }}>Not sure about something?</p>
       {state === 'sent' ? (
         <p role="status" className="font-body font-light text-[0.82rem] leading-relaxed" style={{ color: 'rgba(237,232,220,0.86)' }}>
           Thanks — we’ve got your question and will reply by email. If anything needs changing, we’ll send you a revised agreement.

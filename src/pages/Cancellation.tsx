@@ -20,16 +20,16 @@ export default function Cancellation() {
       updated={POLICY_UPDATED}
       prose={false}>
       <section aria-label="At a glance" className="mb-10 p-6 sm:p-8" style={{ border: '1px solid rgba(237,232,220,0.1)', background: 'rgba(237,232,220,0.03)' }}>
-        <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.72)' }}>At a glance</p>
+        <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.72)' }}>At a glance</p>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
           {atAGlance.map(line => (
-            <li key={line} className="flex gap-3 font-body font-light text-sm leading-relaxed" style={{ color: '#EDE8DC' }}>
+            <li key={line} className="flex gap-3 font-body text-[15px] leading-relaxed" style={{ color: '#F6F2EA' }}>
               <span aria-hidden="true" className="mt-2.5 w-3 h-px shrink-0 gradient-bg" />
               {line}
             </li>
           ))}
         </ul>
-        <p className="font-body font-light text-xs leading-relaxed mt-6" style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '62ch' }}>
+        <p className="font-body text-sm leading-relaxed mt-6" style={{ color: 'rgba(237,232,220,0.88)', maxWidth: '62ch' }}>
           Every project has a signed agreement, and this policy forms part of it. The plain-English notes beside each section are there to help; the full wording is what counts.
         </p>
       </section>

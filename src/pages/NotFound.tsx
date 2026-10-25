@@ -27,7 +27,7 @@ export default function NotFound() {
       <header className="flex items-center" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
+          <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
             Motion Visual
           </span>
         </Link>
@@ -35,7 +35,7 @@ export default function NotFound() {
 
       <main className="flex-1 flex flex-col items-center justify-center text-center"
         style={{ padding: 'clamp(24px,5vw,88px)' }}>
-        <span className="font-body text-[10px] tracking-[0.32em] uppercase mb-6"
+        <span className="font-body text-[11px] tracking-[0.32em] uppercase mb-6"
           style={{ color: 'rgba(237,232,220,0.62)' }}>
           404
         </span>

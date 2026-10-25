@@ -90,7 +90,7 @@ export default function Pricing() {
 
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase"
               style={{ color: 'rgba(237,232,220,0.72)' }}>Investment</span>
             <div className="w-8 h-px gradient-bg" />
           </div>
@@ -124,7 +124,7 @@ export default function Pricing() {
               {tier.isPopular && (
                 <div className="absolute -top-[14px] left-0 right-0 flex justify-center z-20 pointer-events-none">
                   <div className="inline-flex items-center gradient-bg rounded-full px-4 py-1.5">
-                    <span className="font-body font-semibold text-[10px] tracking-[0.22em] uppercase"
+                    <span className="font-body font-semibold text-[11px] tracking-[0.22em] uppercase"
                       style={{ color: '#F0EDED' }}>Popular</span>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default function Pricing() {
 
                 {/* Tagline — red italic */}
                 <p className="font-display italic mb-2"
-                  style={{ fontSize: 'clamp(0.9rem,1.3vw,1.05rem)', color: '#E5534B', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+                  style={{ fontSize: 'clamp(1.15rem,1.4vw,1.2rem)', color: '#F07A7C', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                   {tier.tagline}
                 </p>
 
@@ -279,7 +279,7 @@ export default function Pricing() {
                   <span className="font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>
                     <span style={{ color: '#EDE8DC' }}>{c.name}</span> — {c.detail}
                   </span>
-                  <span className="font-display italic shrink-0" style={{ fontSize: '1.25rem', color: '#EDE8DC' }}>{c.price}</span>
+                  <span className="font-display italic shrink-0" style={{ fontSize: '1.5rem', color: '#F6F2EA' }}>{c.price}</span>
                 </li>
               ))}
             </ul>

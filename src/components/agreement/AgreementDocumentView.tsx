@@ -8,7 +8,7 @@ const body = 'rgba(237,232,220,0.72)';
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-3" style={{ color: muted }}>{children}</p>
+    <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-3" style={{ color: muted }}>{children}</p>
   );
 }
 
@@ -58,7 +58,7 @@ export default function AgreementDocumentView({ doc, signature, expiresAt }: {
 
         <dl className="grid grid-cols-1 sm:grid-cols-[1.2fr_1fr] gap-x-10 gap-y-6 mt-10 pt-8" style={{ borderTop: '1px solid rgba(237,232,220,0.1)' }}>
           <div>
-            <dt className="font-body text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>Between</dt>
+            <dt className="font-body text-[11px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>Between</dt>
             <dd className="font-body font-light text-sm leading-relaxed" style={{ color: '#EDE8DC' }}>
               {doc.provider.legalName}
               <span className="block text-xs mt-0.5" style={{ color: muted }}>
@@ -67,7 +67,7 @@ export default function AgreementDocumentView({ doc, signature, expiresAt }: {
             </dd>
           </div>
           <div>
-            <dt className="font-body text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>And</dt>
+            <dt className="font-body text-[11px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>And</dt>
             <dd className="font-body font-light text-sm leading-relaxed" style={{ color: '#EDE8DC' }}>
               {clientLine}
               <span className="block text-xs mt-0.5" style={{ color: muted }}>
@@ -76,7 +76,7 @@ export default function AgreementDocumentView({ doc, signature, expiresAt }: {
             </dd>
           </div>
           <div>
-            <dt className="font-body text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>Issued</dt>
+            <dt className="font-body text-[11px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>Issued</dt>
             <dd className="font-body font-light text-sm" style={{ color: '#EDE8DC' }}>
               {formatDate(doc.issuedOn)}
               {expiresAt && !signature && <span style={{ color: muted }}> · open until {formatDate(expiresAt)}</span>}
@@ -84,7 +84,7 @@ export default function AgreementDocumentView({ doc, signature, expiresAt }: {
           </div>
           {doc.parent && (
             <div>
-              <dt className="font-body text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>Relates to</dt>
+              <dt className="font-body text-[11px] tracking-[0.28em] uppercase mb-2" style={{ color: muted }}>Relates to</dt>
               <dd className="font-body font-light text-sm" style={{ color: '#EDE8DC' }}>
                 {doc.parent.reference ? `${doc.parent.reference} — ` : ''}{doc.parent.title}
               </dd>
@@ -211,7 +211,7 @@ export default function AgreementDocumentView({ doc, signature, expiresAt }: {
               Start of work: {signature.startChoice === 'now' ? doc.startChoices.now : doc.startChoices.wait}
             </p>
           )}
-          <p className="font-body text-[10px] leading-relaxed mt-5 break-all" style={{ color: muted }}>
+          <p className="font-body text-[11px] leading-relaxed mt-5 break-all" style={{ color: muted }}>
             Document fingerprint (SHA-256): {signature.documentHash}
           </p>
         </section>

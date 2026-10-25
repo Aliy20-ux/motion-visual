@@ -36,7 +36,7 @@ function DenialParagraph() {
       ref={ref}
       className="font-display italic"
       style={{
-        fontSize: 'clamp(1.05rem,1.9vw,2.1rem)',
+        fontSize: 'clamp(1.3rem,2vw,2.1rem)',
         color: 'rgba(237,232,220,0.84)',
         letterSpacing: '-0.018em',
         lineHeight: 1.4,
@@ -100,7 +100,7 @@ export default function Manifesto() {
           initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div className="w-8 h-px gradient-bg" />
-          <span className="font-body text-[10px] tracking-[0.3em] uppercase"
+          <span className="font-body text-[11px] tracking-[0.3em] uppercase"
             style={{ color: 'rgba(237,232,220,0.72)' }}>
             Our Manifesto
           </span>
@@ -193,8 +193,8 @@ export default function Manifesto() {
             it's the standard held on every single decision, every single day.
           </p>
           <span
-            className="gradient-text font-display italic"
-            style={{ fontSize: 'clamp(1.1rem,1.8vw,1.9rem)', letterSpacing: '-0.02em' }}>
+            className="font-display italic"
+            style={{ fontSize: 'clamp(1.35rem,1.9vw,1.9rem)', letterSpacing: '-0.02em', color: '#F07A7C' }}>
             Edinburgh-built. Scotland-trusted.
           </span>
         </div>

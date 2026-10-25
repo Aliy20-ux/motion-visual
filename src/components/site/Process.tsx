@@ -68,7 +68,7 @@ export default function Process() {
             initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase"
               style={{ color: 'rgba(237,232,220,0.72)' }}>How We Work</span>
           </motion.div>
 
@@ -148,7 +148,7 @@ export default function Process() {
                 initial={{ boxShadow: '0 0 12px rgba(196,30,30,0.25)' }}
                 whileHover={{ scale: 1.15, boxShadow: '0 0 20px rgba(196,30,30,0.5)' }}
                 transition={{ type: 'spring', stiffness: 400, damping: 14 }}>
-                <span className="font-body text-[10px] font-semibold tracking-[0.08em]"
+                <span className="font-body text-[11px] font-semibold tracking-[0.08em]"
                   style={{ color: '#E5534B' }}>
                   {step.num}
                 </span>
@@ -158,12 +158,12 @@ export default function Process() {
                   connecting line (anchored to the circle's measured, unmoving center)
                   never drifts out of alignment when a card is hovered. */}
               <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.3, ease }}>
-                <p className="font-body text-[10px] tracking-[0.28em] uppercase mb-2"
+                <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-2"
                   style={{ color: 'rgba(237,232,220,0.72)' }}>
                   {step.duration}
                 </p>
                 <h3 className="font-display italic mb-3 transition-transform duration-200 group-hover:translate-x-[3px]"
-                  style={{ fontSize: 'clamp(1.2rem,1.8vw,1.6rem)', color: '#EDE8DC', letterSpacing: '-0.022em', lineHeight: 1.1 }}>
+                  style={{ fontSize: 'clamp(1.45rem,1.9vw,1.7rem)', color: '#F6F2EA', letterSpacing: '-0.022em', lineHeight: 1.1 }}>
                   {step.title}
                 </h3>
                 <p className="font-body font-light text-sm leading-relaxed"

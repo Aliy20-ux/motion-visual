@@ -39,9 +39,9 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
+          <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
         </Link>
-        <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Client review</span>
+        <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Client review</span>
       </header>
       <main id="main-content" className="mx-auto" style={{ maxWidth: 720, padding: 'clamp(24px,6vw,64px) clamp(20px,5vw,40px) clamp(80px,10vw,140px)' }}>
         {children}
@@ -258,7 +258,7 @@ export default function Review() {
           </motion.div>
         ) : (
           <motion.form key="form" onSubmit={submit} noValidate initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28, ease }}>
-            <p className="font-body text-[10px] tracking-[0.28em] uppercase mb-5" style={{ color: muted }}>
+            <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-5" style={{ color: muted }}>
               {review.projectName ? `${review.projectName}` : 'Your project'} · now live
             </p>
             <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2.6rem,7vw,4.6rem)', lineHeight: 0.98, letterSpacing: '-0.03em', color: '#EDE8DC' }}>
@@ -270,13 +270,13 @@ export default function Review() {
 
             <div className="mb-10">
               <fieldset style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}>
-                <legend className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: muted }}>Your rating</legend>
+                <legend className="font-body text-[11px] tracking-[0.22em] uppercase mb-4" style={{ color: muted }}>Your rating</legend>
                 <StarInput value={rating} onChange={n => { setRating(n); setError(''); }} />
               </fieldset>
             </div>
 
             <div className="mb-8">
-              <label htmlFor="review-body" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Your review <span>(optional)</span></label>
+              <label htmlFor="review-body" className="font-body text-[11px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Your review <span>(optional)</span></label>
               <textarea id="review-body" value={body} onChange={e => setBody(e.target.value)} maxLength={2000} rows={5}
                 placeholder="What was it like working with us? What did you like, and what could be better?"
                 className="w-full font-body text-sm resize-y"
@@ -286,12 +286,12 @@ export default function Review() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
               <div>
-                <label htmlFor="review-name" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Your name</label>
+                <label htmlFor="review-name" className="font-body text-[11px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Your name</label>
                 <input id="review-name" value={name} onChange={e => setName(e.target.value)} maxLength={80} autoComplete="name" required
                   className="w-full font-body text-sm" style={{ background: 'rgba(237,232,220,0.03)', border: '1px solid rgba(237,232,220,0.14)', borderRadius: 12, color: '#EDE8DC', padding: '0 16px', minHeight: 48 }} />
               </div>
               <div>
-                <label htmlFor="review-business" className="font-body text-[10px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Business <span>(optional)</span></label>
+                <label htmlFor="review-business" className="font-body text-[11px] tracking-[0.22em] uppercase block mb-3" style={{ color: muted }}>Business <span>(optional)</span></label>
                 <input id="review-business" value={business} onChange={e => setBusiness(e.target.value)} maxLength={120} autoComplete="organization"
                   className="w-full font-body text-sm" style={{ background: 'rgba(237,232,220,0.03)', border: '1px solid rgba(237,232,220,0.14)', borderRadius: 12, color: '#EDE8DC', padding: '0 16px', minHeight: 48 }} />
               </div>

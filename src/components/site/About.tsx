@@ -55,7 +55,7 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}>
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase"
               style={{ color: 'rgba(237,232,220,0.72)' }}>The Team</span>
             <div className="w-8 h-px gradient-bg" />
           </motion.div>
@@ -107,11 +107,11 @@ export default function About() {
               </div>
 
               <p className="font-display italic mb-1.5"
-                style={{ fontSize: 'clamp(1rem,1.5vw,1.35rem)', color: '#EDE8DC', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                style={{ fontSize: 'clamp(1.35rem,1.7vw,1.5rem)', color: '#F6F2EA', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 {member.name}
               </p>
 
-              <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-3"
+              <p className="font-body text-[11px] tracking-[0.22em] uppercase mb-3"
                 style={{ color: '#F07A7C' }}>
                 {member.role}
               </p>
@@ -134,7 +134,7 @@ export default function About() {
           {badges.map((badge, i) => (
             <span
               key={i}
-              className="font-body text-[10px] tracking-[0.22em] uppercase rounded-full"
+              className="font-body text-[11px] tracking-[0.22em] uppercase rounded-full"
               style={{
                 padding: '10px 22px',
                 background: 'transparent',

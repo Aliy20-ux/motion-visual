@@ -15,7 +15,7 @@ function ClientTicker() {
   }, []);
   return (
     <span className="inline-flex items-center gap-2">
-      <span className="font-body text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(237,232,220,0.8)', textShadow: '0 1px 14px rgba(10,10,11,0.9)' }}>Built for</span>
+      <span className="font-body text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(246,242,234,0.94)', textShadow: '0 1px 14px rgba(10,10,11,0.9)' }}>Built for</span>
       <AnimatePresence mode="wait">
         <motion.span key={clients[idx]} className="font-body text-xs tracking-[0.2em] uppercase"
           style={{ color: '#EDE8DC', textShadow: '0 1px 14px rgba(10,10,11,0.9)' }}
@@ -80,7 +80,7 @@ export default function Hero() {
         <motion.div className="flex items-center justify-between mb-6 flex-wrap gap-3"
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.05, ease }}>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
+            <span className="font-body text-[13px] tracking-[0.24em] uppercase" style={{ color: 'rgba(246,242,234,0.94)', textShadow: '0 1px 14px rgba(8,2,2,0.9)' }}>
               Edinburgh, Scotland
             </span>
             <div className="hidden sm:block w-px h-3" style={{ background: 'rgba(237,232,220,0.15)' }} />
@@ -115,10 +115,10 @@ export default function Hero() {
             <div key={i} className="overflow-hidden">
               <motion.span
                 className="block font-display italic"
-                style={{ fontSize: 'clamp(2rem,10.5vw,13rem)', lineHeight: 0.9, letterSpacing: '-0.028em' }}
+                style={{ fontSize: 'clamp(2.4rem,11.5vw,13rem)', lineHeight: 0.9, letterSpacing: '-0.028em' }}
                 initial={{ y: '110%' }} animate={{ y: 0 }}
                 transition={{ duration: 1.1, ease, delay: 1.3 + i * 0.12 }}>
-                <span className={i === 2 ? 'gradient-text' : ''} style={i === 2 ? {} : { color: '#EDE8DC' }}>
+                <span className={i === 2 ? 'hero-last' : ''} style={i === 2 ? {} : { color: '#F6F2EA' }}>
                   {line}
                 </span>
               </motion.span>
@@ -131,16 +131,16 @@ export default function Hero() {
             behind isn't an LCP candidate, so this line is what the metric measures first. The divider + buttons keep their original
             fade-in untouched. */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10 lg:mt-14">
-          <p className="font-body font-light text-sm leading-relaxed max-w-[260px]"
-            style={{ color: 'rgba(237,232,220,0.72)' }}>
+          <p className="font-body font-normal text-[15px] leading-relaxed max-w-[280px]"
+            style={{ color: 'rgba(246,242,234,0.94)', textShadow: '0 1px 12px rgba(8,2,2,0.85)' }}>
             Bespoke websites, live in 14 days.<br />Brands that refuse to be forgettable.
           </p>
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
           <motion.div className="flex items-center gap-5 flex-wrap"
             initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.55 }}>
             <MagneticCTA href="#quote">Get a Quote <ArrowUpRight size={14} /></MagneticCTA>
-            <a href="#work" onClick={scrollToHash('#work')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
-              style={{ color: 'rgba(237,232,220,0.72)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+            <a href="#work" onClick={scrollToHash('#work')} className="font-body font-normal text-[15px] transition-opacity hover:opacity-80"
+              style={{ color: 'rgba(246,242,234,0.94)', textShadow: '0 1px 12px rgba(8,2,2,0.85)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
               See our work →
             </a>
           </motion.div>
@@ -154,8 +154,8 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 14, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
           className="w-px h-14" style={{ background: 'linear-gradient(to bottom, rgba(196,30,30,0.7), transparent)' }} />
-        <span className="font-body text-[9px] tracking-[0.3em] uppercase"
-          style={{ color: 'rgba(237,232,220,0.72)', writingMode: 'vertical-lr' }}>scroll</span>
+        <span className="font-body text-[11px] tracking-[0.3em] uppercase"
+          style={{ color: 'rgba(246,242,234,0.9)', writingMode: 'vertical-lr' }}>scroll</span>
       </motion.div>
     </section>
   );

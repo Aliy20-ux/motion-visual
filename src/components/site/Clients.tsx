@@ -31,12 +31,12 @@ export default function Clients() {
           viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div className="flex items-center gap-4">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase"
+            <span className="font-body text-[11px] tracking-[0.3em] uppercase"
               style={{ color: 'rgba(237,232,220,0.72)' }}>
               Trusted by Edinburgh's finest
             </span>
           </div>
-          <span className="font-body text-[10px] tracking-[0.18em] uppercase hidden md:block"
+          <span className="font-body text-[11px] tracking-[0.18em] uppercase hidden md:block"
             style={{ color: 'rgba(237,232,220,0.72)' }}>
             4 live projects
           </span>
@@ -65,15 +65,15 @@ export default function Clients() {
                 style={{ background: 'linear-gradient(to bottom, #C41E1E, #E83838)' }} />
 
               <div>
-                <p className="font-body text-[9px] tracking-[0.26em] uppercase mb-3 transition-colors duration-300"
+                <p className="font-body text-[11px] tracking-[0.26em] uppercase mb-3 transition-colors duration-300"
                   style={{ color: 'rgba(237,232,220,0.72)' }}>
                   {client.industry}
                 </p>
-                <p className={`font-display italic leading-tight transition-colors duration-300 ${isTouch ? 'gradient-text' : 'group-hover:gradient-text'}`}
+                <p className={`font-display italic leading-tight transition-colors duration-300 ${isTouch ? '' : 'group-hover:gradient-text'}`}
                   style={{
-                    fontSize: 'clamp(0.85rem,1.5vw,1.05rem)',
+                    fontSize: 'clamp(1.15rem,1.6vw,1.25rem)',
                     letterSpacing: '-0.01em',
-                    color: isTouch ? undefined : 'rgba(237,232,220,0.7)',
+                    color: isTouch ? '#F6F2EA' : 'rgba(246,242,234,0.86)',
                     lineHeight: 1.2,
                   }}>
                   {client.name}
