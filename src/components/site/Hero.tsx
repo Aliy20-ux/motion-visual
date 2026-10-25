@@ -7,25 +7,6 @@ import { scrollToHash } from '../../lib/smoothScroll';
 const ease = [0.16, 1, 0.3, 1] as const;
 const clients = ['Texture Lounge', 'Trim2Fresh', 'Kell Executive', 'S2 Studio'];
 
-// When the live WebGL background can't run on this device (journey/JourneyCanvas sets data-journey="off"), a recorded loop of
-// the same scene plays instead of a still. Mounted only then, so nobody else downloads it. Reduced motion keeps the poster.
-function FallbackVideo() {
-  const [off, setOff] = useState(false);
-  useEffect(() => {
-    const root = document.documentElement;
-    const read = () => setOff(root.getAttribute('data-journey') === 'off');
-    read();
-    const watch = new MutationObserver(read);
-    watch.observe(root, { attributes: true, attributeFilter: ['data-journey'] });
-    return () => watch.disconnect();
-  }, []);
-  if (!off || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
-  return (
-    <video className="absolute inset-0 h-full w-full object-cover" src="/hero-journey.mp4" poster="/hero-poster.jpg"
-      autoPlay muted loop playsInline preload="auto" aria-hidden="true" tabIndex={-1} />
-  );
-}
-
 function ClientTicker() {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -81,10 +62,10 @@ export default function Hero() {
 
   return (
     // No background of its own: the journey canvas (journey/JourneyCanvas) is drawn behind it.
-    // Without WebGL2 the .hero-fallback shows instead: a recorded loop of the scene over its still poster (see index.css).
+    // Without WebGL2 the .hero-fallback still image shows instead (see index.css).
     <section id="home" ref={sectionRef} className="hero-journey relative overflow-hidden"
       style={{ height: '100svh', display: 'flex', flexDirection: 'column' }}>
-      <div className="hero-fallback absolute inset-0 z-0 pointer-events-none" aria-hidden="true"><FallbackVideo /></div>
+      <div className="hero-fallback absolute inset-0 z-0 pointer-events-none" aria-hidden="true" />
 
       {/* ── Main content ── */}
       <motion.div
