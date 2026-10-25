@@ -42,7 +42,7 @@ function FAQRow({ index, q, a, isOpen, onToggle }: {
           className="w-full flex items-center justify-between gap-6 text-left cursor-pointer"
           style={{ padding: 'clamp(22px,3vw,30px) 0' }}>
           <span className="font-display italic"
-            style={{ fontSize: 'clamp(1.05rem,2vw,1.4rem)', letterSpacing: '-0.015em', color: '#EDE8DC' }}>
+            style={{ fontSize: 'clamp(1.25rem,2vw,1.5rem)', letterSpacing: '-0.015em', color: '#F6F2EA' }}>
             {q}
           </span>
           <motion.span
@@ -91,7 +91,7 @@ export default function FAQ() {
           initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <div className="w-8 h-px gradient-bg" />
-          <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+          <span className="font-body text-[11px] tracking-[0.32em] uppercase"
             style={{ color: 'rgba(237,232,220,0.72)' }}>FAQ</span>
         </motion.div>
 

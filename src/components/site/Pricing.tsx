@@ -90,7 +90,7 @@ export default function Pricing() {
 
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase"
               style={{ color: 'rgba(237,232,220,0.72)' }}>Investment</span>
             <div className="w-8 h-px gradient-bg" />
           </div>
@@ -124,7 +124,7 @@ export default function Pricing() {
               {tier.isPopular && (
                 <div className="absolute -top-[14px] left-0 right-0 flex justify-center z-20 pointer-events-none">
                   <div className="inline-flex items-center gradient-bg rounded-full px-4 py-1.5">
-                    <span className="font-body font-semibold text-[10px] tracking-[0.22em] uppercase"
+                    <span className="font-body font-semibold text-[11px] tracking-[0.22em] uppercase"
                       style={{ color: '#F0EDED' }}>Popular</span>
                   </div>
                 </div>
@@ -199,22 +199,22 @@ export default function Pricing() {
                       </div>
                     )}
                   </div>
-                  <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.72)' }}>
+                  <p className="font-body text-xs mt-1" style={{ color: 'rgba(237,232,220,0.72)' }}>
                     {tier.customPrice ? 'scoped together, on a call' : 'one-off'}
                   </p>
                   {!tier.customPrice && (
-                    <p className="font-body text-[11px] mt-1" style={{ color: 'rgba(237,232,220,0.72)' }}>
+                    <p className="font-body text-xs mt-1" style={{ color: 'rgba(237,232,220,0.72)' }}>
                       {gbp(depositFor(tier.price!))} deposit to start (25%)
                     </p>
                   )}
-                  <p className="font-body text-[11px] mt-2" style={{ color: '#E5534B' }}>
+                  <p className="font-body text-xs mt-2" style={{ color: '#E5534B' }}>
                     {tier.customPrice ? `+ Care plan from ${gbp(CARE_PLANS.flagship.price)}, scoped with you` : `+ ${gbp(tier.carePlanPrice!)} care plan`}
                   </p>
                 </div>
 
                 {/* Tagline — red italic */}
                 <p className="font-display italic mb-2"
-                  style={{ fontSize: 'clamp(0.9rem,1.3vw,1.05rem)', color: '#E5534B', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+                  style={{ fontSize: 'clamp(1.15rem,1.4vw,1.2rem)', color: '#F07A7C', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                   {tier.tagline}
                 </p>
 
@@ -279,7 +279,7 @@ export default function Pricing() {
                   <span className="font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>
                     <span style={{ color: '#EDE8DC' }}>{c.name}</span> — {c.detail}
                   </span>
-                  <span className="font-display italic shrink-0" style={{ fontSize: '1.25rem', color: '#EDE8DC' }}>{c.price}</span>
+                  <span className="font-body font-medium shrink-0 whitespace-nowrap" style={{ fontSize: '1.3rem', letterSpacing: '-0.01em', fontVariantNumeric: 'lining-nums tabular-nums', color: '#F6F2EA' }}>{c.price}</span>
                 </li>
               ))}
             </ul>
@@ -288,13 +288,13 @@ export default function Pricing() {
             </p>
             <ul className="flex flex-wrap gap-2">
               {careIncludes.map(i => (
-                <li key={i} className="font-body text-[11px] rounded-full"
+                <li key={i} className="font-body text-xs rounded-full"
                   style={{ padding: '5px 12px', border: '1px solid rgba(237,232,220,0.12)', color: 'rgba(237,232,220,0.8)' }}>
                   {i}
                 </li>
               ))}
             </ul>
-            <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.72)' }}>
+            <p className="font-body font-light text-xs leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Prefer to prepay a year? Pay for 11 payments and get 12. Moving to a smaller plan later?
               Keep-alive is £30 for hosting, security, backups and monitoring, with no updates — a small
               update is £15 and an extra page £80. Minimum term and notice rules are in our{' '}

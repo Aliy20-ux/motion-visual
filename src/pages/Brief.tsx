@@ -86,7 +86,7 @@ export default function Brief() {
       <header style={{ padding: 'clamp(20px,4vw,32px) clamp(20px,5vw,64px)', borderBottom: '1px solid rgba(237,232,220,0.07)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" width={32} height={32} className="h-8 w-8 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
+          <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
         </Link>
       </header>
       <main id="main-content" className="mx-auto" style={{ maxWidth: 760, padding: 'clamp(28px,5vw,56px) clamp(20px,5vw,40px) 96px' }}>{children}</main>
@@ -111,7 +111,7 @@ export default function Brief() {
   }
 
   return shell(<>
-    <p className="font-body text-[9px] tracking-[0.28em] uppercase mb-3" style={{ color: muted }}>Quote {quote?.reference} · {quote?.plan}</p>
+    <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-3" style={{ color: muted }}>Quote {quote?.reference} · {quote?.plan}</p>
     {title('Tell us about your business')}
     {body(<>Hi {quote?.customerName.split(' ')[0]}, this helps us design your first draft. Only the first two questions are required — answer what you can, and anything you leave blank we’ll ask about.</>)}
     <form onSubmit={submit} className="flex flex-col gap-6 mt-10">

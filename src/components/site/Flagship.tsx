@@ -100,7 +100,7 @@ export default function Flagship() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.75, ease: EASE }}>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Flagship</span>
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Flagship</span>
           </div>
           <h2 id="flagship-heading" className="font-display italic mb-6" style={{ fontSize: 'clamp(2.4rem,5.2vw,5.4rem)', lineHeight: 0.95, letterSpacing: '-0.025em' }}>
             <span style={{ color: '#EDE8DC' }}>Built to </span><span className="gradient-text">own your market.</span>
@@ -170,7 +170,7 @@ export default function Flagship() {
                   style={{ minHeight: 52, borderRadius: 999, background: 'linear-gradient(135deg,#8B1010,#C41E1E)', color: '#F0EDED', letterSpacing: '0.06em' }}>
                   {loading ? 'Sending…' : 'Send Flagship enquiry'}
                 </button>
-                <p className="font-body font-light text-[11px] mt-3 text-center" style={{ color: 'rgba(237,232,220,0.72)' }}>
+                <p className="font-body font-light text-xs mt-3 text-center" style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Free consultation · No obligation
                 </p>
               </motion.form>

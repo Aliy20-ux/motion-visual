@@ -30,9 +30,9 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" width={36} height={36} className="h-9 w-9 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
+          <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Motion Visual</span>
         </Link>
-        <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: muted }}>Project tracker</span>
+        <span className="font-body text-[11px] tracking-[0.22em] uppercase" style={{ color: muted }}>Project tracker</span>
       </header>
       <main id="main-content" className="mx-auto" style={{ maxWidth: 860, padding: 'clamp(16px,4vw,48px) clamp(20px,5vw,40px) clamp(80px,10vw,140px)' }}>{children}</main>
       <footer style={{ borderTop: '1px solid rgba(237,232,220,0.07)', padding: 'clamp(24px,4vw,32px) clamp(24px,5vw,88px)' }}>
@@ -113,7 +113,7 @@ export default function ProjectTracker() {
   return (
     <Shell>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28, ease }}>
-        <p className="font-body text-[10px] tracking-[0.28em] uppercase mb-5" style={{ color: muted }}>{raw.businessName ?? 'Your project'}</p>
+        <p className="font-body text-[11px] tracking-[0.28em] uppercase mb-5" style={{ color: muted }}>{raw.businessName ?? 'Your project'}</p>
         <h1 className="font-display italic mb-8" style={{ fontSize: 'clamp(2.2rem,5.5vw,4rem)', lineHeight: 1, letterSpacing: '-0.025em', color: '#EDE8DC' }}>{raw.projectName}</h1>
 
         {/* The headline: where the 14 days are up to */}
@@ -133,7 +133,7 @@ export default function ProjectTracker() {
             </>
           ) : v.phase === 'underway' ? (
             <>
-              <p className="font-body text-[10px] tracking-[0.24em] uppercase mb-3" style={{ color: muted }}>{v.pastTarget ? 'Past the 14-day target' : 'Your 14 days'}</p>
+              <p className="font-body text-[11px] tracking-[0.24em] uppercase mb-3" style={{ color: muted }}>{v.pastTarget ? 'Past the 14-day target' : 'Your 14 days'}</p>
               <p className="font-display italic" style={{ fontSize: 'clamp(3rem,9vw,5.5rem)', lineHeight: 0.95, letterSpacing: '-0.03em', color: '#EDE8DC' }}>
                 Day {v.day} <span style={{ color: muted, fontSize: '0.5em' }}>of {v.totalDays}</span>
               </p>
@@ -159,7 +159,7 @@ export default function ProjectTracker() {
         {/* Waiting on you */}
         {v.waiting.length > 0 && (
           <section aria-label="Waiting on you" style={{ ...card, marginBottom: 20, border: '1px solid rgba(196,30,30,0.4)', background: 'rgba(196,30,30,0.06)' }}>
-            <p className="font-body text-[10px] tracking-[0.24em] uppercase mb-3" style={{ color: '#E86A6A' }}>Waiting on you</p>
+            <p className="font-body text-[11px] tracking-[0.24em] uppercase mb-3" style={{ color: '#E86A6A' }}>Waiting on you</p>
             <ul>
               {v.waiting.map(w => (
                 <li key={w.id} className="flex items-center justify-between gap-4 py-2 flex-wrap">
@@ -178,20 +178,20 @@ export default function ProjectTracker() {
 
         {raw.note && (
           <section aria-label="A note from us" style={{ ...card, marginBottom: 20 }}>
-            <p className="font-body text-[10px] tracking-[0.24em] uppercase mb-2" style={{ color: muted }}>A note from us</p>
+            <p className="font-body text-[11px] tracking-[0.24em] uppercase mb-2" style={{ color: muted }}>A note from us</p>
             <p className="font-body text-sm leading-relaxed" style={{ color: '#EDE8DC', whiteSpace: 'pre-line' }}>{raw.note}</p>
           </section>
         )}
 
         {/* Stages */}
         <section aria-label="Stages" style={{ ...card, marginBottom: 20 }}>
-          <p className="font-body text-[10px] tracking-[0.24em] uppercase mb-5" style={{ color: muted }}>Where it’s at</p>
+          <p className="font-body text-[11px] tracking-[0.24em] uppercase mb-5" style={{ color: muted }}>Where it’s at</p>
           <ol className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: 12 }}>
             {TRACKER_STAGES.map((s, i) => {
               const state = v.phase === 'live' || i < v.stageIndex ? 'done' : i === v.stageIndex ? 'now' : 'next';
               return (
                 <li key={s} aria-current={state === 'now' ? 'step' : undefined} className="font-body text-[13px]" style={{ paddingTop: 12, borderTop: `2px solid ${state === 'next' ? 'rgba(237,232,220,0.1)' : state === 'now' ? '#E03A3A' : '#8B1010'}`, color: state === 'next' ? muted : '#EDE8DC' }}>
-                  <span className="block text-[10px] tracking-[0.2em] uppercase mb-1" style={{ color: state === 'now' ? '#E86A6A' : muted }}>{state === 'done' ? 'Done' : state === 'now' ? 'Now' : 'Next'}</span>
+                  <span className="block text-[11px] tracking-[0.2em] uppercase mb-1" style={{ color: state === 'now' ? '#E86A6A' : muted }}>{state === 'done' ? 'Done' : state === 'now' ? 'Now' : 'Next'}</span>
                   {s}
                 </li>
               );
@@ -201,7 +201,7 @@ export default function ProjectTracker() {
 
         {/* Dates */}
         <section aria-label="Key dates" style={card}>
-          <p className="font-body text-[10px] tracking-[0.24em] uppercase mb-3" style={{ color: muted }}>The details</p>
+          <p className="font-body text-[11px] tracking-[0.24em] uppercase mb-3" style={{ color: muted }}>The details</p>
           <ul>
             {raw.agreement && <Row label="Project Agreement signed" value={signed ? when(raw.agreement.signedOn) : null} done={signed} />}
             <Row label="Your content received" value={when(raw.contentReceivedOn)} done={!!raw.contentReceivedOn} />

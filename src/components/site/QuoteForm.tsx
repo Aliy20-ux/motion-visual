@@ -99,16 +99,16 @@ export function FieldLabel({ htmlFor, label, optional, error }: {
 }) {
   return (
     <div className="flex items-center gap-2 mb-1">
-      <label htmlFor={htmlFor} className="font-body text-[9px] tracking-[0.28em] uppercase"
+      <label htmlFor={htmlFor} className="font-body text-[11px] tracking-[0.28em] uppercase"
         style={{ color: error ? '#F87171' : 'rgba(237,232,220,0.5)' }}>
         {label}
       </label>
       {optional && (
-        <span className="font-body text-[9px] tracking-[0.15em] uppercase"
+        <span className="font-body text-[11px] tracking-[0.15em] uppercase"
           style={{ color: 'rgba(237,232,220,0.72)' }}>Optional</span>
       )}
       {error && (
-        <span id={htmlFor ? `${htmlFor}-error` : undefined} role="alert" className="font-body text-[9px]" style={{ color: '#F87171' }}>{error}</span>
+        <span id={htmlFor ? `${htmlFor}-error` : undefined} role="alert" className="font-body text-xs" style={{ color: '#F87171' }}>{error}</span>
       )}
     </div>
   );
@@ -334,7 +334,7 @@ export default function QuoteForm() {
                   initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }} transition={{ duration: 0.6 }}>
                   <div className="w-8 h-px gradient-bg" />
-                  <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+                  <span className="font-body text-[11px] tracking-[0.32em] uppercase"
                     style={{ color: 'rgba(237,232,220,0.72)' }}>
                     Free Enquiry
                   </span>
@@ -479,7 +479,7 @@ export default function QuoteForm() {
                     {loading ? 'Sending…' : 'Send Enquiry'}
                   </motion.button>
 
-                  <p className="text-center font-body text-[10px] tracking-[0.15em] uppercase -mt-4"
+                  <p className="text-center font-body text-[11px] tracking-[0.15em] uppercase -mt-4"
                     style={{ color: 'rgba(237,232,220,0.72)' }}>
                     Free consultation · No obligation · Reply within 24h
                   </p>

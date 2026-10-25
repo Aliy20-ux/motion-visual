@@ -44,7 +44,7 @@ export default function Testimonials() {
           transition={{ duration: 0.7, ease: EASE }}>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Client reviews</span>
+            <span className="font-body text-[11px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Client reviews</span>
           </div>
           <h2 id="reviews-heading" className="font-display italic" style={{ fontSize: 'clamp(2.2rem,4.6vw,4.4rem)', lineHeight: 0.96, letterSpacing: '-0.025em' }}>
             <span style={{ color: '#EDE8DC' }}>In their </span><span className="gradient-text">own words.</span>

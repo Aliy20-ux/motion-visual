@@ -72,7 +72,7 @@ export default function SelectedWork() {
             initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(244,241,236,0.6)' }}>
+            <span className="font-body text-[11px] tracking-[0.3em] uppercase" style={{ color: 'rgba(244,241,236,0.6)' }}>
               Selected Work
             </span>
           </motion.div>
@@ -197,7 +197,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
       />
 
       {/* Index — top left */}
-      <span className="absolute top-6 left-7 z-20 font-body text-[10px] tracking-[0.2em]"
+      <span className="absolute top-6 left-7 z-20 font-body text-[11px] tracking-[0.2em]"
         style={{ color: 'rgba(244,241,236,0.28)' }}>
         {String(index + 1).padStart(2, '0')}
       </span>
@@ -216,7 +216,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         }}>
         <div className="flex items-end justify-between">
           <div>
-            <p className="font-body text-[10px] tracking-[0.25em] uppercase mb-2"
+            <p className="font-body text-[11px] tracking-[0.25em] uppercase mb-2"
               style={{ color: 'rgba(244,241,236,0.42)' }}>
               {project.type}
             </p>
@@ -227,7 +227,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span key={tag}
-                  className="font-body text-[10px] tracking-[0.15em] uppercase px-2 py-1 rounded"
+                  className="font-body text-[11px] tracking-[0.15em] uppercase px-2 py-1 rounded"
                   style={{ background: 'rgba(244,241,236,0.07)', color: 'rgba(244,241,236,0.45)' }}>
                   {tag}
                 </span>

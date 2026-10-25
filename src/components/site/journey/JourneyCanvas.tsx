@@ -6,7 +6,8 @@ import { FRAGMENT_SHADER, VERTEX_SHADER } from './shader';
 // It fades out and stops drawing entirely once the services section has gone, so the rest of the site costs nothing.
 //
 // Elements it reads by id: #home (hero), #fall, #why-us (services).
-// No WebGL2, or a GPU error: it renders nothing and sets data-journey="off" on <html>, and the CSS shows a still fallback.
+// No WebGL2, software rendering, a GPU error or a lost context: it renders nothing and sets data-journey="off" on <html>,
+// and the hero shows a recorded loop of the same scene (Hero.tsx FallbackVideo) over a still poster (index.css).
 
 type Uniforms = Record<string, WebGLUniformLocation | null>;
 const UNIFORMS = ['uRes', 'uTime', 'uMouse', 'uWell', 'uIntro', 'uTravel', 'uShock', 'uShockPos', 'uJourney', 'uDrift'];
@@ -41,6 +42,12 @@ export default function JourneyCanvas() {
     const off = () => document.documentElement.setAttribute('data-journey', 'off');
     const gl = cv.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' });
     if (!gl) { off(); return undefined; }
+    // Software rendering (hardware acceleration off, or no usable GPU) runs this scene far too slowly: use the recorded loop.
+    const info = gl.getExtension('WEBGL_debug_renderer_info');
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+    if (/swiftshader|llvmpipe|softpipe|software|microsoft basic render/i.test(renderer)) { off(); return undefined; }
+    // If the GPU resets mid-visit (it happens on laptops), the canvas goes blank: switch to the loop instead of a dead background.
+    cv.addEventListener('webglcontextlost', (e) => { e.preventDefault(); off(); });
 
     const u: Uniforms = {};
     const program = gl.createProgram()!;

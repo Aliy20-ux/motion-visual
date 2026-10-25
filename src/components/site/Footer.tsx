@@ -59,7 +59,7 @@ export default function Footer() {
                 initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.7 }}>
                 <div className="w-8 h-px gradient-bg" />
-                <span className="font-body text-[10px] tracking-[0.32em] uppercase"
+                <span className="font-body text-[11px] tracking-[0.32em] uppercase"
                   style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Ready to begin?
                 </span>
@@ -98,7 +98,7 @@ export default function Footer() {
               viewport={{ once: true }} transition={{ duration: 0.85, ease, delay: 0.35 }}>
 
               <div className="flex flex-col gap-3">
-                <span className="font-body text-[10px] tracking-[0.28em] uppercase"
+                <span className="font-body text-[11px] tracking-[0.28em] uppercase"
                   style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Get in touch
                 </span>
@@ -143,7 +143,7 @@ export default function Footer() {
             <div className="flex flex-col gap-6 max-w-xs">
               <div className="flex items-center gap-2.5">
                 <img src="/logo-dark.png" alt="" className="h-10 w-10 shrink-0 object-contain" />
-                <span className="font-body text-[10px] tracking-[0.22em] uppercase"
+                <span className="font-body text-[11px] tracking-[0.22em] uppercase"
                   style={{ color: 'rgba(237,232,220,0.72)' }}>
                   Motion Visual
                 </span>
@@ -152,15 +152,15 @@ export default function Footer() {
                 style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Edinburgh's premium web design agency, serving clients across the UK. Award-quality sites delivered in days, not months.
               </p>
-              <span className="gradient-text font-display italic"
-                style={{ fontSize: '0.9rem', letterSpacing: '-0.01em' }}>
+              <span className="font-display italic"
+                style={{ fontSize: '1.15rem', letterSpacing: '-0.01em', color: '#F07A7C' }}>
                 Edinburgh-built. Trusted UK-wide.
               </span>
             </div>
 
             {/* Navigation */}
             <div className="flex flex-col gap-5">
-              <span className="font-body text-[9px] tracking-[0.32em] uppercase"
+              <span className="font-body text-[11px] tracking-[0.32em] uppercase"
                 style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Navigate
               </span>
@@ -177,7 +177,7 @@ export default function Footer() {
 
             {/* Social */}
             <div className="flex flex-col gap-5">
-              <span className="font-body text-[9px] tracking-[0.32em] uppercase"
+              <span className="font-body text-[11px] tracking-[0.32em] uppercase"
                 style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Follow
               </span>
@@ -196,7 +196,7 @@ export default function Footer() {
 
             {/* Contact */}
             <div className="flex flex-col gap-5">
-              <span className="font-body text-[9px] tracking-[0.32em] uppercase"
+              <span className="font-body text-[11px] tracking-[0.32em] uppercase"
                 style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Contact
               </span>
