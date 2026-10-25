@@ -48,14 +48,14 @@ function Notice({ title, children }: { title: string; children: React.ReactNode 
   return (
     <div className="py-16 text-center mx-auto" style={{ maxWidth: '44ch' }}>
       <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2.2rem,5vw,3.5rem)', letterSpacing: '-0.02em', color: '#EDE8DC' }}>{title}</h1>
-      <div className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.65)' }}>{children}</div>
+      <div className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.8)' }}>{children}</div>
     </div>
   );
 }
 
 const Row = ({ label, value, done }: { label: string; value: string | null; done: boolean }) => (
   <li className="flex items-center justify-between gap-4 py-3" style={{ borderTop: '1px solid rgba(237,232,220,0.07)' }}>
-    <span className="flex items-center gap-2.5 font-body text-[13px]" style={{ color: 'rgba(237,232,220,0.75)' }}>
+    <span className="flex items-center gap-2.5 font-body text-[13px]" style={{ color: 'rgba(237,232,220,0.86)' }}>
       <span aria-hidden="true" className="flex items-center justify-center shrink-0" style={{ width: 18, height: 18, borderRadius: 999, border: done ? '1px solid transparent' : '1px solid rgba(237,232,220,0.25)', background: done ? 'linear-gradient(135deg,#8B1010,#C41E1E)' : 'transparent' }}>
         {done && <Check size={11} style={{ color: '#F0EDED' }} />}
       </span>
@@ -121,7 +121,7 @@ export default function ProjectTracker() {
           {v.phase === 'live' ? (
             <>
               <p className="font-display italic gradient-text" style={{ fontSize: 'clamp(2.6rem,7vw,4.6rem)', lineHeight: 1 }}>Your site is live.</p>
-              <p className="font-body font-light text-sm mt-3" style={{ color: 'rgba(237,232,220,0.65)' }}>
+              <p className="font-body font-light text-sm mt-3" style={{ color: 'rgba(237,232,220,0.8)' }}>
                 {raw.launchDate ? `Launched ${when(raw.launchDate)}. ` : ''}Thank you for working with us.
               </p>
               {raw.reviewToken && (
@@ -140,7 +140,7 @@ export default function ProjectTracker() {
               <div role="progressbar" aria-label="Days used" aria-valuemin={0} aria-valuemax={v.totalDays} aria-valuenow={Math.min(v.day ?? 0, v.totalDays)} className="mt-6" style={{ height: 6, borderRadius: 999, background: 'rgba(237,232,220,0.08)', overflow: 'hidden' }}>
                 <div style={{ width: `${v.progress * 100}%`, height: '100%', borderRadius: 999, background: 'linear-gradient(90deg,#8B1010,#E03A3A)' }} />
               </div>
-              <p className="font-body font-light text-sm mt-4" style={{ color: 'rgba(237,232,220,0.65)' }}>
+              <p className="font-body font-light text-sm mt-4" style={{ color: 'rgba(237,232,220,0.8)' }}>
                 {v.pastTarget
                   ? `The target for sharing your site was ${when(v.siteBy)}. We’re still working on it, and you can email us any time.`
                   : `We aim to share your finished site by ${when(v.siteBy)}.`}
@@ -149,7 +149,7 @@ export default function ProjectTracker() {
           ) : (
             <>
               <p className="font-display italic" style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', lineHeight: 1.05, color: '#EDE8DC' }}>Your 14 days haven’t started yet.</p>
-              <p className="font-body font-light text-sm mt-3" style={{ color: 'rgba(237,232,220,0.65)', maxWidth: '52ch' }}>
+              <p className="font-body font-light text-sm mt-3" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '52ch' }}>
                 The clock starts on the day we have both your signed agreement and your content. Here’s what we’re waiting for.
               </p>
             </>

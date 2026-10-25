@@ -50,7 +50,7 @@ function FAQRow({ index, q, a, isOpen, onToggle }: {
             style={{ width: 32, height: 32, border: '1px solid rgba(237,232,220,0.14)' }}
             animate={{ rotate: isOpen ? 45 : 0 }}
             transition={{ duration: 0.2, ease }}>
-            <Plus size={14} strokeWidth={1.75} style={{ color: 'rgba(237,232,220,0.6)' }} />
+            <Plus size={14} strokeWidth={1.75} style={{ color: 'rgba(237,232,220,0.8)' }} />
           </motion.span>
         </button>
       </h3>
@@ -65,7 +65,7 @@ function FAQRow({ index, q, a, isOpen, onToggle }: {
         }}>
         <div style={{ overflow: 'hidden' }}>
           <p className="font-body font-light text-sm leading-relaxed"
-            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '62ch', paddingBottom: 'clamp(22px,3vw,30px)' }}>
+            style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '62ch', paddingBottom: 'clamp(22px,3vw,30px)' }}>
             {a}
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function FAQ() {
           viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <div className="w-8 h-px gradient-bg" />
           <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-            style={{ color: 'rgba(237,232,220,0.5)' }}>FAQ</span>
+            style={{ color: 'rgba(237,232,220,0.72)' }}>FAQ</span>
         </motion.div>
 
         <motion.h2

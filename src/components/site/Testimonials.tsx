@@ -44,18 +44,18 @@ export default function Testimonials() {
           transition={{ duration: 0.7, ease: EASE }}>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>Client reviews</span>
+            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Client reviews</span>
           </div>
           <h2 id="reviews-heading" className="font-display italic" style={{ fontSize: 'clamp(2.2rem,4.6vw,4.4rem)', lineHeight: 0.96, letterSpacing: '-0.025em' }}>
             <span style={{ color: '#EDE8DC' }}>In their </span><span className="gradient-text">own words.</span>
           </h2>
           {average !== null && (
-            <p className="font-body text-sm mt-8 flex items-center gap-3 flex-wrap" style={{ color: 'rgba(237,232,220,0.65)' }}>
+            <p className="font-body text-sm mt-8 flex items-center gap-3 flex-wrap" style={{ color: 'rgba(237,232,220,0.8)' }}>
               <Stars n={Math.round(average)} size={16} />
               <span>{average.toFixed(1)} out of 5 from {data.count} client review{data.count === 1 ? '' : 's'}</span>
             </p>
           )}
-          <p className="font-body font-light text-xs leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.6)', maxWidth: '38ch' }}>
+          <p className="font-body font-light text-xs leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '38ch' }}>
             Left by clients through a private link sent with their final invoice. We approve reviews, we don’t edit them.
           </p>
         </motion.div>
@@ -68,7 +68,7 @@ export default function Testimonials() {
             <blockquote className="font-display italic mt-6" style={{ fontSize: 'clamp(1.5rem,2.6vw,2.4rem)', lineHeight: 1.22, letterSpacing: '-0.015em', color: '#EDE8DC', whiteSpace: 'pre-line' }}>
               “{lead.body}”
             </blockquote>
-            <figcaption className="font-body text-xs mt-6" style={{ color: 'rgba(237,232,220,0.6)' }}>
+            <figcaption className="font-body text-xs mt-6" style={{ color: 'rgba(237,232,220,0.8)' }}>
               <span style={{ color: '#EDE8DC' }}>{lead.name}</span>{lead.business ? `, ${lead.business}` : ''} · {monthYear(lead.date)}
             </figcaption>
           </motion.figure>
@@ -82,7 +82,7 @@ export default function Testimonials() {
                   <figure>
                     <Stars n={r.rating} />
                     <blockquote className="font-body font-light text-sm leading-relaxed mt-3" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '62ch', whiteSpace: 'pre-line' }}>“{r.body}”</blockquote>
-                    <figcaption className="font-body text-xs mt-3" style={{ color: 'rgba(237,232,220,0.55)' }}>
+                    <figcaption className="font-body text-xs mt-3" style={{ color: 'rgba(237,232,220,0.72)' }}>
                       <span style={{ color: '#EDE8DC' }}>{r.name}</span>{r.business ? `, ${r.business}` : ''} · {monthYear(r.date)}
                     </figcaption>
                   </figure>

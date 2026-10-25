@@ -7,7 +7,7 @@ export function Label({ htmlFor, children, hint }: { htmlFor?: string; children:
   return (
     <label htmlFor={htmlFor} className="block mb-1.5">
       <span className="font-body text-[9px] tracking-[0.28em] uppercase" style={{ color: muted }}>{children}</span>
-      {hint && <span className="block font-body font-light text-[11px] mt-0.5 normal-case tracking-normal" style={{ color: 'rgba(237,232,220,0.62)' }}>{hint}</span>}
+      {hint && <span className="block font-body font-light text-[11px] mt-0.5 normal-case tracking-normal" style={{ color: 'rgba(237,232,220,0.8)' }}>{hint}</span>}
     </label>
   );
 }
@@ -47,11 +47,11 @@ export function Button({ variant = 'ghost', className = '', ...props }: React.Bu
 }
 
 const STATUS_STYLE: Record<DisplayStatus, { label: string; color: string; bg: string }> = {
-  draft: { label: 'Draft', color: 'rgba(237,232,220,0.7)', bg: 'rgba(237,232,220,0.06)' },
+  draft: { label: 'Draft', color: 'rgba(237,232,220,0.84)', bg: 'rgba(237,232,220,0.06)' },
   sent: { label: 'Sent', color: '#93C5FD', bg: 'rgba(147,197,253,0.1)' },
   viewed: { label: 'Viewed', color: '#FCD34D', bg: 'rgba(252,211,77,0.1)' },
   signed: { label: 'Signed', color: '#86EFAC', bg: 'rgba(134,239,172,0.1)' },
-  void: { label: 'Void', color: 'rgba(237,232,220,0.45)', bg: 'transparent' },
+  void: { label: 'Void', color: 'rgba(237,232,220,0.62)', bg: 'transparent' },
   expired: { label: 'Expired', color: '#F87171', bg: 'rgba(248,113,113,0.08)' },
 };
 

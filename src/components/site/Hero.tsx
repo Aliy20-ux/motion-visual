@@ -175,7 +175,7 @@ export default function Hero() {
         <motion.div className="flex items-center justify-between mb-6 flex-wrap gap-3"
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.05, ease }}>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <span className="font-body text-xs tracking-[0.26em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Edinburgh, Scotland
             </span>
             <div className="hidden sm:block w-px h-3" style={{ background: 'rgba(237,232,220,0.15)' }} />
@@ -229,7 +229,7 @@ export default function Hero() {
             fade-in untouched. */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mt-10 lg:mt-14">
           <p className="font-body font-light text-sm leading-relaxed max-w-[260px]"
-            style={{ color: 'rgba(237,232,220,0.52)' }}>
+            style={{ color: 'rgba(237,232,220,0.72)' }}>
             Bespoke websites, live in 14 days.<br />Brands that refuse to be forgettable.
           </p>
           <div className="hidden sm:block w-px h-8" style={{ background: 'rgba(237,232,220,0.1)' }} />
@@ -237,7 +237,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease, delay: 1.55 }}>
             <MagneticCTA href="#quote">Get a Quote <ArrowUpRight size={14} /></MagneticCTA>
             <a href="#work" onClick={scrollToHash('#work')} className="font-body font-light text-sm transition-opacity hover:opacity-80"
-              style={{ color: 'rgba(237,232,220,0.5)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+              style={{ color: 'rgba(237,232,220,0.72)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
               See our work →
             </a>
           </motion.div>
@@ -252,7 +252,7 @@ export default function Hero() {
           animate={{ y: [0, 14, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
           className="w-px h-14" style={{ background: 'linear-gradient(to bottom, rgba(196,30,30,0.7), transparent)' }} />
         <span className="font-body text-[9px] tracking-[0.3em] uppercase"
-          style={{ color: 'rgba(237,232,220,0.5)', writingMode: 'vertical-lr' }}>scroll</span>
+          style={{ color: 'rgba(237,232,220,0.72)', writingMode: 'vertical-lr' }}>scroll</span>
       </motion.div>
     </section>
   );

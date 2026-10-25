@@ -27,7 +27,7 @@ export default function NotFound() {
       <header className="flex items-center" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
+          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
             Motion Visual
           </span>
         </Link>
@@ -36,7 +36,7 @@ export default function NotFound() {
       <main className="flex-1 flex flex-col items-center justify-center text-center"
         style={{ padding: 'clamp(24px,5vw,88px)' }}>
         <span className="font-body text-[10px] tracking-[0.32em] uppercase mb-6"
-          style={{ color: 'rgba(237,232,220,0.4)' }}>
+          style={{ color: 'rgba(237,232,220,0.62)' }}>
           404
         </span>
         <h1 className="font-display italic mb-5"
@@ -44,7 +44,7 @@ export default function NotFound() {
           This page <span className="gradient-text">wandered off.</span>
         </h1>
         <p className="font-body font-light text-sm leading-relaxed mb-10"
-          style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '42ch' }}>
+          style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '42ch' }}>
           The link you followed doesn't lead anywhere — it may be outdated or mistyped.
         </p>
         <Link to="/"
@@ -56,7 +56,7 @@ export default function NotFound() {
 
       <footer style={{ borderTop: '1px solid rgba(237,232,220,0.07)', padding: 'clamp(24px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <div className="max-w-7xl mx-auto flex justify-center">
-          <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.3)' }}>
+          <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.62)' }}>
             © 2026 {COMPANY.legalName}
           </span>
         </div>

@@ -39,12 +39,12 @@ export default function LegalLayout({ title, description, updated, prose = true,
       <header className="flex items-center justify-between" style={{ padding: 'clamp(20px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo-dark.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
-          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>
+          <span className="font-body text-[10px] tracking-[0.22em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>
             Motion Visual
           </span>
         </Link>
         <Link to="/" className="font-body text-xs transition-opacity hover:opacity-70"
-          style={{ color: 'rgba(237,232,220,0.5)' }}>
+          style={{ color: 'rgba(237,232,220,0.72)' }}>
           ← Back to site
         </Link>
       </header>
@@ -59,7 +59,7 @@ export default function LegalLayout({ title, description, updated, prose = true,
         <h1 className="font-display italic" style={{ fontSize: 'clamp(2.2rem,5vw,3.5rem)', letterSpacing: '-0.02em', color: '#EDE8DC' }}>
           {title}
         </h1>
-        <p className="font-body text-xs mb-12 mt-3" style={{ color: 'rgba(237,232,220,0.5)' }}>
+        <p className="font-body text-xs mb-12 mt-3" style={{ color: 'rgba(237,232,220,0.72)' }}>
           Last updated {updated}
         </p>
 
@@ -68,23 +68,23 @@ export default function LegalLayout({ title, description, updated, prose = true,
 
       <footer style={{ borderTop: '1px solid rgba(237,232,220,0.07)', padding: 'clamp(24px,4vw,32px) clamp(24px,5vw,88px)' }}>
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.5)' }}>
+          <span className="font-body text-xs text-center sm:text-left leading-relaxed" style={{ color: 'rgba(237,232,220,0.72)' }}>
             © 2026 {COMPANY.legalName}
             <span className="block">
               Registered in {COMPANY.registeredIn}, company no. {COMPANY.companyNumber}. Registered office: {COMPANY.registeredOffice}.
             </span>
           </span>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-            <Link to="/privacy" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <Link to="/privacy" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Privacy
             </Link>
-            <Link to="/terms" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <Link to="/terms" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Terms
             </Link>
-            <Link to="/cancellation" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <Link to="/cancellation" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.72)' }}>
               Cancellation
             </Link>
-            <a href="mailto:aliy20@hotmail.co.uk" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <a href="mailto:aliy20@hotmail.co.uk" className="font-body text-xs transition-opacity hover:opacity-70" style={{ color: 'rgba(237,232,220,0.72)' }}>
               aliy20@hotmail.co.uk
             </a>
           </div>

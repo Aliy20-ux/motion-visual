@@ -50,7 +50,7 @@ export default function AgreementList() {
 
       {rows && rows.length === 0 && !error && (
         <div className="py-16 max-w-lg">
-          <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.7)' }}>
+          <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.84)' }}>
             No agreements yet. Create a Project Agreement before any work starts, a Change Request for anything extra, and a Completion Sign-off when you hand over.
           </p>
         </div>

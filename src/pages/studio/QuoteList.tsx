@@ -78,14 +78,14 @@ export default function QuoteList() {
   return (
     <div>
       <PageTitle eyebrow="Studio">Website quotes</PageTitle>
-      <p className="font-body font-light text-sm -mt-4 mb-8" style={{ color: 'rgba(237,232,220,0.65)', maxWidth: '62ch' }}>
+      <p className="font-body font-light text-sm -mt-4 mb-8" style={{ color: 'rgba(237,232,220,0.8)', maxWidth: '62ch' }}>
         Every quote the website has emailed. Keep the status up to date — it is the history. Quotes lapse 14 days after they’re issued.
       </p>
 
       {error && <ErrorText>{error}</ErrorText>}
 
       {rows && rows.length === 0 && !error && (
-        <p className="font-body font-light text-sm py-10" style={{ color: 'rgba(237,232,220,0.7)' }}>
+        <p className="font-body font-light text-sm py-10" style={{ color: 'rgba(237,232,220,0.84)' }}>
           No website quotes yet. They appear here as soon as a visitor requests one.
         </p>
       )}
@@ -111,7 +111,7 @@ export default function QuoteList() {
                     </Select>
                   </span>
                 </summary>
-                <div className="mt-4 grid gap-4 md:grid-cols-2 font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.7)' }}>
+                <div className="mt-4 grid gap-4 md:grid-cols-2 font-body text-xs leading-relaxed" style={{ color: 'rgba(237,232,220,0.84)' }}>
                   <div>
                     <p style={{ color: muted }} className="tracking-[0.2em] uppercase text-[9px] mb-1.5">Package</p>
                     <ul>

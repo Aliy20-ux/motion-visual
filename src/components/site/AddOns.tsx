@@ -108,7 +108,7 @@ export default function AddOns() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.75, ease: EASE }}>
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-8 h-px gradient-bg" />
-            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.5)' }}>Make it yours</span>
+            <span className="font-body text-[10px] tracking-[0.32em] uppercase" style={{ color: 'rgba(237,232,220,0.72)' }}>Make it yours</span>
             <div className="w-8 h-px gradient-bg" />
           </div>
           <h2 className="font-display italic mb-5"
@@ -117,7 +117,7 @@ export default function AddOns() {
             <span className="gradient-text">perfect package.</span>
           </h2>
           <p className="font-body font-light text-sm leading-relaxed mx-auto"
-            style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '50ch' }}>
+            style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '50ch' }}>
             Start with a plan, then add only what your business needs. If your wish-list is better value on a bigger plan, we'll tell you.
           </p>
         </motion.div>
@@ -129,7 +129,7 @@ export default function AddOns() {
 
             {/* Plan toggle + pages */}
             <div style={{ ...card, padding: 'clamp(20px,2.5vw,28px)' }}>
-              <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.5)' }}>1 · Starting plan</p>
+              <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.72)' }}>1 · Starting plan</p>
               <div className="flex gap-3 flex-wrap">
                 {PLANS.map(p => (
                   <button key={p} type="button" onClick={() => choosePlan(p)}
@@ -150,7 +150,7 @@ export default function AddOns() {
                   className="font-body text-xs font-semibold cursor-pointer transition-colors inline-flex items-center"
                   style={{
                     padding: '12px 22px', minHeight: 44, borderRadius: 999,
-                    background: 'transparent', color: 'rgba(237,232,220,0.6)', border: '1px solid rgba(237,232,220,0.12)',
+                    background: 'transparent', color: 'rgba(237,232,220,0.8)', border: '1px solid rgba(237,232,220,0.12)',
                   }}>
                   Flagship · Custom
                   <span style={{ opacity: 0.85, fontWeight: 300 }}> · scoped with you · send an enquiry →</span>
@@ -160,7 +160,7 @@ export default function AddOns() {
               <div className="flex items-center justify-between gap-4 mt-6 flex-wrap">
                 <div>
                   <p className="font-body text-sm" style={{ color: '#EDE8DC' }}>Extra pages</p>
-                  <p className="font-body font-light text-[11px]" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                  <p className="font-body font-light text-[11px]" style={{ color: 'rgba(237,232,220,0.72)' }}>
                     {gbp(EXTRA_PAGE_PRICE)} each · {calc.pagesTotal} page{calc.pagesTotal > 1 ? 's' : ''} in total
                   </p>
                 </div>
@@ -183,7 +183,7 @@ export default function AddOns() {
 
             {/* Add-ons */}
             <div style={{ ...card, padding: 'clamp(20px,2.5vw,28px)' }}>
-              <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.5)' }}>2 · Optional add-ons</p>
+              <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.72)' }}>2 · Optional add-ons</p>
               <AnimatePresence initial={false}>
                 {notice && (
                   <motion.div key="notice" role="status"
@@ -220,21 +220,21 @@ export default function AddOns() {
                         <span className="font-body text-[12px] font-semibold flex items-center gap-1 shrink-0"
                           style={{ color: included ? 'rgba(237,232,220,0.6)' : '#E5534B' }}>
                           {on && <Check size={12} />}
-                          {needsBigger && <span className="text-[9px] tracking-[0.12em] uppercase font-semibold" style={{ padding: '2px 7px', borderRadius: 999, border: '1px solid rgba(237,232,220,0.25)', color: 'rgba(237,232,220,0.7)' }}>Signature</span>}
+                          {needsBigger && <span className="text-[9px] tracking-[0.12em] uppercase font-semibold" style={{ padding: '2px 7px', borderRadius: 999, border: '1px solid rgba(237,232,220,0.25)', color: 'rgba(237,232,220,0.84)' }}>Signature</span>}
                           {included ? 'Included' : `+${gbp(a.price!)}`}
                         </span>
                       </span>
-                      <span className="block font-body font-light text-[11px] leading-relaxed mt-1.5" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                      <span className="block font-body font-light text-[11px] leading-relaxed mt-1.5" style={{ color: 'rgba(237,232,220,0.72)' }}>
                         {a.blurb}
                       </span>
                     </button>
                   );
                 })}
               </div>
-              <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.5)' }}>
+              <p className="font-body font-light text-[11px] leading-relaxed mt-4" style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Add-ons marked Signature need the Signature plan: choosing one moves your build there, and you can undo it.
               </p>
-              <p className="font-body font-light text-[11px] leading-relaxed mt-2" style={{ color: 'rgba(237,232,220,0.5)' }}>
+              <p className="font-body font-light text-[11px] leading-relaxed mt-2" style={{ color: 'rgba(237,232,220,0.72)' }}>
                 Add-ons are one-off prices. We never guarantee search rankings or business results.
               </p>
             </div>
@@ -242,9 +242,9 @@ export default function AddOns() {
 
           {/* ── Right: summary ── */}
           <div className="lg:sticky lg:top-28" style={{ ...card, padding: 'clamp(20px,2.5vw,28px)', border: '1.5px solid rgba(196,30,30,0.35)', background: 'rgba(196,30,30,0.04)' }}>
-            <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.5)' }}>Your package</p>
+            <p className="font-body text-[10px] tracking-[0.22em] uppercase mb-4" style={{ color: 'rgba(237,232,220,0.72)' }}>Your package</p>
 
-            <div className="flex flex-col gap-2 font-body text-[13px]" style={{ color: 'rgba(237,232,220,0.75)' }}>
+            <div className="flex flex-col gap-2 font-body text-[13px]" style={{ color: 'rgba(237,232,220,0.86)' }}>
               <div className="flex justify-between"><span>{plan} plan</span><span>{gbp(PLAN_PRICE[plan])}</span></div>
               {extraPages > 0 && (
                 <div className="flex justify-between"><span>{extraPages} extra page{extraPages > 1 ? 's' : ''}</span><span>{gbp(extraPages * EXTRA_PAGE_PRICE)}</span></div>
@@ -260,10 +260,10 @@ export default function AddOns() {
             <div className="my-5" style={{ height: 1, background: 'rgba(237,232,220,0.1)' }} />
 
             <div className="flex items-baseline justify-between">
-              <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>Total, one-off</span>
+              <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.72)' }}>Total, one-off</span>
               <span className="font-display italic gradient-text" style={{ fontSize: '2.2rem', lineHeight: 1 }}>{gbp(calc.total)}</span>
             </div>
-            <p className="font-body font-light text-[11px] mt-2" style={{ color: 'rgba(237,232,220,0.5)' }}>
+            <p className="font-body font-light text-[11px] mt-2" style={{ color: 'rgba(237,232,220,0.72)' }}>
               {`A deposit of ${gbp(depositFor(calc.total))} (25%) secures your start date.`}
             </p>
 
@@ -276,7 +276,7 @@ export default function AddOns() {
                     <p className="font-body text-[10px] tracking-[0.18em] uppercase flex items-center gap-1.5 mb-2" style={{ color: '#E5534B' }}>
                       <Sparkles size={11} /> Better value: {calc.suggestion.to}
                     </p>
-                    <p className="font-body font-light text-[12px] leading-relaxed" style={{ color: 'rgba(237,232,220,0.75)' }}>{calc.suggestion.text}</p>
+                    <p className="font-body font-light text-[12px] leading-relaxed" style={{ color: 'rgba(237,232,220,0.86)' }}>{calc.suggestion.text}</p>
                     {calc.suggestion.to === 'Signature' && (
                       <button type="button" onClick={() => { setPlan('Signature'); setExtraPages(Math.max(0, calc.pagesTotal - PLAN_PAGES.Signature)); }}
                         className="font-body text-[11px] font-semibold underline underline-offset-4 mt-3 cursor-pointer" style={{ color: '#EDE8DC' }}>

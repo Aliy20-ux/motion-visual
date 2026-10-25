@@ -97,7 +97,7 @@ export default function Brief() {
     <h1 className="font-display italic mb-4" style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', letterSpacing: '-0.02em', color: '#EDE8DC', lineHeight: 1 }}>{text}</h1>
   );
   const body = (text: React.ReactNode) => (
-    <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.7)', maxWidth: '60ch' }}>{text}</p>
+    <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'rgba(237,232,220,0.84)', maxWidth: '60ch' }}>{text}</p>
   );
 
   if (phase === 'loading') return shell(<div aria-busy="true" style={{ minHeight: '40svh' }} />);

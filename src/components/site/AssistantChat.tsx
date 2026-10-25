@@ -38,7 +38,7 @@ const field = {
   width: '100%', background: 'rgba(237,232,220,0.04)', border: '1px solid rgba(237,232,220,0.14)', borderRadius: 12,
   color: '#EDE8DC', fontSize: 14, padding: '0 14px', minHeight: 46,
 } as const;
-const label = { display: 'block', fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase' as const, color: 'rgba(237,232,220,0.5)', marginBottom: 6 };
+const label = { display: 'block', fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase' as const, color: 'rgba(237,232,220,0.72)', marginBottom: 6 };
 
 export default function AssistantChat() {
   const [open, setOpen] = useState(false);
@@ -241,22 +241,22 @@ export default function AssistantChat() {
 
             <div className="flex items-center gap-3 shrink-0" style={{ padding: '14px 14px 14px 18px', borderBottom: '1px solid rgba(237,232,220,0.08)', background: 'linear-gradient(180deg, rgba(196,30,30,0.1), transparent)' }}>
               {view === 'handoff' && (
-                <button type="button" aria-label="Back to the chat" onClick={() => setView('chat')} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.7)' }}>
+                <button type="button" aria-label="Back to the chat" onClick={() => setView('chat')} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.84)' }}>
                   <ArrowLeft size={18} aria-hidden="true" />
                 </button>
               )}
               <div className="flex-1 min-w-0">
                 <p className="font-display italic" style={{ fontSize: '1.25rem', lineHeight: 1.1, color: '#EDE8DC' }}>Motion Visual</p>
-                <p className="font-body" style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(237,232,220,0.5)', marginTop: 3 }}>
+                <p className="font-body" style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(237,232,220,0.72)', marginTop: 3 }}>
                   AI assistant
                 </p>
               </div>
               {view === 'chat' && messages.length > 0 && (
-                <button type="button" aria-label="Start a new chat" title="Start a new chat" onClick={reset} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.6)' }}>
+                <button type="button" aria-label="Start a new chat" title="Start a new chat" onClick={reset} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.8)' }}>
                   <RotateCcw size={16} aria-hidden="true" />
                 </button>
               )}
-              <button type="button" aria-label="Close the chat" onClick={close} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.7)' }}>
+              <button type="button" aria-label="Close the chat" onClick={close} className="flex items-center justify-center cursor-pointer" style={{ width: 40, height: 40, borderRadius: 999, color: 'rgba(237,232,220,0.84)' }}>
                 <X size={18} aria-hidden="true" />
               </button>
             </div>
@@ -313,7 +313,7 @@ export default function AssistantChat() {
                     </button>
                   </form>
                   <div className="flex items-center justify-between gap-3" style={{ marginTop: 8 }}>
-                    <p className="font-body" style={{ fontSize: 10.5, lineHeight: 1.4, color: 'rgba(237,232,220,0.6)', maxWidth: '30ch' }}>
+                    <p className="font-body" style={{ fontSize: 10.5, lineHeight: 1.4, color: 'rgba(237,232,220,0.8)', maxWidth: '30ch' }}>
                       AI can make mistakes. Prices and terms on this site always apply.
                     </p>
                     <button type="button" onClick={() => setView('handoff')} className="font-body font-semibold cursor-pointer shrink-0"
@@ -328,7 +328,7 @@ export default function AssistantChat() {
             {view === 'handoff' && (
               <form onSubmit={submitHandoff} noValidate className="flex-1 overflow-y-auto" style={{ padding: '18px 18px 20px' }}>
                 <h2 className="font-display italic" style={{ fontSize: '1.6rem', lineHeight: 1.05, color: '#EDE8DC', marginBottom: 6 }}>Talk to a founder</h2>
-                <p className="font-body font-light" style={{ fontSize: 13, lineHeight: 1.6, color: 'rgba(237,232,220,0.6)', marginBottom: 16 }}>
+                <p className="font-body font-light" style={{ fontSize: 13, lineHeight: 1.6, color: 'rgba(237,232,220,0.8)', marginBottom: 16 }}>
                   Leave your details and one of us will reply by email. Your chat so far comes with it, so you won’t need to repeat yourself.
                 </p>
                 <div style={{ display: 'grid', gap: 14 }}>
@@ -342,7 +342,7 @@ export default function AssistantChat() {
                   style={{ marginTop: 16, minHeight: 50, borderRadius: 999, fontSize: 13, letterSpacing: '0.04em', background: 'linear-gradient(135deg,#8B1010,#C41E1E)', color: '#F0EDED' }}>
                   {hBusy ? 'Sending…' : 'Send to a founder'}
                 </button>
-                <p className="font-body font-light" style={{ fontSize: 11, lineHeight: 1.5, color: 'rgba(237,232,220,0.6)', marginTop: 10 }}>
+                <p className="font-body font-light" style={{ fontSize: 11, lineHeight: 1.5, color: 'rgba(237,232,220,0.8)', marginTop: 10 }}>
                   We use these details only to reply to you. See our <a href="/privacy" style={{ textDecoration: 'underline' }}>Privacy Policy</a>.
                 </p>
               </form>
@@ -352,7 +352,7 @@ export default function AssistantChat() {
               <div className="flex-1 flex flex-col items-center justify-center text-center" style={{ padding: 28 }} role="status">
                 <span className="gradient-bg flex items-center justify-center" style={{ width: 52, height: 52, borderRadius: 999, marginBottom: 18 }} aria-hidden="true"><Check size={22} style={{ color: '#F0EDED' }} /></span>
                 <h2 className="font-display italic" style={{ fontSize: '1.9rem', lineHeight: 1.05, color: '#EDE8DC', marginBottom: 8 }}>Thank you, {hName.trim().split(' ')[0]}.</h2>
-                <p className="font-body font-light" style={{ fontSize: 13.5, lineHeight: 1.65, color: 'rgba(237,232,220,0.65)', maxWidth: '30ch' }}>
+                <p className="font-body font-light" style={{ fontSize: 13.5, lineHeight: 1.65, color: 'rgba(237,232,220,0.8)', maxWidth: '30ch' }}>
                   A founder will reply to <span style={{ color: '#EDE8DC' }}>{hEmail.trim()}</span>.
                 </p>
                 <button type="button" onClick={() => setView('chat')} className="font-body font-semibold cursor-pointer" style={{ marginTop: 22, minHeight: 44, padding: '0 22px', borderRadius: 999, fontSize: 12.5, color: '#EDE8DC', border: '1px solid rgba(237,232,220,0.2)' }}>Back to the chat</button>

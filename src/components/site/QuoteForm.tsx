@@ -105,7 +105,7 @@ export function FieldLabel({ htmlFor, label, optional, error }: {
       </label>
       {optional && (
         <span className="font-body text-[9px] tracking-[0.15em] uppercase"
-          style={{ color: 'rgba(237,232,220,0.5)' }}>Optional</span>
+          style={{ color: 'rgba(237,232,220,0.72)' }}>Optional</span>
       )}
       {error && (
         <span id={htmlFor ? `${htmlFor}-error` : undefined} role="alert" className="font-body text-[9px]" style={{ color: '#F87171' }}>{error}</span>
@@ -306,7 +306,7 @@ export default function QuoteForm() {
                 We'll be in touch.
               </h2>
               <p className="font-body font-light text-sm mt-4"
-                style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '38ch', lineHeight: 1.7 }}>
+                style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '38ch', lineHeight: 1.7 }}>
                 {result?.mode === 'quote' && result.customerEmailSent ? (
                   <>
                     Thanks {form.name.split(' ')[0] || 'there'}. Your quote{result.ref ? ` ${result.ref}` : ''} is on its
@@ -335,7 +335,7 @@ export default function QuoteForm() {
                   viewport={{ once: true }} transition={{ duration: 0.6 }}>
                   <div className="w-8 h-px gradient-bg" />
                   <span className="font-body text-[10px] tracking-[0.32em] uppercase"
-                    style={{ color: 'rgba(237,232,220,0.5)' }}>
+                    style={{ color: 'rgba(237,232,220,0.72)' }}>
                     Free Enquiry
                   </span>
                 </motion.div>
@@ -359,7 +359,7 @@ export default function QuoteForm() {
 
                 <motion.p
                   className="font-body font-light text-sm leading-relaxed mb-12"
-                  style={{ color: 'rgba(237,232,220,0.5)', maxWidth: '38ch' }}
+                  style={{ color: 'rgba(237,232,220,0.72)', maxWidth: '38ch' }}
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                   viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
                   Fill in your details and we'll come back with a personalised proposal
@@ -381,7 +381,7 @@ export default function QuoteForm() {
                         style={{ fontSize: 'clamp(1.6rem,2.8vw,2.6rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
                         {item.stat}
                       </span>
-                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.5)' }}>
+                      <span className="font-body text-xs" style={{ color: 'rgba(237,232,220,0.72)' }}>
                         {item.label}
                       </span>
                     </div>
@@ -480,7 +480,7 @@ export default function QuoteForm() {
                   </motion.button>
 
                   <p className="text-center font-body text-[10px] tracking-[0.15em] uppercase -mt-4"
-                    style={{ color: 'rgba(237,232,220,0.5)' }}>
+                    style={{ color: 'rgba(237,232,220,0.72)' }}>
                     Free consultation · No obligation · Reply within 24h
                   </p>
                 </form>
