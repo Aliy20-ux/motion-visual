@@ -134,9 +134,10 @@
          a synchronous <link rel="stylesheet"> — that was a render-blocking request costing ~1.4s
          under throttled mobile, delaying first paint of every text node on the page for a font
          that (with display=swap) doesn't need to block anyway. The <noscript> covers JS-disabled. -->
-    <link rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="preload" as="style" id="font-css"
+      href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" />
+    <!-- Swaps it to a stylesheet. An external file, not an inline onload: the Content-Security-Policy blocks inline handlers. -->
+    <script src="/font-swap.js"></script>
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" />
     </noscript>
